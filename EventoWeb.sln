@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2042
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Secretaria", "Secretaria", "{C29BB475-4A8A-4895-BE89-522DEFEA4C05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Inscricao On-Line", "Inscricao On-Line", "{112E1688-56A8-4F43-9DDE-87B75A1C9368}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "web-iu", "Secretaria\web-iu", "{ED31E145-E089-459C-8D13-ED85672216D6}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_53074"
+		Debug.AspNetCompiler.PhysicalPath = "Secretaria\web-iu\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53074\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_53074"
+		Release.AspNetCompiler.PhysicalPath = "Secretaria\web-iu\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_53074\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "53074"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ED31E145-E089-459C-8D13-ED85672216D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED31E145-E089-459C-8D13-ED85672216D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{ED31E145-E089-459C-8D13-ED85672216D6} = {C29BB475-4A8A-4895-BE89-522DEFEA4C05}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1554B426-5493-4886-8ABB-6391B2B5C78D}
+	EndGlobalSection
+EndGlobal
