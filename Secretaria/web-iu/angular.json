@@ -23,7 +23,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.scss",
+              "src/tema.scss",
+              "node_modules/font-awesome/scss/font-awesome.scss"
             ],
             "scripts": []
           },
