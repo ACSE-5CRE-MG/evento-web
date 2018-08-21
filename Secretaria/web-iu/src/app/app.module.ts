@@ -34,13 +34,24 @@ import { MatSelectModule } from '@angular/material/select';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
 
+import { CookieModule } from 'ngx-cookie';
+
+import { PermissaoAcessoRota } from './seguranca/permissao-acesso-rota';
+import { GestaoAutenticacao } from './seguranca/gestao-autenticacao';
+
+import { TelaLogin } from './login/tela-login';
 import { TelaPrincipal } from './tela-principal';
-import { TelaLogin } from './login/tela-login'
+
+import { LayoutCadastro } from './componentes/layout/layout-barra-ferramenta';
+
+import { TelaListaEventos } from './evento/tela-lista-eventos';
 
 @NgModule({
   declarations: [
     TelaPrincipal,
-    TelaLogin
+    TelaLogin,
+    LayoutCadastro,
+    TelaListaEventos
   ],
   imports: [
     BrowserModule,
@@ -67,9 +78,16 @@ import { TelaLogin } from './login/tela-login'
     MatRadioModule,
     MatCheckboxModule,
     FlexLayoutModule,
-    RouterModule.forRoot([])
+    CookieModule.forRoot(),
+    RouterModule.forRoot([
+      { path: 'login', component: TelaLogin },
+      { path: '', component: TelaListaEventos, canActivate: [PermissaoAcessoRota] },
+      { path: '** ', redirectTo: '' }
+    ])
   ],
-  providers: [{ provide: LOCALE_ID, useValue: 'pt' }, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }],
+  entryComponents: [LayoutCadastro, TelaListaEventos],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt' }, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    PermissaoAcessoRota, GestaoAutenticacao],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule

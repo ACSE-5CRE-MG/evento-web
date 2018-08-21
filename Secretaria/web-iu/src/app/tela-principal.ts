@@ -1,15 +1,19 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { GestaoAutenticacao } from './seguranca/gestao-autenticacao';
 
 @Component({
   selector: 'tela-principal',
-  templateUrl: './tela_principal.html'
+  templateUrl: './tela-principal.html',
+  styleUrls: ['./tela-principal.scss']
 })
 
 export class TelaPrincipal {
 
-  estaAutenticado: boolean = false;
+  constructor(public router: Router, public gestaoAutenticacao: GestaoAutenticacao) {}
 
-  processarLoginAutenticado(autenticacao: any): void {
-
+  clicarSair(): void {
+    this.gestaoAutenticacao.desautenticar();
+    this.router.navigate(['login']);
   }
 }

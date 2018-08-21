@@ -1,0 +1,45 @@
+:host {
+  display: flex;
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  .layout-barra-ferramenta-pacote {
+    // [layout="column"]
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+    // [layout-fill]
+    margin: 0;
+    width: 100%;
+    min-height: 100%;
+    height: 100%;
+
+    .layout-barra-ferramenta-toolbar {
+      // [layout="row"]
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+      // [layout-align="start center"]
+      align-items: center;
+      align-content: center;
+      max-width: 100%;
+      justify-content: flex-start;
+    }
+
+    .layout-barra-ferramenta-conteudo {
+      // [layout="column"]
+      flex-direction: column;
+      box-sizing: border-box;
+      display: flex;
+      // [flex]
+      flex: 1;
+      // [md-content]
+      position: relative;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+<mat-sidenav-container fullscreen>
+  <div class="layout-cadastro-pacote">
+    <mat-toolbar [color]="corToolbar">
+      <ng-content select="[layout-barra-ferramenta-toolbar]"></ng-content>
+    </mat-toolbar>
+    <div class="layout-barra-ferramenta-conteudo" cdkScrollable>
+      <ng-content></ng-content>
+    </div>
+  </div>
+</mat-sidenav-container>
