@@ -1,26 +1,5 @@
 <mat-sidenav-container fullscreen>
-
-  <div class="layout-cadastro-pacote" fxFill>
-    <mat-toolbar color="primary">
-      <span class="cursor-pointer">EventoWeb</span>
-      <span style="flex: 1 1 auto;"></span>
-      <button class="overflow-visible" mat-icon-button [matMenuTriggerFor]="notificationsMenu">
-        <span class="fa fa-user fa-2x"></span>
-      </button>
-      <mat-menu #notificationsMenu="matMenu" [overlapTrigger]="false">
-        <button mat-menu-item>
-          <mat-icon fontSet="fa" fontIcon="fa-info"></mat-icon>
-          <span>Sobre o usuário</span>
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-menu-item (click)="clicarSair()">
-          <mat-icon fontSet="fa" fontIcon="fa-sign-out"></mat-icon>
-          <span>Sair</span>
-        </button>
-      </mat-menu>
-    </mat-toolbar>
-    <div class="layout-barra-ferramenta-conteudo" cdkScrollable>
-      <router-outlet></router-outlet>
-    </div>
+  <div fxFill>
+    <router-outlet></router-outlet>
   </div>
 </mat-sidenav-container>

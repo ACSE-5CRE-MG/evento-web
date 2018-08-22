@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GestaoAutenticacao, Autenticacao, Usuario } from '../seguranca/gestao-autenticacao';
 
 @Component({
@@ -8,13 +8,16 @@ import { GestaoAutenticacao, Autenticacao, Usuario } from '../seguranca/gestao-a
   styleUrls: ['./tela-login.scss']
 })
 
-export class TelaLogin {
+export class TelaLogin implements OnInit {
 
-  nomeUsuario: string;
-  senha: string;
+  paraOndeRedirecionar: string;
 
-  constructor(public gestaoAutenticacao: GestaoAutenticacao, public router: Router) {
+  constructor(public gestaoAutenticacao: GestaoAutenticacao, public router: Router, public route: ActivatedRoute) {
 
+  }
+
+  ngOnInit() {
+    this.paraOndeRedirecionar = this.route.snapshot.queryParams['urlRetornar'] || '/';
   }
 
   clicarAutenticar(): void {
@@ -30,7 +33,7 @@ export class TelaLogin {
     autenticacao.token = '99999';
 
     this.gestaoAutenticacao.autenticar(autenticacao);
-    
-    this.router.navigate([''])
+
+    this.router.navigate([this.paraOndeRedirecionar])
   }
 }

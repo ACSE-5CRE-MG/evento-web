@@ -1,15 +1,22 @@
-<layout-barra-ferramenta>
-  <div layout-barra-ferramenta-toolbar fxLayout="row" fxLayoutAlign="start center" fxFill>
-    <span style="margin-right:20px">Eventos</span>
-    <mat-radio-group>
-      <mat-radio-button value="1">Em Andamento</mat-radio-button>
-      <mat-radio-button value="2">Encerrados</mat-radio-button>
-    </mat-radio-group>
-    <button mat-button (click)="clicarNovo()">
-      <span class="fa fa-plus"></span>
-      Novo
-    </button>
-  </div>
-
-  Lista de eventos aqui
-</layout-barra-ferramenta>
+<layout-base corToolbar="accent">
+  <layout-barra-ferramenta corToolbar="primary">
+    <div layout-barra-ferramenta-toolbar fxLayout="row" fxLayoutAlign="start center" fxFill>
+      <span style="margin-right:20px">Eventos</span>
+      <span style="flex: 1 1 auto;"></span>
+      <mat-radio-group>
+        <mat-radio-button value="1">Em Andamento&nbsp;</mat-radio-button>
+        <mat-radio-button value="2">Encerrados</mat-radio-button>
+      </mat-radio-group>
+      <span style="flex: 1 1 auto;"></span>
+      <button mat-button (click)="clicarNovo()">
+        <span class="fa fa-plus"></span>
+        Novo
+      </button>
+    </div>
+    <div fxFill fxLayout="column" fxLayoutAlign="center center">
+      <button mat-raised-button (click)="clicarAutenticar()">
+        <img src="assets/facebook200.png" />
+      </button>
+    </div>
+  </layout-barra-ferramenta>
+</layout-base>

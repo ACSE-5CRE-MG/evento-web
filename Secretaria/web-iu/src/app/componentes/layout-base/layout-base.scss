@@ -6,7 +6,7 @@
   height: 100%;
   overflow: hidden;
 
-  .layout-barra-ferramenta-pacote {
+  .layout-base-ferramenta-pacote {
     // [layout="column"]
     flex-direction: column;
     box-sizing: border-box;
@@ -17,7 +17,7 @@
     min-height: 100%;
     height: 100%;
 
-    .layout-barra-ferramenta-toolbar {
+    .layout-base-ferramenta-toolbar {
       // [layout="row"]
       flex-direction: row;
       box-sizing: border-box;
@@ -29,7 +29,7 @@
       justify-content: flex-start;
     }
 
-    .layout-barra-ferramenta-conteudo {
+    .layout-base-conteudo {
       // [layout="column"]
       flex-direction: column;
       box-sizing: border-box;

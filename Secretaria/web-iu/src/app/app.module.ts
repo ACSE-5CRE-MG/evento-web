@@ -43,6 +43,7 @@ import { TelaLogin } from './login/tela-login';
 import { TelaPrincipal } from './tela-principal';
 
 import { LayoutCadastro } from './componentes/layout/layout-barra-ferramenta';
+import { LayoutBase } from './componentes/layout-base/layout-base';
 
 import { TelaListaEventos } from './evento/tela-lista-eventos';
 
@@ -51,6 +52,7 @@ import { TelaListaEventos } from './evento/tela-lista-eventos';
     TelaPrincipal,
     TelaLogin,
     LayoutCadastro,
+    LayoutBase,
     TelaListaEventos
   ],
   imports: [
@@ -85,7 +87,7 @@ import { TelaListaEventos } from './evento/tela-lista-eventos';
       { path: '** ', redirectTo: '' }
     ])
   ],
-  entryComponents: [LayoutCadastro, TelaListaEventos],
+  entryComponents: [LayoutCadastro, LayoutBase, TelaListaEventos],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' }, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     PermissaoAcessoRota, GestaoAutenticacao],
   bootstrap: [TelaPrincipal]
