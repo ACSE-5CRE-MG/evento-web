@@ -3,3 +3,5 @@
 ################################################################################
 
 /.vs
+/EventoWeb.Nucleo/obj/Debug/netstandard2.0
+/EventoWeb.Nucleo/obj
