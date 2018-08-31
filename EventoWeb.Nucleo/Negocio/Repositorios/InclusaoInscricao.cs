@@ -1,5 +1,4 @@
-﻿using NegocioEventoWeb.EMail;
-using EventoWeb.Nucleo.Negocio.Entidades;
+﻿using EventoWeb.Nucleo.Negocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +9,15 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
     public class InclusaoInscricao
     {
         private AInscricoes mInscricoes;
-        private NotificacaoEmailInclusaoInscricao mNotificacaoEmailInclusaoInscricao;
+        //private NotificacaoEmailInclusaoInscricao mNotificacaoEmailInclusaoInscricao; remodelar o envio de email
         private IList<IValidacaoInscricao> mValidacoes;
 
         public InclusaoInscricao(AInscricoes aInscricoes, 
-            IList<IValidacaoInscricao> validacoes,
-            NotificacaoEmailInclusaoInscricao notificacaoEmailInclusaoInscricao)
+            IList<IValidacaoInscricao> validacoes/*,
+            NotificacaoEmailInclusaoInscricao notificacaoEmailInclusaoInscricao*/)
         {
             this.mInscricoes = aInscricoes;
-            this.mNotificacaoEmailInclusaoInscricao = notificacaoEmailInclusaoInscricao;
+            //this.mNotificacaoEmailInclusaoInscricao = notificacaoEmailInclusaoInscricao;
             mValidacoes = validacoes;
         }
         public void Persistir(Inscricao inscricao)
@@ -30,7 +29,7 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
             }
 
             mInscricoes.Incluir(inscricao);
-            mNotificacaoEmailInclusaoInscricao.Notificar(inscricao);
+            //mNotificacaoEmailInclusaoInscricao.Notificar(inscricao);
         }
     }
 }

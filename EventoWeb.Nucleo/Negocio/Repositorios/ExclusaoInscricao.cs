@@ -1,5 +1,4 @@
-﻿using NegocioEventoWeb.AplicativosFinanceiro;
-using EventoWeb.Nucleo.Negocio.Entidades;
+﻿using EventoWeb.Nucleo.Negocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +36,8 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
                 inscricao.IsentarInscricao();
                 mInscricoes.Atualizar(inscricao);
 
-                var appTitulo = new AplicativoTituloFinanceiro();
+                // Remodelar essa regra
+                /*var appTitulo = new AplicativoTituloFinanceiro();
                 switch (situacao)
                 {
                     case TipoSituacaoPagamento.Pagar:
@@ -52,7 +52,7 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
                         else
                             new AplicativoTransacao().Excluir(transacao);
                         break;
-                }
+                }*/
             }
 
             mInscricoes.Excluir(inscricao);

@@ -6,7 +6,11 @@
 
   <ItemGroup>
     <Folder Include="Aplicacao\" />
-    <Folder Include="Persistencia\BancoDados\" />
+    <Folder Include="Persistencia\Repositorios\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NHibernate" Version="5.1.3" />
   </ItemGroup>
 
 </Project>

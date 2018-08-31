@@ -1,4 +1,4 @@
-﻿using NegocioEventoWeb.Repositorio;
+﻿using EventoWeb.Nucleo.Negocio.Entidades;
 using EventoWeb.Nucleo.Negocio.Repositorios;
 using System;
 using System.Collections.Generic;

@@ -1,9 +1,9 @@
-﻿using NegocioEventoWeb.Repositorio;
-using EventoWeb.Nucleo.Negocio.Repositorios;
+﻿using EventoWeb.Nucleo.Negocio.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using EventoWeb.Nucleo.Negocio.Entidades;
 
 namespace EventoWeb.Nucleo.Negocio.Servicos
 {
