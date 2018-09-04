@@ -1,17 +1,15 @@
-﻿using EventoWeb.Nucleo.Negocio.Repositorios;
+﻿using EventoWeb.Nucleo.Aplicacao;
+using EventoWeb.Nucleo.Negocio.Repositorios;
 using EventoWeb.Nucleo.Persistencia.Repositorios;
 using NHibernate;
 using NHibernate.Cfg;
 using NHibernate.Context;
 using NHibernate.Mapping.ByCode;
-using System;
-using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
 
 namespace EventoWeb.Nucleo.Persistencia
 {
-    public class Contexto
+    public class Contexto: IContexto
     {
         private static ISessionFactory mFabricaSession;
 
@@ -70,7 +68,7 @@ namespace EventoWeb.Nucleo.Persistencia
             session.Dispose();
         }
 
-        public static AEventos RepositorioEventos
+        public AEventos RepositorioEventos
         {
             get
             {
