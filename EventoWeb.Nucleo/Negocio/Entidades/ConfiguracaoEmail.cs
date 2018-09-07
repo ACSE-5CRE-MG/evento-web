@@ -7,18 +7,18 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
     public class ConfiguracaoEmail
     {
-        private String mEnderecoEmail;
-        private String mUsuarioEmail;
-        private String mSenhaEmail;
-        private String mServidorEmail;
-        private int? mPortaServidor;
-        private TipoSegurancaEmail? mTipoSeguranca;
-        private String mTituloEmailConfirmacaoInscricao;
-        private String mMensagemEmailConfirmacaoInscricao;
+        private String m_EnderecoEmail;
+        private String m_UsuarioEmail;
+        private String m_SenhaEmail;
+        private String m_ServidorEmail;
+        private int? m_PortaServidor;
+        private TipoSegurancaEmail? m_TipoSeguranca;
+        private String m_TituloEmailConfirmacaoInscricao;
+        private String m_MensagemEmailConfirmacaoInscricao;
 
         public virtual String EnderecoEmail
         {
-            get { return mEnderecoEmail; }
+            get { return m_EnderecoEmail; }
             set 
             {
                 if (!string.IsNullOrEmpty(value))
@@ -32,62 +32,62 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                         throw new ArgumentException("O endereço de email informado não é válido.", "EnderecoEmail");
                     }
                 }
-                mEnderecoEmail = value; 
+                m_EnderecoEmail = value; 
             }
         }
 
         public virtual String UsuarioEmail
         {
-            get { return mUsuarioEmail; }
-            set { mUsuarioEmail = value; }
+            get { return m_UsuarioEmail; }
+            set { m_UsuarioEmail = value; }
         }
 
         public virtual String SenhaEmail
         {
-            get { return mSenhaEmail; }
-            set { mSenhaEmail = value; }
+            get { return m_SenhaEmail; }
+            set { m_SenhaEmail = value; }
         }
 
         public virtual String ServidorEmail
         {
-            get { return mServidorEmail; }
-            set { mServidorEmail = value; }
+            get { return m_ServidorEmail; }
+            set { m_ServidorEmail = value; }
         }
 
         public virtual int? PortaServidor
         {
-            get { return mPortaServidor; }
-            set { mPortaServidor = value; }
+            get { return m_PortaServidor; }
+            set { m_PortaServidor = value; }
         }
 
         public virtual TipoSegurancaEmail? TipoSeguranca
         {
-            get { return mTipoSeguranca; }
-            set { mTipoSeguranca = value; }
+            get { return m_TipoSeguranca; }
+            set { m_TipoSeguranca = value; }
         }
 
         public virtual String TituloEmailConfirmacaoInscricao
         {
-            get { return mTituloEmailConfirmacaoInscricao; }
-            set { mTituloEmailConfirmacaoInscricao = value; }
+            get { return m_TituloEmailConfirmacaoInscricao; }
+            set { m_TituloEmailConfirmacaoInscricao = value; }
         }
 
         public virtual String MensagemEmailConfirmacaoInscricao
         {
-            get { return mMensagemEmailConfirmacaoInscricao; }
-            set { mMensagemEmailConfirmacaoInscricao = value; }
+            get { return m_MensagemEmailConfirmacaoInscricao; }
+            set { m_MensagemEmailConfirmacaoInscricao = value; }
         }
 
         public virtual Boolean ConfiguracaoInformada
         {
             get
             {
-                return !String.IsNullOrEmpty(mEnderecoEmail) &&
-                       !String.IsNullOrEmpty(mSenhaEmail) &&
-                       !String.IsNullOrEmpty(mServidorEmail) &&
-                       !String.IsNullOrEmpty(mUsuarioEmail) &&
-                       mPortaServidor != null &&
-                       mTipoSeguranca != null;
+                return !String.IsNullOrEmpty(m_EnderecoEmail) &&
+                       !String.IsNullOrEmpty(m_SenhaEmail) &&
+                       !String.IsNullOrEmpty(m_ServidorEmail) &&
+                       !String.IsNullOrEmpty(m_UsuarioEmail) &&
+                       m_PortaServidor != null &&
+                       m_TipoSeguranca != null;
             }
         }
     }

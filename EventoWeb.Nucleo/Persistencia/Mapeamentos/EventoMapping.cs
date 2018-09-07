@@ -61,13 +61,13 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Type<EnumGeneric<SituacaoEvento>>();
             });
             this.Property(x => x.Logotipo, m => {
-                m.Access(Accessor.NoSetter);
+                m.Access(Accessor.Property);
                 m.NotNullable(false);
                 m.Column("LOGOTIPO");
                 m.Type(NHibernateUtil.StringClob);
             });
             this.Property(x => x.TemDepartamentalizacao, m => {
-                m.Access(Accessor.NoSetter);
+                m.Access(Accessor.Property);
                 m.NotNullable(true);
                 m.Column("TEM_DEPARTAMENTALIZACAO");
             });
@@ -83,12 +83,12 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Type<EnumGeneric<EnumModeloDivisaoSalasEstudo>>();
             });
             this.Property(x => x.TemOficinas, m => {
-                m.Access(Accessor.NoSetter);
+                m.Access(Accessor.Property);
                 m.NotNullable(true);
                 m.Column("TEM_OFICINAS");
             });
             this.Property(x => x.TemDormitorios, m => {
-                m.Access(Accessor.NoSetter);
+                m.Access(Accessor.Property);
                 m.NotNullable(true);
                 m.Column("TEM_DORMITORIOS");
             });

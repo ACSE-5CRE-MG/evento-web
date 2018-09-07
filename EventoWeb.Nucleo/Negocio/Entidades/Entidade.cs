@@ -6,11 +6,11 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class Entidade
     {
-        private int mId = 0;
+        private int m_Id = 0;
 
         public virtual int Id
         {
-            get { return mId; }
+            get { return m_Id; }
         }
 
         public override bool Equals(object obj)

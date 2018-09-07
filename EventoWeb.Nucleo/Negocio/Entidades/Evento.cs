@@ -14,21 +14,21 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
     public class Evento: Entidade
     {
-        private string mNome;
-        private DateTime mDataInicioInscricao;
-        private DateTime mDataFimInscricao;
-        private SituacaoEvento mSituacao;
-        private DateTime mDataRegistro;
-        private ConfiguracaoEmail mConfiguracaoEmail;
-        private decimal mValorInscricao;
-        private DateTime mDataFimEvento;
-        private DateTime mDataInicioEvento;
-        private EnumPublicoEvangelizacao? mPublicoEvangelizacao;
-        private bool mTemEvangelizacao;
-        private int? mTempoDuracaoSarauMin;
-        private bool mTemSarau;
-        private bool mTemSalasEstudo;
-        private EnumModeloDivisaoSalasEstudo? mModeloDivisaoSalasEstudo;
+        private string m_Nome;
+        private DateTime m_DataInicioInscricao;
+        private DateTime m_DataFimInscricao;
+        private SituacaoEvento m_Situacao;
+        private DateTime m_DataRegistro;
+        private ConfiguracaoEmail m_ConfiguracaoEmail;
+        private decimal m_ValorInscricao;
+        private DateTime m_DataFimEvento;
+        private DateTime m_DataInicioEvento;
+        private EnumPublicoEvangelizacao? m_PublicoEvangelizacao;
+        private bool m_TemEvangelizacao;
+        private int? m_TempoDuracaoSarauMin;
+        private bool m_TemSarau;
+        private bool m_TemSalasEstudo;
+        private EnumModeloDivisaoSalasEstudo? m_ModeloDivisaoSalasEstudo;
 
         protected Evento()
         {
@@ -42,14 +42,14 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             DefinirDataInscricao(dataInicioInscricao, dataFimInscricao);
             DefinirDataEvento(dataInicioEvento, dataFimEvento);
 
-            mDataRegistro = DateTime.Today;
-            mSituacao = SituacaoEvento.Aberto;
-            mConfiguracaoEmail = new ConfiguracaoEmail();
+            m_DataRegistro = DateTime.Today;
+            m_Situacao = SituacaoEvento.Aberto;
+            m_ConfiguracaoEmail = new ConfiguracaoEmail();
         }
 
         public virtual string Nome 
         {
-            get { return mNome; }
+            get { return m_Nome; }
             set
             {
                 if (value == null)
@@ -58,7 +58,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 if (String.IsNullOrEmpty(value))
                     throw new ArgumentException("Nome vazio.", "Nome");
 
-                mNome = value;
+                m_Nome = value;
             }
         }
 
@@ -67,8 +67,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (dataInicial >= dataFinal)
                 throw new ArgumentException("Data inicial da inscrição dever ser menor que a final.", "dataInicial");
 
-            mDataInicioInscricao = dataInicial;
-            mDataFimInscricao = dataFinal;
+            m_DataInicioInscricao = dataInicial;
+            m_DataFimInscricao = dataFinal;
         }
 
         public virtual void DefinirDataEvento(DateTime dataInicial, DateTime dataFinal)
@@ -76,96 +76,96 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (dataInicial >= dataFinal)
                 throw new ArgumentException("Data inicial do evento dever ser menor que a final.", "dataInicial");
 
-            mDataInicioEvento = dataInicial;
-            mDataFimEvento = dataFinal;
+            m_DataInicioEvento = dataInicial;
+            m_DataFimEvento = dataFinal;
         }
 
-        public virtual DateTime DataInicioInscricao { get { return mDataInicioInscricao; } }
+        public virtual DateTime DataInicioInscricao { get { return m_DataInicioInscricao; } }
 
-        public virtual DateTime DataFimInscricao { get { return mDataFimInscricao; } }
+        public virtual DateTime DataFimInscricao { get { return m_DataFimInscricao; } }
 
-        public virtual DateTime DataInicioEvento { get { return mDataInicioEvento; } }
+        public virtual DateTime DataInicioEvento { get { return m_DataInicioEvento; } }
 
-        public virtual DateTime DataFimEvento { get { return mDataFimEvento; } }
+        public virtual DateTime DataFimEvento { get { return m_DataFimEvento; } }
 
-        public virtual SituacaoEvento Situacao { get { return mSituacao; } }
+        public virtual SituacaoEvento Situacao { get { return m_Situacao; } }
 
-        public virtual DateTime DataRegistro { get { return mDataRegistro; } }
+        public virtual DateTime DataRegistro { get { return m_DataRegistro; } }
 
         public virtual String Logotipo { get; set; }
 
         public virtual Boolean TemDepartamentalizacao { get; set; }
 
-        public virtual Boolean TemSalasEstudo { get { return mTemSalasEstudo; } }
+        public virtual Boolean TemSalasEstudo { get { return m_TemSalasEstudo; } }
 
-        public virtual EnumModeloDivisaoSalasEstudo? ModeloDivisaoSalasEstudo { get { return mModeloDivisaoSalasEstudo; } }
+        public virtual EnumModeloDivisaoSalasEstudo? ModeloDivisaoSalasEstudo { get { return m_ModeloDivisaoSalasEstudo; } }
 
         public virtual void NaoUtilizaSalasEstudo()
         {
-            mTemSalasEstudo = false;
-            mModeloDivisaoSalasEstudo = null;
+            m_TemSalasEstudo = false;
+            m_ModeloDivisaoSalasEstudo = null;
         }
 
         public virtual void UtilizaSalasEstudo(EnumModeloDivisaoSalasEstudo modeloDivisao)
         {
-            mTemSalasEstudo = true;
-            mModeloDivisaoSalasEstudo = modeloDivisao;
+            m_TemSalasEstudo = true;
+            m_ModeloDivisaoSalasEstudo = modeloDivisao;
         }
 
         public virtual Boolean TemOficinas { get; set; }
 
         public virtual Boolean TemDormitorios { get; set; }
 
-        public virtual Boolean TemEvangelizacao { get { return mTemEvangelizacao; } }
+        public virtual Boolean TemEvangelizacao { get { return m_TemEvangelizacao; } }
 
-        public virtual EnumPublicoEvangelizacao? PublicoEvangelizacao { get { return mPublicoEvangelizacao; } }
+        public virtual EnumPublicoEvangelizacao? PublicoEvangelizacao { get { return m_PublicoEvangelizacao; } }
 
         public virtual void ConfigurarEvangelizacao(bool temEvangelizacao, EnumPublicoEvangelizacao? publicoEvangelizacao)
         {
             if (temEvangelizacao && publicoEvangelizacao == null)
                 throw new ArgumentException("Informe o público da evangelização");
 
-            mTemEvangelizacao = temEvangelizacao;
-            mPublicoEvangelizacao = publicoEvangelizacao;
+            m_TemEvangelizacao = temEvangelizacao;
+            m_PublicoEvangelizacao = publicoEvangelizacao;
         }
 
-        public virtual Boolean TemSarau { get { return mTemSarau; } }
+        public virtual Boolean TemSarau { get { return m_TemSarau; } }
 
-        public virtual int? TempoDuracaoSarauMin { get { return mTempoDuracaoSarauMin; } }
+        public virtual int? TempoDuracaoSarauMin { get { return m_TempoDuracaoSarauMin; } }
 
         public virtual void ConfigurarSarau(bool temSarau, int? tempoDuracaoSarauMin)
         {
             if (temSarau && tempoDuracaoSarauMin == null)
                 throw new ArgumentException("Informe o tempo de duração do Sarau");
 
-            mTemSarau = temSarau;
-            mTempoDuracaoSarauMin = tempoDuracaoSarauMin;
+            m_TemSarau = temSarau;
+            m_TempoDuracaoSarauMin = tempoDuracaoSarauMin;
         }
 
         public virtual ConfiguracaoEmail ConfiguracaoEmail
         {
-            get { return mConfiguracaoEmail; }
+            get { return m_ConfiguracaoEmail; }
         }
 
         public virtual Decimal ValorInscricao
         {
-            get { return mValorInscricao; }
+            get { return m_ValorInscricao; }
             set
             {
                 if (value < 0)
                     throw new ArgumentException("O valor da inscrição deve ser maior ou igual a zero.");
 
-                mValorInscricao = value;
+                m_ValorInscricao = value;
             }
         }
 
         public virtual void concluir()
         {
-            if (mSituacao == SituacaoEvento.Aberto)
+            if (m_Situacao == SituacaoEvento.Aberto)
                 throw new Exception("Não se pode concluir um evento na situação ABERTO.");
 
-            if (mSituacao != SituacaoEvento.Concluido)
-                mSituacao = SituacaoEvento.Concluido;
+            if (m_Situacao != SituacaoEvento.Concluido)
+                m_Situacao = SituacaoEvento.Concluido;
         }
 
         public virtual bool EstaAbertoNestaData(DateTime data) 

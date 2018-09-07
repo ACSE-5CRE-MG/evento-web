@@ -6,18 +6,26 @@ using System.Threading.Tasks;
 using EventoWeb.Nucleo.Aplicacao;
 using EventoWeb.Nucleo.Negocio.Entidades;
 using EventoWeb.WS.Secretaria.Controllers.DTOS;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventoWeb.WS.Secretaria.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class EventosController : ControllerBase
     {
         private AppEvento mAppEvento;
 
+        public EventosController(IContexto contexto)
+        {
+            mAppEvento = new AppEvento(contexto);
+        }
+
         // GET api/eventos/obter-todos
         [HttpGet("obter-todos")]
+        [Authorize("Bearer")]
         public ActionResult<Object> Get()
         {
             return new
@@ -37,6 +45,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
         // GET api/eventos/obter-id/5
         [HttpGet("obter-id/{id}")]
+        [Authorize("Bearer")]
         public ActionResult<DTOEventoCompleto> Get(int id)
         {
             var evento = mAppEvento.ObterPorId(id);
@@ -79,6 +88,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
         // POST api/eventos/incluir
         [HttpPost("incluir")]
+        [Authorize("Bearer")]
         public void Post([FromBody] DTOEvento eventoDTO)
         {
             Evento evento = new Evento(eventoDTO.Nome,
@@ -116,6 +126,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
         // PUT api/eventos/atualizar/5
         [HttpPut("atualizar/{id}")]
+        [Authorize("Bearer")]
         public void Put(int id, [FromBody] DTOEvento eventoDTO)
         {
             Evento evento = ObterEvento(id);
@@ -155,6 +166,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
         // PUT api/eventos/concluir/5
         [HttpPut("concluir/{id}")]
+        [Authorize("Bearer")]
         public void Put(int id)
         {
             Evento evento = ObterEvento(id);
@@ -164,6 +176,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
         // DELETE api/eventos/excluir/5
         [HttpDelete("excluir/{id}")]
+        [Authorize("Bearer")]
         public void Delete(int id)
         {
             mAppEvento.Excluir(ObterEvento(id));

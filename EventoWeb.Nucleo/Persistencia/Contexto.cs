@@ -9,72 +9,66 @@ using System.Reflection;
 
 namespace EventoWeb.Nucleo.Persistencia
 {
+    public class ConfiguracaoNHibernate {
+
+        public ISessionFactory GerarFabricaSessao()
+        {
+            NHibernate.Cfg.Environment.UseReflectionOptimizer = false;
+            var configuration = new Configuration();
+            configuration.Configure();
+            var mapper = new ModelMapper();
+
+            configuration.AddAssembly("EventoWeb.Nucleo");
+            mapper.AddMappings(Assembly.GetExecutingAssembly().GetExportedTypes());
+
+            configuration.AddMapping(mapper.CompileMappingForAllExplicitlyAddedEntities());
+
+            return configuration.BuildSessionFactory();
+        }
+    }
+
     public class Contexto: IContexto
     {
-        private static ISessionFactory mFabricaSession;
+        private ISession m_Sessao;
 
-        private static ISession SessionEmAberto
+        public Contexto(ISession sessao)
         {
-            get
-            {
-                if (mFabricaSession == null)
-                {
-                    NHibernate.Cfg.Environment.UseReflectionOptimizer = false;
-                    var configuration = new Configuration();
-                    configuration.Configure();
-                    var mapper = new ModelMapper();
-
-                    configuration.AddAssembly("EventoWeb.Nucleo");
-                    mapper.AddMappings(Assembly.GetExecutingAssembly().GetExportedTypes());
-
-                    configuration.AddMapping(mapper.CompileMappingForAllExplicitlyAddedEntities());
-
-                    mFabricaSession = configuration.BuildSessionFactory();
-                }
-
-                if (CurrentSessionContext.HasBind(mFabricaSession) && !mFabricaSession.GetCurrentSession().IsOpen)
-                    CurrentSessionContext.Unbind(mFabricaSession);
-
-                if (!CurrentSessionContext.HasBind(mFabricaSession))
-                    CurrentSessionContext.Bind(mFabricaSession.OpenSession());
-
-                return mFabricaSession.GetCurrentSession();
-            }
+            m_Sessao = sessao;
         }
 
         public void IniciarTransacao()
         {
-            SessionEmAberto.BeginTransaction();
+            m_Sessao.BeginTransaction();
         }
 
         public void SalvarTransacao()
         {
-            var session = SessionEmAberto;
+            var session = m_Sessao;
             if (session.Transaction.IsActive)
                 session.Transaction.Commit();
         }
 
         public void CancelarTransacao()
         {
-            var session = SessionEmAberto;
+            var session = m_Sessao;
             if (session.Transaction.IsActive)
                 session.Transaction.Rollback();
         }
 
-        public void FinalizarConexao()
+        public void Dispose()
         {
-            var session = SessionEmAberto;
-            session.Close();
-            session.Dispose();
+            m_Sessao.Close();
+            m_Sessao.Dispose();
         }
 
         public AEventos RepositorioEventos
         {
             get
             {
-                return new RepositorioEventosNH(SessionEmAberto);
+                return new RepositorioEventosNH(m_Sessao);
             }
         }
 
+        public AUsuarios RepositorioUsuarios => new RepositorioUsuariosNH(m_Sessao);
     }
 }
