@@ -32,7 +32,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Núcleo", "1 - Núcleo"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventoWeb.Nucleo", "EventoWeb.Nucleo\EventoWeb.Nucleo.csproj", "{9446D4F0-3EA8-4B74-AAD9-D715D4FC9ADE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventoWeb.WS.Secretaria", "Secretaria\EventoWeb.WS.Secretaria\EventoWeb.WS.Secretaria.csproj", "{C7E6D99E-A188-47B3-8587-502D3DC49AFB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventoWeb.WS.Secretaria", "Secretaria\EventoWeb.WS.Secretaria\EventoWeb.WS.Secretaria.csproj", "{C7E6D99E-A188-47B3-8587-502D3DC49AFB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventoWeb.BancoDados", "EventoWeb.BancoDados\EventoWeb.BancoDados.csproj", "{7F567E3F-64CD-4604-9C0B-4263E5ED1842}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +54,10 @@ Global
 		{C7E6D99E-A188-47B3-8587-502D3DC49AFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7E6D99E-A188-47B3-8587-502D3DC49AFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7E6D99E-A188-47B3-8587-502D3DC49AFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F567E3F-64CD-4604-9C0B-4263E5ED1842}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F567E3F-64CD-4604-9C0B-4263E5ED1842}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F567E3F-64CD-4604-9C0B-4263E5ED1842}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F567E3F-64CD-4604-9C0B-4263E5ED1842}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,6 +66,7 @@ Global
 		{ED31E145-E089-459C-8D13-ED85672216D6} = {C29BB475-4A8A-4895-BE89-522DEFEA4C05}
 		{9446D4F0-3EA8-4B74-AAD9-D715D4FC9ADE} = {E1C9CEA3-083E-4141-954F-81FD5548EEB6}
 		{C7E6D99E-A188-47B3-8587-502D3DC49AFB} = {C29BB475-4A8A-4895-BE89-522DEFEA4C05}
+		{7F567E3F-64CD-4604-9C0B-4263E5ED1842} = {E1C9CEA3-083E-4141-954F-81FD5548EEB6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1554B426-5493-4886-8ABB-6391B2B5C78D}

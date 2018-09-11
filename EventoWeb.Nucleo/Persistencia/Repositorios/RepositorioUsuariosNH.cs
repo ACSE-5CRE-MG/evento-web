@@ -8,7 +8,7 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
     {
         private ISession mSessao;
 
-        public RepositorioUsuariosNH(ISession sessao)
+        public RepositorioUsuariosNH(ISession sessao) : base(new PersistenciaNH<Usuario>(sessao))
         {
             mSessao = sessao;
         }

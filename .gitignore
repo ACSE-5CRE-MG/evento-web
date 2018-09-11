@@ -8,3 +8,5 @@
 /EventoWeb.Nucleo/bin/Debug/netstandard2.0
 /Secretaria/EventoWeb.WS.Secretaria/bin/Debug/netcoreapp2.1
 /Secretaria/EventoWeb.WS.Secretaria/obj
+/EventoWeb.BancoDados/bin/Debug/netcoreapp2.1
+/EventoWeb.BancoDados/obj
