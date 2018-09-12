@@ -5,16 +5,16 @@ import { CookieService, CookieOptions } from 'ngx-cookie';
 export class GestaoAutenticacao {
 
   public NOME_STORANGE: string = "eventoweb-autenticacao";
-  public mAutenticacao: Autenticacao = null;
+  public mAutenticacao: Usuario = null;
   public mOpcoes: CookieOptions = {
     path: "/"
   };
 
   constructor(public mCookieService: CookieService) {
-    this.mAutenticacao = <Autenticacao>this.mCookieService.getObject(this.NOME_STORANGE);
+    this.mAutenticacao = <Usuario>this.mCookieService.getObject(this.NOME_STORANGE);
   }
 
-  autenticar(dados: Autenticacao): void {
+  autenticar(dados: Usuario): void {
     if (this.autenticado)
       throw new Error("Já está autenticado.");
 
@@ -35,7 +35,7 @@ export class GestaoAutenticacao {
     return this.mAutenticacao != null;
   }
 
-  get dadosAutenticacao(): Autenticacao {
+  get dadosAutenticacao(): Usuario {
 
     if (this.autenticado) {
       return this.mAutenticacao;
@@ -46,13 +46,18 @@ export class GestaoAutenticacao {
 }
 
 export class Usuario {
-  DataCriacao: Date;
-  Id: number;
-  Nome: string;
-  NomeUsuario: string;
+  email: string;
+  name: string;
+  picture: Data;
+  imagem64: string;
+  tokenApi: string;
 }
 
-export class Autenticacao {
-  usuario: Usuario;
-  token: string;
+export class Data {
+  data: ImgUsuario;
+}
+
+export class ImgUsuario {
+  is_silhouette: boolean;
+  url: string;
 }

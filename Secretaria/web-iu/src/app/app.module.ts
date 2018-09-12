@@ -6,6 +6,8 @@ import { HttpModule, Http, Response, Headers, RequestOptions, ResponseContentTyp
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
+import { Observable } from 'rxjs';
+
 import {
   MatCardModule,
   MatIconModule,
@@ -36,6 +38,11 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { CookieModule } from 'ngx-cookie';
 
+import { CaixaMensagemDlg } from './componentes/alertas-dlg/caixa-mensagem-dlg';
+import { DlgEmProcessamento, Alertas } from './componentes/alertas-dlg/alertas';
+
+import { WebServiceAutenticacao } from './webservices/webservice-autenticacao';
+
 import { PermissaoAcessoRota } from './seguranca/permissao-acesso-rota';
 import { GestaoAutenticacao } from './seguranca/gestao-autenticacao';
 
@@ -46,9 +53,12 @@ import { LayoutCadastro } from './componentes/layout/layout-barra-ferramenta';
 import { LayoutBase } from './componentes/layout-base/layout-base';
 
 import { TelaListaEventos } from './evento/tela-lista-eventos';
+import { ConfiguracaoSistemaService } from './configuracao-sistema-service';
+
 
 @NgModule({
   declarations: [
+    CaixaMensagemDlg, DlgEmProcessamento,
     TelaPrincipal,
     TelaLogin,
     LayoutCadastro,
@@ -87,18 +97,19 @@ import { TelaListaEventos } from './evento/tela-lista-eventos';
       { path: '** ', redirectTo: '' }
     ])
   ],
-  entryComponents: [LayoutCadastro, LayoutBase, TelaListaEventos],
+  entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, LayoutCadastro, LayoutBase, TelaListaEventos],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' }, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-    PermissaoAcessoRota, GestaoAutenticacao],
+    Alertas, PermissaoAcessoRota, GestaoAutenticacao,
+    WebServiceAutenticacao],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule
 {
-  constructor(public matIconRegistry: MatIconRegistry, /*public alertas: Alertas,*/ public http: Http) {
+  constructor(public matIconRegistry: MatIconRegistry, public alertas: Alertas, public http: Http) {
 
     this.matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
 
-    /*let opRequisicao = new RequestOptions();
+    let opRequisicao = new RequestOptions();
     opRequisicao.headers = new Headers();
     opRequisicao.headers.append('Content-Type', 'application/json');
 
@@ -111,10 +122,11 @@ export class AppModule
           ConfiguracaoSistemaService.configuracao = configuracao;
         }
         else
-          this.alertas.alertarSemConfiguracaoInicial("Não há dados de configuração");
+          this.alertas.alertarErro("Não há dados de configuração");
       },
-        error => {
-          this.alertas.alertarSemConfiguracaoInicial(error);
-        });*/
+      error => {
+        console.log(error);
+          this.alertas.alertarErro(error);
+        });
   }
 }

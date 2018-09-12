@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { GestaoAutenticacao, Autenticacao, Usuario } from '../seguranca/gestao-autenticacao';
+import { GestaoAutenticacao } from '../seguranca/gestao-autenticacao';
+import { WebServiceAutenticacao } from '../webservices/webservice-autenticacao';
+import { Alertas } from '../componentes/alertas-dlg/alertas';
 
 @Component({
   selector: 'tela-login',
@@ -12,7 +14,11 @@ export class TelaLogin implements OnInit {
 
   paraOndeRedirecionar: string;
 
-  constructor(public gestaoAutenticacao: GestaoAutenticacao, public router: Router, public route: ActivatedRoute) {
+  constructor(public gestaoAutenticacao: GestaoAutenticacao,
+    public router: Router,
+    public route: ActivatedRoute,
+    public wsAutenticacao: WebServiceAutenticacao,
+    public alertas: Alertas) {
 
   }
 
@@ -21,19 +27,17 @@ export class TelaLogin implements OnInit {
   }
 
   clicarAutenticar(): void {
-    let usuario = new Usuario();
-    
-    usuario.DataCriacao = new Date();
-    usuario.Id = -1;
-    usuario.Nome = 'Usuario de Teste';
-    usuario.NomeUsuario = 'UsuarioTeste';
 
-    let autenticacao = new Autenticacao();
-    autenticacao.usuario = usuario;
-    autenticacao.token = '99999';
-
-    this.gestaoAutenticacao.autenticar(autenticacao);
-
-    this.router.navigate([this.paraOndeRedirecionar])
+    let dlg = this.alertas.alertarProcessamento("Autenticando...");
+    this.wsAutenticacao.autenticarSemFacebook("robsonmbobbi@gmail.com", "EVENTOWEB-0192")
+      .subscribe(dadosAutenticacao => {
+        this.gestaoAutenticacao.autenticar(dadosAutenticacao);
+        this.router.navigate([this.paraOndeRedirecionar]);
+        dlg.close();
+      },
+        dadosErro => {
+          this.alertas.alertarErro(dadosErro);
+          dlg.close();
+        });
   }
 }
