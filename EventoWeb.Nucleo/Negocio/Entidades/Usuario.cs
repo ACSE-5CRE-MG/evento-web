@@ -1,4 +1,5 @@
-﻿using EventoWeb.Nucleo.Negocio.Repositorios;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using EventoWeb.Nucleo.Negocio.Repositorios;
 using System;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
@@ -8,10 +9,10 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public Usuario(string login)
         {
             if (login == null)
-                throw new ArgumentNullException("Login", "O login do usuário não pode ser nulo.");
+                throw new ExcecaoNegocioAtributo("Usuario", "Login", "O login do usuário não pode ser nulo.");
 
             if (login.Trim().Length == 0)
-                throw new ArgumentException("O login do usuário não pode ser vazio.");
+                throw new ExcecaoNegocioAtributo("Usuario", "Login", "O login do usuário não pode ser vazio.");
 
             Login = login;
         }

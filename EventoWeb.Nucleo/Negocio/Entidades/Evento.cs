@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security;
-using System.Text;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using System;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
@@ -53,10 +50,10 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("Nome");
+                    throw new ExcecaoNegocioAtributo("Evento", "Nome", "Nome vazio");
 
                 if (String.IsNullOrEmpty(value))
-                    throw new ArgumentException("Nome vazio.", "Nome");
+                    throw new ExcecaoNegocioAtributo("Evento", "Nome", "Nome vazio.");
 
                 m_Nome = value;
             }
@@ -65,7 +62,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual void DefinirDataInscricao(DateTime dataInicial, DateTime dataFinal)
         {
             if (dataInicial >= dataFinal)
-                throw new ArgumentException("Data inicial da inscrição dever ser menor que a final.", "dataInicial");
+                throw new ExcecaoNegocioAtributo("Evento", "dataInicial", "Data inicial da inscrição dever ser menor que a final.");
 
             m_DataInicioInscricao = dataInicial;
             m_DataFimInscricao = dataFinal;
@@ -74,7 +71,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual void DefinirDataEvento(DateTime dataInicial, DateTime dataFinal)
         {
             if (dataInicial >= dataFinal)
-                throw new ArgumentException("Data inicial do evento dever ser menor que a final.", "dataInicial");
+                throw new ExcecaoNegocioAtributo("Evento", "dataInicial", "Data inicial do evento dever ser menor que a final.");
 
             m_DataInicioEvento = dataInicial;
             m_DataFimEvento = dataFinal;
@@ -123,7 +120,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual void ConfigurarEvangelizacao(bool temEvangelizacao, EnumPublicoEvangelizacao? publicoEvangelizacao)
         {
             if (temEvangelizacao && publicoEvangelizacao == null)
-                throw new ArgumentException("Informe o público da evangelização");
+                throw new ExcecaoNegocioAtributo("Evento", "PublicoEvangelizacao", "Informe o público da evangelização");
 
             m_TemEvangelizacao = temEvangelizacao;
             m_PublicoEvangelizacao = publicoEvangelizacao;
@@ -136,7 +133,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual void ConfigurarSarau(bool temSarau, int? tempoDuracaoSarauMin)
         {
             if (temSarau && tempoDuracaoSarauMin == null)
-                throw new ArgumentException("Informe o tempo de duração do Sarau");
+                throw new ExcecaoNegocioAtributo("Evento", "TempoDuracaoSarauMin", "Informe o tempo de duração do Sarau");
 
             m_TemSarau = temSarau;
             m_TempoDuracaoSarauMin = tempoDuracaoSarauMin;
@@ -153,7 +150,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             set
             {
                 if (value < 0)
-                    throw new ArgumentException("O valor da inscrição deve ser maior ou igual a zero.");
+                    throw new ExcecaoNegocioAtributo("Evento", "ValorInscricao", "O valor da inscrição deve ser maior ou igual a zero.");
 
                 m_ValorInscricao = value;
             }
@@ -162,7 +159,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual void concluir()
         {
             if (m_Situacao == SituacaoEvento.Aberto)
-                throw new Exception("Não se pode concluir um evento na situação ABERTO.");
+                throw new ExcecaoNegocioAtributo("Evento", "Situacao", "Não se pode concluir um evento na situação ABERTO.");
 
             if (m_Situacao != SituacaoEvento.Concluido)
                 m_Situacao = SituacaoEvento.Concluido;

@@ -42,6 +42,7 @@ import { CaixaMensagemDlg } from './componentes/alertas-dlg/caixa-mensagem-dlg';
 import { DlgEmProcessamento, Alertas } from './componentes/alertas-dlg/alertas';
 
 import { WebServiceAutenticacao } from './webservices/webservice-autenticacao';
+import { WebServiceEventos } from './webservices/webservice-eventos';
 
 import { PermissaoAcessoRota } from './seguranca/permissao-acesso-rota';
 import { GestaoAutenticacao } from './seguranca/gestao-autenticacao';
@@ -100,7 +101,7 @@ import { ConfiguracaoSistemaService } from './configuracao-sistema-service';
   entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, LayoutCadastro, LayoutBase, TelaListaEventos],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' }, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     Alertas, PermissaoAcessoRota, GestaoAutenticacao,
-    WebServiceAutenticacao],
+    WebServiceAutenticacao, WebServiceEventos],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule

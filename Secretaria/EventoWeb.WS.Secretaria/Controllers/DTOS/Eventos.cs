@@ -42,4 +42,14 @@ namespace EventoWeb.WS.Secretaria.Controllers.DTOS
         public String DataRegistro { get; set; }
         public Boolean PodeAlterar { get; set; }
     }
+
+    public class DTOEventoMinimo
+    {
+        public int Id { get; set; }
+        public DateTime DataInicioInscricao { get; set; }
+        public DateTime DataFimInscricao { get; set; }
+        public SituacaoEvento Situacao { get; set; }
+        public string Nome { get; set; }
+        public String Logotipo { get; set; }
+    }
 }

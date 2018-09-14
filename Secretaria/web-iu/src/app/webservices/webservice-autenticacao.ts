@@ -20,7 +20,7 @@ export class WebServiceAutenticacao extends WebServiceBase {
     return this.executarPost('autenticarSemFacebook/?emailFacebook=' + emailFacebook + '&token=' + token, null);
   };
 
-  desautenticar() {
+  desautenticar(): Observable<any> {
     return this.executarDelete('desautenticar/');
   }
 }

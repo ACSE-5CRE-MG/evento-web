@@ -24,6 +24,9 @@ export class TelaLogin implements OnInit {
 
   ngOnInit() {
     this.paraOndeRedirecionar = this.route.snapshot.queryParams['urlRetornar'] || '/';
+
+    if (this.gestaoAutenticacao.autenticado)
+      this.router.navigate([this.paraOndeRedirecionar]);
   }
 
   clicarAutenticar(): void {

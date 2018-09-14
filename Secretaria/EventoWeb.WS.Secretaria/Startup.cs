@@ -80,7 +80,12 @@ namespace EventoWeb.WS.Secretaria
                     });
             });
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services
+                .AddMvc(config=>
+                {
+                    config.Filters.Add<FiltroExcecao>();
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

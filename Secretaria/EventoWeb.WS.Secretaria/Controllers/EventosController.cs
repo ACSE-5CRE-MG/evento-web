@@ -26,21 +26,18 @@ namespace EventoWeb.WS.Secretaria.Controllers
         // GET api/eventos/obter-todos
         [HttpGet("obter-todos")]
         [Authorize("Bearer")]
-        public ActionResult<Object> Get()
+        public ActionResult<IEnumerable<DTOEventoMinimo>> Get()
         {
-            return new
+            return mAppEvento.ObterTodos().Select(x => new DTOEventoMinimo()
             {
-                lista = mAppEvento.ObterTodos().Select(x => new
-                {
-                    x.Id,
-                    x.DataFimInscricao,
-                    x.DataInicioInscricao,
-                    x.Situacao,
-                    x.Nome,
-                    x.Logotipo
-                })
-                .ToList()
-            };
+                Id = x.Id,
+                DataFimInscricao = x.DataFimInscricao,
+                DataInicioInscricao = x.DataInicioInscricao,
+                Situacao = x.Situacao,
+                Nome = x.Nome,
+                Logotipo = x.Logotipo
+            })
+            .ToList();
         }
 
         // GET api/eventos/obter-id/5
@@ -189,7 +186,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
             if (evento != null)
                 return evento;
             else
-                throw new Exception("Não foi encontrado nenhum evento com o id informado.");
+                throw new ExcecaoAPI("Eventos", "Não foi encontrado nenhum evento com o id informado.");
         }
     }
 }

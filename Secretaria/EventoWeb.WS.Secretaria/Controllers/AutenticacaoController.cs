@@ -19,11 +19,11 @@ namespace EventoWeb.WS.Secretaria.Controllers
     [ApiController]
     public class AutenticacaoController : ControllerBase
     {
-        private IContexto mContexto;
+        private AppUsuarios mAppUsuario;
 
         public AutenticacaoController(IContexto contexto) 
         {
-            mContexto = contexto; 
+            mAppUsuario = new AppUsuarios(contexto);
         }
 
         [AllowAnonymous]
@@ -31,13 +31,13 @@ namespace EventoWeb.WS.Secretaria.Controllers
         public DadosUsuario PostAutenticar([FromBody] String token, [FromServices]ConfiguracaoAutorizacao configuracaoAutorizacao)
         {
             var usuario = ConsultarEmailUsuarioFacebook(token);
-            if (usuario != null && mContexto.RepositorioUsuarios.ObterUsuarioPeloLogin(usuario.Login) != null)
+            if (usuario != null && mAppUsuario.BuscarPeloLogin(usuario.Login) != null)
             {
                 usuario.TokenApi = GerarTokenApi(configuracaoAutorizacao, usuario.Login);                 
                 return usuario;
             }
             else
-                throw new Exception("Token incorreto ou usuário não existe.");
+                throw new ExcecaoAPI("Autenticacao", "Token incorreto ou usuário não existe.");
         }
 
         [AllowAnonymous]
@@ -45,7 +45,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         public DadosUsuario PostAutenticar(String emailFacebook, String token, [FromServices]ConfiguracaoAutorizacao configuracaoAutorizacao)
         {
             Usuario usuario = null;
-            if ((usuario = mContexto.RepositorioUsuarios.ObterUsuarioPeloLogin(emailFacebook)) != null && 
+            if ((usuario = mAppUsuario.BuscarPeloLogin(emailFacebook)) != null && 
                 !String.IsNullOrEmpty(token) && token == "EVENTOWEB-0192")
             {
                 return new DadosUsuario()
@@ -56,7 +56,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
                 };
             }
             else
-                throw new Exception("Token incorreto ou usuário não existe.");
+                throw new ExcecaoAPI("Autenticacao", "Token incorreto ou usuário não existe.");
         }
 
         [Authorize("Bearer")]
