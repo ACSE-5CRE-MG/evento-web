@@ -3,22 +3,26 @@
     <div layout-barra-ferramenta-toolbar fxLayout="row" fxLayoutAlign="start center" fxFill>
       <span style="margin-right:20px">Eventos</span>
       <span style="flex: 1 1 auto;"></span>
-      <mat-radio-group>
-        <mat-radio-button value="1">Em Andamento&nbsp;</mat-radio-button>
-        <mat-radio-button value="2">Encerrados</mat-radio-button>
-      </mat-radio-group>
+      <!--<mat-radio-group>
+    <mat-radio-button value="1">Em Andamento&nbsp;</mat-radio-button>
+    <mat-radio-button value="2">Encerrados</mat-radio-button>
+  </mat-radio-group>-->
       <span style="flex: 1 1 auto;"></span>
       <button mat-button (click)="clicarNovo()">
         <span class="fa fa-plus"></span>
         Novo
       </button>
     </div>
-    <div fxLayout="row" fxLayout.sm="column" fxLayoutGap.sm="5px" fxLayoutGap="5px"  style="padding: 5px">
-      <div fxFlex="30">
+    <div *ngIf="eventos == null || eventos.length == 0">
+      Não há nenhum evento cadastrado!!
+    </div>
+    <div fxLayout="row" fxLayout.sm="column" fxLayoutGap.sm="5px" fxLayoutGap="5px"  style="padding: 5px"
+         *ngFor="let linhaEventos of eventos">
+      <div fxFlex="30" *ngFor="let evento of linhaEventos">
         <mat-card>
           <mat-card-header>
-            <mat-card-title>Evento nº 01</mat-card-title>
-            <mat-card-subtitle>01/01/2001 à 05/01/2001</mat-card-subtitle>
+            <mat-card-title>{{evento.Nome}}</mat-card-title>
+            <mat-card-subtitle>{{evento.DataInicioInscricao + ' à ' + evento.DataFimInscricao}}</mat-card-subtitle>
           </mat-card-header>
           <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
           <mat-card-actions>
@@ -26,33 +30,7 @@
             <button mat-button>GERENCIAR</button>
           </mat-card-actions>
         </mat-card>
-      </div>
-      <div fxFlex="30">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>Evento nº 01</mat-card-title>
-            <mat-card-subtitle>01/01/2001 à 05/01/2001</mat-card-subtitle>
-          </mat-card-header>
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-actions>
-            <span fxFlex></span>
-            <button mat-button>GERENCIAR</button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
-      <div fxFlex="30">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>Evento nº 01</mat-card-title>
-            <mat-card-subtitle>01/01/2001 à 05/01/2001</mat-card-subtitle>
-          </mat-card-header>
-          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-          <mat-card-actions>
-            <span fxFlex></span>
-            <button mat-button>GERENCIAR</button>
-          </mat-card-actions>
-        </mat-card>
-      </div>
+      </div>      
     </div>   
   </layout-barra-ferramenta>
 </layout-base>

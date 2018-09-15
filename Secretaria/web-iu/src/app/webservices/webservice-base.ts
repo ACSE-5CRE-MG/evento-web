@@ -16,7 +16,7 @@ export abstract class WebServiceBase {
     
   protected executarGet(parametros: string, retornoEhBinario: boolean = false): any {
     let opRequisicao = this.gerarCabecalho(retornoEhBinario);
-
+    console.log(this.webserviceURL + this.nomeWebService);
     return this.http
       .get(this.webserviceURL + this.nomeWebService +
         this.gerarParametros(parametros), opRequisicao)

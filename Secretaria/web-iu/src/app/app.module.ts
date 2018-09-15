@@ -124,6 +124,8 @@ export class AppModule
         }
         else
           this.alertas.alertarErro("Não há dados de configuração");
+
+        console.log(configuracao);
       },
       error => {
         console.log(error);

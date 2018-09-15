@@ -28,6 +28,7 @@ namespace EventoWeb.BancoDados.Migracoes
                 .WithColumn("LOGOTIPO").AsString(Int32.MaxValue).NotNullable()
                 .WithColumn("TEM_DEPARTAMENTALIZACAO").AsInt16().NotNullable()
                 .WithColumn("TEM_SALAS_ESTUDO").AsInt16().NotNullable()
+                .WithColumn("MODELO_DIV_SL_ESTUDO").AsInt16().NotNullable()
                 .WithColumn("TEM_OFICINAS").AsInt16().NotNullable()
                 .WithColumn("TEM_DORMITORIOS").AsInt16().NotNullable()
                 .WithColumn("TEM_EVANGELIZACAO").AsInt16().NotNullable()
