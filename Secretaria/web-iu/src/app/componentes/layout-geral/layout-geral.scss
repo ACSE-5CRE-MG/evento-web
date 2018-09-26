@@ -6,7 +6,7 @@
   height: 100%;
   overflow: hidden;
 
-  .layout-barra-ferramenta-pacote {
+  .layout-geral {
     // [layout="column"]
     flex-direction: column;
     box-sizing: border-box;
@@ -17,7 +17,7 @@
     min-height: 100%;
     height: 100%;
 
-    .layout-barra-ferramenta-toolbar {
+    .layout-geral-cabecalho {
       // [layout="row"]
       flex-direction: row;
       box-sizing: border-box;
@@ -29,7 +29,7 @@
       justify-content: flex-start;
     }
 
-    .layout-barra-ferramenta-conteudo {
+    .layout-geral-conteudo {
       // [layout="column"]
       flex-direction: column;
       box-sizing: border-box;
@@ -42,4 +42,7 @@
       -webkit-overflow-scrolling: touch;
     }
   }
+}
+.layout-geral-rodape {
+  display: block;
 }

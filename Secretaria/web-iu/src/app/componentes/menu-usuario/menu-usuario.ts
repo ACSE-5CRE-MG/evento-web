@@ -1,17 +1,14 @@
-import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
-import { GestaoAutenticacao } from '../../seguranca/gestao-autenticacao';
-import { WebServiceAutenticacao } from '../../webservices/webservice-autenticacao';
-import { Alertas } from '../../componentes/alertas-dlg/alertas';
+import { Component } from "@angular/core";
+import { Router } from "@angular/router";
+import { GestaoAutenticacao } from "../../seguranca/gestao-autenticacao";
+import { WebServiceAutenticacao } from "../../webservices/webservice-autenticacao";
+import { Alertas } from "../alertas-dlg/alertas";
 
 @Component({
-  selector: 'layout-base',
-  styleUrls: ['./layout-base.scss'],
-  templateUrl: './layout-base.html',
+  selector: 'menu-usuario',
+  templateUrl: './menu-usuario.html',
 })
-export class LayoutBase {
-
-  @Input('corToolbar') corToolbar: string = 'primary';
+export class MenuUsuario {
 
   constructor(public router: Router, public gestaoAutenticacao: GestaoAutenticacao,
     public wsAutenticacao: WebServiceAutenticacao,
@@ -31,6 +28,5 @@ export class LayoutBase {
           this.alertas.alertarErro(dadosErro);
           dlg.close();
         });
-
   }
 }

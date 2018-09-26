@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { HttpModule, Http, Response, Headers, RequestOptions, ResponseContentType } from '@angular/http';
@@ -40,6 +40,8 @@ import { CookieModule } from 'ngx-cookie';
 
 import { CaixaMensagemDlg } from './componentes/alertas-dlg/caixa-mensagem-dlg';
 import { DlgEmProcessamento, Alertas } from './componentes/alertas-dlg/alertas';
+import { LayoutGeral } from './componentes/layout-geral/layout-geral';
+import { MenuUsuario } from './componentes/menu-usuario/menu-usuario';
 
 import { WebServiceAutenticacao } from './webservices/webservice-autenticacao';
 import { WebServiceEventos } from './webservices/webservice-eventos';
@@ -50,21 +52,19 @@ import { GestaoAutenticacao } from './seguranca/gestao-autenticacao';
 import { TelaLogin } from './login/tela-login';
 import { TelaPrincipal } from './tela-principal';
 
-import { LayoutCadastro } from './componentes/layout/layout-barra-ferramenta';
-import { LayoutBase } from './componentes/layout-base/layout-base';
-
 import { TelaListaEventos } from './evento/tela-lista-eventos';
+import { DlgFormEvento, ServicoDlgFormEvento } from './evento/dlg-form-evento';
+
 import { ConfiguracaoSistemaService } from './configuracao-sistema-service';
 
+declare function require(url: string);
 
 @NgModule({
   declarations: [
-    CaixaMensagemDlg, DlgEmProcessamento,
+    CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
     TelaPrincipal,
-    TelaLogin,
-    LayoutCadastro,
-    LayoutBase,
-    TelaListaEventos
+    TelaLogin,    
+    TelaListaEventos, DlgFormEvento
   ],
   imports: [
     BrowserModule,
@@ -98,9 +98,11 @@ import { ConfiguracaoSistemaService } from './configuracao-sistema-service';
       { path: '** ', redirectTo: '' }
     ])
   ],
-  entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, LayoutCadastro, LayoutBase, TelaListaEventos],
+  entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
+    TelaListaEventos, DlgFormEvento],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' }, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
-    Alertas, PermissaoAcessoRota, GestaoAutenticacao,
+    { provide: APP_INITIALIZER, useFactory: carregarConfiguracao, deps: [Http], multi: true },
+    Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
     WebServiceAutenticacao, WebServiceEventos],
   bootstrap: [TelaPrincipal]
 })
@@ -109,8 +111,14 @@ export class AppModule
   constructor(public matIconRegistry: MatIconRegistry, public alertas: Alertas, public http: Http) {
 
     this.matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
+    let configuracao = require('../assets/configuracao.json');
+    if (configuracao != null) {
+      ConfiguracaoSistemaService.configuracao = configuracao;
+    }
+    else
+      this.alertas.alertarErro("Não há dados de configuração");
 
-    let opRequisicao = new RequestOptions();
+    /*let opRequisicao = new RequestOptions();
     opRequisicao.headers = new Headers();
     opRequisicao.headers.append('Content-Type', 'application/json');
 
@@ -130,6 +138,32 @@ export class AppModule
       error => {
         console.log(error);
           this.alertas.alertarErro(error);
-        });
+        });*/
   }
+}
+
+export function carregarConfiguracao(http: Http) {
+
+  let opRequisicao = new RequestOptions();
+  opRequisicao.headers = new Headers();
+  opRequisicao.headers.append('Content-Type', 'application/json');
+
+  http
+    .get('/assets/configuracao.json', opRequisicao)
+    .map(res => { return res.json(); })
+    .catch(erro => { return Observable.throw(erro.toString()); })
+    .subscribe(configuracao => {
+      if (configuracao != null) {
+        ConfiguracaoSistemaService.configuracao = configuracao;
+      }
+      else
+        console.log("Não há dados de configuração");
+
+      console.log(configuracao);
+    },
+      error => {
+        console.log(error);
+    });
+
+  return () => this;
 }

@@ -1,24 +1,25 @@
-<layout-base corToolbar="accent">
-  <layout-barra-ferramenta corToolbar="primary">
-    <div layout-barra-ferramenta-toolbar fxLayout="row" fxLayoutAlign="start center" fxFill>
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="accent">
+    <span class="cursor-pointer">EventoWeb</span>
+    <span style="flex: 1 1 auto;"></span>
+    <menu-usuario></menu-usuario>
+  </mat-toolbar>
+  <layout-geral>
+    <mat-toolbar layout-geral-cabecalho color="primary">
       <span style="margin-right:20px">Eventos</span>
-      <span style="flex: 1 1 auto;"></span>
-      <!--<mat-radio-group>
-    <mat-radio-button value="1">Em Andamento&nbsp;</mat-radio-button>
-    <mat-radio-button value="2">Encerrados</mat-radio-button>
-  </mat-radio-group>-->
       <span style="flex: 1 1 auto;"></span>
       <button mat-button (click)="clicarNovo()">
         <span class="fa fa-plus"></span>
         Novo
       </button>
+    </mat-toolbar>
+    <div fxFill fxLayout="column" fxLayoutAlign="center center" *ngIf="eventos == null || eventos.length == 0">
+      <span class="fa fa-plus fa-5x"></span>
+      <h1>Não há nenhum evento cadastrado!!</h1>
     </div>
-    <div *ngIf="eventos == null || eventos.length == 0">
-      Não há nenhum evento cadastrado!!
-    </div>
-    <div fxLayout="row" fxLayout.sm="column" fxLayoutGap.sm="5px" fxLayoutGap="5px"  style="padding: 5px"
+    <div fxLayout="row" fxLayout.sm="column" fxLayoutGap.sm="5px" fxLayoutGap="5px" style="padding: 5px"
          *ngFor="let linhaEventos of eventos">
-      <div fxFlex="30" *ngFor="let evento of linhaEventos">
+      <div fxFlex="20" *ngFor="let evento of linhaEventos">
         <mat-card>
           <mat-card-header>
             <mat-card-title>{{evento.Nome}}</mat-card-title>
@@ -30,7 +31,7 @@
             <button mat-button>GERENCIAR</button>
           </mat-card-actions>
         </mat-card>
-      </div>      
-    </div>   
-  </layout-barra-ferramenta>
-</layout-base>
+      </div>
+    </div>
+  </layout-geral>
+</layout-geral>

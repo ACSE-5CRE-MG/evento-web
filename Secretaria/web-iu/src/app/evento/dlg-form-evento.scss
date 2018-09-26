@@ -6,7 +6,7 @@
   height: 100%;
   overflow: hidden;
 
-  .layout-base-pacote {
+  .dlg-pacote {
     // [layout="column"]
     flex-direction: column;
     box-sizing: border-box;
@@ -17,7 +17,7 @@
     min-height: 100%;
     height: 100%;
 
-    .layout-base-ferramenta-toolbar {
+    .dlg-ferramenta-toolbar {
       // [layout="row"]
       flex-direction: row;
       box-sizing: border-box;
@@ -29,7 +29,7 @@
       justify-content: flex-start;
     }
 
-    .layout-base-conteudo {
+    .dlg-base-conteudo {
       // [layout="column"]
       flex-direction: column;
       box-sizing: border-box;
@@ -42,4 +42,7 @@
       -webkit-overflow-scrolling: touch;
     }
   }
+}
+.rodape {
+  display: block;
 }
