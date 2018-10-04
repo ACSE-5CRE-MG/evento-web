@@ -44,15 +44,15 @@ export class DTOEvento {
 export class DTOEventoCompleto extends DTOEvento {
   public Id: number;
   public Situacao: SituacaoEvento;
-  public DataRegistro: String;
+  public DataRegistro: Date;
   public PodeAlterar: Boolean;
 }
 
 export class DTOEventoMinimo {
-  public Id: number;
-  public DataInicioInscricao: Date;
-  public DataFimInscricao: Date;
-  public Situacao: SituacaoEvento;
-  public Nome: string;
-  public Logotipo: String;
+  public id: number;
+  public dataInicioInscricao: Date;
+  public dataFimInscricao: Date;
+  public situacao: SituacaoEvento;
+  public nome: string;
+  public logotipo: String;
 }

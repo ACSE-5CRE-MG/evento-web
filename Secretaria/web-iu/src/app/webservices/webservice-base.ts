@@ -16,7 +16,7 @@ export abstract class WebServiceBase {
     
   protected executarGet(parametros: string, retornoEhBinario: boolean = false): any {
     let opRequisicao = this.gerarCabecalho(retornoEhBinario);
-    console.log(this.webserviceURL + this.nomeWebService);
+    
     return this.http
       .get(this.webserviceURL + this.nomeWebService +
         this.gerarParametros(parametros), opRequisicao)
@@ -67,7 +67,7 @@ export abstract class WebServiceBase {
     opRequisicao.headers = new Headers();
     opRequisicao.headers.append('Content-Type', 'application/json');
     opRequisicao.headers.append('Accept', 'application/json');
-    console.log(this.gestorAutenticacao.dadosAutenticacao);
+    
     if (this.gestorAutenticacao.autenticado)
       opRequisicao.headers.append('Authorization', 'Bearer ' + this.gestorAutenticacao.dadosAutenticacao.tokenApi);
 

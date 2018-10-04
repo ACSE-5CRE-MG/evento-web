@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { HttpModule, Http, Response, Headers, RequestOptions, ResponseContentType } from '@angular/http';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
@@ -38,6 +39,8 @@ import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { CookieModule } from 'ngx-cookie';
 
+import { TextMaskModule } from 'angular2-text-mask';
+
 import { CaixaMensagemDlg } from './componentes/alertas-dlg/caixa-mensagem-dlg';
 import { DlgEmProcessamento, Alertas } from './componentes/alertas-dlg/alertas';
 import { LayoutGeral } from './componentes/layout-geral/layout-geral';
@@ -59,6 +62,8 @@ import { ConfiguracaoSistemaService } from './configuracao-sistema-service';
 
 declare function require(url: string);
 
+registerLocaleData(localePt);
+
 @NgModule({
   declarations: [
     CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
@@ -70,6 +75,7 @@ declare function require(url: string);
     BrowserModule,
     BrowserAnimationsModule,
     HttpModule,
+    FormsModule,
     MatCardModule,
     MatIconModule,
     MatMenuModule,
@@ -91,6 +97,7 @@ declare function require(url: string);
     MatRadioModule,
     MatCheckboxModule,
     FlexLayoutModule,
+    TextMaskModule,
     CookieModule.forRoot(),
     RouterModule.forRoot([
       { path: 'login', component: TelaLogin },
@@ -158,8 +165,6 @@ export function carregarConfiguracao(http: Http) {
       }
       else
         console.log("Não há dados de configuração");
-
-      console.log(configuracao);
     },
       error => {
         console.log(error);
