@@ -1,5 +1,5 @@
 <layout-geral>
-  <mat-toolbar layout-geral-cabecalho>
+  <mat-toolbar layout-geral-cabecalho color="primary">
     <div><h1>{{titulo}}</h1></div>
     <span style="flex: 1 1 auto;"></span>
     <button mat-icon-button mat-dialog-close>X</button>
@@ -20,7 +20,7 @@
         </mat-form-field>
       </div>
       <div>
-        <mat-form-field>
+        <mat-form-field class="margem-direita">
           <input type="text" matInput [matDatepicker]="calCriadoEm" placeholder="Criado Em" name="txtDataCriacao" [(ngModel)]="evento.DataRegistro" disabled="disabled">
           <mat-datepicker-toggle matSuffix [for]="calCriadoEm"></mat-datepicker-toggle>
           <mat-datepicker #calCriadoEm></mat-datepicker>
@@ -28,38 +28,26 @@
       </div>
       <div>
         <mat-form-field class="margem-direita">
-          <input matInput [matDatepicker]="calDataInicialInsc" placeholder="Data Inicial Inscrição" [(ngModel)]="evento.DataInicioInscricao">
-          <mat-datepicker-toggle matSuffix [for]="calDataInicialInsc"></mat-datepicker-toggle>
-          <mat-datepicker #calDataInicialInsc></mat-datepicker>
+          <input matInput placeholder="Data/Hora Inicial Inscrição" [(ngModel)]="evento.DataInicioInscricao" [matDatetimepicker]="calDataInicialInsc" />
+          <mat-datetimepicker-toggle [for]="calDataInicialInsc" matSuffix></mat-datetimepicker-toggle>
+          <mat-datetimepicker #calDataInicialInsc type="datetime" timeInterval="5"></mat-datetimepicker>
         </mat-form-field>
         <mat-form-field class="margem-direita">
-          <input matInput placeholder="Hora Inicial Inscrição" [textMask]="mascaraHora" [(ngModel)]="evento.DataInicioInscricao">
-        </mat-form-field>
-        <mat-form-field class="margem-direita">
-          <input matInput [matDatepicker]="calDataFinalInsc" placeholder="Data Final Inscrição" [(ngModel)]="evento.DataFimInscricao">
-          <mat-datepicker-toggle matSuffix [for]="calDataFinalInsc"></mat-datepicker-toggle>
-          <mat-datepicker #calDataFinalInsc></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field class="margem-direita">
-          <input matInput placeholder="Hora Final Inscrição" [textMask]="mascaraHora" [(ngModel)]="evento.DataFimInscricao">
+          <input matInput [matDatetimepicker]="calDataFinalInsc" placeholder="Data/Hora Final Inscrição" [(ngModel)]="evento.DataFimInscricao">
+          <mat-datetimepicker-toggle matSuffix [for]="calDataFinalInsc"></mat-datetimepicker-toggle>
+          <mat-datetimepicker #calDataFinalInsc type="datetime" timeInterval="5"></mat-datetimepicker>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field class="margem-direita">
-          <input matInput [matDatepicker]="calDataInicialEvento" placeholder="Data Inicial Evento" [(ngModel)]="evento.DataInicioEvento">
-          <mat-datepicker-toggle matSuffix [for]="calDataInicialEvento"></mat-datepicker-toggle>
-          <mat-datepicker #calDataInicialEvento></mat-datepicker>
+          <input matInput [matDatetimepicker]="calDataInicialEvento" placeholder="Data Inicial Evento" [(ngModel)]="evento.DataInicioEvento">
+          <mat-datetimepicker-toggle matSuffix [for]="calDataInicialEvento"></mat-datetimepicker-toggle>
+          <mat-datetimepicker #calDataInicialEvento type="datetime" timeInterval="5"></mat-datetimepicker>
         </mat-form-field>
         <mat-form-field class="margem-direita">
-          <input matInput placeholder="Hora Inicial Evento" [textMask]="mascaraHora"  [(ngModel)]="evento.DataInicioEvento">
-        </mat-form-field>
-        <mat-form-field class="margem-direita">
-          <input matInput [matDatepicker]="calDataFinalEvento" placeholder="Data Final Evento" [(ngModel)]="evento.DataFimEvento">
-          <mat-datepicker-toggle matSuffix [for]="calDataFinalEvento"></mat-datepicker-toggle>
-          <mat-datepicker #calDataFinalEvento></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field class="margem-direita">
-          <input matInput placeholder="Hora Final Evento" [textMask]="mascaraHora" [(ngModel)]="evento.DataFimEvento">
+          <input matInput [matDatetimepicker]="calDataFinalEvento" placeholder="Data Final Evento" [(ngModel)]="evento.DataFimEvento">
+          <mat-datetimepicker-toggle matSuffix [for]="calDataFinalEvento"></mat-datetimepicker-toggle>
+          <mat-datetimepicker #calDataFinalEvento type="datetime" timeInterval="5"></mat-datetimepicker>
         </mat-form-field>
       </div>
       <div>

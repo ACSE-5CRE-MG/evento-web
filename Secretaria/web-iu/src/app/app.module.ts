@@ -35,6 +35,9 @@ import {
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 
+import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
+import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
+
 import { FlexLayoutModule } from "@angular/flex-layout";
 
 import { CookieModule } from 'ngx-cookie';
@@ -96,6 +99,8 @@ registerLocaleData(localePt);
     MatSelectModule,
     MatRadioModule,
     MatCheckboxModule,
+    MatMomentDatetimeModule,
+    MatDatetimepickerModule,
     FlexLayoutModule,
     TextMaskModule,
     CookieModule.forRoot(),
