@@ -1,0 +1,39 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="accent">
+    <span class="cursor-pointer">EventoWeb</span>
+    <span style="flex: 1 1 auto;"></span>
+    <menu-usuario></menu-usuario>
+  </mat-toolbar>
+  <layout-geral>
+    <mat-toolbar layout-geral-cabecalho color="primary">
+      <span style="margin-right:20px">Eventos</span>
+      <span style="flex: 1 1 auto;"></span>
+      <button mat-button (click)="clicarNovo()">
+        <span class="fa fa-plus"></span>
+        Novo
+      </button>
+    </mat-toolbar>
+    <div fxFill fxLayout="column" fxLayoutAlign="center center" *ngIf="eventos == null || eventos.length == 0">
+      <span class="fa fa-plus fa-5x"></span>
+      <h1>Não há nenhum evento cadastrado!!</h1>
+    </div>
+    <div fxLayout="row" fxLayoutWrap fxLayout.sm="column" fxLayoutGap.sm="5px" fxLayoutGap="5px" style="padding: 5px"
+         *ngFor="let linhaEventos of eventos">
+      <div fxFlex="20" *ngFor="let evento of linhaEventos">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>{{evento.nome}}</mat-card-title>
+            <mat-card-subtitle>
+              Inscrições: {{evento.dataInicioInscricao | date:'shortDate'}} à {{evento.dataFimInscricao | date:'shortDate'}}
+            </mat-card-subtitle>
+          </mat-card-header>
+          <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+          <mat-card-actions>
+            <span fxFlex></span>
+            <button mat-button>GERENCIAR</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+    </div>
+  </layout-geral>
+</layout-geral>

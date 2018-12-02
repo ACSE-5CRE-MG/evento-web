@@ -1,0 +1,93 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div><h1>{{titulo}}</h1></div>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-icon-button mat-dialog-close>X</button>
+  </mat-toolbar>
+  <div fxLayout="row" fxLayout.lt-md="column">
+    <div fxFlex="20">
+      <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" style="max-height:50%; max-width:90%; margin:5px"/>
+      <input type="file" name="fileUploadImg" fileread="evento.Logotipo" style="visibility:hidden" />
+      <div>
+        <button mat-raised-button (click)="clicarCarregarImagem()">Carregar</button>
+        <button mat-raised-button (click)="clicarLimparImagem()">Limpar</button>
+      </div>
+    </div>
+    <div fxFlex="80">
+      <div>
+        <mat-form-field style="width:100%">
+          <input matInput placeholder="Nome" [(ngModel)]="evento.Nome">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="margem-direita">
+          <input type="text" matInput [matDatepicker]="calCriadoEm" placeholder="Criado Em" name="txtDataCriacao" [(ngModel)]="evento.DataRegistro" disabled="disabled">
+          <mat-datepicker-toggle matSuffix [for]="calCriadoEm"></mat-datepicker-toggle>
+          <mat-datepicker #calCriadoEm></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="margem-direita">
+          <input matInput placeholder="Data/Hora Inicial Inscrição" [(ngModel)]="evento.DataInicioInscricao" [matDatetimepicker]="calDataInicialInsc" />
+          <mat-datetimepicker-toggle [for]="calDataInicialInsc" matSuffix></mat-datetimepicker-toggle>
+          <mat-datetimepicker #calDataInicialInsc type="datetime" timeInterval="5"></mat-datetimepicker>
+        </mat-form-field>
+        <mat-form-field class="margem-direita">
+          <input matInput [matDatetimepicker]="calDataFinalInsc" placeholder="Data/Hora Final Inscrição" [(ngModel)]="evento.DataFimInscricao">
+          <mat-datetimepicker-toggle matSuffix [for]="calDataFinalInsc"></mat-datetimepicker-toggle>
+          <mat-datetimepicker #calDataFinalInsc type="datetime" timeInterval="5"></mat-datetimepicker>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field class="margem-direita">
+          <input matInput [matDatetimepicker]="calDataInicialEvento" placeholder="Data Inicial Evento" [(ngModel)]="evento.DataInicioEvento">
+          <mat-datetimepicker-toggle matSuffix [for]="calDataInicialEvento"></mat-datetimepicker-toggle>
+          <mat-datetimepicker #calDataInicialEvento type="datetime" timeInterval="5"></mat-datetimepicker>
+        </mat-form-field>
+        <mat-form-field class="margem-direita">
+          <input matInput [matDatetimepicker]="calDataFinalEvento" placeholder="Data Final Evento" [(ngModel)]="evento.DataFimEvento">
+          <mat-datetimepicker-toggle matSuffix [for]="calDataFinalEvento"></mat-datetimepicker-toggle>
+          <mat-datetimepicker #calDataFinalEvento type="datetime" timeInterval="5"></mat-datetimepicker>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemSalasEstudo">Tem Salas Estudo?</mat-checkbox>
+        <mat-form-field>
+          <mat-select placeholder="Modelo Divisão" [(ngModel)]="evento.ModeloDivisaoSalaEstudo">
+            <mat-option value="0">Por Idade e Cidade</mat-option>
+            <mat-option value="1">Por Ordem de Escolha definida na Inscrição</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemEvangelizacao">Tem Evangelização?</mat-checkbox>
+        <mat-form-field>
+          <mat-select placeholder="Público Evangelização" [(ngModel)]="evento.PublicoEvangelizacao">
+            <mat-option value="0">Todos</mat-option>
+            <mat-option value="1">Apenas para Trabalhadores e Participantes/Trabalhadores</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemSarau">Tem Sarau?</mat-checkbox>
+        <mat-form-field>
+          <input matInput placeholder="Tempo Sarau(min)" [textMask]="mascaraNumero" [(ngModel)]="evento.TempoDuracaoSarauMin">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemDepartamentalizacao">Tem Departamentalização?</mat-checkbox>
+        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemOficinas">Tem Oficinas?</mat-checkbox>
+        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemDormitorios">Tem Dormitórios?</mat-checkbox>
+      </div>
+    </div>
+  </div>
+
+  <div layout-geral-rodape>
+    <mat-divider></mat-divider>
+    <div fxLayout="row">
+      <span fxFlex="95"></span>
+      <button fxFlex mat-stroked-button cdkFocusInitial (click)="clicarSalvar()">Salvar</button>
+    </div>
+    
+  </div>
+</layout-geral>

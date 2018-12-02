@@ -41,7 +41,7 @@ export abstract class WebServiceBase {
 
     return this.http
       .put(this.webserviceURL + this.nomeWebService + this.gerarParametros(parametros),
-        dados, { headers: opRequisicao)
+        dados, { headers: opRequisicao })
       //.map(this.ExtrairDados)
       .catch(this.ProcessarErro);
   }
