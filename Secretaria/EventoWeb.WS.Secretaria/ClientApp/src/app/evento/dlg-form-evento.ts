@@ -5,6 +5,7 @@ import createNumberMask from 'text-mask-addons/dist/createNumberMask';
 import { DTOEventoCompleto } from "./objetos";
 import { Alertas } from "../componentes/alertas-dlg/alertas";
 import { WebServiceEventos } from "../webservices/webservice-eventos";
+import { OperacoesImagem } from "../util/util-imagem";
 
 @Component({
   selector: "dlg-form-evento",
@@ -45,8 +46,20 @@ export class DlgFormEvento implements OnInit {
 
   }
 
-  clicarLimparImagem(): void {
+  processarArquivoEscolhido(arquivoImagem: any): void {
+    let reader = new FileReader();
+    reader.addEventListener('load', (event: any) => {
+      this.evento.Logotipo = event.target.result;
+    });
+    reader.readAsDataURL(arquivoImagem.files[0]);
+  }
 
+  obterImagem(): string {
+    return OperacoesImagem.obterImagemOuSemImagem(this.evento.Logotipo);
+  }
+
+  clicarLimparImagem(): void {
+    this.evento.Logotipo = null;
   }
 
   clicarSalvar(): void {
@@ -71,9 +84,9 @@ export class DlgFormEvento implements OnInit {
       this.wsEventos
         .incluir(this.evento)
         .subscribe(
-          (retornoOK) => {
+          (eventoIncluido) => {
             dlg.close();
-            this.dialogRef.close();
+            this.dialogRef.close(eventoIncluido);
           },
           (retornoErro) => {
             dlg.close();
@@ -95,5 +108,7 @@ export class ServicoDlgFormEvento {
       maxWidth: '100vw',
       maxHeight: '100vh'
     });
+
+    return dialogRef.afterClosed();
   }
 }

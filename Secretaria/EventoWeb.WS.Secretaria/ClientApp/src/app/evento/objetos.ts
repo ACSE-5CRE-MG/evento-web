@@ -18,7 +18,7 @@ export class DTOEvento {
   public Nome: string;
   public DataInicioInscricao: String;
   public DataFimInscricao: String;
-  public Logotipo: String;
+  public Logotipo: string;
   public EnderecoEmail: String;
   public UsuarioEmail: String;
   public SenhaEmail: String;
@@ -55,4 +55,8 @@ export class DTOEventoMinimo {
   public situacao: SituacaoEvento;
   public nome: string;
   public logotipo: string;
+}
+
+export class DTOEventoIncluido {
+  public idEvento: number;
 }

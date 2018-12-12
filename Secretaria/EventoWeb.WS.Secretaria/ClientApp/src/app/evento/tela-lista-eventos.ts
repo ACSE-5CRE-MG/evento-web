@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { WebServiceEventos } from '../webservices/webservice-eventos';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
-import { DTOEventoMinimo } from './objetos';
+import { DTOEventoMinimo, DTOEventoIncluido } from './objetos';
 import { ServicoDlgFormEvento } from './dlg-form-evento';
+
+import { Router, ActivatedRoute } from '@angular/router';
+import { OperacoesImagem } from '../util/util-imagem';
 
 @Component({
   selector: 'tela-lista-eventos',
@@ -13,7 +16,11 @@ export class TelaListaEventos implements OnInit {
 
   eventos: DTOEventoMinimo[];
 
-  constructor(public wsEventos: WebServiceEventos, public alertas: Alertas, public srv: ServicoDlgFormEvento) { }
+  constructor(public wsEventos: WebServiceEventos,
+    public alertas: Alertas,
+    public srv: ServicoDlgFormEvento,
+    public router: Router,
+    public route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -35,14 +42,15 @@ export class TelaListaEventos implements OnInit {
   }
 
   clicarNovo(): void {
-    this.srv.abrir();
+    this.srv.abrir()
+      .subscribe(retorno => {
+        if (retorno != null)
+          this.router.navigate(['/evento', { id: retorno.idEvento }], { relativeTo: this.route });
+      });
   }
 
   obterImagem(evento: DTOEventoMinimo): string {
-    if (evento.logotipo == null || evento.logotipo.trim().length == 0)
-      return 'assets/semimagem.jpg';
-    else
-      return 'data:image/jpg;base64,' + evento.logotipo;
+    return OperacoesImagem.obterImagemOuSemImagem(evento.logotipo);
   }
 
   clicarExcluir(evento: DTOEventoMinimo): void {

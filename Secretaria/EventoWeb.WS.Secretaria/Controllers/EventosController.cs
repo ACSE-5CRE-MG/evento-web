@@ -86,7 +86,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         // POST api/eventos/incluir
         [HttpPost("incluir")]
         [Authorize("Bearer")]
-        public void Post([FromBody] DTOEvento eventoDTO)
+        public DTOEventoIncluido Post([FromBody] DTOEvento eventoDTO)
         {
             Evento evento = new Evento(eventoDTO.Nome,
                 DateTime.Parse(eventoDTO.DataInicioInscricao), DateTime.Parse(eventoDTO.DataFimInscricao),
@@ -119,6 +119,11 @@ namespace EventoWeb.WS.Secretaria.Controllers
                 evento.ConfiguracaoEmail.TipoSeguranca = eventoDTO.TipoSeguranca == "Nenhuma" ? TipoSegurancaEmail.Nenhuma : TipoSegurancaEmail.SSL;
 
             mAppEvento.Incluir(evento);
+
+            return new DTOEventoIncluido
+            {
+                IdEvento = evento.Id
+            };
         }
 
         // PUT api/eventos/atualizar/5
