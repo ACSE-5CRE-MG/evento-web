@@ -1,16 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { WebServiceEventos } from '../webservices/webservice-eventos';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
-import { DTOEventoMinimo, DTOEvento } from './objetos';
+import { DTOEventoMinimo } from './objetos';
 import { ServicoDlgFormEvento } from './dlg-form-evento';
 
 @Component({
   selector: 'tela-lista-eventos',
   templateUrl: './tela-lista-eventos.html',
+  styleUrls: ["./tela-lista-eventos.scss"]
 })
 export class TelaListaEventos implements OnInit {
 
-  eventos: DTOEventoMinimo[][];
+  eventos: DTOEventoMinimo[];
 
   constructor(public wsEventos: WebServiceEventos, public alertas: Alertas, public srv: ServicoDlgFormEvento) { }
 
@@ -22,23 +23,8 @@ export class TelaListaEventos implements OnInit {
 
     this.wsEventos.obterTodos()
       .subscribe(eventosRetornados => {
-        console.log(eventosRetornados);
-        let linhas = Math.floor(eventosRetornados.length / 3);
-        if (eventosRetornados.length % 3 != 0)
-          linhas++;
 
-        let indiceEventos = 0;
-        for (let indiceLinha = 0; indiceLinha < linhas; indiceLinha++) {
-
-          let linhaEventos = [];       
-
-          for (let IndiceCol = 0; IndiceCol < 3 && indiceEventos < eventosRetornados.length; IndiceCol++) {
-            linhaEventos.push(eventosRetornados[indiceEventos]);
-            indiceEventos++;
-          }
-
-          this.eventos.push(linhaEventos);
-        }
+        this.eventos = eventosRetornados;
 
         dlg.close();
       },
@@ -50,5 +36,31 @@ export class TelaListaEventos implements OnInit {
 
   clicarNovo(): void {
     this.srv.abrir();
+  }
+
+  obterImagem(evento: DTOEventoMinimo): string {
+    if (evento.logotipo == null || evento.logotipo.trim().length == 0)
+      return 'assets/semimagem.jpg';
+    else
+      return 'data:image/jpg;base64,' + evento.logotipo;
+  }
+
+  clicarExcluir(evento: DTOEventoMinimo): void {
+    this.alertas.alertarConfirmacao("Você deseja realmente excluir este evento?", "")
+      .subscribe((retorno) => {
+        if (retorno.result == "sim") {
+          let dlg = this.alertas.alertarProcessamento("Processando exclusão...");
+          this.wsEventos.excluir(evento.id)
+            .subscribe((resposta) => {
+
+              this.eventos = this.eventos.filter(x => x.id != evento.id);
+              dlg.close();
+            },
+            (erro) => {
+              dlg.close();
+              this.alertas.alertarErro(erro);
+            });
+        }
+      });
   }
 }

@@ -33,7 +33,7 @@ export class WebServiceEventos extends WebServiceBase {
     return this.executarPut('concluir/' + id, null);
   }
 
-  excluir(id: number, evento: DTOEvento): Observable<any> {
+  excluir(id: number): Observable<any> {
     return this.executarDelete('excluir/' + id);
   }
 }

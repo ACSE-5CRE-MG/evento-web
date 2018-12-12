@@ -54,5 +54,5 @@ export class DTOEventoMinimo {
   public dataFimInscricao: Date;
   public situacao: SituacaoEvento;
   public nome: string;
-  public logotipo: String;
+  public logotipo: string;
 }

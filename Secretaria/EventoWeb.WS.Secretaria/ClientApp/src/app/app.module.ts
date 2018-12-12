@@ -60,6 +60,7 @@ import { TelaPrincipal } from './tela-principal';
 
 import { TelaListaEventos } from './evento/tela-lista-eventos';
 import { DlgFormEvento, ServicoDlgFormEvento } from './evento/dlg-form-evento';
+import { TelaGestaoEvento } from './evento/tela-gestao-evento';
 
 import { ConfiguracaoSistemaService, Configuracao } from './configuracao-sistema-service';
 
@@ -72,7 +73,7 @@ registerLocaleData(localePt);
     CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
     TelaPrincipal,
     TelaLogin,    
-    TelaListaEventos, DlgFormEvento
+    TelaListaEventos, DlgFormEvento, TelaGestaoEvento
   ],
   imports: [
     BrowserModule,
@@ -105,8 +106,9 @@ registerLocaleData(localePt);
     TextMaskModule,
     CookieModule.forRoot(),
     RouterModule.forRoot([
-      { path: 'login', component: TelaLogin },
       { path: '', component: TelaListaEventos, canActivate: [PermissaoAcessoRota] },
+      { path: 'login', component: TelaLogin },
+      { path: 'evento/:id', component: TelaGestaoEvento, canActivate: [PermissaoAcessoRota] },
       { path: '** ', redirectTo: '' }
     ])
   ],
