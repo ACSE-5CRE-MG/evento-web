@@ -3,7 +3,6 @@ using EventoWeb.Nucleo.Persistencia;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -124,7 +123,7 @@ namespace EventoWeb.WS.Secretaria
             });
 
             app.UseCors("AllowAll");
-            app.UseHttpsRedirection();            
+            app.UseHttpsRedirection();
 
             app.UseMvc();
         }

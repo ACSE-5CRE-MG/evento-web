@@ -21,7 +21,6 @@ export abstract class WebServiceBase {
     return this.http
       .get<T>(this.webserviceURL + this.nomeWebService +
           this.gerarParametros(parametros), { headers: opRequisicao })
-      //.map(this.ExtrairDados)
       .catch(this.ProcessarErro);
   }
 
@@ -32,7 +31,6 @@ export abstract class WebServiceBase {
       .post(this.webserviceURL + this.nomeWebService +
         this.gerarParametros(parametros),
       dados, { headers: opRequisicao })
-      //.map(this.ExtrairDados)
       .catch(this.ProcessarErro);
   }   
 
@@ -42,7 +40,6 @@ export abstract class WebServiceBase {
     return this.http
       .put(this.webserviceURL + this.nomeWebService + this.gerarParametros(parametros),
         dados, { headers: opRequisicao })
-      //.map(this.ExtrairDados)
       .catch(this.ProcessarErro);
   }
 
@@ -94,8 +91,12 @@ export abstract class WebServiceBase {
           return Observable.throw(JSON.parse(errMsgJsonAsText));
         });
     }
-    else if (erro.error != null && !(erro.error instanceof Blob))
-      return Observable.throw(erro.error);
+    else if (erro.error != null && !(erro.error instanceof Blob)) {
+      if (erro.error.type === "application/json")
+        return Observable.throw(erro.error);
+      else (erro.error.type === "error")
+        return Observable.throw(JSON.parse(erro.error.target.response));
+    }
     else
       return Observable.throw(erro.message || "Erro no Servidor");
   }

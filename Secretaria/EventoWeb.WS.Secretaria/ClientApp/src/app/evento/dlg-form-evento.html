@@ -2,9 +2,10 @@
   <mat-toolbar layout-geral-cabecalho color="primary">
     <div><h1>{{titulo}}</h1></div>
     <span style="flex: 1 1 auto;"></span>
-    <button mat-icon-button mat-dialog-close>X</button>
+    <button mat-icon-button cdkFocusInitial (click)="clicarSalvar()" matTooltip="Permite salvar este evento"><i class="fa fa-save"></i></button>
+    <button mat-icon-button mat-dialog-close matTooltip="Permite fechar esta tela"><i class="fa fa-times"></i></button>
   </mat-toolbar>
-  <div fxLayout="row" fxLayout.lt-md="column">
+  <div fxLayout="row" fxLayout.lt-md="column" class="formulario">
     <div fxFlex="20">
       <img [src]="obterImagem()" style="max-height:50%; max-width:90%; margin:5px"/>
       <input type="file" name="fileUploadImg" fileread="evento.Logotipo" style="visibility:hidden" />
@@ -86,14 +87,5 @@
         <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemDormitorios">Tem Dormitórios?</mat-checkbox>
       </div>
     </div>
-  </div>
-
-  <div layout-geral-rodape>
-    <mat-divider></mat-divider>
-    <div fxLayout="row">
-      <span fxFlex="95"></span>
-      <button fxFlex mat-stroked-button cdkFocusInitial (click)="clicarSalvar()">Salvar</button>
-    </div>
-    
   </div>
 </layout-geral>

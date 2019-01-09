@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace EventoWeb.WS.Secretaria.Controllers.DTOS
+namespace EventoWeb.Nucleo.Aplicacao
 {
     public class DTOEvento
     {

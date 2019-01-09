@@ -1,24 +1,20 @@
 <layout-geral>
   <mat-toolbar layout-geral-cabecalho color="accent">
-    <span class="cursor-pointer">EventoWeb</span>
+    <span class="cursor-pointer">EventoWeb - Eventos</span>
     <span style="flex: 1 1 auto;"></span>
+    <button mat-button (click)="clicarNovo()" style="margin-right:20px">
+      <span class="fa fa-plus"></span>
+      Novo
+    </button>
     <menu-usuario></menu-usuario>
   </mat-toolbar>
   <layout-geral>
-    <mat-toolbar layout-geral-cabecalho color="primary">
-      <span style="margin-right:20px">Eventos</span>
-      <span style="flex: 1 1 auto;"></span>
-      <button mat-button (click)="clicarNovo()">
-        <span class="fa fa-plus"></span>
-        Novo
-      </button>
-    </mat-toolbar>
     <div fxFill fxLayout="column" fxLayoutAlign="center center" *ngIf="eventos == null || eventos.length == 0">
       <span class="fa fa-plus fa-5x"></span>
       <h1>Não há nenhum evento cadastrado!!</h1>
     </div>
-    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.sm="5px" fxLayoutGap="5px" style="padding: 5px">
-      <div fxFlex="20" fxFlex.xs="100" style="padding-top: 5px" fxLayout="column" class="item-evento" *ngFor="let evento of eventos">
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="listagem">
+      <div fxFlex="20" fxFlex.xs="100" fxLayout="column" class="item-evento" *ngFor="let evento of eventos">
         <h2>{{evento.nome}}</h2>
         <h3>
           Inscrições: {{evento.dataInicioInscricao | date:'shortDate'}} à {{evento.dataFimInscricao | date:'shortDate'}}
