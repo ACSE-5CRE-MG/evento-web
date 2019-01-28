@@ -7,8 +7,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class Departamento: Entidade
     {
-        private Evento mEvento;
-        private string mNome;
+        private Evento m_Evento;
+        private string m_Nome;
 
         public Departamento(Evento evento, String nome)
         {
@@ -21,7 +21,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual Evento Evento
         {
-            get { return mEvento; }
+            get { return m_Evento; }
             protected set
             {
                 if (value == null)
@@ -33,19 +33,19 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 if (!value.TemDepartamentalizacao)
                     throw new InvalidOperationException("Este evento não está configurado para ter departamentos.");
 
-                mEvento = value;
+                m_Evento = value;
             }
         }
 
         public virtual String Nome
         {
-            get { return mNome; }
+            get { return m_Nome; }
             set
             {
                 if (String.IsNullOrWhiteSpace(value))
                     throw new ArgumentNullException("Nome");
 
-                mNome = value;
+                m_Nome = value;
             }
         }
     }

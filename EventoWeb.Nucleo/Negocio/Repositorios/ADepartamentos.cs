@@ -9,6 +9,6 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
     public interface ADepartamentos : IPersistencia<Departamento>
     {
         IList<Departamento> ListarTodosPorEvento(int idEvento);
-        Departamento ObterPorEventoEId(int idEvento, int idDepartamento);
+        Departamento ObterPorId(int id);
     }
 }

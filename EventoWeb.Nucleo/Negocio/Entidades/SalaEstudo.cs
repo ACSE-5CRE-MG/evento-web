@@ -7,14 +7,15 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class SalaEstudo: Entidade
     {
-        private Evento mEvento;
-        private string mNome;
-        private IList<InscricaoParticipante> mParticipantes;
-        private FaixaEtaria mFaixaEtaria;
+        private Evento m_Evento;
+        private string m_Nome;
+        private IList<InscricaoParticipante> m_Participantes;
+        private FaixaEtaria m_FaixaEtaria;
+        private bool m_DeveSerParNumeroTotalParticipantes;
 
         public SalaEstudo(Evento evento, string nome)
         {
-            mParticipantes = new List<InscricaoParticipante>();
+            m_Participantes = new List<InscricaoParticipante>();
 
             if (evento == null)
                 throw new ArgumentNullException("evento", "Evento não pode ser nulo.");
@@ -26,54 +27,59 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 throw new InvalidOperationException("Este evento não está configurado para ter Salas de Estudo.");
 
 
-            mEvento = evento;
+            m_Evento = evento;
             Nome = nome;
         }
 
         protected SalaEstudo() { }
 
-        public virtual Evento Evento { get { return mEvento; } }
+        public virtual Evento Evento { get { return m_Evento; } }
 
         public virtual string Nome 
         {
-            get { return mNome; }
+            get { return m_Nome; }
             set 
             { 
                 if (String.IsNullOrEmpty(value))
                     throw new ArgumentNullException("Nome","O nome não pode ser vazio.");
 
-                mNome = value; 
+                m_Nome = value; 
             }
         }
 
-        public virtual IEnumerable<InscricaoParticipante> Participantes { get { return mParticipantes; } }
+        public virtual IEnumerable<InscricaoParticipante> Participantes { get { return m_Participantes; } }
 
         public virtual FaixaEtaria FaixaEtaria
         {
-            get { return mFaixaEtaria; }
+            get { return m_FaixaEtaria; }
             set
             {
-                if (mEvento.ModeloDivisaoSalasEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao)
+                if (m_Evento.ModeloDivisaoSalasEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao)
                     throw new ArgumentException("O modelo de divisão da salas de estudo não permite o uso da faixa etária.", "FaixaEtaria");
 
-                mFaixaEtaria = value;
+                m_FaixaEtaria = value;
             }
         }
-        
+
+        public virtual bool DeveSerParNumeroTotalParticipantes
+        {
+            get => m_DeveSerParNumeroTotalParticipantes; 
+            set => m_DeveSerParNumeroTotalParticipantes = value;
+        }
 
         public virtual void AdicionarParticipante(InscricaoParticipante participante)
         {
             ValidarSeParticipanteEhNulo(participante);
             ValidarSeParticipanteEhMesmoEvento(participante);
 
-            if (mEvento.ModeloDivisaoSalasEstudo == EnumModeloDivisaoSalasEstudo.PorIdadeCidade &&
-                mFaixaEtaria != null &&
-                (participante.Pessoa.CalcularIdadeEmAnos(mEvento.DataInicioEvento) < mFaixaEtaria.IdadeMin ||
-                participante.Pessoa.CalcularIdadeEmAnos(mEvento.DataInicioEvento) > mFaixaEtaria.IdadeMax))
+            if (m_Evento.ModeloDivisaoSalasEstudo == EnumModeloDivisaoSalasEstudo.PorIdadeCidade &&
+                m_FaixaEtaria != null &&
+                (participante.Pessoa.CalcularIdadeEmAnos(m_Evento.DataInicioEvento) < m_FaixaEtaria.IdadeMin ||
+                participante.Pessoa.CalcularIdadeEmAnos(m_Evento.DataInicioEvento) > m_FaixaEtaria.IdadeMax))
                 throw new ArgumentException("Participante fora da faixa etária definida para esta sala.");
 
             if (!EstaNaListaDeParticipantes(participante))
-                mParticipantes.Add(participante);
+                m_Participantes.Add(participante);
         }
 
         public virtual void RemoverParticipante(InscricaoParticipante participante)
@@ -83,17 +89,17 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (!EstaNaListaDeParticipantes(participante))
                 throw new ArgumentException("Participante não existe na lista de participantes desta sala.", "participante");
 
-            mParticipantes.Remove(participante);
+            m_Participantes.Remove(participante);
         }
 
         public virtual void RemoverTodosParticipantes()
         {
-            mParticipantes.Clear();
+            m_Participantes.Clear();
         }
 
         public virtual bool EstaNaListaDeParticipantes(InscricaoParticipante participante)
         {
-            return mParticipantes.Where(x => x == participante).Count() > 0;
+            return m_Participantes.Where(x => x == participante).Count() > 0;
         }
 
         private void ValidarSeParticipanteEhNulo(InscricaoParticipante participante)
@@ -104,7 +110,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         private void ValidarSeParticipanteEhMesmoEvento(InscricaoParticipante participante)
         {
-            if (participante.Evento != mEvento)
+            if (participante.Evento != m_Evento)
                 throw new ArgumentException("participante", "Participante deve ser do mesmo evento da sala.");
         }
     }

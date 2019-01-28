@@ -1,6 +1,7 @@
 ﻿using FluentMigrator;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Text;
 
 namespace EventoWeb.BancoDados.Migracoes
@@ -15,6 +16,15 @@ namespace EventoWeb.BancoDados.Migracoes
         }
 
         public override void Up()
+        {
+            CriarTabelaEventos();
+            CriarTabelaUsuarios();
+            CriarTabelaSalasEstudo();
+            CriarTabelaAfracs();
+            CriarTabelaDepartamentos();                       
+        }
+
+        private void CriarTabelaEventos()
         {
             Create.Table("EVENTOS")
                 .WithColumn("ID_EVENTO").AsInt32().PrimaryKey().Identity()
@@ -43,11 +53,49 @@ namespace EventoWeb.BancoDados.Migracoes
                 .WithColumn("TIPO_SEGURANCA").AsInt16().Nullable()
                 .WithColumn("TITULO_EMAIL").AsString(150).Nullable()
                 .WithColumn("MENSAGEM_EMAIL").AsString(Int32.MaxValue).Nullable();
+        }
 
+        private void CriarTabelaUsuarios()
+        {
             Create.Table("USUARIOS")
                 .WithColumn("LOGIN").AsString(150).PrimaryKey();
 
             Insert.IntoTable("USUARIOS").Row(new { LOGIN = "robsonmbobbi@gmail.com" });
+        }
+
+        private void CriarTabelaSalasEstudo()
+        {
+            Create
+                .Table("SALAS_ESTUDO")
+                    .WithColumn("ID_SALA_ESTUDO").AsInt32().PrimaryKey().Identity()
+                    .WithColumn("PAR_TOTAL_PARTICIPANTES").AsInt16().NotNullable().WithDefaultValue(0)
+                    .WithColumn("ID_EVENTO").AsInt32().NotNullable()
+                        .ForeignKey("FK_EVENTO_SALA", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
+                    .WithColumn("IDADE_MAX").AsInt32()
+                    .WithColumn("IDADE_MIN").AsInt32()
+                    .WithColumn("NOME").AsString(250).NotNullable();                
+        }
+
+        private void CriarTabelaAfracs()
+        {
+            Create
+                .Table("AFRACS")
+                    .WithColumn("ID_AFRAC").AsInt32().PrimaryKey().Identity()
+                    .WithColumn("PAR_TOTAL_PARTICIPANTES").AsInt16().NotNullable().WithDefaultValue(0)
+                    .WithColumn("ID_EVENTO").AsInt32().NotNullable()
+                        .ForeignKey("FK_EVENTO_SALA", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
+                    .WithColumn("NOME").AsString(250).NotNullable()
+                    .WithColumn("NUM_MAX_PARTICIPANTES").AsInt32();
+        }
+
+        private void CriarTabelaDepartamentos()
+        {
+            Create
+                .Table("DEPARTAMENTOS")
+                    .WithColumn("ID_DEPARTAMENTO").AsInt32().PrimaryKey().Identity()
+                    .WithColumn("ID_EVENTO").AsInt32().NotNullable()
+                        .ForeignKey("FK_EVENTO_SALA", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
+                    .WithColumn("NOME").AsString(250).NotNullable();
         }
     }
 }

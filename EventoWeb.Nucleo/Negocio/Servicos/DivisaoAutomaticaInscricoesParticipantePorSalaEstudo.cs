@@ -28,7 +28,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             var participantes =
                 mInscricoes.ListarTodasInscricoesPorAtividade<AtividadeInscricaoSalaEstudo>(mEvento);
 
-            IList<SalaEstudo> salas = mSalasEstudo.ListarTodasSalasEstudoDoEvento(mEvento);
+            IList<SalaEstudo> salas = mSalasEstudo.ListarTodasPorEvento(mEvento.Id);
             foreach (var sala in salas)
                 sala.RemoverTodosParticipantes();
 

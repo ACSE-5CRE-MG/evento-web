@@ -52,9 +52,4 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string Nome { get; set; }
         public String Logotipo { get; set; }
     }
-
-    public class DTOEventoIncluido
-    {
-        public int IdEvento { get; set; }
-    }
 }

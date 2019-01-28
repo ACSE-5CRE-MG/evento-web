@@ -52,7 +52,10 @@ namespace EventoWeb.Nucleo.Persistencia
         {
             var session = m_Sessao;
             if (session.Transaction.IsActive)
+            {
                 session.Transaction.Rollback();
+                session.Clear();
+            }
         }
 
         public void Dispose()
@@ -61,14 +64,10 @@ namespace EventoWeb.Nucleo.Persistencia
             m_Sessao.Dispose();
         }
 
-        public AEventos RepositorioEventos
-        {
-            get
-            {
-                return new RepositorioEventosNH(m_Sessao);
-            }
-        }
-
+        public AEventos RepositorioEventos => new RepositorioEventosNH(m_Sessao);
         public AUsuarios RepositorioUsuarios => new RepositorioUsuariosNH(m_Sessao);
+        public ADepartamentos RepositorioDepartamentos => new RepositorioDepartamentosNH(m_Sessao);
+        public ASalasEstudo RepositorioSalasEstudo => new RepositorioSalasEstudoNH(m_Sessao);
+        public AAfracs RepositorioAfracs => new RepositorioAfracsNH(m_Sessao);
     }
 }

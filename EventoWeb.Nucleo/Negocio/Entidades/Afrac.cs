@@ -7,25 +7,25 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class Afrac: Entidade
     {
-        private string mNome;
-        private Evento mEvento;
-        private int? mNumeroTotalParticipantes;
-        private bool mDeveSerParNumeroTotalParticipantes;
-        private IList<InscricaoParticipante> mParticipantes;
+        private string m_Nome;
+        private Evento m_Evento;
+        private int? m_NumeroTotalParticipantes;
+        private bool m_DeveSerParNumeroTotalParticipantes;
+        private IList<InscricaoParticipante> m_Participantes;
 
         public Afrac(Evento evento, string nome)
         {
             Evento = evento;
             Nome = nome;
 
-            mParticipantes = new List<InscricaoParticipante>();
+            m_Participantes = new List<InscricaoParticipante>();
         }
 
         protected Afrac() { }
 
         public virtual String Nome
         {
-            get { return mNome; }
+            get { return m_Nome; }
             set
             {
                 if (value == null)
@@ -34,13 +34,13 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 if (String.IsNullOrEmpty(value))
                     throw new ArgumentException("Nome não pode ser vazio.");
 
-                mNome = value;
+                m_Nome = value;
             }
         }
 
         public virtual Evento Evento
         {
-            get { return mEvento; }
+            get { return m_Evento; }
             protected set
             {
                 if (value == null)
@@ -52,46 +52,46 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 if (!value.TemOficinas)
                     throw new InvalidOperationException("Este evento não está configurado para ter Oficinas.");
 
-                mEvento = value;
+                m_Evento = value;
             }
         }
 
         public virtual int? NumeroTotalParticipantes 
         {
-            get { return mNumeroTotalParticipantes; }
+            get { return m_NumeroTotalParticipantes; }
             set
             {
                 if (value != null && DeveSerParNumeroTotalParticipantes && value % 2 != 0)
                     throw new ArgumentException("O número de participantes deve ser par.", "NumeroTotalParticipantes");
 
-                mNumeroTotalParticipantes = value;
+                m_NumeroTotalParticipantes = value;
             }
         }
 
         public virtual bool DeveSerParNumeroTotalParticipantes 
         {
-            get { return mDeveSerParNumeroTotalParticipantes; }
+            get { return m_DeveSerParNumeroTotalParticipantes; }
             set
             {
-                if (value && mNumeroTotalParticipantes != null && mNumeroTotalParticipantes % 2 != 0)
+                if (value && m_NumeroTotalParticipantes != null && m_NumeroTotalParticipantes % 2 != 0)
                     throw new ArgumentException("O número de participantes deve ser par.", "NumeroTotalParticipantes");
 
-                mDeveSerParNumeroTotalParticipantes = value;
+                m_DeveSerParNumeroTotalParticipantes = value;
             }
         }
 
-        public virtual IEnumerable<InscricaoParticipante> Participantes { get { return mParticipantes; } }
+        public virtual IEnumerable<InscricaoParticipante> Participantes { get { return m_Participantes; } }
 
         public virtual void AdicionarParticipante(InscricaoParticipante participante)
         {
             ValidarSeParticipanteEhNulo(participante);
             ValidarSeParticipanteEhMesmoEvento(participante);
 
-            if (mNumeroTotalParticipantes != null && mParticipantes.Count >= mNumeroTotalParticipantes.Value)
+            if (m_NumeroTotalParticipantes != null && m_Participantes.Count >= m_NumeroTotalParticipantes.Value)
                 throw new ArgumentException("Não é possível incluir mais participantes. Número Total atingido.", "participante");
 
             if (!EstaNaListaDeParticipantes(participante))
-                mParticipantes.Add(participante);
+                m_Participantes.Add(participante);
         }
 
         public virtual void RemoverParticipante(InscricaoParticipante participante)
@@ -101,17 +101,17 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (!EstaNaListaDeParticipantes(participante))
                 throw new ArgumentException("Participante não existe na lista de participantes desta afrac.", "participante");
 
-            mParticipantes.Remove(participante);
+            m_Participantes.Remove(participante);
         }
 
         public virtual void RemoverTodosParticipantes()
         {
-            mParticipantes.Clear();
+            m_Participantes.Clear();
         }
 
         public virtual bool EstaNaListaDeParticipantes(InscricaoParticipante participante)
         {
-            return mParticipantes.Where(x => x == participante).Count() > 0;
+            return m_Participantes.Where(x => x == participante).Count() > 0;
         }
 
         private void ValidarSeParticipanteEhNulo(InscricaoParticipante participante)
@@ -122,7 +122,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         private void ValidarSeParticipanteEhMesmoEvento(InscricaoParticipante participante)
         {
-            if (participante.Evento != mEvento)
+            if (participante.Evento != m_Evento)
                 throw new ArgumentException("participante", "Participante deve ser do mesmo evento da afrac .");
         }
     }

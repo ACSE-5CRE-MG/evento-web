@@ -85,7 +85,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             return dtoEventos;
         }
 
-        public DTOEventoIncluido Incluir(DTOEvento eventoDTO)
+        public DTOId Incluir(DTOEvento eventoDTO)
         {
             Evento evento = new Evento(eventoDTO.Nome,
                 DateTime.Parse(eventoDTO.DataInicioInscricao), DateTime.Parse(eventoDTO.DataFimInscricao),
@@ -124,9 +124,9 @@ namespace EventoWeb.Nucleo.Aplicacao
                 Contexto.RepositorioEventos.Incluir(evento);
             });
 
-            return new DTOEventoIncluido
+            return new DTOId
             {
-                IdEvento = evento.Id
+                Id = evento.Id
             };
         }
 

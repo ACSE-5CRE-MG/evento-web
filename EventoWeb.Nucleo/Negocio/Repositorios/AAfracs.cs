@@ -8,8 +8,8 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
 {
     public interface AAfracs : IPersistencia<Afrac>
     {
-        IList<Afrac> ListarTodasAfracsPorEvento(int idEvento);
-        Afrac ObterAfracPorIdEventoEAfrac(int idEvento, int idAfrac);
+        IList<Afrac> ListarTodasPorEvento(int idEvento);
+        Afrac ObterPorId(int id);
         IList<Afrac> ListarTodasAfracsComParticipantesPorEvento(Evento evento);
         IList<InscricaoParticipante> ListarParticipantesSemAfracNoEvento(Evento evento);
         bool InscritoEhResponsavelPorAfrac(Evento evento, InscricaoParticipante inscParticipante);
