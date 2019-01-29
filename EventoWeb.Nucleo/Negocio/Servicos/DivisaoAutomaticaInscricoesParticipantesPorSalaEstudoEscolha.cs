@@ -31,7 +31,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             if (evento == null)
                 throw new ArgumentNullException("Evento", "Evento não pode ser nulo.");
 
-            if (evento.ModeloDivisaoSalasEstudo != EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao)
+            if (evento.ConfiguracaoSalaEstudo.ModeloDivisao != EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao)
                 throw new ArgumentException("O evento não aceita este tipo de divisão automática.");
 
             mRepositorioInscricoes = inscricoes;

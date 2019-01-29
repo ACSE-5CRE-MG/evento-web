@@ -39,7 +39,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
             if (!Evento.TemDepartamentalizacao && atividade.GetType() == typeof(AtividadeInscricaoDepartamento) ||
                 !Evento.TemOficinas && atividade.GetType() == typeof(AtividadeInscricaoOficinas) ||
-                !Evento.TemSalasEstudo && atividade.GetType() == typeof(AtividadeInscricaoSalaEstudo))
+                Evento.ConfiguracaoSalaEstudo != null && atividade.GetType() == typeof(AtividadeInscricaoSalaEstudo))
                 throw new ArgumentException("Tipo de atividade não é aceita pelo evento", "atividade");
 
             mAtividades.Add(atividade);

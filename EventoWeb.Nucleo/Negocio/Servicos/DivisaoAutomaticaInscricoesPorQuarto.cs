@@ -89,7 +89,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             var listaInscricoes = mRepInscricoes.ListarTodasInscricoesComPessoasDormemEvento(mEvento);
 
             var criancas = listaInscricoes
-                .Where(x => x is InscricaoInfantil && x.Pessoa.CalcularIdadeEmAnos(mEvento.DataInicioEvento) <= 6)
+                .Where(x => x is InscricaoInfantil && x.Pessoa.CalcularIdadeEmAnos(mEvento.PeriodoRealizacaoEvento.DataInicial) <= 6)
                 .Select(x => (InscricaoInfantil)x)
                 .ToList();
 
@@ -137,7 +137,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             }
 
             var inscritosGeral = listaInscricoes
-                .Where(x => !(x is InscricaoInfantil && x.Pessoa.CalcularIdadeEmAnos(mEvento.DataInicioEvento) <= 6))
+                .Where(x => !(x is InscricaoInfantil && x.Pessoa.CalcularIdadeEmAnos(mEvento.PeriodoRealizacaoEvento.DataInicial) <= 6))
                 .ToList();
 
             var inscritosGeralPorSexo = inscritosGeral.GroupBy(x => x.Pessoa.Sexo);
@@ -163,7 +163,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             foreach (var inscritosPorSexo in inscritosGeralPorSexo)
             {
                 var inscritosOrdenadosIdadeCidade = inscritosPorSexo
-                    .OrderBy(x => x.Pessoa.CalcularIdadeEmAnos(x.Evento.DataInicioEvento))
+                    .OrderBy(x => x.Pessoa.CalcularIdadeEmAnos(x.Evento.PeriodoRealizacaoEvento.DataInicial))
                     .ThenBy(x => x.Pessoa.Endereco.Cidade);
 
                 var listaQuartos = quartosGeral.Where(x=> (int)x.Sexo == (int)inscritosPorSexo.Key).ToList();

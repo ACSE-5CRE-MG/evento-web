@@ -21,7 +21,8 @@ namespace EventoWeb.BancoDados.Migracoes
             CriarTabelaUsuarios();
             CriarTabelaSalasEstudo();
             CriarTabelaAfracs();
-            CriarTabelaDepartamentos();                       
+            CriarTabelaDepartamentos();
+            CriarTabelaConfiguracaoEmail();
         }
 
         private void CriarTabelaEventos()
@@ -34,25 +35,13 @@ namespace EventoWeb.BancoDados.Migracoes
                 .WithColumn("DATA_INICIO_EVENTO").AsDateTime().NotNullable()
                 .WithColumn("DATA_FIM_EVENTO").AsDateTime().NotNullable()
                 .WithColumn("DATA_REGISTRO").AsDateTime().NotNullable()
-                .WithColumn("SITUACAO").AsInt16().NotNullable()
                 .WithColumn("LOGOTIPO").AsString(Int32.MaxValue)
                 .WithColumn("TEM_DEPARTAMENTALIZACAO").AsInt16().NotNullable()
-                .WithColumn("TEM_SALAS_ESTUDO").AsInt16().NotNullable()
                 .WithColumn("MODELO_DIV_SL_ESTUDO").AsInt16().NotNullable()
                 .WithColumn("TEM_OFICINAS").AsInt16().NotNullable()
                 .WithColumn("TEM_DORMITORIOS").AsInt16().NotNullable()
-                .WithColumn("TEM_EVANGELIZACAO").AsInt16().NotNullable()
                 .WithColumn("PUBLICO_EVANGELIZACAO").AsInt16()
-                .WithColumn("TEM_SARAU").AsInt16().NotNullable()
-                .WithColumn("TEMPO_SARAU_MIN").AsInt32().Nullable()
-                .WithColumn("ENDERECO_EMAIL").AsString(150).Nullable()
-                .WithColumn("USUARIO_EMAIL").AsString(100).Nullable()
-                .WithColumn("SENHA_EMAIL").AsString(100).Nullable()
-                .WithColumn("SERVIDOR_EMAIL").AsString(50).Nullable()
-                .WithColumn("PORTA_SERVIDOR").AsInt32().Nullable()
-                .WithColumn("TIPO_SEGURANCA").AsInt16().Nullable()
-                .WithColumn("TITULO_EMAIL").AsString(150).Nullable()
-                .WithColumn("MENSAGEM_EMAIL").AsString(Int32.MaxValue).Nullable();
+                .WithColumn("TEMPO_SARAU_MIN").AsInt32().Nullable();
         }
 
         private void CriarTabelaUsuarios()
@@ -96,6 +85,25 @@ namespace EventoWeb.BancoDados.Migracoes
                     .WithColumn("ID_EVENTO").AsInt32().NotNullable()
                         .ForeignKey("FK_EVENTO_SALA", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
                     .WithColumn("NOME").AsString(250).NotNullable();
+        }
+
+        private void CriarTabelaConfiguracaoEmail()
+        {
+            Create
+                .Table("CONFIGURACOES_EMAIL")
+                    .WithColumn("ID_CONFIGURACAO_EMAIL").AsInt32().PrimaryKey().Identity()
+                    .WithColumn("ID_EVENTO").AsInt32().NotNullable()
+                        .ForeignKey("FK_EVENTO_SALA", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
+                    .WithColumn("ENDERECO_EMAIL").AsString(150).Nullable()
+                    .WithColumn("USUARIO_EMAIL").AsString(100).Nullable()
+                    .WithColumn("SENHA_EMAIL").AsString(100).Nullable()
+                    .WithColumn("SERVIDOR_EMAIL").AsString(50).Nullable()
+                    .WithColumn("PORTA_SERVIDOR").AsInt32().Nullable()
+                    .WithColumn("TIPO_SEGURANCA").AsInt16().Nullable()
+                    .WithColumn("ASSUNTO_INSC_CONFIRMADA").AsString(150).Nullable()
+                    .WithColumn("MENSAGEM_INSC_CONFIRMADA").AsString(Int32.MaxValue).Nullable()
+                    .WithColumn("ASSUNTO_INSC_REGISTRADA").AsString(150).Nullable()
+                    .WithColumn("MENSAGEM_INSC_REGISTRADA").AsString(Int32.MaxValue).Nullable();
         }
     }
 }

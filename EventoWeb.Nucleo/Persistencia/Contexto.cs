@@ -69,5 +69,6 @@ namespace EventoWeb.Nucleo.Persistencia
         public ADepartamentos RepositorioDepartamentos => new RepositorioDepartamentosNH(m_Sessao);
         public ASalasEstudo RepositorioSalasEstudo => new RepositorioSalasEstudoNH(m_Sessao);
         public AAfracs RepositorioAfracs => new RepositorioAfracsNH(m_Sessao);
+        public AConfiguracoesEmail RepositorioConfiguracoesEmail => throw new System.NotImplementedException();
     }
 }

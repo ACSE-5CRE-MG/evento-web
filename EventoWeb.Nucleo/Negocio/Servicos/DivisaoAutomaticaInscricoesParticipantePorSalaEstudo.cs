@@ -36,8 +36,8 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             if (salaComFaixaEtaria != null)
             {
                 var inscricoesDentroFaixaEtaria = participantes
-                    .Where(x => x.Inscrito.Pessoa.CalcularIdadeEmAnos(mEvento.DataInicioEvento) >= salaComFaixaEtaria.FaixaEtaria.IdadeMin
-                             && x.Inscrito.Pessoa.CalcularIdadeEmAnos(mEvento.DataInicioEvento) <= salaComFaixaEtaria.FaixaEtaria.IdadeMax)
+                    .Where(x => x.Inscrito.Pessoa.CalcularIdadeEmAnos(mEvento.PeriodoRealizacaoEvento.DataInicial) >= salaComFaixaEtaria.FaixaEtaria.IdadeMin
+                             && x.Inscrito.Pessoa.CalcularIdadeEmAnos(mEvento.PeriodoRealizacaoEvento.DataInicial) <= salaComFaixaEtaria.FaixaEtaria.IdadeMax)
                     .ToList();
 
                 foreach (var participante in inscricoesDentroFaixaEtaria)

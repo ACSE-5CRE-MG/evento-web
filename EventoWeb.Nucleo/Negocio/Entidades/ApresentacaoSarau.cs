@@ -50,10 +50,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 if (value == null)
                     throw new ArgumentNullException("Evento", "Evento não pode ser nulo.");
 
-                if (!value.EstaAbertoNestaData(DateTime.Now))
-                    throw new ArgumentException("O evento já foi encerrado.", "evento");
-
-                if (!value.TemSarau)
+                if (value.ConfiguracaoSarau == null)
                     throw new InvalidOperationException("Este evento não está configurado para ter Sarau.");
 
                 mEvento = value;

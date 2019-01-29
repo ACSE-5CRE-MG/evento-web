@@ -20,10 +20,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (evento == null)
                 throw new ArgumentNullException("evento", "Evento não pode ser nulo.");
 
-            if (!evento.EstaAbertoNestaData(DateTime.Now))
-                throw new ArgumentException("O evento já foi encerrado.", "evento");
-
-            if (!evento.TemSalasEstudo)
+            if (evento.ConfiguracaoSalaEstudo == null)
                 throw new InvalidOperationException("Este evento não está configurado para ter Salas de Estudo.");
 
 
@@ -54,7 +51,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             get { return m_FaixaEtaria; }
             set
             {
-                if (m_Evento.ModeloDivisaoSalasEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao)
+                if (m_Evento.ConfiguracaoSalaEstudo.ModeloDivisao == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao)
                     throw new ArgumentException("O modelo de divisão da salas de estudo não permite o uso da faixa etária.", "FaixaEtaria");
 
                 m_FaixaEtaria = value;
@@ -72,10 +69,10 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             ValidarSeParticipanteEhNulo(participante);
             ValidarSeParticipanteEhMesmoEvento(participante);
 
-            if (m_Evento.ModeloDivisaoSalasEstudo == EnumModeloDivisaoSalasEstudo.PorIdadeCidade &&
+            if (m_Evento.ConfiguracaoSalaEstudo.ModeloDivisao == EnumModeloDivisaoSalasEstudo.PorIdadeCidade &&
                 m_FaixaEtaria != null &&
-                (participante.Pessoa.CalcularIdadeEmAnos(m_Evento.DataInicioEvento) < m_FaixaEtaria.IdadeMin ||
-                participante.Pessoa.CalcularIdadeEmAnos(m_Evento.DataInicioEvento) > m_FaixaEtaria.IdadeMax))
+                (participante.Pessoa.CalcularIdadeEmAnos(m_Evento.PeriodoRealizacaoEvento.DataInicial) < m_FaixaEtaria.IdadeMin ||
+                participante.Pessoa.CalcularIdadeEmAnos(m_Evento.PeriodoRealizacaoEvento.DataInicial) > m_FaixaEtaria.IdadeMax))
                 throw new ArgumentException("Participante fora da faixa etária definida para esta sala.");
 
             if (!EstaNaListaDeParticipantes(participante))

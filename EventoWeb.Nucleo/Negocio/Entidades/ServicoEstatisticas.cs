@@ -294,19 +294,19 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             estatistica.NumeroMeninos = lista.Count();
             estatistica.NumeroMeninosPresentes = lista.Count(x => x.ConfirmadoNoEvento);
 
-            lista = criancas.Where(x => x.Pessoa.CalcularIdadeEmAnos(x.Evento.DataInicioEvento) >= 0 && x.Pessoa.CalcularIdadeEmAnos(x.Evento.DataInicioEvento) <= 3);
+            lista = criancas.Where(x => x.Pessoa.CalcularIdadeEmAnos(x.Evento.PeriodoRealizacaoEvento.DataInicial) >= 0 && x.Pessoa.CalcularIdadeEmAnos(x.Evento.PeriodoRealizacaoEvento.DataInicial) <= 3);
             estatistica.NumeroCriancas0a3Anos = lista.Count();
             estatistica.NumeroCriancas0a3AnosPresentes = lista.Count(x => x.ConfirmadoNoEvento);
 
-            lista = criancas.Where(x => x.Pessoa.CalcularIdadeEmAnos(x.Evento.DataInicioEvento) >= 4 && x.Pessoa.CalcularIdadeEmAnos(x.Evento.DataInicioEvento) <= 6);
+            lista = criancas.Where(x => x.Pessoa.CalcularIdadeEmAnos(x.Evento.PeriodoRealizacaoEvento.DataInicial) >= 4 && x.Pessoa.CalcularIdadeEmAnos(x.Evento.PeriodoRealizacaoEvento.DataInicial) <= 6);
             estatistica.NumeroCriancas4a6Anos = lista.Count();
             estatistica.NumeroCriancas4a6AnosPresentes = lista.Count(x => x.ConfirmadoNoEvento);
 
-            lista = criancas.Where(x => x.Pessoa.CalcularIdadeEmAnos(x.Evento.DataInicioEvento) >= 7 && x.Pessoa.CalcularIdadeEmAnos(x.Evento.DataInicioEvento) <= 9);
+            lista = criancas.Where(x => x.Pessoa.CalcularIdadeEmAnos(x.Evento.PeriodoRealizacaoEvento.DataInicial) >= 7 && x.Pessoa.CalcularIdadeEmAnos(x.Evento.PeriodoRealizacaoEvento.DataInicial) <= 9);
             estatistica.NumeroCriancas7a9Anos = lista.Count();
             estatistica.NumeroCriancas7a9AnosPresentes = lista.Count(x => x.ConfirmadoNoEvento);
 
-            lista = criancas.Where(x => x.Pessoa.CalcularIdadeEmAnos(x.Evento.DataInicioEvento) >= 10 && x.Pessoa.CalcularIdadeEmAnos(x.Evento.DataInicioEvento) <= 12);
+            lista = criancas.Where(x => x.Pessoa.CalcularIdadeEmAnos(x.Evento.PeriodoRealizacaoEvento.DataInicial) >= 10 && x.Pessoa.CalcularIdadeEmAnos(x.Evento.PeriodoRealizacaoEvento.DataInicial) <= 12);
             estatistica.NumeroCriancas10a12Anos = lista.Count();
             estatistica.NumeroCriancas10a12AnosPresentes = lista.Count(x => x.ConfirmadoNoEvento);
 

@@ -37,7 +37,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         // POST api/eventos/incluir
         [HttpPost("incluir")]
         [Authorize("Bearer")]
-        public DTOEventoIncluido Post([FromBody] DTOEvento eventoDTO)
+        public DTOId Post([FromBody] DTOEvento eventoDTO)
         {
             return mAppEvento.Incluir(eventoDTO);
         }
@@ -48,14 +48,6 @@ namespace EventoWeb.WS.Secretaria.Controllers
         public void Put(int id, [FromBody] DTOEvento eventoDTO)
         {
             mAppEvento.Atualizar(id, eventoDTO);
-        }
-
-        // PUT api/eventos/concluir/5
-        [HttpPut("concluir/{id}")]
-        [Authorize("Bearer")]
-        public void Put(int id)
-        {
-            mAppEvento.Concluir(id);
         }
 
         // DELETE api/eventos/excluir/5

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using System;
 using System.Net.Mail;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public enum TipoSegurancaEmail { SSL, Nenhuma }
 
-    public class ConfiguracaoEmail
+    public class ConfiguracaoEmail: Entidade
     {
         private String m_EnderecoEmail;
         private String m_UsuarioEmail;
@@ -13,8 +14,21 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         private String m_ServidorEmail;
         private int? m_PortaServidor;
         private TipoSegurancaEmail? m_TipoSeguranca;
-        private String m_TituloEmailConfirmacaoInscricao;
-        private String m_MensagemEmailConfirmacaoInscricao;
+        private ModeloMensagem m_MensagemInscricaoRegistrada;
+        private ModeloMensagem m_MensagemInscricaoConfirmada;
+        private Evento m_Evento;
+
+        public ConfiguracaoEmail(Evento evento)
+        {
+            if (evento == null)
+                throw new ExcecaoNegocioAtributo("ConfiguracaoEmail", "evento", "Evento não informado.");
+
+            m_Evento = evento;
+        }
+
+        protected ConfiguracaoEmail() { }
+
+        public virtual Evento Evento { get => m_Evento; }
 
         public virtual String EnderecoEmail
         {
@@ -66,16 +80,16 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             set { m_TipoSeguranca = value; }
         }
 
-        public virtual String TituloEmailConfirmacaoInscricao
+        public virtual ModeloMensagem MensagemInscricaoRegistrada
         {
-            get { return m_TituloEmailConfirmacaoInscricao; }
-            set { m_TituloEmailConfirmacaoInscricao = value; }
+            get { return m_MensagemInscricaoRegistrada; }
+            set { m_MensagemInscricaoRegistrada = value; }
         }
 
-        public virtual String MensagemEmailConfirmacaoInscricao
+        public virtual ModeloMensagem MensagemInscricaoConfirmada
         {
-            get { return m_MensagemEmailConfirmacaoInscricao; }
-            set { m_MensagemEmailConfirmacaoInscricao = value; }
+            get { return m_MensagemInscricaoConfirmada; }
+            set { m_MensagemInscricaoConfirmada = value; }
         }
 
         public virtual Boolean ConfiguracaoInformada
@@ -90,5 +104,26 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                        m_TipoSeguranca != null;
             }
         }
+    }
+
+    public class ModeloMensagem
+    {
+        private string m_Mensagem;
+        private string m_Assunto;
+
+        public ModeloMensagem(string assunto, string mensagem)
+        {
+            if (string.IsNullOrWhiteSpace(assunto))
+                throw new Excecoes.ExcecaoNegocioAtributo("ModeloMensagem", "assunto", "O assunto deve ser informado.");
+
+            if (string.IsNullOrWhiteSpace(mensagem))
+                throw new Excecoes.ExcecaoNegocioAtributo("ModeloMensagem", "mensagem", "A mensagem deve ser informada.");
+
+            m_Assunto = assunto;
+            m_Mensagem = mensagem;
+        }
+
+        public string Assunto { get => m_Assunto; }
+        public string Mensagem { get => m_Mensagem; }
     }
 }

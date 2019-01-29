@@ -22,7 +22,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (pessoa == null)
                 throw new ArgumentNullException("Pessoa");
 
-            if (!EhValidaIdade(pessoa.CalcularIdadeEmAnos(evento.DataInicioEvento)))
+            if (!EhValidaIdade(pessoa.CalcularIdadeEmAnos(evento.PeriodoRealizacaoEvento.DataInicial)))
                 throw new ArgumentException("A idade da pessoa é inválida para este tipo de inscrição.");
 
             mPessoa = pessoa;
@@ -42,9 +42,6 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             get { return mDataRecebimento; }
             set
             {
-                if (!mEvento.EstaAbertoNestaData(value))
-                    throw new ArgumentException("A data de recebimento deve estar dentro do período de inscrição");
-
                 mDataRecebimento = value;
             }
         }
