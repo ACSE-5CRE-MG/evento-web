@@ -2,7 +2,7 @@ import { Component, Injectable, OnInit } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import { DTOEventoCompleto } from "./objetos";
+import { DTOEventoCompleto, ConfiguracaoSalaEstudo, EnumModeloDivisaoSalasEstudo, ConfiguracaoEvangelizacao, EnumPublicoEvangelizacao, ConfiguracaoSarau, Periodo } from "./objetos";
 import { Alertas } from "../componentes/alertas-dlg/alertas";
 import { WebServiceEventos } from "../webservices/webservice-eventos";
 import { OperacoesImagem } from "../util/util-imagem";
@@ -39,11 +39,75 @@ export class DlgFormEvento implements OnInit {
 
   ngOnInit(): void {
     this.evento = new DTOEventoCompleto();
+    this.evento.PeriodoInscricao = new Periodo();
+    this.evento.PeriodoRealizacao = new Periodo();
     this.evento.DataRegistro = new Date();
   }
 
-  clicarCarregarImagem(): void {
+  public set temSalaEstudo(valor: boolean) {
+    if (valor) {
+      this.evento.ConfiguracaoSalaEstudo = new ConfiguracaoSalaEstudo();
+      this.evento.ConfiguracaoSalaEstudo.ModeloDivisao = EnumModeloDivisaoSalasEstudo.PorIdadeCidade;
+    }
+    else
+      this.evento.ConfiguracaoSalaEstudo = null;            
+  }
 
+  public get temSalaEstudo(): boolean {
+    return this.evento.ConfiguracaoSalaEstudo != null;
+  }
+
+  public set modeloDivisaoSalaEstudo(valor: EnumModeloDivisaoSalasEstudo) {
+    if (this.evento.ConfiguracaoSalaEstudo != null)
+      this.evento.ConfiguracaoSalaEstudo.ModeloDivisao = valor;
+  }
+
+  public get modeloDivisaoSalEstudo(): EnumModeloDivisaoSalasEstudo {
+    return (this.evento.ConfiguracaoSalaEstudo != null ? this.evento.ConfiguracaoSalaEstudo.ModeloDivisao : null);
+  }
+
+  public set temEvangelizacao(valor: boolean) {
+    if (valor) {
+      this.evento.ConfiguracaoEvangelizacao = new ConfiguracaoEvangelizacao();
+      this.evento.ConfiguracaoEvangelizacao.Publico = EnumPublicoEvangelizacao.Todos;
+    }
+    else
+      this.evento.ConfiguracaoEvangelizacao = null;
+  }
+
+  public get temEvangelizacao(): boolean {
+    return this.evento.ConfiguracaoEvangelizacao != null;
+  }
+
+  public set publicoEvangelizacao(valor: EnumPublicoEvangelizacao) {
+    if (this.evento.ConfiguracaoEvangelizacao != null)
+      this.evento.ConfiguracaoEvangelizacao.Publico = valor;
+  }
+
+  public get publicoEvangelizacao(): EnumPublicoEvangelizacao {
+    return (this.evento.ConfiguracaoEvangelizacao != null ? this.evento.ConfiguracaoEvangelizacao.Publico : null);
+  }
+
+  public set temSarau(valor: boolean) {
+    if (valor) {
+      this.evento.ConfiguracaoSarau = new ConfiguracaoSarau();
+      this.evento.ConfiguracaoSarau.TempoDuracaoMin = 0;
+    }
+    else
+      this.evento.ConfiguracaoSarau = null;
+  }
+
+  public get temSarau(): boolean {
+    return this.evento.ConfiguracaoSarau != null;
+  }
+
+  public set tempoDuracaoSarauMin(valor: number) {
+    if (this.evento.ConfiguracaoSarau != null)
+      this.evento.ConfiguracaoSarau.TempoDuracaoMin = valor;
+  }
+
+  public get tempoDuracaoSarauMin(): number {
+    return (this.evento.ConfiguracaoSarau != null ? this.evento.ConfiguracaoSarau.TempoDuracaoMin : null);
   }
 
   processarArquivoEscolhido(arquivoImagem: any): void {
@@ -65,19 +129,19 @@ export class DlgFormEvento implements OnInit {
   clicarSalvar(): void {
     if (this.evento.Nome == null || this.evento.Nome.trim().length == 0)
       this.alertas.alertarAtencao("Você não informou o nome do evento", "");
-    else if (this.evento.DataInicioEvento == null)
+    else if (this.evento.PeriodoRealizacao.DataInicial == null)
       this.alertas.alertarAtencao("Você não informou a data que inicia o evento", "");
-    else if (this.evento.DataFimEvento == null)
+    else if (this.evento.PeriodoRealizacao.DataFinal == null)
       this.alertas.alertarAtencao("Você não informou a data que termina o evento", "");
-    else if (this.evento.DataInicioInscricao == null)
+    else if (this.evento.PeriodoInscricao.DataInicial == null)
       this.alertas.alertarAtencao("Você não informou a data que inicia as inscrições", "");
-    else if (this.evento.DataFimInscricao == null)
+    else if (this.evento.PeriodoInscricao.DataFinal == null)
       this.alertas.alertarAtencao("Você não informou a data que termina as inscrições", "");
-    else if (this.evento.TemEvangelizacao && this.evento.PublicoEvangelizacao == null)
+    else if (this.evento.ConfiguracaoEvangelizacao != null && this.evento.ConfiguracaoEvangelizacao.Publico == null)
       this.alertas.alertarAtencao("Você precisa dizer qual o público da evangelização", "");
-    else if (this.evento.TemSalasEstudo && this.evento.ModeloDivisaoSalaEstudo == null)
+    else if (this.evento.ConfiguracaoSalaEstudo != null && this.evento.ConfiguracaoSalaEstudo.ModeloDivisao == null)
       this.alertas.alertarAtencao("Você precisa dizer qual o modelo de divisão da sala de estudo", "");
-    else if (this.evento.TemSarau && (this.evento.TempoDuracaoSarauMin == null || this.evento.TempoDuracaoSarauMin == 0))
+    else if (this.evento.ConfiguracaoSarau != null && (this.evento.ConfiguracaoSarau.TempoDuracaoMin == null || this.evento.ConfiguracaoSarau.TempoDuracaoMin <= 0))
       this.alertas.alertarAtencao("Você precisa dizer o tempo do duração. Esse tempo deve ser maior que zero", "");
     else {
       let dlg = this.alertas.alertarProcessamento("Salvando evento, aguarde...");

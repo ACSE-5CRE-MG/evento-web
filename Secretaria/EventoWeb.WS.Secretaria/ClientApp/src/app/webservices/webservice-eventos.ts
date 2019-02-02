@@ -4,7 +4,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { WebServiceBase } from './webservice-base';
 import { GestaoAutenticacao } from '../seguranca/gestao-autenticacao';
-import { DTOEventoMinimo, DTOEventoCompleto, DTOEvento, DTOEventoIncluido } from '../evento/objetos';
+import { DTOEventoMinimo, DTOEventoCompleto, DTOEvento, DTOId } from '../evento/objetos';
 
 @Injectable()
 export class WebServiceEventos extends WebServiceBase {
@@ -21,7 +21,7 @@ export class WebServiceEventos extends WebServiceBase {
     return this.executarGet<DTOEventoCompleto>('obter-id/' + id);
   };
 
-  incluir(evento: DTOEvento): Observable<DTOEventoIncluido> {
+  incluir(evento: DTOEvento): Observable<DTOId> {
     return this.executarPost('incluir/', evento);
   }
 

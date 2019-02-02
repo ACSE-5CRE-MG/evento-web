@@ -34,12 +34,12 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
              {
                  c.Access(Accessor.NoSetter);
                  c.Property(o => o.DataInicial, m => {
-                     m.Access(Accessor.NoSetter);
+                     m.Access(Accessor.Property);
                      m.NotNullable(true);
                      m.Column("DATA_INICIO_INSC");
                  });
                  c.Property(o => o.DataFinal, m => {
-                     m.Access(Accessor.NoSetter);
+                     m.Access(Accessor.Property);
                      m.NotNullable(true);
                      m.Column("DATA_FIM_INSC");
                  });
@@ -49,12 +49,12 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
             {
                 c.Access(Accessor.NoSetter);
                 c.Property(o => o.DataInicial, m => {
-                    m.Access(Accessor.NoSetter);
+                    m.Access(Accessor.Property);
                     m.NotNullable(true);
                     m.Column("DATA_INICIO_EVENTO");
                 });
                 c.Property(o => o.DataFinal, m => {
-                    m.Access(Accessor.NoSetter);
+                    m.Access(Accessor.Property);
                     m.NotNullable(true);
                     m.Column("DATA_FIM_EVENTO");
                 });

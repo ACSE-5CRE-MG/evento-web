@@ -16,47 +16,46 @@ export enum EnumModeloDivisaoSalasEstudo {
 
 export class DTOEvento {
   public Nome: string;
-  public DataInicioInscricao: String;
-  public DataFimInscricao: String;
+  public PeriodoInscricao: Periodo;
+  public PeriodoRealizacao: Periodo;
   public Logotipo: string;
-  public EnderecoEmail: String;
-  public UsuarioEmail: String;
-  public SenhaEmail: String;
-  public ServidorEmail: String;
-  public PortaServidor: number;
-  public TipoSeguranca: String;
-  public TituloEmailConfirmacaoInscricao: String;
-  public MensagemEmailConfirmacaoInscricao: String;
-  public ValorInscricao: number;
-  public DataFimEvento: string;
-  public DataInicioEvento: string;
   public TemDepartamentalizacao: Boolean;
-  public TemSalasEstudo: Boolean;
   public TemOficinas: Boolean;
   public TemDormitorios: Boolean;
-  public TemEvangelizacao: Boolean;
-  public PublicoEvangelizacao: EnumPublicoEvangelizacao;
-  public TemSarau: Boolean;
-  public TempoDuracaoSarauMin: number;
-  public ModeloDivisaoSalaEstudo: EnumModeloDivisaoSalasEstudo;
+  public ConfiguracaoEvangelizacao: ConfiguracaoEvangelizacao;
+  public ConfiguracaoSalaEstudo: ConfiguracaoSalaEstudo;
+  public ConfiguracaoSarau: ConfiguracaoSarau;
+}
+
+export class Periodo {
+  public DataInicial: Date;
+  public DataFinal: Date;
+}
+
+export class ConfiguracaoEvangelizacao {
+  public Publico: EnumPublicoEvangelizacao;
+}
+
+export class ConfiguracaoSarau {
+  public TempoDuracaoMin: number;
+}
+export class ConfiguracaoSalaEstudo {
+  public ModeloDivisao: EnumModeloDivisaoSalasEstudo;
 }
 
 export class DTOEventoCompleto extends DTOEvento {
   public Id: number;
-  public Situacao: SituacaoEvento;
   public DataRegistro: Date;
   public PodeAlterar: Boolean;
 }
 
 export class DTOEventoMinimo {
-  public id: number;
-  public dataInicioInscricao: Date;
-  public dataFimInscricao: Date;
-  public situacao: SituacaoEvento;
-  public nome: string;
-  public logotipo: string;
+  public Id: number;
+  public PeriodoInscricao: Periodo;
+  public Nome: string;
+  public Logotipo: string;
 }
 
-export class DTOEventoIncluido {
-  public idEvento: number;
+export class DTOId {
+  public Id: number;
 }

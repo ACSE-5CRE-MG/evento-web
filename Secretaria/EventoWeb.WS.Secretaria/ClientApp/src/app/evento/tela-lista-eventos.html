@@ -15,14 +15,14 @@
     </div>
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="listagem">
       <div fxFlex="20" fxFlex.xs="100" fxLayout="column" class="item-evento" *ngFor="let evento of eventos">
-        <h2>{{evento.nome}}</h2>
+        <h2>{{evento.Nome}}</h2>
         <h3>
-          Inscrições: {{evento.dataInicioInscricao | date:'shortDate'}} à {{evento.dataFimInscricao | date:'shortDate'}}
+          Inscrições: {{evento.PeriodoInscricao.DataInicial | date:'shortDate'}} à {{evento.PeriodoInscricao.DataFinal | date:'shortDate'}}
         </h3>
         <img [src]="obterImagem(evento)" alt="Imagem do evento">
         <mat-divider></mat-divider>
         <button mat-button (click)="clicarExcluir(evento)">EXCLUIR</button>
-        <a mat-button [routerLink]="'/evento/' + evento.id">GERENCIAR</a>
+        <a mat-button [routerLink]="'/evento/' + evento.Id">GERENCIAR</a>
       </div>
     </div>
   </layout-geral>

@@ -11,6 +11,10 @@ namespace EventoWeb.BancoDados.Migracoes
     {
         public override void Down()
         {
+            Delete.Table("SALAS_ESTUDO");
+            Delete.Table("AFRACS");
+            Delete.Table("DEPARTAMENTOS");
+            Delete.Table("CONFIGURACOES_EMAIL");
             Delete.Table("EVENTOS");
             Delete.Table("USUARIOS");
         }
@@ -29,18 +33,18 @@ namespace EventoWeb.BancoDados.Migracoes
         {
             Create.Table("EVENTOS")
                 .WithColumn("ID_EVENTO").AsInt32().PrimaryKey().Identity()
-                .WithColumn("NOME").AsString(100).NotNullable()
+                .WithColumn("NOME").AsString(250).NotNullable()
                 .WithColumn("DATA_INICIO_INSC").AsDateTime().NotNullable()
                 .WithColumn("DATA_FIM_INSC").AsDateTime().NotNullable()
                 .WithColumn("DATA_INICIO_EVENTO").AsDateTime().NotNullable()
                 .WithColumn("DATA_FIM_EVENTO").AsDateTime().NotNullable()
                 .WithColumn("DATA_REGISTRO").AsDateTime().NotNullable()
-                .WithColumn("LOGOTIPO").AsString(Int32.MaxValue)
+                .WithColumn("LOGOTIPO").AsString(Int32.MaxValue).Nullable()
                 .WithColumn("TEM_DEPARTAMENTALIZACAO").AsInt16().NotNullable()
-                .WithColumn("MODELO_DIV_SL_ESTUDO").AsInt16().NotNullable()
+                .WithColumn("MODELO_DIV_SL_ESTUDO").AsInt16().Nullable()
                 .WithColumn("TEM_OFICINAS").AsInt16().NotNullable()
                 .WithColumn("TEM_DORMITORIOS").AsInt16().NotNullable()
-                .WithColumn("PUBLICO_EVANGELIZACAO").AsInt16()
+                .WithColumn("PUBLICO_EVANGELIZACAO").AsInt16().Nullable()
                 .WithColumn("TEMPO_SARAU_MIN").AsInt32().Nullable();
         }
 
@@ -60,8 +64,8 @@ namespace EventoWeb.BancoDados.Migracoes
                     .WithColumn("PAR_TOTAL_PARTICIPANTES").AsInt16().NotNullable().WithDefaultValue(0)
                     .WithColumn("ID_EVENTO").AsInt32().NotNullable()
                         .ForeignKey("FK_EVENTO_SALA", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
-                    .WithColumn("IDADE_MAX").AsInt32()
-                    .WithColumn("IDADE_MIN").AsInt32()
+                    .WithColumn("IDADE_MAX").AsInt32().Nullable()
+                    .WithColumn("IDADE_MIN").AsInt32().Nullable()
                     .WithColumn("NOME").AsString(250).NotNullable();                
         }
 
@@ -72,9 +76,9 @@ namespace EventoWeb.BancoDados.Migracoes
                     .WithColumn("ID_AFRAC").AsInt32().PrimaryKey().Identity()
                     .WithColumn("PAR_TOTAL_PARTICIPANTES").AsInt16().NotNullable().WithDefaultValue(0)
                     .WithColumn("ID_EVENTO").AsInt32().NotNullable()
-                        .ForeignKey("FK_EVENTO_SALA", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
+                        .ForeignKey("FK_EVENTO_AFRAC", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
                     .WithColumn("NOME").AsString(250).NotNullable()
-                    .WithColumn("NUM_MAX_PARTICIPANTES").AsInt32();
+                    .WithColumn("NUM_MAX_PARTICIPANTES").AsInt32().Nullable();
         }
 
         private void CriarTabelaDepartamentos()
@@ -83,7 +87,7 @@ namespace EventoWeb.BancoDados.Migracoes
                 .Table("DEPARTAMENTOS")
                     .WithColumn("ID_DEPARTAMENTO").AsInt32().PrimaryKey().Identity()
                     .WithColumn("ID_EVENTO").AsInt32().NotNullable()
-                        .ForeignKey("FK_EVENTO_SALA", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
+                        .ForeignKey("FK_EVENTO_DEP", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
                     .WithColumn("NOME").AsString(250).NotNullable();
         }
 
@@ -93,7 +97,7 @@ namespace EventoWeb.BancoDados.Migracoes
                 .Table("CONFIGURACOES_EMAIL")
                     .WithColumn("ID_CONFIGURACAO_EMAIL").AsInt32().PrimaryKey().Identity()
                     .WithColumn("ID_EVENTO").AsInt32().NotNullable()
-                        .ForeignKey("FK_EVENTO_SALA", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
+                        .ForeignKey("FK_EVENTO_CNFEMAIL", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
                     .WithColumn("ENDERECO_EMAIL").AsString(150).Nullable()
                     .WithColumn("USUARIO_EMAIL").AsString(100).Nullable()
                     .WithColumn("SENHA_EMAIL").AsString(100).Nullable()

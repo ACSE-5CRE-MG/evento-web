@@ -35,50 +35,50 @@
       </div>
       <div>
         <mat-form-field class="margem-direita">
-          <input matInput placeholder="Data/Hora Inicial Inscrição" [(ngModel)]="evento.DataInicioInscricao" [matDatetimepicker]="calDataInicialInsc" />
+          <input matInput placeholder="Data/Hora Inicial Inscrição" [(ngModel)]="evento.PeriodoInscricao.DataInicial" [matDatetimepicker]="calDataInicialInsc" />
           <mat-datetimepicker-toggle [for]="calDataInicialInsc" matSuffix></mat-datetimepicker-toggle>
           <mat-datetimepicker #calDataInicialInsc type="datetime" timeInterval="5"></mat-datetimepicker>
         </mat-form-field>
         <mat-form-field class="margem-direita">
-          <input matInput [matDatetimepicker]="calDataFinalInsc" placeholder="Data/Hora Final Inscrição" [(ngModel)]="evento.DataFimInscricao">
+          <input matInput [matDatetimepicker]="calDataFinalInsc" placeholder="Data/Hora Final Inscrição" [(ngModel)]="evento.PeriodoInscricao.DataFinal">
           <mat-datetimepicker-toggle matSuffix [for]="calDataFinalInsc"></mat-datetimepicker-toggle>
           <mat-datetimepicker #calDataFinalInsc type="datetime" timeInterval="5"></mat-datetimepicker>
         </mat-form-field>
       </div>
       <div>
         <mat-form-field class="margem-direita">
-          <input matInput [matDatetimepicker]="calDataInicialEvento" placeholder="Data Inicial Evento" [(ngModel)]="evento.DataInicioEvento">
+          <input matInput [matDatetimepicker]="calDataInicialEvento" placeholder="Data Inicial Evento" [(ngModel)]="evento.PeriodoRealizacao.DataInicial">
           <mat-datetimepicker-toggle matSuffix [for]="calDataInicialEvento"></mat-datetimepicker-toggle>
           <mat-datetimepicker #calDataInicialEvento type="datetime" timeInterval="5"></mat-datetimepicker>
         </mat-form-field>
         <mat-form-field class="margem-direita">
-          <input matInput [matDatetimepicker]="calDataFinalEvento" placeholder="Data Final Evento" [(ngModel)]="evento.DataFimEvento">
+          <input matInput [matDatetimepicker]="calDataFinalEvento" placeholder="Data Final Evento" [(ngModel)]="evento.PeriodoRealizacao.DataFinal">
           <mat-datetimepicker-toggle matSuffix [for]="calDataFinalEvento"></mat-datetimepicker-toggle>
           <mat-datetimepicker #calDataFinalEvento type="datetime" timeInterval="5"></mat-datetimepicker>
         </mat-form-field>
       </div>
       <div>
-        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemSalasEstudo">Tem Salas Estudo?</mat-checkbox>
+        <mat-checkbox class="margem-direita" [(ngModel)]="temSalaEstudo">Tem Salas Estudo?</mat-checkbox>
         <mat-form-field>
-          <mat-select placeholder="Modelo Divisão" [(ngModel)]="evento.ModeloDivisaoSalaEstudo" [disabled]="!evento.TemSalasEstudo">
+          <mat-select placeholder="Modelo Divisão" [(ngModel)]="modeloDivisaoSalaEstudo" [disabled]="!temSalaEstudo">
             <mat-option value="0">Por Idade e Cidade</mat-option>
             <mat-option value="1">Por Ordem de Escolha definida na Inscrição</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <div>
-        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemEvangelizacao">Tem Evangelização?</mat-checkbox>
+        <mat-checkbox class="margem-direita" [(ngModel)]="temEvangelizacao">Tem Evangelização?</mat-checkbox>
         <mat-form-field>
-          <mat-select placeholder="Público Evangelização" [(ngModel)]="evento.PublicoEvangelizacao" [disabled]="!evento.TemEvangelizacao">
+          <mat-select placeholder="Público Evangelização" [(ngModel)]="publicoEvangelizacao" [disabled]="!temEvangelizacao">
             <mat-option value="0">Todos</mat-option>
             <mat-option value="1">Apenas para Trabalhadores e Participantes/Trabalhadores</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
       <div>
-        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemSarau">Tem Sarau?</mat-checkbox>
+        <mat-checkbox class="margem-direita" [(ngModel)]="temSarau">Tem Sarau?</mat-checkbox>
         <mat-form-field>
-          <input matInput placeholder="Tempo Sarau(min)" [textMask]="mascaraNumero" [(ngModel)]="evento.TempoDuracaoSarauMin" [disabled]="!evento.TemSarau">
+          <input matInput placeholder="Tempo Sarau(min)" [textMask]="mascaraNumero" [(ngModel)]="tempoDuracaoSarauMin" [disabled]="!temSarau">
         </mat-form-field>
       </div>
       <div>

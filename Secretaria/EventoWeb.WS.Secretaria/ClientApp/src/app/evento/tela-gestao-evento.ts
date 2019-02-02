@@ -10,7 +10,7 @@ import { DTOEventoCompleto } from './objetos';
 })
 export class TelaGestaoEvento implements OnInit {
 
-  evento: DTOEventoCompleto;
+  evento: DTOEventoCompleto = new DTOEventoCompleto();
 
   constructor(public wsEventos: WebServiceEventos, public mensageria: Alertas, public roteador: ActivatedRoute) { }
 

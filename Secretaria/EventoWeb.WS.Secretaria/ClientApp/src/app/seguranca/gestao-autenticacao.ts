@@ -50,7 +50,7 @@ export class Usuario {
   name: string;
   picture: Data;
   imagem64: string;
-  tokenApi: string;
+  TokenApi: string;
 }
 
 export class Data {

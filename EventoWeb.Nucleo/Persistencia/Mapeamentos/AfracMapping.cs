@@ -44,7 +44,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
             this.Property(x => x.NumeroTotalParticipantes, m =>
             {
                 m.Access(Accessor.NoSetter);
-                m.NotNullable(true);
+                m.NotNullable(false);
                 m.Column("NUM_MAX_PARTICIPANTES");
             });
 

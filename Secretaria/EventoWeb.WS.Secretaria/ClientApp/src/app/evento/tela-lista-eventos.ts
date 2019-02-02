@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { WebServiceEventos } from '../webservices/webservice-eventos';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
-import { DTOEventoMinimo, DTOEventoIncluido } from './objetos';
+import { DTOEventoMinimo } from './objetos';
 import { ServicoDlgFormEvento } from './dlg-form-evento';
 
 import { Router, ActivatedRoute } from '@angular/router';
@@ -50,7 +50,7 @@ export class TelaListaEventos implements OnInit {
   }
 
   obterImagem(evento: DTOEventoMinimo): string {
-    return OperacoesImagem.obterImagemOuSemImagem(evento.logotipo);
+    return OperacoesImagem.obterImagemOuSemImagem(evento.Logotipo);
   }
 
   clicarExcluir(evento: DTOEventoMinimo): void {
@@ -58,10 +58,10 @@ export class TelaListaEventos implements OnInit {
       .subscribe((retorno) => {
         if (retorno.result == "sim") {
           let dlg = this.alertas.alertarProcessamento("Processando exclusão...");
-          this.wsEventos.excluir(evento.id)
+          this.wsEventos.excluir(evento.Id)
             .subscribe((resposta) => {
 
-              this.eventos = this.eventos.filter(x => x.id != evento.id);
+              this.eventos = this.eventos.filter(x => x.Id != evento.Id);
               dlg.close();
             },
             (erro) => {

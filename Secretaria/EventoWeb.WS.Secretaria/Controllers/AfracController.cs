@@ -10,14 +10,10 @@ namespace EventoWeb.WS.Secretaria.Controllers
     public class AfracController : ControllerBase
     {
         private AppAfracs mAppAfracs;
-        //private ConversorInscricaoDTOInscricaoBasico mConversorInscricaoBasico;
 
         public AfracController(IContexto contexto)
         {
             mAppAfracs = new AppAfracs(contexto);
-            /*mRepositorioEvento = contexto.Eventos;
-            mRepositorioInscricoes = contexto.Inscricoes;
-            mConversorInscricaoBasico = new ConversorInscricaoDTOInscricaoBasico();*/
         }
 
         // GET api/afrac/obter/1
