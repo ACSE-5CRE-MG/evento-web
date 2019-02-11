@@ -7,7 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
-import { Observable } from 'rxjs';
+import { AgGridModule } from 'ag-grid-angular';
 
 import {
   MatCardModule,
@@ -63,6 +63,9 @@ import { DlgFormEvento, ServicoDlgFormEvento } from './evento/dlg-form-evento';
 import { TelaGestaoEvento } from './evento/tela-gestao-evento';
 
 import { ConfiguracaoSistemaService, Configuracao } from './configuracao-sistema-service';
+import { TelaListagemSalas } from './sala-estudo/tela-listagem-salas';
+import { TelaRoteamentoEvento } from './evento/tela-roteamento-evento';
+import { WebServiceSala } from './webservices/webservice-salas';
 
 declare function require(url: string);
 
@@ -73,7 +76,8 @@ registerLocaleData(localePt);
     CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
     TelaPrincipal,
     TelaLogin,    
-    TelaListaEventos, DlgFormEvento, TelaGestaoEvento
+    TelaListaEventos, DlgFormEvento, TelaGestaoEvento, TelaRoteamentoEvento,
+    TelaListagemSalas
   ],
   imports: [
     BrowserModule,
@@ -104,19 +108,27 @@ registerLocaleData(localePt);
     MatDatetimepickerModule,
     FlexLayoutModule,
     TextMaskModule,
+    AgGridModule.withComponents([]),
     CookieModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: TelaListaEventos, canActivate: [PermissaoAcessoRota] },
       { path: 'login', component: TelaLogin },
-      { path: 'evento/:id', component: TelaGestaoEvento, canActivate: [PermissaoAcessoRota] },
+      {
+        path: 'evento/:id', component: TelaRoteamentoEvento, canActivate: [PermissaoAcessoRota],
+        children: [
+          { path: '', component: TelaGestaoEvento, canActivate: [PermissaoAcessoRota] },
+          { path: 'salas', component: TelaListagemSalas, canActivate: [PermissaoAcessoRota] }
+        ]
+      },
       { path: '** ', redirectTo: '' }
     ])
   ],
   entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
-    TelaListaEventos, DlgFormEvento],
+    TelaListaEventos, DlgFormEvento, TelaRoteamentoEvento,
+    TelaListagemSalas],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' }, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
-    WebServiceAutenticacao, WebServiceEventos],
+    WebServiceAutenticacao, WebServiceEventos, WebServiceSala],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule

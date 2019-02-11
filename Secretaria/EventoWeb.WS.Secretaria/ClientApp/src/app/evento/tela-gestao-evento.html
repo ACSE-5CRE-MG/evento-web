@@ -1,25 +1,19 @@
 <layout-geral>
-  <mat-toolbar layout-geral-cabecalho color="accent">
-    <span class="cursor-pointer">{{evento.Nome}} - Painel de Controle</span>
-    <span style="flex: 1 1 auto;"></span>
-    <button mat-button (click)="clicarEditar()" style="margin-right:20px">
-      <span class="fas fa-pencil-alt"></span>
-      Alterar
+  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
+    <button mat-button>
+      <span class="fas fa-pencil-alt fa-7x"></span>
+      <br />
+      <span>Dados Evento</span>
     </button>
-    <menu-usuario></menu-usuario>
-  </mat-toolbar>
-  <layout-geral>
-    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px">
-      <a mat-button>
-        <span class="fas fa-chalkboard fa-7x"></span>
-        <br />
-        <span>Salas de Estudo</span>
-      </a>
-      <a mat-button>
-        <span class="fas fa-search-dollar fa-7x"></span>
-        <br />
-        <span>Tabela de preços</span>
-      </a>
-    </div>
-  </layout-geral>
+    <a mat-button>
+      <span class="fas fa-chalkboard fa-7x"></span>
+      <br />
+      <span>Salas de Estudo</span>
+    </a>
+    <a mat-button>
+      <span class="fas fa-search-dollar fa-7x"></span>
+      <br />
+      <span>Tabela de preços</span>
+    </a>
+  </div>
 </layout-geral>

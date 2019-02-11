@@ -27,6 +27,8 @@
     "@fortawesome/fontawesome-free": "^5.6.3",
     "@mat-datetimepicker/core": "^2.0.1",
     "@mat-datetimepicker/moment": "^2.0.1",
+    "ag-grid-angular": "^20.0.0",
+    "ag-grid-community": "^20.0.0",
     "angular2-text-mask": "^9.0.0",
     "core-js": "^2.5.4",
     "moment": "^2.22.2",
