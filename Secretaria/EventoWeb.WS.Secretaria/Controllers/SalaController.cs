@@ -19,7 +19,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
         [Authorize("Bearer")]
         [HttpGet("obter")]
-        public Object GetObter(int id)
+        public DTOSalaEstudo GetObter(int id)
         {
             var sala = mAppSalasEstudo.ObterPorId(id);
             return sala;

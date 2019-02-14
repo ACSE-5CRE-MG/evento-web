@@ -1,10 +1,29 @@
-﻿<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8" />
-    <title></title>
-</head>
-<body>
-
-</body>
-</html>
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div><h1>{{titulo}}</h1></div>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-icon-button cdkFocusInitial (click)="clicarSalvar()" matTooltip="Permite salvar esta sala de estudo"><i class="fa fa-save"></i></button>
+    <button mat-icon-button mat-dialog-close matTooltip="Permite fechar esta tela"><i class="fa fa-times"></i></button>
+  </mat-toolbar>
+  <div fxLayout="column" fxLayout.lt-md="column" class="formulario">
+    <div>
+      <mat-form-field style="width:100%">
+        <input matInput placeholder="Nome" [(ngModel)]="sala.Nome">
+      </mat-form-field>
+    </div>
+    <div>
+      <div fxLayout="row" fxLayout.lt-md="column">
+        <mat-checkbox class="margem-direita" [(ngModel)]="usaFaixaEtaria"  [disabled]="!podeUsarFaixaEtaria">Tem Faixa Etária definida?</mat-checkbox>
+        <mat-form-field>
+          <input matInput placeholder="Min." [textMask]="mascaraNumero" [(ngModel)]="sala.IdadeMinima" [disabled]="!usaFaixaEtaria || !podeUsarFaixaEtaria">
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Máx." [textMask]="mascaraNumero" [(ngModel)]="sala.IdadeMaxima" [disabled]="!usaFaixaEtaria || !podeUsarFaixaEtaria">
+        </mat-form-field>
+      </div>
+    </div>
+    <div>
+      <mat-checkbox [(ngModel)]="sala.DeveSerParNumeroTotalParticipantes">Número de participantes deve ser par?</mat-checkbox>
+    </div>
+  </div>
+</layout-geral>
