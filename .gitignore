@@ -10,3 +10,6 @@
 /Secretaria/EventoWeb.WS.Secretaria/obj
 /EventoWeb.BancoDados/bin/Debug/netcoreapp2.1
 /EventoWeb.BancoDados/obj
+/EventoWeb.WS.Inscricao/bin/Debug/netcoreapp2.1
+/EventoWeb.WS.Inscricao/obj
+/Secretaria/web-iu/node_modules
