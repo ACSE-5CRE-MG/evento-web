@@ -1,0 +1,24 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div fxLayout="column" class="sistema">
+      <span>Inscrições</span>
+      <span class="versao">Versão: 1.0.0</span>
+    </div>
+    <span style="flex: 1 1 auto;"></span>
+    <button type="button" mat-raised-button [routerLink]="'/acompanhar'">Acompanhar Inscrição</button>
+  </mat-toolbar>
+  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="listagem" fxLayoutAlign="center center" >
+    <div fxFlex="20" fxFlex.lt-lg="30" fxFlex.xs="100" fxLayout="column" class="item-evento" *ngFor="let evento of eventos">
+      <img [src]="obterImagem(evento)" alt="Imagem do evento">
+      <h2>{{evento.Nome}}</h2>
+      <h3>
+        Inscrições: {{evento.PeriodoInscricao.DataInicial | date:'shortDate'}} à {{evento.PeriodoInscricao.DataFinal | date:'shortDate'}}
+      </h3>
+      <h3>
+        Realização: {{evento.PeriodoRealizacao.DataInicial | date:'shortDate'}} à {{evento.PeriodoRealizacao.DataFinal | date:'shortDate'}}
+      </h3>
+      <mat-divider></mat-divider>
+      <a mat-button [routerLink]="'/criarinscricao/' + evento.Id">INSCREVER-SE</a>
+    </div>
+  </div>
+</layout-geral>

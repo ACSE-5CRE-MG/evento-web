@@ -1,0 +1,40 @@
+<div mat-dialog-container>
+  <mat-toolbar *ngIf="style==1" color="primary" class="mat-elevation-z2">
+    {{title}}
+  </mat-toolbar>
+  <div fxLayout="row" fxLayoutGap="5px">
+    <div class="imagem">
+      <i class="fas fa-info-circle fa-3x" *ngIf="tipoAlerta == 0"></i>
+      <i class="fas fa-exclamation-triangle fa-3x" *ngIf="tipoAlerta == 1"></i>
+      <i class="fas fa-times-circle fa-3x" *ngIf="tipoAlerta == 2"></i>
+      <i class="fas fa-question-circle fa-3x" *ngIf="tipoAlerta == 3"></i>
+    </div>
+    <div>
+      <div class="message">
+        <p>
+          {{message}}
+        </p>
+      </div>
+      <div class="info" *ngIf="information!==''">
+        <p>{{information}}</p>
+      </div>
+    </div>
+  </div>
+  <div style="padding: 5px;float:right">
+    <div *ngIf="button==0">
+      <button mat-stroked-button (click)="onOk()" tabindex="-1">OK</button>
+    </div>
+    <div *ngIf="button==1">
+      <button mat-stroked-button (click)="onOk()" tabindex="-1">OK</button>
+      <button mat-stroked-button (click)="onCancel()" tabindex="-1">CANCELAR</button>
+    </div>
+    <div *ngIf="button==2">
+      <button mat-stroked-button (click)="onYes()" tabindex="-1">SIM</button>
+      <button mat-stroked-button (click)="onNo()" tabindex="-1">NÃO</button>
+    </div>
+    <div *ngIf="button==3">
+      <button mat-stroked-button (click)="onAccept()" tabindex="-1">ACEITAR</button>
+      <button mat-stroked-button (click)="onReject()" tabindex="-1">REJEITAR</button>
+    </div>
+  </div>
+</div>
