@@ -6,7 +6,10 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\app\inscricao\tela-criacao-inscricao.ts" />
+    <None Remove="ClientApp\src\app\inscricao\tela-pesquisa-inscricao.ts" />
+    <None Remove="ClientApp\src\app\principal\objetos.ts" />
     <None Remove="ClientApp\src\app\principal\tela-principal.ts" />
+    <None Remove="ClientApp\src\app\webservices\wsEventos.ts" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { DTOEventoListagem } from './objetos';
+import { WsEventos } from '../webservices/wsEventos';
+import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 
 @Component({
   selector: 'tela-principal',
@@ -9,34 +12,25 @@ export class TelaPrincipal implements OnInit {
 
   eventos: DTOEventoListagem[];
 
+  constructor(private wsEventos: WsEventos, private coordenacao: CoordenacaoCentral) { }
+
   ngOnInit(): void {
 
     this.eventos = [];
 
-    let evento = new DTOEventoListagem();
-    evento.Id = 1;
-    evento.Logotipo = "";
-    evento.Nome = "Evento 1";
-    evento.PeriodoInscricao = new Periodo();
-    evento.PeriodoInscricao.DataFinal = new Date();
-    evento.PeriodoInscricao.DataInicial = new Date();
-    evento.PeriodoRealizacao = new Periodo();
-    evento.PeriodoRealizacao.DataFinal = new Date();
-    evento.PeriodoRealizacao.DataInicial = new Date();
+    let dlg = this.coordenacao.Alertas.alertarProcessamento("Carregando eventos disponíveis...");
 
-    this.eventos.push(evento);
-
-    evento = new DTOEventoListagem();
-    evento.Id = 2;
-    evento.Logotipo = "";
-    evento.Nome = "Evento 2";
-    evento.PeriodoInscricao = new Periodo();
-    evento.PeriodoInscricao.DataFinal = new Date();
-    evento.PeriodoInscricao.DataInicial = new Date();
-    evento.PeriodoRealizacao = new Periodo();
-    evento.PeriodoRealizacao.DataFinal = new Date();
-    evento.PeriodoRealizacao.DataInicial = new Date();
-    this.eventos.push(evento);
+    this.wsEventos.listarEventosDisponiveisInscricao()
+      .subscribe(
+        (eventosRetornados) => {
+          this.eventos = eventosRetornados;
+          dlg.close();
+        },
+        (excecao) => {
+          dlg.close();
+          this.coordenacao.ProcessamentoErro.processar(excecao);
+        }
+      );
   }
 
   public obterImagem(evento: DTOEventoListagem): string {
@@ -45,17 +39,4 @@ export class TelaPrincipal implements OnInit {
     else
       return evento.Logotipo;
   }
-}
-
-export class DTOEventoListagem {
-  public Id: number;
-  public PeriodoInscricao: Periodo;
-  public PeriodoRealizacao: Periodo;
-  public Nome: string;
-  public Logotipo: string;
-}
-
-export class Periodo {
-  public DataInicial: Date;
-  public DataFinal: Date;
 }

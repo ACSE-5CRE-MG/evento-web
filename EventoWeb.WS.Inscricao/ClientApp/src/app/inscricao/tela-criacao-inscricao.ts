@@ -7,7 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TelaCriacaoInscricao implements OnInit {  
 
-  ngOnInit(): void {
+  dadosTela: DadosTela;
 
+  ngOnInit(): void {
+    this.dadosTela = new DadosTela();
+    this.dadosTela.descricaoEvento = "<Evento>"
   }
+}
+
+class DadosTela {
+  nome: string;
+  dataNascimento: Date;
+  email: string;
+  descricaoEvento: string;
 }

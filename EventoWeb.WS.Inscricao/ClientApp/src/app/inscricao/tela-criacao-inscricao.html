@@ -1,1 +1,26 @@
-Teste
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div fxLayout="column" class="sistema">
+      <span>Inscrever-se</span>
+      <span class="versao">{{dadosTela.descricaoEvento}}</span>
+    </div>
+    <span style="flex: 1 1 auto;"></span>
+    <button type="button" mat-raised-button>
+      Continuar
+    </button>
+  </mat-toolbar>
+  <div fxLayout="column" fxLayoutGap="5px">
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Nome:</label>
+      <dx-text-box [(value)]="dadosTela.nome" fxFlex="80"></dx-text-box>
+    </div>
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Nascimento:</label>
+      <dx-date-box [(value)]="dadosTela.dataNascimento" type="date"></dx-date-box>
+    </div>
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">E-mail:</label>
+      <dx-text-box [(value)]="dadosTela.email" fxFlex="80"></dx-text-box>
+    </div>
+  </div>
+</layout-geral>
