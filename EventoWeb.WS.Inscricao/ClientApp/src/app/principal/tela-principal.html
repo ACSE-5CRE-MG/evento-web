@@ -11,8 +11,8 @@
     <i class="fas fa-bullhorn fa-7x"></i>
     <span class="dx-overlay-wrapper">Não há eventos disponíveis hoje.</span>
   </div>
-  <div *ngIf="eventos.length > 0" fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="listagem" fxLayoutAlign="center center">
-    <div fxFlex="20" fxFlex.lt-lg="30" fxFlex.xs="100" fxLayout="column" class="item-evento" *ngFor="let evento of eventos">
+  <div *ngIf="eventos.length > 0" fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="margem-5px" fxLayoutAlign="center center">
+    <div fxFlex="20" fxFlex.lt-lg="30" fxFlex.xs="100" fxLayout="column" class="cartao" *ngFor="let evento of eventos" style="height: 390px">
       <img [src]="obterImagem(evento)" alt="Imagem do evento">
       <h2>{{evento.Nome}}</h2>
       <h3>

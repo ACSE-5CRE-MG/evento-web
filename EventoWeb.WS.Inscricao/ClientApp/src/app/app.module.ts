@@ -43,6 +43,8 @@ import { TelaCriacaoInscricao } from './inscricao/tela-criacao-inscricao';
 import { TelaPesquisaInscricao } from './inscricao/tela-pesquisa-inscricao';
 import { WsEventos } from './webservices/wsEventos';
 
+declare function require(url: string);
+
 registerLocaleData(localePt);
 
 let ptMessages = require("devextreme/localization/messages/pt.json");

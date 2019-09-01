@@ -5,11 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\inscricao\objetos.ts" />
     <None Remove="ClientApp\src\app\inscricao\tela-criacao-inscricao.ts" />
     <None Remove="ClientApp\src\app\inscricao\tela-pesquisa-inscricao.ts" />
     <None Remove="ClientApp\src\app\principal\objetos.ts" />
     <None Remove="ClientApp\src\app\principal\tela-principal.ts" />
     <None Remove="ClientApp\src\app\webservices\wsEventos.ts" />
+    <None Remove="ClientApp\src\app\webservices\wsInscricoes.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +26,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Update="ClientApp\src\app\inscricao\objetos.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Update="ClientApp\src\app\webservices\wsInscricoes.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
   </ItemGroup>
 
 </Project>

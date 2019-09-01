@@ -4,6 +4,7 @@ export class DTOEventoListagem {
   public PeriodoRealizacao: Periodo;
   public Nome: string;
   public Logotipo: string;
+  public IdadeMinima: number;
 }
 
 export class Periodo {

@@ -5,22 +5,42 @@
       <span class="versao">{{dadosTela.descricaoEvento}}</span>
     </div>
     <span style="flex: 1 1 auto;"></span>
-    <button type="button" mat-raised-button>
+    <button type="button" mat-raised-button (click)="clicarContinuar()">
       Continuar
     </button>
-  </mat-toolbar>
-  <div fxLayout="column" fxLayoutGap="5px">
-    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-      <label class="label_campos" fxFlex="106px">Nome:</label>
-      <dx-text-box [(value)]="dadosTela.nome" fxFlex="80"></dx-text-box>
+  </mat-toolbar>  
+  <dx-validation-group ngIf="!dadosTela.confirmandoEmail"  name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center" fxLayoutAlign.xs="start start">
+    <div class="cartao margem-5px" fxFlex="70" fxFlex.xs="100" fxLayout="column" fxLayoutGap="5px">
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Nome:</label>
+        <dx-text-box [(value)]="dadosTela.nome" fxFlex="80">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou o nome."></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Nascimento:</label>
+        <dx-date-box [(value)]="dadosTela.dataNascimento" type="date">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou o nome a data de nascimento"></dxi-validation-rule>
+            <dxi-validation-rule type="range" [max]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no mínimo, de {{dadosTela.idadeMinima}} anos"></dxi-validation-rule>
+          </dx-validator>
+        </dx-date-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">E-mail:</label>
+        <dx-text-box [(value)]="dadosTela.email" fxFlex="80">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou o e-mail."></dxi-validation-rule>
+            <dxi-validation-rule type="email" message="Você informou um email que não é válido"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </div>
     </div>
-    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-      <label class="label_campos" fxFlex="106px">Nascimento:</label>
-      <dx-date-box [(value)]="dadosTela.dataNascimento" type="date"></dx-date-box>
-    </div>
-    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-      <label class="label_campos" fxFlex="106px">E-mail:</label>
-      <dx-text-box [(value)]="dadosTela.email" fxFlex="80"></dx-text-box>
-    </div>
+  </dx-validation-group>
+
+  <div ngIf="dadosTela.confirmandoEmail" fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center" fxLayoutAlign.xs="start start">
+
   </div>
-</layout-geral>
+  </layout-geral>

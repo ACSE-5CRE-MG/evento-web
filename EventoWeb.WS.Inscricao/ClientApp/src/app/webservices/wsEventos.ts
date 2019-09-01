@@ -38,4 +38,22 @@ export class WsEventos {
     });
   }
 
+  public obter(idEvento: number): Observable<DTOEventoListagem> {
+    return new Observable<DTOEventoListagem>((x) => {
+
+      let evento = new DTOEventoListagem();
+      evento.Id = 1;
+      evento.Logotipo = "";
+      evento.Nome = "Evento 1";
+      evento.PeriodoInscricao = new Periodo();
+      evento.PeriodoInscricao.DataFinal = new Date();
+      evento.PeriodoInscricao.DataInicial = new Date();
+      evento.PeriodoRealizacao = new Periodo();
+      evento.PeriodoRealizacao.DataFinal = new Date();
+      evento.PeriodoRealizacao.DataInicial = new Date();
+      evento.IdadeMinima = 13;
+
+      x.next(evento);
+    });
+  }
 }
