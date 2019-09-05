@@ -1,0 +1,37 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div fxLayout="column" class="sistema">
+      <span>Acessar Inscrição</span>
+      <span class="versao">{{dadosTela.dadosInscricao.NomeEvento}}</span>
+    </div>
+    <span style="flex: 1 1 auto;"></span>
+    <button type="button" mat-raised-button (click)="clicarContinuar()">
+      Continuar
+    </button>
+  </mat-toolbar>
+  <div fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
+    <div class="cartao margem-5px" fxFlex="50" fxFlex.xs="95">
+      <div fxLayout="column">
+        <mat-card-title>Validação de acesso a inscrição</mat-card-title>
+        <mat-card-subtitle>{{"Inscrição de " + dadosTela.dadosInscricao.NomeInscrito}}</mat-card-subtitle>
+      </div>
+      <mat-divider></mat-divider>
+      <div fxLayout="column" fxLayoutGap="5px" fxFill>
+        <div class="margem-5px">
+          Foi enviado um email para <strong>{{dadosTela.dadosInscricao.Email}}</strong> com o código para acessar a inscrição. Por favor, verifique a sua caixa de email e nos informe o código recebido para poder acessar sua inscrição.
+        </div>
+        <mat-divider></mat-divider>
+        <div>
+          <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Código:</label>
+            <dx-text-box [(value)]="codigo" fxFlex="200px">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou o código."></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </dx-validation-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</layout-geral>

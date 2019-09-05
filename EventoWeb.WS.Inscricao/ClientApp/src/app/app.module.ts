@@ -12,7 +12,8 @@ import {
   MatDialogModule,
   MatToolbarModule,
   MatButtonModule,
-  MatDividerModule
+  MatDividerModule,
+  MatCardModule
 } from '@angular/material';
 
 import {
@@ -42,6 +43,8 @@ import { CoordenacaoCentral } from './componentes/central/coordenacao-central';
 import { TelaCriacaoInscricao } from './inscricao/tela-criacao-inscricao';
 import { TelaPesquisaInscricao } from './inscricao/tela-pesquisa-inscricao';
 import { WsEventos } from './webservices/wsEventos';
+import { WsInscricoes } from './webservices/wsInscricoes';
+import { TelaCodigoInscricao } from './inscricao/tela-codigo-inscricao';
 
 declare function require(url: string);
 
@@ -53,7 +56,7 @@ locale('pt');
 
 @NgModule({
   declarations: [
-    TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao,
+    TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao, TelaCodigoInscricao,
     CaixaMensagemDlg, DlgEmProcessamento, LayoutGeral,
   ],
   imports: [
@@ -64,6 +67,7 @@ locale('pt');
     MatToolbarModule,
     MatButtonModule,
     MatDividerModule,
+    MatCardModule,
     DxDataGridModule,
     DxTextBoxModule,
     DxNumberBoxModule,
@@ -79,13 +83,14 @@ locale('pt');
     RouterModule.forRoot([
       { path: '', component: TelaPrincipal },
       { path: 'comecar/:idevento', component: TelaCriacaoInscricao },
-      { path: 'pesquisar', component: TelaPesquisaInscricao }
+      { path: 'pesquisar', component: TelaPesquisaInscricao },
+      { path: 'validar/:idinscricao', component: TelaCodigoInscricao }
     ]),
     BrowserAnimationsModule
   ],
   entryComponents: [CaixaMensagemDlg, DlgEmProcessamento],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' },
-    CoordenacaoCentral, WsEventos
+    CoordenacaoCentral, WsEventos, WsInscricoes
   ],
   bootstrap: [TelaBase]
 })

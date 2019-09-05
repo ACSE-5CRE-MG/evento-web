@@ -9,11 +9,11 @@
       Continuar
     </button>
   </mat-toolbar>  
-  <dx-validation-group ngIf="!dadosTela.confirmandoEmail"  name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center" fxLayoutAlign.xs="start start">
-    <div class="cartao margem-5px" fxFlex="70" fxFlex.xs="100" fxLayout="column" fxLayoutGap="5px">
+  <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center" fxLayoutAlign.xs="start start">
+    <div class="cartao margem-5px" fxFlex="70" fxFlex.xs="95" fxLayout="column" fxLayoutGap="5px">
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
         <label class="label_campos" fxFlex="106px">Nome:</label>
-        <dx-text-box [(value)]="dadosTela.nome" fxFlex="80">
+        <dx-text-box [(value)]="dadosTela.nome" fxFlex="100">
           <dx-validator>
             <dxi-validation-rule type="required" message="Você não informou o nome."></dxi-validation-rule>
           </dx-validator>
@@ -27,20 +27,29 @@
             <dxi-validation-rule type="range" [max]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no mínimo, de {{dadosTela.idadeMinima}} anos"></dxi-validation-rule>
           </dx-validator>
         </dx-date-box>
+        <label class="label_campos">Sexo:</label>
+        <dx-radio-group [items]="this.dadosTela.sexos"
+                        [(value)]="this.dadosTela.sexoEscolhido"
+                        layout="horizontal">
+        </dx-radio-group>
       </div>
-      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-        <label class="label_campos" fxFlex="106px">E-mail:</label>
-        <dx-text-box [(value)]="dadosTela.email" fxFlex="80">
-          <dx-validator>
-            <dxi-validation-rule type="required" message="Você não informou o e-mail."></dxi-validation-rule>
-            <dxi-validation-rule type="email" message="Você informou um email que não é válido"></dxi-validation-rule>
-          </dx-validator>
-        </dx-text-box>
+      <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <label class="label_campos" fxFlex="106px">E-mail:</label>
+          <dx-text-box [(value)]="dadosTela.email" fxFlex="60">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="Você não informou o e-mail."></dxi-validation-rule>
+              <dxi-validation-rule type="email" message="Você informou um email que não é válido"></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <div class="label_campos" fxFlex="106px"></div>
+          <div>
+            Você precisa informar um e-mail válido, pois para ele será enviado informações sobre o evento, bem como o código para permitir acesso ao andamento e alterações na sua inscrição.
+          </div>          
+        </div>
       </div>
     </div>
   </dx-validation-group>
-
-  <div ngIf="dadosTela.confirmandoEmail" fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center" fxLayoutAlign.xs="start start">
-
-  </div>
-  </layout-geral>
+</layout-geral>

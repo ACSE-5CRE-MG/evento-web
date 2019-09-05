@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 import { WsEventos } from '../webservices/wsEventos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { WsInscricoes } from '../webservices/wsInscricoes';
-import { DTODadosConfirmacao } from './objetos';
+import { DTODadosConfirmacao, EnumSexo } from './objetos';
 
 @Component({
   selector: 'tela-criacao-inscricao',
@@ -18,12 +18,14 @@ export class TelaCriacaoInscricao implements OnInit {
   @ViewChild("grupoValidacao", { static: false })
   grupoValidacao: DxValidationGroupComponent;
 
-  constructor(private rotaAtual: ActivatedRoute, private coordenacao: CoordenacaoCentral, private wsEventos: WsEventos, private wsInscricoes: WsInscricoes) { }
+  constructor(private rotaAtual: ActivatedRoute, private coordenacao: CoordenacaoCentral,
+    private wsEventos: WsEventos, private wsInscricoes: WsInscricoes, private navegadorUrl: Router) { }
 
   ngOnInit(): void {
     this.dadosTela = new DadosTela();
     this.dadosTela.descricaoEvento = "<Evento>";
-    this.dadosTela.confirmandoEmail = false;
+    this.dadosTela.sexos = ["Feminino", "Masculino"];
+    this.dadosTela.sexoEscolhido = this.dadosTela.sexos[0];
 
     let dlg = this.coordenacao.Alertas.alertarProcessamento("Carregando dados...");
 
@@ -54,34 +56,29 @@ export class TelaCriacaoInscricao implements OnInit {
 
   public clicarContinuar(): void {
      
-    if (!this.dadosTela.confirmandoEmail) {
-      let resultadoValidacao = this.grupoValidacao.instance.validate();
-      if (!resultadoValidacao.isValid)
-        this.coordenacao.Alertas.alertarAtencao("Nâo deu para continuar!!", "Ops, acho que alguns dados informados não estão legais!");
-      else {
-
-        let dlg = this.coordenacao.Alertas.alertarProcessamento("Criando inscrição...");
-
-        this.wsInscricoes.criar(this.dadosTela.idEvento, {
-          DataNascimento: this.dadosTela.dataNascimento,
-          Email: this.dadosTela.email,
-          Nome: this.dadosTela.nome
-        })
-          .subscribe(
-            (confirmacao) => {
-              this.dadosTela.dadosConfirmacao = confirmacao;
-              this.dadosTela.confirmandoEmail = true;
-              dlg.close();
-            },
-            (erro) => {
-              dlg.close();
-              this.coordenacao.ProcessamentoErro.processar(erro);
-            }
-          );
-      }
-    }
+    let resultadoValidacao = this.grupoValidacao.instance.validate();
+    if (!resultadoValidacao.isValid)
+      this.coordenacao.Alertas.alertarAtencao("Nâo deu para continuar!!", "Ops, acho que alguns dados informados não estão legais!");
     else {
 
+      let dlg = this.coordenacao.Alertas.alertarProcessamento("Criando inscrição...");
+
+      this.wsInscricoes.criar(this.dadosTela.idEvento, {
+        DataNascimento: this.dadosTela.dataNascimento,
+        Email: this.dadosTela.email,
+        Nome: this.dadosTela.nome,
+        Sexo: (this.dadosTela.sexoEscolhido[0] == this.dadosTela.sexoEscolhido ? EnumSexo.Feminino : EnumSexo.Masculino)
+      })
+        .subscribe(
+          (confirmacao) => {
+            dlg.close();
+            this.navegadorUrl.navigate(['validar/' + confirmacao.IdInscricao]);
+          },
+          (erro) => {
+            dlg.close();
+            this.coordenacao.ProcessamentoErro.processar(erro);
+          }
+        );
     }
   }
 }
@@ -94,6 +91,7 @@ class DadosTela {
   dataMinimaNascimento: Date;
   idadeMinima: number;
   idEvento: number;
-  confirmandoEmail: Boolean;
   dadosConfirmacao: DTODadosConfirmacao;
+  sexos: string[];
+  sexoEscolhido: string;
 }
