@@ -3,7 +3,7 @@ import { DxValidationGroupComponent } from 'devextreme-angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 import { WsInscricoes } from '../webservices/wsInscricoes';
-import { DTOAcessoInscricao } from './objetos';
+import { DTOBasicoInscricao } from './objetos';
 
 @Component({
   selector: 'tela-codigo-inscricao',
@@ -20,7 +20,8 @@ export class TelaCodigoInscricao implements OnInit {
   ngOnInit(): void {
     this.dadosTela = new DadosTela();
     this.dadosTela.codigo = "";
-    this.dadosTela.dadosInscricao = new DTOAcessoInscricao();
+    this.dadosTela.dadosInscricao = new DTOBasicoInscricao();
+    this.dadosTela.inscricaoEncontrada = false;
 
     let dlg = this.coordenacao.Alertas.alertarProcessamento("Carregando dados...");
 
@@ -29,12 +30,14 @@ export class TelaCodigoInscricao implements OnInit {
         (parametrosUrl) => {
           let idInscricao = parametrosUrl["idinscricao"];
 
-          this.wsInscricoes.obterDadosAcesso(idInscricao)
+          this.wsInscricoes.obterBasicoInscricao(idInscricao)
             .subscribe(
-              (dadosEvento) => {
-                this.dadosTela.dadosInscricao = dadosEvento;
-
+              (dadosInscricao) => {
                 dlg.close();
+                if (dadosInscricao != null) {
+                  this.dadosTela.dadosInscricao = dadosInscricao;
+                  this.dadosTela.inscricaoEncontrada = true;
+                }
               },
               (erro) => {
                 dlg.close();
@@ -50,11 +53,30 @@ export class TelaCodigoInscricao implements OnInit {
 
   public clicarContinuar(): void {
 
-    this.grupoValidacao.instance.validate().isValid;
+    let resultadoValidacao = this.grupoValidacao.instance.validate();
+    if (!resultadoValidacao.isValid)
+      this.coordenacao.Alertas.alertarAtencao("Nâo deu para continuar!!", "Ops, acho que alguns dados informados não estão legais!");
+    else {
+      let dlg = this.coordenacao.Alertas.alertarProcessamento("Acessando...");
+
+      this.wsInscricoes.validarAcessoInscricao(this.dadosTela.dadosInscricao.IdInscricao, this.dadosTela.codigo)
+        .subscribe(
+          (autenticacao) => {
+            dlg.close();
+            this.coordenacao.AutorizacoesInscricao.adicionar(autenticacao.IdInscricao, autenticacao.Autorizacao);
+            this.navegadorUrl.navigate(['inscricao/' + autenticacao.IdInscricao]);
+          },
+          (erro) => {
+            dlg.close();
+            this.coordenacao.ProcessamentoErro.processar(erro);
+          }
+        );
+    }
   }
 }
 
 class DadosTela {
   codigo: string;
-  dadosInscricao: DTOAcessoInscricao;
+  inscricaoEncontrada: boolean;
+  dadosInscricao: DTOBasicoInscricao;
 }

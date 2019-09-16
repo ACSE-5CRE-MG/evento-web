@@ -1,0 +1,207 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <button type="button" mat-raised-button (click)="clicarVoltar()">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <div fxLayout="column" class="sistema">
+      <span>Sua Inscrição</span>
+      <span class="versao">evento</span>
+    </div>
+    <span style="flex: 1 1 auto;"></span>
+    <button type="button" mat-raised-button (click)="clicarAtualizar()">
+      Atualizar
+    </button>
+  </mat-toolbar>
+  <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutAlign="center start">
+    <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
+      <mat-card-title>Dados Inscrição</mat-card-title>
+      <mat-divider></mat-divider>
+      <dx-validation-group id="grupoValidacaoEssencial" name="grupoValidacaoEssencial" #grupoValidacaoEssencial fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
+        <div class="margem-5px" fxFlex="100" fxLayout="column" fxLayoutGap="5px">
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Tipo Inscrição:</label>
+            <dx-radio-group [items]="coordenacao.TiposInscricao"
+                            [(value)]="dadosTela.tipoInscricao"
+                            layout="horizontal">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não escolheu o tipo de inscrição."></dxi-validation-rule>
+              </dx-validator>
+            </dx-radio-group>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Nome:</label>
+            <dx-text-box [(value)]="dadosTela.nome" fxFlex="100">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou o nome."></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+          <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+              <label class="label_campos" fxFlex="106px">Nascimento:</label>
+              <dx-date-box [(value)]="dadosTela.dataNascimento" type="date">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="Você não informou o nome a data de nascimento"></dxi-validation-rule>
+                  <dxi-validation-rule type="range" [max]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no mínimo, de {{dadosTela.idadeMinima}} anos"></dxi-validation-rule>
+                </dx-validator>
+              </dx-date-box>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+              <label class="label_campos" fxFlex.xs="106px">Sexo:</label>
+              <dx-radio-group [items]="coordenacao.Sexos"
+                              [(value)]="this.dadosTela.sexoEscolhido"
+                              layout="horizontal">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="Você não escolheu o sexo."></dxi-validation-rule>
+                </dx-validator>
+              </dx-radio-group>
+            </div>
+          </div>
+          <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
+            <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+              <label class="label_campos" fxFlex="106px">E-mail:</label>
+              <dx-text-box [(value)]="dadosTela.email" fxFlex="60">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="Você não informou o e-mail."></dxi-validation-rule>
+                  <dxi-validation-rule type="email" message="Você informou um email que não é válido"></dxi-validation-rule>
+                </dx-validator>
+              </dx-text-box>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+              <div class="label_campos" fxFlex="106px"></div>
+              <div>
+                Você precisa informar um e-mail válido, pois para ele será enviado informações sobre o evento, bem como o código para permitir acesso ao andamento e alterações na sua inscrição.
+              </div>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Cidade/UF:</label>
+            <dx-text-box [(value)]="dadosTela.cidade" fxFlex="80">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou a Cidade."></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+            <dx-select-box [dataSource]="coordenacao.EstadosFederacao"
+                           [searchMode]="'contains'"
+                           [searchTimeout]="200"
+                           [minSearchLength]="0"
+                           [searchEnabled]="true"
+                           [(value)]="dadosTela.uf"
+                           fxFlex="20">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou a UF."></dxi-validation-rule>
+              </dx-validator>
+            </dx-select-box>
+          </div>
+        </div>
+      </dx-validation-group>
+      <mat-divider></mat-divider>
+      <div class="margem-5px" fxFlex="100" fxLayout="column" fxLayoutGap="5px">
+        <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <div fxFlex="106px"></div>
+          <dx-check-box [(value)]="dadosTela.ehVegetariano" text="É Vegetariano?"></dx-check-box>
+          <dx-check-box [(value)]="dadosTela.usaAdocanteDiariamente" text="Usa adoçante diariamente?"></dx-check-box>
+          <dx-check-box [(value)]="dadosTela.ehDiabetico" text="É diabético?"></dx-check-box>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <label class="label_campos" fxFlex="106px">Carnes que você não come:</label>
+          <dx-text-box [(value)]="dadosTela.carnesNaoCome" fxFlex="100">
+          </dx-text-box>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <label class="label_campos" fxFlex="106px">Alimentos que você tem alergia:</label>
+          <dx-text-box [(value)]="dadosTela.alimentosAlergia" fxFlex="100">
+          </dx-text-box>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <label class="label_campos" fxFlex="106px">Medicamentos que você usa:</label>
+          <dx-text-box [(value)]="dadosTela.medicamentosUsa" fxFlex="100">
+          </dx-text-box>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <dx-validation-group id="grupoValidacaoEspirita" name="grupoValidacaoEspirita" #grupoValidacaoEspirita fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
+        <div class="margem-5px" fxFlex="100" fxLayout="column" fxLayoutGap="5px">
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Centro Espírita:</label>
+            <dx-text-box [(value)]="dadosTela.centroEspirita" fxFlex="100">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou o Centro Espírita que frequenta."></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Tempo que é espírita:</label>
+            <dx-text-box [(value)]="dadosTela.tempoEspirita" fxFlex="40">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou o tempo que é espírita."></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+            <dx-check-box [(value)]="dadosTela.primeiroEncontro"
+                          [width]="80"
+                          fxFlex="40"
+                          text="Primeiro Encontro?"></dx-check-box>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Nome Responsável Casa Espírita:</label>
+            <dx-text-box [(value)]="dadosTela.nomeResponsavelCentro" fxFlex="100">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou o responsável pela Casa Espírita ou pela reunião que você frequenta."></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Telefone Responsável Casa Espírita:</label>
+            <dx-text-box [(value)]="dadosTela.telefoneResponsavelCentro" fxFlex="60">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou o telefone do responsável pela Casa Espírita ou pela reunião que você frequenta."></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+          <mat-divider></mat-divider>
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Nome Responsável Legal:</label>
+            <dx-text-box [(value)]="dadosTela.nomeResponsavelLegal" fxFlex="100" [disabled]="dadosTela.idade < 18">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou o nome do responsável legal por você. Precisamos dessa informação já que você ainda não tem 18 anos."></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Telefone Responsável Legal:</label>
+            <dx-text-box [(value)]="dadosTela.telefoneResponsavelLegal" fxFlex="60" [disabled]="dadosTela.idade < 18">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou o telefone do responsável legal por você. Precisamos dessa informação já que você ainda não tem 18 anos."></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+        </div>
+      </dx-validation-group>
+    </div>
+    <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
+      <mat-card-title>Participação em Atividades</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-tab-group>
+        <mat-tab label="Oficinas">
+          Content 1
+        </mat-tab>
+        <mat-tab label="Estudo">
+          Content 2
+        </mat-tab>
+        <mat-tab label="Sarau">
+          Content 3
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
+      <mat-card-title>Crianças que você será responsável</mat-card-title>
+      <mat-divider></mat-divider>
+      Infantil
+    </div>
+    <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
+      <mat-card-title>Financeiro</mat-card-title>
+      <mat-divider></mat-divider>
+      Financeiro
+    </div>
+  </div>
+</layout-geral>

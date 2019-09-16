@@ -13,7 +13,8 @@ import {
   MatToolbarModule,
   MatButtonModule,
   MatDividerModule,
-  MatCardModule
+  MatCardModule,
+  MatTabsModule
 } from '@angular/material';
 
 import {
@@ -28,7 +29,8 @@ import {
   DxPopoverModule,
   DxTextAreaModule,
   DxValidatorModule,
-  DxValidationGroupModule
+  DxValidationGroupModule,
+  DxSelectBoxModule
 } from 'devextreme-angular';
 
 import { locale, loadMessages } from 'devextreme/localization';
@@ -45,6 +47,9 @@ import { TelaPesquisaInscricao } from './inscricao/tela-pesquisa-inscricao';
 import { WsEventos } from './webservices/wsEventos';
 import { WsInscricoes } from './webservices/wsInscricoes';
 import { TelaCodigoInscricao } from './inscricao/tela-codigo-inscricao';
+import { TelaInscricao } from './inscricao/tela-inscricao';
+import { PermissaoAcessoInscricao } from './permissao-acesso-inscricao';
+import { WsManutencaoInscricoes } from './webservices/wsManutencaoInscricoes';
 
 declare function require(url: string);
 
@@ -56,7 +61,7 @@ locale('pt');
 
 @NgModule({
   declarations: [
-    TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao, TelaCodigoInscricao,
+    TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao, TelaCodigoInscricao, TelaInscricao,
     CaixaMensagemDlg, DlgEmProcessamento, LayoutGeral,
   ],
   imports: [
@@ -68,6 +73,7 @@ locale('pt');
     MatButtonModule,
     MatDividerModule,
     MatCardModule,
+    MatTabsModule,
     DxDataGridModule,
     DxTextBoxModule,
     DxNumberBoxModule,
@@ -80,17 +86,20 @@ locale('pt');
     DxTextAreaModule,
     DxValidatorModule,
     DxValidationGroupModule,
+    DxSelectBoxModule,
     RouterModule.forRoot([
       { path: '', component: TelaPrincipal },
       { path: 'comecar/:idevento', component: TelaCriacaoInscricao },
       { path: 'pesquisar', component: TelaPesquisaInscricao },
-      { path: 'validar/:idinscricao', component: TelaCodigoInscricao }
+      { path: 'validar/:idinscricao', component: TelaCodigoInscricao },
+      { path: 'inscricao/:idinscricao', component: TelaInscricao, canActivate: [PermissaoAcessoInscricao], },
+      { path: '**', redirectTo: '' }
     ]),
     BrowserAnimationsModule
   ],
   entryComponents: [CaixaMensagemDlg, DlgEmProcessamento],
   providers: [{ provide: LOCALE_ID, useValue: 'pt' },
-    CoordenacaoCentral, WsEventos, WsInscricoes
+    CoordenacaoCentral, WsEventos, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao
   ],
   bootstrap: [TelaBase]
 })

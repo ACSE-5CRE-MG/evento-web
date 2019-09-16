@@ -1,1 +1,35 @@
-Pesquisa de inscrição
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div fxLayout="column" class="sistema">
+      <span>Pesquisar Inscrição</span>
+    </div>
+    <span style="flex: 1 1 auto;"></span>
+    <button type="button" mat-raised-button (click)="clicarContinuar()">
+      Continuar
+    </button>
+  </mat-toolbar>
+  <div fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
+    <div class="cartao margem-5px" fxFlex="50" fxFlex.xs="95">
+      <div fxLayout="column">
+        <mat-card-title>Pesquisar pela identificação da inscrição</mat-card-title>
+      </div>
+      <mat-divider></mat-divider>
+      <div fxLayout="column" fxLayoutGap="5px" fxFill>
+        <div class="margem-5px">
+          Ao fazer sua inscrição, você recebeu um email com a identificação da inscrição. Por favor, informe essa identificação pra poder acessar a sua ficha de inscrição!
+        </div>
+        <mat-divider></mat-divider>
+        <div>
+          <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Identificação:</label>
+            <dx-text-box [(value)]="identificacao" fxFlex="200px">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou a identificação."></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </dx-validation-group>
+        </div>
+      </div>
+    </div>
+  </div>
+</layout-geral>

@@ -5,11 +5,20 @@
       <span class="versao">{{dadosTela.dadosInscricao.NomeEvento}}</span>
     </div>
     <span style="flex: 1 1 auto;"></span>
-    <button type="button" mat-raised-button (click)="clicarContinuar()">
+    <button type="button" mat-raised-button (click)="clicarContinuar()" *ngIf="dadosTela.inscricaoEncontrada">
       Continuar
     </button>
   </mat-toolbar>
-  <div fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
+  <div *ngIf="!dadosTela.inscricaoEncontrada" fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center">
+    <div fxLayout="column" class="margem-5px" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <i class="fas fa-file-contract fa-7x"></i>
+      <div>
+        Não conseguimos encontrar a inscrição que você escolheu!!
+      </div>
+      <a mat-raised-button [routerLink]="'../../pesquisar'">Voltar</a>
+    </div>
+  </div>
+  <div *ngIf="dadosTela.inscricaoEncontrada" fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
     <div class="cartao margem-5px" fxFlex="50" fxFlex.xs="95">
       <div fxLayout="column">
         <mat-card-title>Validação de acesso a inscrição</mat-card-title>

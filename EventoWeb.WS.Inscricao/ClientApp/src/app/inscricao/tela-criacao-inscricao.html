@@ -5,12 +5,31 @@
       <span class="versao">{{dadosTela.descricaoEvento}}</span>
     </div>
     <span style="flex: 1 1 auto;"></span>
-    <button type="button" mat-raised-button (click)="clicarContinuar()">
+    <button type="button" mat-raised-button (click)="clicarContinuar()" *ngIf="dadosTela.eventoEncontrado">
       Continuar
     </button>
-  </mat-toolbar>  
-  <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center" fxLayoutAlign.xs="start start">
+  </mat-toolbar>
+  <div *ngIf="!dadosTela.eventoEncontrado" fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center">
+    <div fxLayout="column" class="margem-5px" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <i class="fas fa-users fa-7x"></i>
+      <div>
+        Não conseguimos encontrar o evento que você escolheu!!
+      </div>
+      <a mat-raised-button [routerLink]="''">Voltar</a>
+    </div>
+  </div>
+  <dx-validation-group *ngIf="dadosTela.eventoEncontrado" name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
     <div class="cartao margem-5px" fxFlex="70" fxFlex.xs="95" fxLayout="column" fxLayoutGap="5px">
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Tipo Inscrição:</label>
+        <dx-radio-group [items]="coordenacao.TiposInscricao"
+                        [(value)]="dadosTela.tipoInscricao"
+                        layout="horizontal">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não escolheu o tipo de inscrição."></dxi-validation-rule>
+          </dx-validator>
+        </dx-radio-group>
+      </div>
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
         <label class="label_campos" fxFlex="106px">Nome:</label>
         <dx-text-box [(value)]="dadosTela.nome" fxFlex="100">
@@ -19,19 +38,26 @@
           </dx-validator>
         </dx-text-box>
       </div>
-      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-        <label class="label_campos" fxFlex="106px">Nascimento:</label>
-        <dx-date-box [(value)]="dadosTela.dataNascimento" type="date">
-          <dx-validator>
-            <dxi-validation-rule type="required" message="Você não informou o nome a data de nascimento"></dxi-validation-rule>
-            <dxi-validation-rule type="range" [max]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no mínimo, de {{dadosTela.idadeMinima}} anos"></dxi-validation-rule>
-          </dx-validator>
-        </dx-date-box>
-        <label class="label_campos">Sexo:</label>
-        <dx-radio-group [items]="this.dadosTela.sexos"
-                        [(value)]="this.dadosTela.sexoEscolhido"
-                        layout="horizontal">
-        </dx-radio-group>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+          <label class="label_campos" fxFlex="106px">Nascimento:</label>
+          <dx-date-box [(value)]="dadosTela.dataNascimento" type="date">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="Você não informou o nome a data de nascimento"></dxi-validation-rule>
+              <dxi-validation-rule type="range" [max]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no mínimo, de {{dadosTela.idadeMinima}} anos"></dxi-validation-rule>
+            </dx-validator>
+          </dx-date-box>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+          <label class="label_campos" fxFlex.xs="106px">Sexo:</label>
+          <dx-radio-group [items]="coordenacao.Sexos"
+                          [(value)]="this.dadosTela.sexoEscolhido"
+                          layout="horizontal">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="Você não escolheu o sexo."></dxi-validation-rule>
+            </dx-validator>
+          </dx-radio-group>
+        </div>
       </div>
       <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
@@ -47,8 +73,27 @@
           <div class="label_campos" fxFlex="106px"></div>
           <div>
             Você precisa informar um e-mail válido, pois para ele será enviado informações sobre o evento, bem como o código para permitir acesso ao andamento e alterações na sua inscrição.
-          </div>          
+          </div>
         </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Cidade/UF:</label>
+        <dx-text-box [(value)]="dadosTela.cidade" fxFlex="80">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou a Cidade."></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+        <dx-select-box [dataSource]="coordenacao.EstadosFederacao"
+                       [searchMode]="'contains'"
+                       [searchTimeout]="200"
+                       [minSearchLength]="0"
+                       [searchEnabled]="true"
+                       [(value)]="dadosTela.uf"
+                       fxFlex="20">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou a UF."></dxi-validation-rule>
+          </dx-validator>
+        </dx-select-box>
       </div>
     </div>
   </dx-validation-group>

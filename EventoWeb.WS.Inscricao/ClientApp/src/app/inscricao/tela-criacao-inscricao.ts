@@ -4,7 +4,7 @@ import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 import { WsEventos } from '../webservices/wsEventos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { WsInscricoes } from '../webservices/wsInscricoes';
-import { DTODadosConfirmacao, EnumSexo } from './objetos';
+import { DTODadosConfirmacao, EnumSexo, EnumTipoInscricao } from './objetos';
 
 @Component({
   selector: 'tela-criacao-inscricao',
@@ -18,14 +18,17 @@ export class TelaCriacaoInscricao implements OnInit {
   @ViewChild("grupoValidacao", { static: false })
   grupoValidacao: DxValidationGroupComponent;
 
-  constructor(private rotaAtual: ActivatedRoute, private coordenacao: CoordenacaoCentral,
+  constructor(private rotaAtual: ActivatedRoute, public coordenacao: CoordenacaoCentral,
     private wsEventos: WsEventos, private wsInscricoes: WsInscricoes, private navegadorUrl: Router) { }
 
   ngOnInit(): void {
     this.dadosTela = new DadosTela();
-    this.dadosTela.descricaoEvento = "<Evento>";
-    this.dadosTela.sexos = ["Feminino", "Masculino"];
-    this.dadosTela.sexoEscolhido = this.dadosTela.sexos[0];
+    this.dadosTela.descricaoEvento = "";
+    this.dadosTela.sexoEscolhido = this.coordenacao.Sexos[0];
+    this.dadosTela.dataMinimaNascimento = new Date();
+    this.dadosTela.idadeMinima = 0;
+    this.dadosTela.idEvento = -1;
+    this.dadosTela.eventoEncontrado = false;
 
     let dlg = this.coordenacao.Alertas.alertarProcessamento("Carregando dados...");
 
@@ -37,11 +40,15 @@ export class TelaCriacaoInscricao implements OnInit {
           this.wsEventos.obter(idEvento)
             .subscribe(
               (dadosEvento) => {
-                this.dadosTela.descricaoEvento = dadosEvento.Nome;
-                this.dadosTela.dataMinimaNascimento = dadosEvento.PeriodoRealizacao.DataInicial;
-                this.dadosTela.dataMinimaNascimento.setFullYear(this.dadosTela.dataMinimaNascimento.getFullYear() - dadosEvento.IdadeMinima);
-                this.dadosTela.idadeMinima = dadosEvento.IdadeMinima;
-                this.dadosTela.idEvento = idEvento;
+
+                if (dadosEvento != null) {
+                  this.dadosTela.descricaoEvento = dadosEvento.Nome;
+                  this.dadosTela.dataMinimaNascimento = dadosEvento.PeriodoRealizacao.DataInicial;
+                  this.dadosTela.dataMinimaNascimento.setFullYear(this.dadosTela.dataMinimaNascimento.getFullYear() - dadosEvento.IdadeMinima);
+                  this.dadosTela.idadeMinima = dadosEvento.IdadeMinima;
+                  this.dadosTela.idEvento = idEvento;
+                  this.dadosTela.eventoEncontrado = true;
+                }
 
                 dlg.close();
               },
@@ -67,7 +74,10 @@ export class TelaCriacaoInscricao implements OnInit {
         DataNascimento: this.dadosTela.dataNascimento,
         Email: this.dadosTela.email,
         Nome: this.dadosTela.nome,
-        Sexo: (this.dadosTela.sexoEscolhido[0] == this.dadosTela.sexoEscolhido ? EnumSexo.Feminino : EnumSexo.Masculino)
+        Sexo: (this.dadosTela.sexoEscolhido[0] == this.dadosTela.sexoEscolhido ? EnumSexo.Feminino : EnumSexo.Masculino),
+        TipoInscricao: (this.coordenacao.TiposInscricao[0] == this.dadosTela.tipoInscricao ? EnumTipoInscricao.Participante : EnumTipoInscricao.ParticipanteTrabalhador),
+        Cidade: this.dadosTela.cidade,
+        UF: this.dadosTela.uf
       })
         .subscribe(
           (confirmacao) => {
@@ -92,6 +102,9 @@ class DadosTela {
   idadeMinima: number;
   idEvento: number;
   dadosConfirmacao: DTODadosConfirmacao;
-  sexos: string[];
   sexoEscolhido: string;
+  tipoInscricao: string;
+  cidade: string;
+  uf: string;
+  eventoEncontrado: boolean;
 }

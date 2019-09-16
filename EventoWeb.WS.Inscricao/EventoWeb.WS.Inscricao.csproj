@@ -8,11 +8,17 @@
     <None Remove="ClientApp\src\app\inscricao\objetos.ts" />
     <None Remove="ClientApp\src\app\inscricao\tela-codigo-inscricao.ts" />
     <None Remove="ClientApp\src\app\inscricao\tela-criacao-inscricao.ts" />
+    <None Remove="ClientApp\src\app\inscricao\tela-inscricao.ts" />
     <None Remove="ClientApp\src\app\inscricao\tela-pesquisa-inscricao.ts" />
     <None Remove="ClientApp\src\app\principal\objetos.ts" />
     <None Remove="ClientApp\src\app\principal\tela-principal.ts" />
     <None Remove="ClientApp\src\app\webservices\wsEventos.ts" />
     <None Remove="ClientApp\src\app\webservices\wsInscricoes.ts" />
+    <None Remove="ClientApp\src\app\webservices\wsManutencaoInscricoes.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\permissao-acesso-inscricao.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +40,9 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Update="ClientApp\src\app\webservices\wsInscricoes.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Update="ClientApp\src\app\webservices\wsManutencaoInscricoes.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>
   </ItemGroup>
