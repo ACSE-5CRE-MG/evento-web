@@ -63,10 +63,10 @@ export class TelaInscricao implements OnInit {
                   this.dadosTela.nomeResponsavelLegal = this.inscricao.NomeResponsavelLegal;
                   this.dadosTela.telefoneResponsavelLegal = this.inscricao.TelefoneResponsavelLegal;
 
-                  this.dadosTela.dataMinimaNascimento = this.inscricao.Evento.PeriodoRealizacao.DataInicial;
+                  this.dadosTela.dataMinimaNascimento = new Date(this.inscricao.Evento.PeriodoRealizacao.DataInicial);
                   this.dadosTela.dataMinimaNascimento.setFullYear(this.dadosTela.dataMinimaNascimento.getFullYear() - this.inscricao.Evento.IdadeMinima);
 
-                  this.dadosTela.dataInicioEvento = this.inscricao.Evento.PeriodoRealizacao.DataInicial;
+                  this.dadosTela.dataInicioEvento = new Date(this.inscricao.Evento.PeriodoRealizacao.DataInicial);
                 }
                 else
                   this.voltar(idInscricao);
@@ -96,7 +96,7 @@ export class TelaInscricao implements OnInit {
 
       let resultadoValidacaoEspirita = this.grupoValidacaoEspirita.instance.validate();
       if (!resultadoValidacaoEspirita.isValid)
-        mensagemAtencao = mensagemAtencao + "Há informações sobre a casa espírita " + (this.dadosTela.Idade < 18 ? " ou do seu representante legal" : "") +
+        mensagemAtencao = mensagemAtencao + "Há informações sobre a casa espírita " + (this.dadosTela.idade < 18 ? " ou do seu representante legal" : "") +
           " que não foram informadas. Sem essas informações a secretaria do evento não poderá analisar e liberar a sua inscrição. Continuar mesmo assim?";
 
       if (mensagemAtencao != "") {
@@ -156,7 +156,7 @@ class DadosTela {
   telefoneResponsavelLegal: string;
   dataInicioEvento: Date;
 
-  get Idade(): number {
+  get idade(): number {
     if (this.dataInicioEvento == null || this.dataNascimento == null)
       return 0;
     else {

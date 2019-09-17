@@ -18,15 +18,25 @@
       <mat-divider></mat-divider>
       <dx-validation-group id="grupoValidacaoEssencial" name="grupoValidacaoEssencial" #grupoValidacaoEssencial fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
         <div class="margem-5px" fxFlex="100" fxLayout="column" fxLayoutGap="5px">
-          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-            <label class="label_campos" fxFlex="106px">Tipo Inscrição:</label>
-            <dx-radio-group [items]="coordenacao.TiposInscricao"
-                            [(value)]="dadosTela.tipoInscricao"
-                            layout="horizontal">
-              <dx-validator>
-                <dxi-validation-rule type="required" message="Você não escolheu o tipo de inscrição."></dxi-validation-rule>
-              </dx-validator>
-            </dx-radio-group>
+          <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
+            <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+              <label class="label_campos" fxFlex="106px">Tipo Inscrição:</label>
+              <dx-radio-group [items]="coordenacao.TiposInscricao"
+                              [(value)]="dadosTela.tipoInscricao"
+                              layout="horizontal">
+                <dx-validator>
+                  <dxi-validation-rule type="required" message="Você não escolheu o tipo de inscrição."></dxi-validation-rule>
+                </dx-validator>
+              </dx-radio-group>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+              <div class="label_campos" fxFlex="106px"></div>
+              <div>
+                O Tipo de inscrição <strong>Participante</strong> se refere a toda pessoa que irá apenas participar do evento. Ela não tem nenhuma atividade de coordenação de salas ou oficinas, e não atua nas diversas equipes do evento, como música, cozinha, etc.
+                <br />
+                Já o tipo de inscrição <strong>Participante/Trabalhador</strong> se refere a pessoa que pode ser coordenadora de sala, oficina e/ou coordenador ou participante de uma das equipes do evento como a música, cozinha, etc.
+              </div>
+            </div>
           </div>
           <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
             <label class="label_campos" fxFlex="106px">Nome:</label>
@@ -36,7 +46,7 @@
               </dx-validator>
             </dx-text-box>
           </div>
-          <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
               <label class="label_campos" fxFlex="106px">Nascimento:</label>
               <dx-date-box [(value)]="dadosTela.dataNascimento" type="date">
@@ -45,7 +55,10 @@
                   <dxi-validation-rule type="range" [max]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no mínimo, de {{dadosTela.idadeMinima}} anos"></dxi-validation-rule>
                 </dx-validator>
               </dx-date-box>
+              <label>{{"(" + dadosTela.idade + " anos)"}}</label>
             </div>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
               <label class="label_campos" fxFlex.xs="106px">Sexo:</label>
               <dx-radio-group [items]="coordenacao.Sexos"
@@ -161,7 +174,7 @@
           <mat-divider></mat-divider>
           <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
             <label class="label_campos" fxFlex="106px">Nome Responsável Legal:</label>
-            <dx-text-box [(value)]="dadosTela.nomeResponsavelLegal" fxFlex="100" [disabled]="dadosTela.idade < 18">
+            <dx-text-box [(value)]="dadosTela.nomeResponsavelLegal" fxFlex="100" [disabled]="dadosTela.idade >= 18">
               <dx-validator>
                 <dxi-validation-rule type="required" message="Você não informou o nome do responsável legal por você. Precisamos dessa informação já que você ainda não tem 18 anos."></dxi-validation-rule>
               </dx-validator>
@@ -169,7 +182,7 @@
           </div>
           <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
             <label class="label_campos" fxFlex="106px">Telefone Responsável Legal:</label>
-            <dx-text-box [(value)]="dadosTela.telefoneResponsavelLegal" fxFlex="60" [disabled]="dadosTela.idade < 18">
+            <dx-text-box [(value)]="dadosTela.telefoneResponsavelLegal" fxFlex="60" [disabled]="dadosTela.idade >= 18">
               <dx-validator>
                 <dxi-validation-rule type="required" message="Você não informou o telefone do responsável legal por você. Precisamos dessa informação já que você ainda não tem 18 anos."></dxi-validation-rule>
               </dx-validator>
