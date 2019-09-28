@@ -191,28 +191,34 @@
         </div>
       </dx-validation-group>
     </div>
-    <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
+    <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100"
+         *ngIf="inscricao.Evento.TemOficinas || inscricao.Evento.CnfSalaEstudo != null || inscricao.Evento.TemDepartamentos || inscricao.Evento.TemSarau">
       <mat-card-title>Participação em Atividades</mat-card-title>
       <mat-divider></mat-divider>
       <mat-tab-group>
-        <mat-tab label="Oficinas">
-          Content 1
+        <mat-tab label="Oficinas" *ngIf="inscricao.Evento.TemOficinas">
+          <comp-oficinas [configuracao]="dadosTela.configuracaoOficinas" (resultado)="dadosTela.resultadoOficinas"></comp-oficinas>
         </mat-tab>
-        <mat-tab label="Estudo">
+        <mat-tab label="Estudo" *ngIf="inscricao.Evento.CnfSalaEstudo != null">
           Content 2
         </mat-tab>
-        <mat-tab label="Sarau">
+        <mat-tab label="Departamentos" *ngIf="inscricao.Evento.TemDepartamentos">
+          Content 4
+        </mat-tab>
+        <mat-tab label="Sarau" *ngIf="inscricao.Evento.TemSarau">
           Content 3
         </mat-tab>
       </mat-tab-group>
     </div>
-    <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
+    <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100"
+         *ngIf="inscricao.Evento.CnfEvangelizacao != null &&
+                (inscricao.Evento.CnfEvangelizacao == 0 ||(inscricao.Evento.CnfEvangelizacao == 1 && dadosTela.tipoInscricao == this.coordenacao.TiposInscricao[1]))">
       <mat-card-title>Crianças que você será responsável</mat-card-title>
       <mat-divider></mat-divider>
       Infantil
     </div>
     <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
-      <mat-card-title>Financeiro</mat-card-title>
+      <mat-card-title>Financeiro e Observações</mat-card-title>
       <mat-divider></mat-divider>
       Financeiro
     </div>

@@ -1,3 +1,5 @@
+import { extend } from 'webdriver-js-extender';
+
 export class DTOEventoListagem {
   public Id: number;
   public PeriodoInscricao: Periodo;
@@ -11,3 +13,22 @@ export class Periodo {
   public DataInicial: Date;
   public DataFinal: Date;
 }
+
+export class DTOEventoCompleto extends DTOEventoListagem {
+  Oficinas: DTOOficina[];
+  TemOficinas: boolean;
+  TemDepartamentos: boolean;
+  TemSarau: boolean;
+  CnfSalaEstudo: EnumModeloDivisaoSalasEstudo; // Pode ser nulo
+  CnfEvangelizacao: EnumPublicoEvangelizacao; // Pode ser nulo
+}
+
+export class DTOOficina {
+  public Id: number;
+  public Descricao: string;
+}
+
+export enum EnumModeloDivisaoSalasEstudo { PorIdadeCidade, PorOrdemEscolhaInscricao }
+
+export enum EnumPublicoEvangelizacao { Todos, TrabalhadoresOuParticipantesTrabalhadores }
+

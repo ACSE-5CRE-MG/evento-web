@@ -1,46 +1,31 @@
-<layout-geral>
-  <mat-toolbar layout-geral-cabecalho color="primary">
-    <div fxLayout="column" class="sistema">
-      <span>Acessar Inscrição</span>
-      <span class="versao">{{dadosTela.dadosInscricao.NomeEvento}}</span>
-    </div>
-    <span style="flex: 1 1 auto;"></span>
-    <button type="button" mat-raised-button (click)="clicarContinuar()" *ngIf="dadosTela.inscricaoEncontrada">
-      Continuar
-    </button>
-  </mat-toolbar>
-  <div *ngIf="!dadosTela.inscricaoEncontrada" fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center">
-    <div fxLayout="column" class="margem-5px" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-      <i class="fas fa-file-contract fa-7x"></i>
-      <div>
-        Não conseguimos encontrar a inscrição que você escolheu!!
-      </div>
-      <a mat-raised-button [routerLink]="'../../pesquisar'">Voltar</a>
-    </div>
+<div fxLayout="row"  fxLayoutGap="5px">
+  <div fxFlex="40">
+    <dx-list [dataSource]="oficinasDisponiveis"
+             displayExpr="Descricao"
+             [height]="400"
+             [selectionMode]="'all'"
+             [selectAllMode]="allPages"
+             [showSelectionControls]="true"
+             [(selectedItems)]="oficinasDisponiveisSelecionadas">
+    </dx-list>
   </div>
-  <div *ngIf="dadosTela.inscricaoEncontrada" fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
-    <div class="cartao margem-5px" fxFlex="50" fxFlex.xs="95">
-      <div fxLayout="column">
-        <mat-card-title>Validação de acesso a inscrição</mat-card-title>
-        <mat-card-subtitle>{{"Inscrição de " + dadosTela.dadosInscricao.NomeInscrito}}</mat-card-subtitle>
-      </div>
-      <mat-divider></mat-divider>
-      <div fxLayout="column" fxLayoutGap="5px" fxFill>
-        <div class="margem-5px">
-          Foi enviado um email para <strong>{{dadosTela.dadosInscricao.Email}}</strong> com o código para acessar a inscrição. Por favor, verifique a sua caixa de email e nos informe o código recebido para poder acessar sua inscrição.
-        </div>
-        <mat-divider></mat-divider>
-        <div>
-          <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-            <label class="label_campos" fxFlex="106px">Código:</label>
-            <dx-text-box [(value)]="codigo" fxFlex="200px">
-              <dx-validator>
-                <dxi-validation-rule type="required" message="Você não informou o código."></dxi-validation-rule>
-              </dx-validator>
-            </dx-text-box>
-          </dx-validation-group>
-        </div>
-      </div>
-    </div>
+  <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+    <button mat-raised-button [disabled]="oficinasDisponiveisSelecionadas.length == 0" (click)="clicarIncluir()">Incluir</button>
+    <button mat-raised-button [disabled]="oficinasEscolhidasSelecionadas.length == 0" (click)="clicarRemover()">Remover</button>
   </div>
-</layout-geral>
+  <div  fxFlex="40">
+    <dx-list [dataSource]="oficinasEscolhidas"
+             displayExpr="Descricao"
+             [height]="400"
+             [selectionMode]="'all'"
+             [selectAllMode]="allPages"
+             [showSelectionControls]="true"
+             [(selectedItems)]="oficinasEscolhidasSelecionadas"
+             (selectionChanged)="processarMudancasSelecaoOficinasEscolhidas($event)">
+    </dx-list>
+  </div>
+  <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+    <button mat-raised-button [disabled]="situacaoSelecaoOficinasEscolhidas != 1 && situacaoSelecaoOficinasEscolhidas != 2" (click)="clicarSubir()">Subir</button>
+    <button mat-raised-button [disabled]="situacaoSelecaoOficinasEscolhidas != 0 && situacaoSelecaoOficinasEscolhidas != 2" (click)="clicarDescer()">Descer</button>
+  </div>
+</div>

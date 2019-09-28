@@ -20,15 +20,25 @@
   </div>
   <dx-validation-group *ngIf="dadosTela.eventoEncontrado" name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
     <div class="cartao margem-5px" fxFlex="70" fxFlex.xs="95" fxLayout="column" fxLayoutGap="5px">
-      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-        <label class="label_campos" fxFlex="106px">Tipo Inscrição:</label>
-        <dx-radio-group [items]="coordenacao.TiposInscricao"
-                        [(value)]="dadosTela.tipoInscricao"
-                        layout="horizontal">
-          <dx-validator>
-            <dxi-validation-rule type="required" message="Você não escolheu o tipo de inscrição."></dxi-validation-rule>
-          </dx-validator>
-        </dx-radio-group>
+      <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <label class="label_campos" fxFlex="106px">Tipo Inscrição:</label>
+          <dx-radio-group [items]="coordenacao.TiposInscricao"
+                          [(value)]="dadosTela.tipoInscricao"
+                          layout="horizontal">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="Você não escolheu o tipo de inscrição."></dxi-validation-rule>
+            </dx-validator>
+          </dx-radio-group>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <div class="label_campos" fxFlex="106px"></div>
+          <div>
+            O Tipo de inscrição <strong>Participante</strong> se refere a toda pessoa que irá apenas participar do evento. Ela não tem nenhuma atividade de coordenação de salas ou oficinas, e não atua nas diversas equipes do evento, como música, cozinha, etc.
+            <br />
+            Já o tipo de inscrição <strong>Participante/Trabalhador</strong> se refere a pessoa que pode ser coordenadora de sala, oficina e/ou coordenador ou participante de uma das equipes do evento como a música, cozinha, etc.
+          </div>
+        </div>
       </div>
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
         <label class="label_campos" fxFlex="106px">Nome:</label>

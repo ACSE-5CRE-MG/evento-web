@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { DTOInscricaoCompleta, DTOInscricaoDadosPessoais, EnumSexo, EnumTipoInscricao } from '../inscricao/objetos';
-import { DTOEventoListagem, Periodo } from '../principal/objetos';
+import { DTOInscricaoCompleta, DTOInscricaoDadosPessoais, EnumSexo, EnumTipoInscricao, DTOInscricaoOficina } from '../inscricao/objetos';
+import { DTOEventoListagem, Periodo, DTOEventoCompleto, EnumPublicoEvangelizacao, EnumModeloDivisaoSalasEstudo } from '../principal/objetos';
 
 @Injectable()
 export class WsManutencaoInscricoes {
@@ -19,17 +19,24 @@ export class WsManutencaoInscricoes {
       inscricao.DadosPessoais.Sexo = EnumSexo.Masculino;
       inscricao.DadosPessoais.TipoInscricao = EnumTipoInscricao.Participante;
       inscricao.DadosPessoais.Uf = "MG";
-      inscricao.Evento = new DTOEventoListagem();
+      inscricao.Evento = new DTOEventoCompleto();
       inscricao.Evento.Id = 1;
       inscricao.Evento.IdadeMinima = 13;
       inscricao.Evento.Nome = "Evento Teste";
+      inscricao.Evento.Oficinas = [{ Descricao: "Oficina 1", Id: 1 }, { Descricao: "Oficina 2", Id: 2 }, { Descricao: "Oficina 3", Id: 3 }];
       inscricao.Evento.PeriodoInscricao = new Periodo();
       inscricao.Evento.PeriodoInscricao.DataFinal = new Date();
       inscricao.Evento.PeriodoInscricao.DataInicial = inscricao.Evento.PeriodoInscricao.DataFinal;
       inscricao.Evento.PeriodoRealizacao = new Periodo();
       inscricao.Evento.PeriodoRealizacao.DataFinal = inscricao.Evento.PeriodoInscricao.DataFinal;
       inscricao.Evento.PeriodoRealizacao.DataInicial = inscricao.Evento.PeriodoRealizacao.DataFinal;
+      inscricao.Evento.TemDepartamentos = true;
+      inscricao.Evento.TemOficinas = true;
+      inscricao.Evento.TemSarau = true;
+      inscricao.Evento.CnfEvangelizacao = EnumPublicoEvangelizacao.Todos;
+      inscricao.Evento.CnfSalaEstudo = EnumModeloDivisaoSalasEstudo.PorIdadeCidade;
       inscricao.Id = 1;
+      inscricao.Oficina = new DTOInscricaoOficina();
 
       x.next(inscricao);
     });

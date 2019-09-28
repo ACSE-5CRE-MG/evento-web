@@ -1,0 +1,20 @@
+<dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+  <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" *ngIf="apresentacao == 1">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+      <label class="label_campos" fxFlex.xs="106px">Você é:</label>
+      <dx-radio-group [items]="opcoes"
+                      [(value)]="opcaoEscolhida"
+                      layout="horizontal">
+        <dx-validator>
+          <dxi-validation-rule type="required" message="Você não escolheu ainda."></dxi-validation-rule>
+        </dx-validator>
+      </dx-radio-group>
+    </div>
+  </div>
+
+  <comp-oficina-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [configuracao]="configCoordenador" (oficinaCoordena)="resultadoCoordenador">
+  </comp-oficina-coordenador>
+
+  <comp-oficina-participante *ngIf="opcaoEscolhida == opcoes[0]" [configuracaoOficinas]="configParticipante" (resultados)="resultadoParticipante">
+  </comp-oficina-participante>
+</dx-validation-group>

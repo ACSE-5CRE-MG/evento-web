@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DTOInscricaoCompleta } from './objetos';
+import { DTOInscricaoCompleta, EnumTipoInscricao } from './objetos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { WsManutencaoInscricoes } from '../webservices/wsManutencaoInscricoes';
+import { ConfiguracaoOficina, ResultadoOficina, EnumApresentacaoOficina } from './atividades/comp-oficinas';
+import { DTOOficina } from '../principal/objetos';
 
 @Component({
   selector: 'tela-inscricao',
@@ -20,7 +22,7 @@ export class TelaInscricao implements OnInit {
   @ViewChild("grupoValidacaoEspirita", { static: false })
   grupoValidacaoEspirita: DxValidationGroupComponent;
 
-  private inscricao: DTOInscricaoCompleta;
+  inscricao: DTOInscricaoCompleta;
 
   constructor(public coordenacao: CoordenacaoCentral, private rotaAtual: ActivatedRoute, private navegadorUrl: Router, private wsInscricoes: WsManutencaoInscricoes) { }
 
@@ -67,6 +69,17 @@ export class TelaInscricao implements OnInit {
                   this.dadosTela.dataMinimaNascimento.setFullYear(this.dadosTela.dataMinimaNascimento.getFullYear() - this.inscricao.Evento.IdadeMinima);
 
                   this.dadosTela.dataInicioEvento = new Date(this.inscricao.Evento.PeriodoRealizacao.DataInicial);
+
+                  this.dadosTela.configuracaoOficinas = new ConfiguracaoOficina();
+                  this.dadosTela.configuracaoOficinas.oficinasEvento = this.inscricao.Evento.Oficinas;
+                  if (this.inscricao.DadosPessoais.TipoInscricao == EnumTipoInscricao.Participante)
+                    this.dadosTela.configuracaoOficinas.apresentacao = EnumApresentacaoOficina.ApenasParticipante;
+                  else
+                    this.dadosTela.configuracaoOficinas.apresentacao = EnumApresentacaoOficina.PodeEscolher;
+                  if (this.inscricao.Oficina.Coordenador != null)
+                    this.dadosTela.configuracaoOficinas.atribuidoInscricao = this.inscricao.Oficina.Coordenador
+                  else
+                    this.dadosTela.configuracaoOficinas.atribuidoInscricao = this.inscricao.Oficina.OficinasEscolhidasParticipante;
                 }
                 else
                   this.voltar(idInscricao);
@@ -155,6 +168,9 @@ class DadosTela {
   nomeResponsavelLegal: string;
   telefoneResponsavelLegal: string;
   dataInicioEvento: Date;
+
+  configuracaoOficinas: ConfiguracaoOficina;
+  resultadoOficinas: DTOOficina | DTOOficina[];
 
   get idade(): number {
     if (this.dataInicioEvento == null || this.dataNascimento == null)
