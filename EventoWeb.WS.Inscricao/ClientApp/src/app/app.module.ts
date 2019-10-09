@@ -51,6 +51,7 @@ import { TelaInscricao } from './inscricao/tela-inscricao';
 import { PermissaoAcessoInscricao } from './permissao-acesso-inscricao';
 import { WsManutencaoInscricoes } from './webservices/wsManutencaoInscricoes';
 import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador } from './inscricao/atividades/comp-oficinas';
+import { ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador } from './inscricao/atividades/comp-salas';
 
 declare function require(url: string);
 
@@ -64,7 +65,8 @@ locale('pt');
   declarations: [
     TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao, TelaCodigoInscricao, TelaInscricao,
     CaixaMensagemDlg, DlgEmProcessamento, LayoutGeral,
-    ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador
+    ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
+    ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador
   ],
   imports: [
     BrowserModule,

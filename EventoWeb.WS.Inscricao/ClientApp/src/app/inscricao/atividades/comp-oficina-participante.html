@@ -1,19 +1,20 @@
-<div fxLayout="row"  fxLayoutGap="5px">
-  <div fxFlex="40">
+<div fxLayout="row" fxLayout.xs="column"  fxLayoutGap="5px">
+  <div fxFlex="40" fxFlex.xs="100" class="borda_total">
     <dx-list [dataSource]="oficinasDisponiveis"
              displayExpr="Descricao"
              [height]="400"
              [selectionMode]="'all'"
              [selectAllMode]="allPages"
              [showSelectionControls]="true"
-             [(selectedItems)]="oficinasDisponiveisSelecionadas">
+             [(selectedItems)]="oficinasDisponiveisSelecionadas"
+             [width]="200">
     </dx-list>
   </div>
   <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center">
-    <button mat-raised-button [disabled]="oficinasDisponiveisSelecionadas.length == 0" (click)="clicarIncluir()">Incluir</button>
-    <button mat-raised-button [disabled]="oficinasEscolhidasSelecionadas.length == 0" (click)="clicarRemover()">Remover</button>
+    <button mat-raised-button [disabled]="oficinasDisponiveisSelecionadas.length == 0" (click)="clicarIncluir()" style="width: 100%">Incluir</button>
+    <button mat-raised-button [disabled]="oficinasEscolhidasSelecionadas.length == 0" (click)="clicarRemover()" style="width: 100%">Remover</button>
   </div>
-  <div  fxFlex="40">
+  <div  fxFlex="40" fxFlex.xs="100" class="borda_total">
     <dx-list [dataSource]="oficinasEscolhidas"
              displayExpr="Descricao"
              [height]="400"
@@ -21,11 +22,12 @@
              [selectAllMode]="allPages"
              [showSelectionControls]="true"
              [(selectedItems)]="oficinasEscolhidasSelecionadas"
-             (selectionChanged)="processarMudancasSelecaoOficinasEscolhidas($event)">
+             (onSelectionChanged)="processarMudancasSelecaoOficinasEscolhidas($event)"
+             [width]="200">
     </dx-list>
   </div>
   <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center">
-    <button mat-raised-button [disabled]="situacaoSelecaoOficinasEscolhidas != 1 && situacaoSelecaoOficinasEscolhidas != 2" (click)="clicarSubir()">Subir</button>
-    <button mat-raised-button [disabled]="situacaoSelecaoOficinasEscolhidas != 0 && situacaoSelecaoOficinasEscolhidas != 2" (click)="clicarDescer()">Descer</button>
+    <button mat-raised-button [disabled]="situacaoSelecaoOficinasEscolhidas != 1 && situacaoSelecaoOficinasEscolhidas != 2" (click)="clicarSubir()" style="width: 100%">Subir</button>
+    <button mat-raised-button [disabled]="situacaoSelecaoOficinasEscolhidas != 0 && situacaoSelecaoOficinasEscolhidas != 2" (click)="clicarDescer()" style="width: 100%">Descer</button>
   </div>
 </div>

@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DTOInscricaoCompleta, EnumTipoInscricao } from './objetos';
+import { DTOInscricaoCompleta, EnumApresentacaoAtividades } from './objetos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { WsManutencaoInscricoes } from '../webservices/wsManutencaoInscricoes';
-import { ConfiguracaoOficina, ResultadoOficina, EnumApresentacaoOficina } from './atividades/comp-oficinas';
-import { DTOOficina } from '../principal/objetos';
+import { DTOOficina, DTOSalaEstudo } from '../principal/objetos';
 
 @Component({
   selector: 'tela-inscricao',
@@ -27,7 +26,7 @@ export class TelaInscricao implements OnInit {
   constructor(public coordenacao: CoordenacaoCentral, private rotaAtual: ActivatedRoute, private navegadorUrl: Router, private wsInscricoes: WsManutencaoInscricoes) { }
 
   ngOnInit(): void {
-    this.dadosTela = new DadosTela();
+    this.dadosTela = new DadosTela(this.coordenacao);
 
     let dlg = this.coordenacao.Alertas.alertarProcessamento("Carregando dados...");
 
@@ -48,7 +47,7 @@ export class TelaInscricao implements OnInit {
                   this.dadosTela.descricaoEvento = this.inscricao.Evento.Nome;
                   this.dadosTela.idadeMinima = this.inscricao.Evento.IdadeMinima;
                   this.dadosTela.sexoEscolhido = this.coordenacao.Sexos[this.inscricao.DadosPessoais.Sexo];
-                  this.dadosTela.tipoInscricao = this.coordenacao.TiposInscricao[this.inscricao.DadosPessoais.TipoInscricao];
+                  this.dadosTela.tipoInscricaoEscolhida = this.coordenacao.TiposInscricao[this.inscricao.DadosPessoais.TipoInscricao];
                   this.dadosTela.cidade = this.inscricao.DadosPessoais.Cidade;
                   this.dadosTela.uf = this.inscricao.DadosPessoais.Uf;
                   this.dadosTela.ehVegetariano = this.inscricao.DadosPessoais.EhVegetariano;
@@ -70,16 +69,19 @@ export class TelaInscricao implements OnInit {
 
                   this.dadosTela.dataInicioEvento = new Date(this.inscricao.Evento.PeriodoRealizacao.DataInicial);
 
-                  this.dadosTela.configuracaoOficinas = new ConfiguracaoOficina();
-                  this.dadosTela.configuracaoOficinas.oficinasEvento = this.inscricao.Evento.Oficinas;
-                  if (this.inscricao.DadosPessoais.TipoInscricao == EnumTipoInscricao.Participante)
-                    this.dadosTela.configuracaoOficinas.apresentacao = EnumApresentacaoOficina.ApenasParticipante;
-                  else
-                    this.dadosTela.configuracaoOficinas.apresentacao = EnumApresentacaoOficina.PodeEscolher;
                   if (this.inscricao.Oficina.Coordenador != null)
-                    this.dadosTela.configuracaoOficinas.atribuidoInscricao = this.inscricao.Oficina.Coordenador
+                    this.dadosTela.oficinasEscolhidas = this.inscricao.Oficina.Coordenador
+                  else if (this.inscricao.Oficina.OficinasEscolhidasParticipante != null)
+                    this.dadosTela.oficinasEscolhidas = this.inscricao.Oficina.OficinasEscolhidasParticipante;
                   else
-                    this.dadosTela.configuracaoOficinas.atribuidoInscricao = this.inscricao.Oficina.OficinasEscolhidasParticipante;
+                    this.dadosTela.oficinasEscolhidas = [];
+
+                  if (this.inscricao.SalasEstudo.Coordenador != null)
+                    this.dadosTela.salasEscolhidas = this.inscricao.Oficina.Coordenador
+                  else if (this.inscricao.SalasEstudo.SalasEscolhidasParticipante != null)
+                    this.dadosTela.salasEscolhidas = this.inscricao.SalasEstudo.SalasEscolhidasParticipante;
+                  else
+                    this.dadosTela.salasEscolhidas = [];
                 }
                 else
                   this.voltar(idInscricao);
@@ -169,8 +171,11 @@ class DadosTela {
   telefoneResponsavelLegal: string;
   dataInicioEvento: Date;
 
-  configuracaoOficinas: ConfiguracaoOficina;
-  resultadoOficinas: DTOOficina | DTOOficina[];
+  formaEscolha: EnumApresentacaoAtividades;
+  oficinasEscolhidas: DTOOficina | DTOOficina[];
+  salasEscolhidas: DTOSalaEstudo | DTOSalaEstudo[];
+
+  constructor(private coordenacao: CoordenacaoCentral) {}
 
   get idade(): number {
     if (this.dataInicioEvento == null || this.dataNascimento == null)
@@ -184,5 +189,17 @@ class DadosTela {
 
       return idade;
     }
+  }
+
+  get tipoInscricaoEscolhida(): string {
+    return this.tipoInscricao;
+  }
+
+  set tipoInscricaoEscolhida(valor: string) {
+    this.tipoInscricao = valor;
+    if (valor == this.coordenacao.TiposInscricao[0])
+      this.formaEscolha = EnumApresentacaoAtividades.ApenasParticipante
+    else
+      this.formaEscolha = EnumApresentacaoAtividades.PodeEscolher;
   }
 }

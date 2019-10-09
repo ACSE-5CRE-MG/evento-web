@@ -1,6 +1,6 @@
 import { Component, ViewChild, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { DTOOficina } from '../../principal/objetos';
-import { DxValidationGroupComponent } from 'devextreme-angular';
+import { EnumApresentacaoAtividades } from '../objetos';
 
 @Component({
   selector: 'comp-oficinas',
@@ -8,98 +8,90 @@ import { DxValidationGroupComponent } from 'devextreme-angular';
 })
 export class ComponenteOficinas {
 
-  apresentacao: EnumApresentacaoOficina;
+  apresentacao: EnumApresentacaoAtividades;
   opcoes: string[] = ["Participante", "Coordenador"];
-  opcaoEscolhida: string;
-  configParticipante: ConfiguracaoOficinaParticipante;
-  configCoordenador: ConfiguracaoOficinaCoordenador;
-
-  set resultadoCoordenador(valor: DTOOficina) {
-    this.resultado.emit(valor);
-  }
-
-  set resultadoParticipante(valor: DTOOficina[]) {
-    this.resultado.emit(valor);
-  }
-
-  @ViewChild("grupoValidacao", { static: false })
-  grupoValidacao: DxValidationGroupComponent;
+  _opcaoEscolhida: string;
 
   @Input()
-  set configuracao(cnf: ConfiguracaoOficina) {
-    this.apresentacao = cnf.apresentacao;
-    this.opcaoEscolhida = "";
+  oficinas: DTOOficina[] = [];
 
-    this.configParticipante = new ConfiguracaoOficinaParticipante();
-    this.configParticipante.oficinasEvento = cnf.oficinasEvento;
-
-    this.configCoordenador = new ConfiguracaoOficinaCoordenador();
-    this.configCoordenador.oficinasEvento = cnf.oficinasEvento;
-    this.configCoordenador.oficinaEscolhida = null;
-
-    if (cnf.apresentacao == EnumApresentacaoOficina.ApenasParticipante) {
-      this.opcaoEscolhida = this.opcoes[0];
-      if (cnf.atribuidoInscricao == null)
-        this.configParticipante.oficinasEscolhidas = [];
-      else
-        this.configParticipante.oficinasEscolhidas = <DTOOficina[]>cnf.atribuidoInscricao;
-    }
-    else if (cnf.atribuidoInscricao != null) {
-      if (cnf.atribuidoInscricao instanceof DTOOficina) {
-        this.opcaoEscolhida = this.opcoes[1];
-        this.configCoordenador.oficinaEscolhida = <DTOOficina>cnf.atribuidoInscricao;
-      }
-      else {
-        this.opcaoEscolhida = this.opcoes[0];
-        this.configParticipante.oficinasEscolhidas = <DTOOficina[]>cnf.atribuidoInscricao;
-      }
-    }
-  }
+  @Input()
+  escolhido: DTOOficina | DTOOficina[];
 
   @Output()
-  resultado: EventEmitter<DTOOficina | DTOOficina[]> = new EventEmitter<DTOOficina | DTOOficina[]>();
-}
+  escolhidoChange: EventEmitter<DTOOficina | DTOOficina[]> = new EventEmitter<DTOOficina | DTOOficina[]>();
 
-export class ConfiguracaoOficina {
-  apresentacao: EnumApresentacaoOficina;
-  oficinasEvento: DTOOficina[];
-  atribuidoInscricao: DTOOficina | DTOOficina[];
-}
+  @Input()
+  set forma(valor: EnumApresentacaoAtividades) {
 
-export enum EnumApresentacaoOficina {
-  ApenasParticipante, PodeEscolher
+    this.apresentacao = valor;
+    this._opcaoEscolhida = this.opcoes[0];    
+  }
+
+  set opcaoEscolhida(valor: string) {
+    this._opcaoEscolhida = valor;
+
+    if (valor == this.opcoes[0])
+      this.oficinasEscolhidas = [];
+    else
+      this.oficinasEscolhidas = null;
+  }
+
+  get opcaoEscolhida(): string {
+    return this._opcaoEscolhida;
+  }
+
+  set oficinasEscolhidas(valor: DTOOficina | DTOOficina[]) {
+    this.escolhido = valor;
+    this.escolhidoChange.emit(this.escolhido);
+  }
+
+  get oficinasEscolhidas(): DTOOficina | DTOOficina[] {
+    return this.escolhido;
+  }
 }
 
 @Component({
   selector: 'comp-oficina-participante',
-  templateUrl: './comp-oficina-participante.html'
+  templateUrl: './comp-oficina-participante.html',
+  styles: ['.borda_total { border: solid 1px; margin: 5px }']
 })
 export class ComponenteOficinaParticipante {
 
-  @ViewChild("grupoValidacao", { static: false })
-  grupoValidacao: DxValidationGroupComponent;
+  private oficinasRecebidas: DTOOficina[];
 
   @Input()
-  set configuracaoOficinas(cnf: ConfiguracaoOficinaParticipante) {
-    this.oficinasDisponiveis = cnf.oficinasEvento.filter(x => cnf.oficinasEscolhidas.find(y => y.Id == x.Id) == null);
-    this.oficinas = cnf.oficinasEscolhidas == null ? [] : cnf.oficinasEscolhidas;
+  set oficinas(valor: DTOOficina[]) {
+    this.oficinasRecebidas = valor;
+    if (valor != null) {
+      if (this.oficinasEscolhidas != null && this.oficinasEscolhidas.length > 0)
+        this.oficinasDisponiveis = valor.filter(x => this.oficinasEscolhidas.findIndex(y => y.Id == x.Id) == -1);
+      else
+        this.oficinasDisponiveis = valor;
+    }
+    else
+      this.oficinasDisponiveis = [];
+  }
+
+  @Input()
+  set valor(oficinas: DTOOficina[]) {
+
+    if (oficinas != null) {
+      this.oficinasEscolhidas = oficinas;
+
+      if (this.oficinasRecebidas != null && this.oficinasRecebidas.length > 0)
+        this.oficinasDisponiveis = this.oficinasRecebidas.filter(x => this.oficinasEscolhidas.findIndex(y => y.Id == x.Id) == -1);
+      else
+        this.oficinasDisponiveis = [];
+    }
+    else
+      this.oficinasEscolhidas = [];
   }
 
   @Output()
-  resultados: EventEmitter<DTOOficina[]> = new EventEmitter<DTOOficina[]>();
+  valorChange: EventEmitter<DTOOficina[]> = new EventEmitter<DTOOficina[]>();
 
-  oficinas: DTOOficina[] = [];
-
-  set oficinasEscolhidas(valor: DTOOficina[])
-  {
-    this.oficinas = valor;
-    this.resultados.emit(this.oficinas);
-  }
-
-  get oficinasEscolhidas(): DTOOficina[] {
-    return this.oficinas;
-  }
-
+  oficinasEscolhidas: DTOOficina[] = [];
   oficinasDisponiveis: DTOOficina[] = [];
   oficinasDisponiveisSelecionadas: DTOOficina[] = [];
   oficinasEscolhidasSelecionadas: DTOOficina[] = [];
@@ -110,16 +102,20 @@ export class ComponenteOficinaParticipante {
       this.oficinasEscolhidas.push(item);      
     }
 
-    this.oficinasDisponiveis = this.oficinasDisponiveis.filter(x => this.oficinasDisponiveisSelecionadas.find(y => y.Id == x.Id) == null);
+    this.oficinasDisponiveis = this.oficinasDisponiveis.filter(x => this.oficinasDisponiveisSelecionadas.findIndex(y => y.Id == x.Id) == -1);
     this.oficinasDisponiveisSelecionadas = [];
+
+    this.valorChange.emit(this.oficinasEscolhidas);
   }
 
   clicarRemover(): void {
     for (let item of this.oficinasEscolhidasSelecionadas)
       this.oficinasDisponiveis.push(item);
 
-    this.oficinasEscolhidas = this.oficinasEscolhidas.filter(x => this.oficinasEscolhidasSelecionadas.find(y => y.Id == x.Id) == null);
+    this.oficinasEscolhidas = this.oficinasEscolhidas.filter(x => this.oficinasEscolhidasSelecionadas.findIndex(y => y.Id == x.Id) == -1);
     this.oficinasEscolhidasSelecionadas = [];
+
+    this.valorChange.emit(this.oficinasEscolhidas);
   }
 
   processarMudancasSelecaoOficinasEscolhidas(evento: any): void {
@@ -127,13 +123,7 @@ export class ComponenteOficinaParticipante {
     if (this.oficinasEscolhidasSelecionadas.length == 0)
       this.situacaoSelecaoOficinasEscolhidas = EnumSituacaoSelecaoItens.NenhumItem;
     else if (this.oficinasEscolhidasSelecionadas.length == 1) {
-      let posicao = this.oficinasEscolhidas.findIndex(x => x.Id == this.oficinasEscolhidasSelecionadas[0].Id);
-      if (posicao == 0)
-        this.situacaoSelecaoOficinasEscolhidas = EnumSituacaoSelecaoItens.Primeiro;
-      else if (posicao == this.oficinasEscolhidas.length - 1)
-        this.situacaoSelecaoOficinasEscolhidas = EnumSituacaoSelecaoItens.Ultimo;
-      else
-        this.situacaoSelecaoOficinasEscolhidas = EnumSituacaoSelecaoItens.EntrePrimeiroUltimo;
+      this.atualizarSituacaoSelecaoItem();
     }
     else
       this.situacaoSelecaoOficinasEscolhidas = EnumSituacaoSelecaoItens.MaisDeUmItem;
@@ -146,6 +136,10 @@ export class ComponenteOficinaParticipante {
 
     this.oficinasEscolhidas[posicaoItemSubirah - 1] = valorPosicaoItemSubirah;
     this.oficinasEscolhidas[posicaoItemSubirah] = valorPosicaoIrah;
+
+    this.valorChange.emit(this.oficinasEscolhidas);
+
+    this.atualizarSituacaoSelecaoItem();
   }
 
   clicarDescer(): void {
@@ -155,6 +149,20 @@ export class ComponenteOficinaParticipante {
 
     this.oficinasEscolhidas[posicaoItemDescerah + 1] = valorPosicaoItemDescerah;
     this.oficinasEscolhidas[posicaoItemDescerah] = valorPosicaoIrah;
+
+    this.valorChange.emit(this.oficinasEscolhidas);
+
+    this.atualizarSituacaoSelecaoItem();
+  }
+
+  private atualizarSituacaoSelecaoItem(): void {
+    let posicao = this.oficinasEscolhidas.findIndex(x => x.Id == this.oficinasEscolhidasSelecionadas[0].Id);
+    if (posicao == 0)
+      this.situacaoSelecaoOficinasEscolhidas = EnumSituacaoSelecaoItens.Primeiro;
+    else if (posicao == this.oficinasEscolhidas.length - 1)
+      this.situacaoSelecaoOficinasEscolhidas = EnumSituacaoSelecaoItens.Ultimo;
+    else
+      this.situacaoSelecaoOficinasEscolhidas = EnumSituacaoSelecaoItens.EntrePrimeiroUltimo;
   }
 }
 
@@ -166,50 +174,27 @@ enum EnumSituacaoSelecaoItens {
   NenhumItem
 }
 
-export class ConfiguracaoOficinaParticipante {
-  oficinasEvento: DTOOficina[];
-  oficinasEscolhidas: DTOOficina[];
-}
-
 @Component({
   selector: 'comp-oficina-coordenador',
   templateUrl: './comp-oficina-coordenador.html'
 })
 export class ComponenteOficinaCoordenador {
-
-  @ViewChild("grupoValidacao", { static: false })
-  grupoValidacao: DxValidationGroupComponent;
-
+  
   @Input()
-  set configuracao(cnf: ConfiguracaoOficinaCoordenador) {
-    this.oficinas = cnf.oficinasEvento;
-    this.oficinaCoordena = this.oficinas.find(x => x.Id == cnf.oficinaEscolhida.Id);
-  }
-
   oficinas: DTOOficina[] = [];
 
   @Input()
-  oficinaCoordena: DTOOficina;
+  valor: DTOOficina;
 
   @Output()
-  oficinaCoordenaChange: EventEmitter<DTOOficina> = new EventEmitter<DTOOficina>();
+  valorChange: EventEmitter<DTOOficina> = new EventEmitter<DTOOficina>();  
 
-  set oficina(valor: DTOOficina) {
-    this.oficinaCoordena = valor;
-    this.oficinaCoordenaChange.emit(this.oficina);
+  set oficinaCoordena(valor: DTOOficina) {
+    this.valor = valor;
+    this.valorChange.emit(this.valor);
   }
 
-  get oficina(): DTOOficina {
-    return this.oficina;    
+  get oficinaCoordena(): DTOOficina {
+    return this.valor;
   }
-}
-
-export class ConfiguracaoOficinaCoordenador {
-  oficinasEvento: DTOOficina[];
-  oficinaEscolhida: DTOOficina;
-}
-
-export class ResultadoOficina {
-  resultadoValido: boolean;
-  escolha: DTOOficina | DTOOficina[];
 }

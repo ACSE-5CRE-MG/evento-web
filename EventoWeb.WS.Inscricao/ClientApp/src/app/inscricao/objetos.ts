@@ -1,7 +1,10 @@
-import { DTOOficina, DTOEventoCompleto } from '../principal/objetos';
+import { DTOOficina, DTOEventoCompleto, DTOSalaEstudo } from '../principal/objetos';
 
 export enum EnumSexo { Feminino, Masculino }
 export enum EnumTipoInscricao { Participante, ParticipanteTrabalhador }
+export enum EnumApresentacaoAtividades {
+  ApenasParticipante, PodeEscolher
+}
 
 export class DTODadosCriarInscricao {
   Nome: string;
@@ -67,10 +70,15 @@ export class DTOInscricaoCompleta {
   TelefoneResponsavelLegal: string;
 
   Oficina: DTOInscricaoOficina;
-  
+  SalasEstudo: DTOInscricaoSalaEstudo;  
 }
 
 export class DTOInscricaoOficina {
   Coordenador: DTOOficina;
   OficinasEscolhidasParticipante: DTOOficina[];
+}
+
+export class DTOInscricaoSalaEstudo {
+  Coordenador: DTOSalaEstudo;
+  SalasEscolhidasParticipante: DTOSalaEstudo[];
 }

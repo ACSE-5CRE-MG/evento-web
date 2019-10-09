@@ -22,7 +22,7 @@
             <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
               <label class="label_campos" fxFlex="106px">Tipo Inscrição:</label>
               <dx-radio-group [items]="coordenacao.TiposInscricao"
-                              [(value)]="dadosTela.tipoInscricao"
+                              [(value)]="dadosTela.tipoInscricaoEscolhida"
                               layout="horizontal">
                 <dx-validator>
                   <dxi-validation-rule type="required" message="Você não escolheu o tipo de inscrição."></dxi-validation-rule>
@@ -197,10 +197,10 @@
       <mat-divider></mat-divider>
       <mat-tab-group>
         <mat-tab label="Oficinas" *ngIf="inscricao.Evento.TemOficinas">
-          <comp-oficinas [configuracao]="dadosTela.configuracaoOficinas" (resultado)="dadosTela.resultadoOficinas"></comp-oficinas>
+          <comp-oficinas [oficinas]="inscricao.Evento.Oficinas" [forma]="dadosTela.formaEscolha" [(escolhido)]="dadosTela.oficinasEscolhidas"></comp-oficinas>
         </mat-tab>
         <mat-tab label="Estudo" *ngIf="inscricao.Evento.CnfSalaEstudo != null">
-          Content 2
+          <comp-salas [salas]="inscricao.Evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="inscricao.Evento.CnfSalaEstudo" [(escolhido)]="dadosTela.salasEscolhidas"></comp-salas>
         </mat-tab>
         <mat-tab label="Departamentos" *ngIf="inscricao.Evento.TemDepartamentos">
           Content 4

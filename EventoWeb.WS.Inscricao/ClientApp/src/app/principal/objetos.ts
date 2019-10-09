@@ -1,5 +1,3 @@
-import { extend } from 'webdriver-js-extender';
-
 export class DTOEventoListagem {
   public Id: number;
   public PeriodoInscricao: Periodo;
@@ -16,6 +14,7 @@ export class Periodo {
 
 export class DTOEventoCompleto extends DTOEventoListagem {
   Oficinas: DTOOficina[];
+  SalasEstudo: DTOSalaEstudo[];
   TemOficinas: boolean;
   TemDepartamentos: boolean;
   TemSarau: boolean;
@@ -24,6 +23,11 @@ export class DTOEventoCompleto extends DTOEventoListagem {
 }
 
 export class DTOOficina {
+  public Id: number;
+  public Descricao: string;
+}
+
+export class DTOSalaEstudo {
   public Id: number;
   public Descricao: string;
 }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { DTOInscricaoCompleta, DTOInscricaoDadosPessoais, EnumSexo, EnumTipoInscricao, DTOInscricaoOficina } from '../inscricao/objetos';
+import { DTOInscricaoCompleta, DTOInscricaoDadosPessoais, EnumSexo, EnumTipoInscricao, DTOInscricaoOficina, DTOInscricaoSalaEstudo } from '../inscricao/objetos';
 import { DTOEventoListagem, Periodo, DTOEventoCompleto, EnumPublicoEvangelizacao, EnumModeloDivisaoSalasEstudo } from '../principal/objetos';
 
 @Injectable()
@@ -24,6 +24,7 @@ export class WsManutencaoInscricoes {
       inscricao.Evento.IdadeMinima = 13;
       inscricao.Evento.Nome = "Evento Teste";
       inscricao.Evento.Oficinas = [{ Descricao: "Oficina 1", Id: 1 }, { Descricao: "Oficina 2", Id: 2 }, { Descricao: "Oficina 3", Id: 3 }];
+      inscricao.Evento.SalasEstudo = [{ Descricao: "Sala 1", Id: 1 }, { Descricao: "Sala 2", Id: 2 }, { Descricao: "Sala 3", Id: 3 }];
       inscricao.Evento.PeriodoInscricao = new Periodo();
       inscricao.Evento.PeriodoInscricao.DataFinal = new Date();
       inscricao.Evento.PeriodoInscricao.DataInicial = inscricao.Evento.PeriodoInscricao.DataFinal;
@@ -34,9 +35,10 @@ export class WsManutencaoInscricoes {
       inscricao.Evento.TemOficinas = true;
       inscricao.Evento.TemSarau = true;
       inscricao.Evento.CnfEvangelizacao = EnumPublicoEvangelizacao.Todos;
-      inscricao.Evento.CnfSalaEstudo = EnumModeloDivisaoSalasEstudo.PorIdadeCidade;
+      inscricao.Evento.CnfSalaEstudo = EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao;
       inscricao.Id = 1;
       inscricao.Oficina = new DTOInscricaoOficina();
+      inscricao.SalasEstudo = new DTOInscricaoSalaEstudo();
 
       x.next(inscricao);
     });
