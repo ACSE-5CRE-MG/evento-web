@@ -1,0 +1,24 @@
+<div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+  <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" *ngIf="apresentacao == 1">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+      <label class="label_campos" fxFlex.xs="106px">Você é:</label>
+      <dx-radio-group [items]="opcoes"
+                      [(value)]="opcaoEscolhida"
+                      layout="horizontal">
+      </dx-radio-group>
+    </div>
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+    <label class="label_campos" fxFlex="106px">Qual Departamento:</label>
+    <dx-select-box [dataSource]="departamentos"
+                   displayExpr="Descricao"
+                   [searchMode]="'contains'"
+                   [searchTimeout]="200"
+                   [minSearchLength]="0"
+                   [searchEnabled]="true"
+                   [(value)]="departamentoEscolhido"
+                   fxFlex="70">
+    </dx-select-box>
+  </div>
+</div>

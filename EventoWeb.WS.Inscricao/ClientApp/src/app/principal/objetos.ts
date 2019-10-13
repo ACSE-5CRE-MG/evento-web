@@ -15,6 +15,7 @@ export class Periodo {
 export class DTOEventoCompleto extends DTOEventoListagem {
   Oficinas: DTOOficina[];
   SalasEstudo: DTOSalaEstudo[];
+  Departamentos: DTODepartamento[];
   TemOficinas: boolean;
   TemDepartamentos: boolean;
   TemSarau: boolean;
@@ -30,6 +31,11 @@ export class DTOOficina {
 export class DTOSalaEstudo {
   public Id: number;
   public Descricao: string;
+}
+
+export class DTODepartamento {
+    public Id: number;
+    public Descricao: string;
 }
 
 export enum EnumModeloDivisaoSalasEstudo { PorIdadeCidade, PorOrdemEscolhaInscricao }

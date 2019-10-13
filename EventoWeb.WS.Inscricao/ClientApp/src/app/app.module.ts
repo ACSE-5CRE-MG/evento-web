@@ -52,6 +52,7 @@ import { PermissaoAcessoInscricao } from './permissao-acesso-inscricao';
 import { WsManutencaoInscricoes } from './webservices/wsManutencaoInscricoes';
 import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador } from './inscricao/atividades/comp-oficinas';
 import { ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador } from './inscricao/atividades/comp-salas';
+import { ComponenteDepartamentos } from './inscricao/atividades/comp-departamentos';
 
 declare function require(url: string);
 
@@ -62,49 +63,50 @@ loadMessages(ptMessages);
 locale('pt');
 
 @NgModule({
-  declarations: [
-    TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao, TelaCodigoInscricao, TelaInscricao,
-    CaixaMensagemDlg, DlgEmProcessamento, LayoutGeral,
-    ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
-    ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador
-  ],
-  imports: [
-    BrowserModule,
-    FlexLayoutModule,
-    MatSidenavModule,
-    MatDialogModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatCardModule,
-    MatTabsModule,
-    DxDataGridModule,
-    DxTextBoxModule,
-    DxNumberBoxModule,
-    DxDateBoxModule,
-    DxDropDownBoxModule,
-    DxListModule,
-    DxRadioGroupModule,
-    DxCheckBoxModule,
-    DxPopoverModule,
-    DxTextAreaModule,
-    DxValidatorModule,
-    DxValidationGroupModule,
-    DxSelectBoxModule,
-    RouterModule.forRoot([
-      { path: '', component: TelaPrincipal },
-      { path: 'comecar/:idevento', component: TelaCriacaoInscricao },
-      { path: 'pesquisar', component: TelaPesquisaInscricao },
-      { path: 'validar/:idinscricao', component: TelaCodigoInscricao },
-      { path: 'inscricao/:idinscricao', component: TelaInscricao, canActivate: [PermissaoAcessoInscricao], },
-      { path: '**', redirectTo: '' }
-    ]),
-    BrowserAnimationsModule
-  ],
-  entryComponents: [CaixaMensagemDlg, DlgEmProcessamento],
-  providers: [{ provide: LOCALE_ID, useValue: 'pt' },
-    CoordenacaoCentral, WsEventos, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao
-  ],
-  bootstrap: [TelaBase]
+    declarations: [
+        TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao, TelaCodigoInscricao, TelaInscricao,
+        CaixaMensagemDlg, DlgEmProcessamento, LayoutGeral,
+        ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
+        ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
+        ComponenteDepartamentos
+    ],
+    imports: [
+        BrowserModule,
+        FlexLayoutModule,
+        MatSidenavModule,
+        MatDialogModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatDividerModule,
+        MatCardModule,
+        MatTabsModule,
+        DxDataGridModule,
+        DxTextBoxModule,
+        DxNumberBoxModule,
+        DxDateBoxModule,
+        DxDropDownBoxModule,
+        DxListModule,
+        DxRadioGroupModule,
+        DxCheckBoxModule,
+        DxPopoverModule,
+        DxTextAreaModule,
+        DxValidatorModule,
+        DxValidationGroupModule,
+        DxSelectBoxModule,
+        RouterModule.forRoot([
+            { path: '', component: TelaPrincipal },
+            { path: 'comecar/:idevento', component: TelaCriacaoInscricao },
+            { path: 'pesquisar', component: TelaPesquisaInscricao },
+            { path: 'validar/:idinscricao', component: TelaCodigoInscricao },
+            { path: 'inscricao/:idinscricao', component: TelaInscricao, canActivate: [PermissaoAcessoInscricao], },
+            { path: '**', redirectTo: '' }
+        ]),
+        BrowserAnimationsModule
+    ],
+    entryComponents: [CaixaMensagemDlg, DlgEmProcessamento],
+    providers: [{ provide: LOCALE_ID, useValue: 'pt' },
+        CoordenacaoCentral, WsEventos, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao
+    ],
+    bootstrap: [TelaBase]
 })
 export class AppModule { }
