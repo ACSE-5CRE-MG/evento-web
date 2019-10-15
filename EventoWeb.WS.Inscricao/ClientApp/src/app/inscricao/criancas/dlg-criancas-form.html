@@ -1,0 +1,62 @@
+<h1 mat-dialog-title>Criança - {{tituloDlg}}</h1>
+<div mat-dialog-content>
+  <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Nome:</label>
+      <dx-text-box [(value)]="dadosTela.nome" fxFlex="100">
+        <dx-validator>
+          <dxi-validation-rule type="required" message="Você não informou o nome."></dxi-validation-rule>
+        </dx-validator>
+      </dx-text-box>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+        <label class="label_campos" fxFlex="106px">Nascimento:</label>
+        <dx-date-box [(value)]="dadosTela.dataNascimento" type="date">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou a data de nascimento"></dxi-validation-rule>
+            <dxi-validation-rule type="range" [max]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no mínimo, de {{dadosTela.idadeMinima}} anos"></dxi-validation-rule>
+          </dx-validator>
+        </dx-date-box>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+        <label class="label_campos" fxFlex.xs="106px">Sexo:</label>
+        <dx-radio-group [items]="coordenacao.Sexos"
+                        [(value)]="this.dadosTela.sexoEscolhido"
+                        layout="horizontal">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não escolheu o sexo."></dxi-validation-rule>
+          </dx-validator>
+        </dx-radio-group>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="margem-5px" fxFlex="100" fxLayout="column" fxLayoutGap="5px">
+      <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <div fxFlex="106px"></div>
+        <dx-check-box [(value)]="dadosTela.ehVegetariano" text="É Vegetariano(a)?"></dx-check-box>
+        <dx-check-box [(value)]="dadosTela.usaAdocanteDiariamente" text="Usa adoçante diariamente?"></dx-check-box>
+        <dx-check-box [(value)]="dadosTela.ehDiabetico" text="É diabético(a)?"></dx-check-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Carnes que não come:</label>
+        <dx-text-box [(value)]="dadosTela.carnesNaoCome" fxFlex="100">
+        </dx-text-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Alimentos que tem alergia:</label>
+        <dx-text-box [(value)]="dadosTela.alimentosAlergia" fxFlex="100">
+        </dx-text-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Medicamentos que usa:</label>
+        <dx-text-box [(value)]="dadosTela.medicamentosUsa" fxFlex="100">
+        </dx-text-box>
+      </div>
+    </div>
+  </dx-validation-group>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="clicarCancelar()">Cancelar</button>
+  <button mat-raised-button (click)="clicarOK()" cdkFocusInitial>Salvar</button>
+</div>

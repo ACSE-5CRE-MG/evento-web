@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Criança - Código da Inscrição</h1>
+<div mat-dialog-content>
+  <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+    <label class="label_campos">Código:</label>
+    <dx-text-box [(value)]="codigo" fxFlex="100">
+      <dx-validator>
+        <dxi-validation-rule type="required" message="Você não informou o Código da criança."></dxi-validation-rule>
+      </dx-validator>
+    </dx-text-box>
+  </dx-validation-group>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button (click)="clicarCancelar()">Cancelar</button>
+  <button mat-raised-button (click)="clicarOK()" cdkFocusInitial>OK</button>
+</div>

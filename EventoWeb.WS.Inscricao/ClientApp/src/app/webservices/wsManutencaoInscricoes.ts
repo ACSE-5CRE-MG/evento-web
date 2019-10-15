@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { DTOInscricaoCompleta, DTOInscricaoDadosPessoais, EnumSexo, EnumTipoInscricao, DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOSarau, DTOInscricaoSimplificada } from '../inscricao/objetos';
+import { DTOInscricaoCompleta, DTOInscricaoDadosPessoais, EnumSexo, EnumTipoInscricao, DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOSarau, DTOInscricaoSimplificada, DTOCrianca } from '../inscricao/objetos';
 import { Periodo, DTOEventoCompleto, EnumPublicoEvangelizacao, EnumModeloDivisaoSalasEstudo } from '../principal/objetos';
 
 @Injectable()
 export class WsManutencaoInscricoes {
-
 
     obterInscricaoCompleta(idInscricao: number): Observable<DTOInscricaoCompleta> {
         return new Observable<DTOInscricaoCompleta>((x) => {
@@ -65,4 +64,18 @@ export class WsManutencaoInscricoes {
             x.next(sarau);
         });
     }
+
+    obterCrianca(IdEvento: number, codigo: string): Observable<DTOCrianca> {
+        return new Observable<DTOCrianca>((x) => {
+
+            let crianca = new DTOCrianca();
+            crianca.Id = 1;
+            crianca.Nome = "Criança 1";
+            crianca.Responsaveis = [];
+            crianca.Responsaveis.push({ Id: 1, Nome: "João da Silva", IdEvento: 1 });
+
+            x.next(crianca);
+        });
+    }
+
 }

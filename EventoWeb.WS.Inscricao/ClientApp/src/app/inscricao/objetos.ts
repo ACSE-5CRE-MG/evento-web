@@ -102,3 +102,17 @@ export class DTOInscricaoSimplificada {
     IdEvento: number;
     Nome: string;
 }
+
+export class DTOCrianca {
+    Id: number;
+    Nome: string;
+    DataNascimento: Date;
+    Sexo: EnumSexo;
+    EhVegetariano: boolean;
+    UsaAdocanteDiariamente: boolean;
+    EhDiabetico: boolean;
+    CarnesNaoCome: string;
+    AlimentosAlergia: string;
+    MedicamentosUsa: string;
+    Responsaveis: DTOInscricaoSimplificada[];
+}

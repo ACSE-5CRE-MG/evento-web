@@ -9,6 +9,7 @@
     <None Remove="ClientApp\src\app\inscricao\atividades\comp-oficinas.ts" />
     <None Remove="ClientApp\src\app\inscricao\atividades\comp-salas.ts" />
     <None Remove="ClientApp\src\app\inscricao\atividades\comp-sarau.ts" />
+    <None Remove="ClientApp\src\app\inscricao\criancas\comp-criancas.ts" />
     <None Remove="ClientApp\src\app\inscricao\objetos.ts" />
     <None Remove="ClientApp\src\app\inscricao\tela-codigo-inscricao.ts" />
     <None Remove="ClientApp\src\app\inscricao\tela-criacao-inscricao.ts" />

@@ -85,7 +85,7 @@ export class TelaInscricao implements OnInit {
 
                                     if (this.inscricao.Departamento == null)
                                         this.dadosTela.departamentoEscolhido = null;
-                                    if (this.inscricao.Departamento.Coordenador != null)
+                                    else if (this.inscricao.Departamento.Coordenador != null)
                                         this.dadosTela.departamentoEscolhido = this.inscricao.Departamento.Coordenador
                                     else if (this.inscricao.Departamento.Participante != null)
                                         this.dadosTela.departamentoEscolhido = this.inscricao.Departamento.Participante;

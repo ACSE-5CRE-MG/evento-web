@@ -54,6 +54,7 @@ import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoo
 import { ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador } from './inscricao/atividades/comp-salas';
 import { ComponenteDepartamentos } from './inscricao/atividades/comp-departamentos';
 import { ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DialogosSarau } from './inscricao/atividades/comp-sarau';
+import { ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario, DialogosCrianca } from './inscricao/criancas/comp-criancas';
 
 declare function require(url: string);
 
@@ -69,7 +70,8 @@ locale('pt');
         CaixaMensagemDlg, DlgEmProcessamento, LayoutGeral,
         ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
         ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
-        ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario
+        ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
+        ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario
     ],
     imports: [
         BrowserModule,
@@ -104,9 +106,9 @@ locale('pt');
         ]),
         BrowserAnimationsModule
     ],
-    entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario],
+    entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario],
     providers: [{ provide: LOCALE_ID, useValue: 'pt' },
-        CoordenacaoCentral, WsEventos, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau
+        CoordenacaoCentral, WsEventos, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau, DialogosCrianca
     ],
     bootstrap: [TelaBase]
 })
