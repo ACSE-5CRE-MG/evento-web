@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DTOInscricaoCompleta, EnumApresentacaoAtividades } from './objetos';
+import { DTOInscricaoCompleta, EnumApresentacaoAtividades, DTOSarau, DTOInscricaoSimplificada } from './objetos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { WsManutencaoInscricoes } from '../webservices/wsManutencaoInscricoes';
 import { DTOOficina, DTOSalaEstudo, DTODepartamento } from '../principal/objetos';
@@ -89,6 +89,12 @@ export class TelaInscricao implements OnInit {
                                         this.dadosTela.departamentoEscolhido = this.inscricao.Departamento.Coordenador
                                     else if (this.inscricao.Departamento.Participante != null)
                                         this.dadosTela.departamentoEscolhido = this.inscricao.Departamento.Participante;
+
+                                    if (this.inscricao.Sarais == null)
+                                        this.dadosTela.sarais = [];
+                                    else
+                                        this.dadosTela.sarais = this.inscricao.Sarais;
+                                    this.dadosTela.inscricaoSimples = { Id: this.inscricao.Id, IdEvento: this.inscricao.Evento.Id, Nome: this.inscricao.DadosPessoais.Nome };
                                 }
                                 else
                                     this.voltar(idInscricao);
@@ -182,6 +188,8 @@ class DadosTela {
     oficinasEscolhidas: DTOOficina | DTOOficina[];
     salasEscolhidas: DTOSalaEstudo | DTOSalaEstudo[];
     departamentoEscolhido: DTODepartamento;
+    sarais: DTOSarau[];
+    inscricaoSimples: DTOInscricaoSimplificada;
 
     constructor(private coordenacao: CoordenacaoCentral) { }
 

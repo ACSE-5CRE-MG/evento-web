@@ -99,5 +99,6 @@ export class DTOSarau {
 
 export class DTOInscricaoSimplificada {
     Id: number;
+    IdEvento: number;
     Nome: string;
 }

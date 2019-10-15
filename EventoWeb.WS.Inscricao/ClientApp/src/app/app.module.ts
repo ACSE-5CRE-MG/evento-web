@@ -53,6 +53,7 @@ import { WsManutencaoInscricoes } from './webservices/wsManutencaoInscricoes';
 import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador } from './inscricao/atividades/comp-oficinas';
 import { ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador } from './inscricao/atividades/comp-salas';
 import { ComponenteDepartamentos } from './inscricao/atividades/comp-departamentos';
+import { ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DialogosSarau } from './inscricao/atividades/comp-sarau';
 
 declare function require(url: string);
 
@@ -68,7 +69,7 @@ locale('pt');
         CaixaMensagemDlg, DlgEmProcessamento, LayoutGeral,
         ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
         ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
-        ComponenteDepartamentos
+        ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario
     ],
     imports: [
         BrowserModule,
@@ -103,9 +104,9 @@ locale('pt');
         ]),
         BrowserAnimationsModule
     ],
-    entryComponents: [CaixaMensagemDlg, DlgEmProcessamento],
+    entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario],
     providers: [{ provide: LOCALE_ID, useValue: 'pt' },
-        CoordenacaoCentral, WsEventos, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao
+        CoordenacaoCentral, WsEventos, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau
     ],
     bootstrap: [TelaBase]
 })

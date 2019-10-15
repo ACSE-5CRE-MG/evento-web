@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { DTOInscricaoCompleta, DTOInscricaoDadosPessoais, EnumSexo, EnumTipoInscricao, DTOInscricaoOficina, DTOInscricaoSalaEstudo } from '../inscricao/objetos';
+import { DTOInscricaoCompleta, DTOInscricaoDadosPessoais, EnumSexo, EnumTipoInscricao, DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOSarau, DTOInscricaoSimplificada } from '../inscricao/objetos';
 import { Periodo, DTOEventoCompleto, EnumPublicoEvangelizacao, EnumModeloDivisaoSalasEstudo } from '../principal/objetos';
 
 @Injectable()
@@ -49,6 +49,20 @@ export class WsManutencaoInscricoes {
         return new Observable<void>((x) => {
 
             x.next();
+        });
+    }
+
+    obterSarau(idEvento: number, codigoSarau: string): Observable<DTOSarau> {
+        return new Observable<DTOSarau>((x) => {
+
+            let sarau = new DTOSarau();
+            sarau.Id = 1;
+            sarau.DuracaoMin = 10;
+            sarau.Participantes = [];
+            sarau.Participantes.push({ Id: 1, Nome: "João da Silva", IdEvento: 1 });
+            sarau.Tipo = "Música";
+
+            x.next(sarau);
         });
     }
 }

@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, Output, ViewChild, Inject, Injectable } from '@angular/core';
-import { DTOSarau } from '../objetos';
+import { DTOSarau, DTOInscricaoSimplificada } from '../objetos';
 import { CoordenacaoCentral } from '../../componentes/central/coordenacao-central';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { Observable } from 'rxjs';
+import { WsManutencaoInscricoes } from '../../webservices/wsManutencaoInscricoes';
 
 
 @Component({
@@ -17,7 +18,10 @@ export class ComponenteSarau {
     @Output()
     valorChange: EventEmitter<DTOSarau[]> = new EventEmitter<DTOSarau[]>();
 
-    constructor(private coordenacao: CoordenacaoCentral, private DlgsSarau: DialogosSarau) { }
+    @Input()
+    inscrito: DTOInscricaoSimplificada;
+
+    constructor(private coordenacao: CoordenacaoCentral, private DlgsSarau: DialogosSarau, private wsManInscricoes: WsManutencaoInscricoes) { }
 
 
     clicarCodigo(): void {
@@ -25,7 +29,21 @@ export class ComponenteSarau {
             .subscribe(
                 (codigo) => {
                     if (codigo != null) {
-                        // faz as buscas
+
+                        let dlg = this.coordenacao.Alertas.alertarProcessamento("Buscando sarau pelo código...");
+
+                        this.wsManInscricoes.obterSarau(this.inscrito.IdEvento, codigo)
+                            .subscribe(
+                                (sarau) => {
+                                    sarau.Participantes.push(this.inscrito);
+                                    this.valor.push(sarau);
+                                    this.valorChange.emit(this.valor);
+                                },
+                                (erro) => {
+                                    dlg.close();
+                                    this.coordenacao.ProcessamentoErro.processar(erro);
+                                }
+                            );
                     }
                 }
             );
@@ -36,6 +54,9 @@ export class ComponenteSarau {
             .subscribe(
                 (sarauCriado) => {
                     if (sarauCriado != null) {
+                        sarauCriado.Participantes = [];
+                        sarauCriado.Participantes.push(this.inscrito);
+
                         this.valor.push(sarauCriado);
                         this.valorChange.emit(this.valor);
                     }
@@ -68,6 +89,23 @@ export class ComponenteSarau {
                         this.valorChange.emit(this.valor);
                     }
                 });
+    }
+
+    gerarTextoParticipantes(sarau: DTOSarau): string {
+
+        let pessoas: string = "";
+        for (let inscricao of sarau.Participantes) {
+
+            if (pessoas != "")
+                pessoas = pessoas + ", ";
+
+            if (inscricao.Id == this.inscrito.Id)
+                pessoas = pessoas + "Você";
+            else
+                pessoas = pessoas + inscricao.Nome;
+        }
+
+        return pessoas;
     }
 }
 
@@ -105,14 +143,18 @@ export class DlgSarauFormulario {
     grupoValidacao: DxValidationGroupComponent;
 
     sarau: DTOSarau;
+    tituloDlg: string;
 
     constructor(private dialogRef: MatDialogRef<DlgSarauFormulario>,
         @Inject(MAT_DIALOG_DATA) public data: DTOSarau) {
 
+        this.tituloDlg = "Nova Apresentação";
         if (data == null)
             this.sarau = new DTOSarau();
-        else
+        else {
             this.sarau = data;
+            this.tituloDlg = "Alteração de Apresentação";
+        }
     }
 
     clicarOK(): void {
