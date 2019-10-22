@@ -36,9 +36,11 @@ export class WsManutencaoInscricoes {
             inscricao.Evento.TemSarau = true;
             inscricao.Evento.CnfEvangelizacao = EnumPublicoEvangelizacao.Todos;
             inscricao.Evento.CnfSalaEstudo = EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao;
+            inscricao.Evento.ValorInscricaoAdulto = 60.0;
+            inscricao.Evento.ValorInscricaoCrianca = 30.0;
             inscricao.Id = 1;
-            inscricao.Oficina = new DTOInscricaoOficina();
-            inscricao.SalasEstudo = new DTOInscricaoSalaEstudo();
+            //inscricao.Oficina = new DTOInscricaoOficina();
+            //inscricao.SalasEstudo = new DTOInscricaoSalaEstudo();
 
             x.next(inscricao);
         });

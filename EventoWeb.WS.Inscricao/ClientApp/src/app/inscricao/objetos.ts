@@ -73,6 +73,10 @@ export class DTOInscricaoCompleta {
     SalasEstudo: DTOInscricaoSalaEstudo;
     Departamento: DTOInscricaoDepartamento;
     Sarais: DTOSarau[];
+
+    Criancas: DTOCrianca[];
+
+    Pagamento: DTOPagamento;
 }
 
 export class DTOInscricaoOficina {
@@ -115,4 +119,13 @@ export class DTOCrianca {
     AlimentosAlergia: string;
     MedicamentosUsa: string;
     Responsaveis: DTOInscricaoSimplificada[];
+}
+
+export enum EnumPagamento { Comprovante, ComprovanteOutraInscricao, Outro }
+
+export class DTOPagamento {
+
+    Forma: EnumPagamento;
+    ComprovantesBase64: string[];
+    Observacao: string;
 }

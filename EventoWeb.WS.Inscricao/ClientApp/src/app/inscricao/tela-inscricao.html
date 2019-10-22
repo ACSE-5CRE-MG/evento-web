@@ -220,7 +220,19 @@
     <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
       <mat-card-title>Financeiro e Observações</mat-card-title>
       <mat-divider></mat-divider>
-      Financeiro
+      <mat-tab-group>
+        <mat-tab label="Financeiro" style="padding: 5px">
+          <comp-pagamento [(valor)]="dadosTela.pagamento"
+                          [valorInscricao]="inscricao.Evento.ValorInscricaoAdulto"
+                          [valorInscCrianca]="inscricao.Evento.ValorInscricaoAdulto"
+                          [totalCriancas]="contarCriancasPrimeiroResponsavel()"></comp-pagamento>
+        </mat-tab>
+        <mat-tab label="Observações" style="padding: 5px">
+          <dx-text-area [height]="180"
+                        [(value)]="dadosTela.observacoes">
+          </dx-text-area>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </layout-geral>

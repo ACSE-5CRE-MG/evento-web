@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DTOInscricaoCompleta, EnumApresentacaoAtividades, DTOSarau, DTOInscricaoSimplificada } from './objetos';
+import { DTOInscricaoCompleta, EnumApresentacaoAtividades, DTOSarau, DTOInscricaoSimplificada, DTOCrianca } from './objetos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { WsManutencaoInscricoes } from '../webservices/wsManutencaoInscricoes';
 import { DTOOficina, DTOSalaEstudo, DTODepartamento } from '../principal/objetos';
@@ -95,6 +95,8 @@ export class TelaInscricao implements OnInit {
                                     else
                                         this.dadosTela.sarais = this.inscricao.Sarais;
                                     this.dadosTela.inscricaoSimples = { Id: this.inscricao.Id, IdEvento: this.inscricao.Evento.Id, Nome: this.inscricao.DadosPessoais.Nome };
+
+                                    this.dadosTela.criancas = this.inscricao.Criancas;
                                 }
                                 else
                                     this.voltar(idInscricao);
@@ -140,6 +142,13 @@ export class TelaInscricao implements OnInit {
         }
         else
             this.coordenacao.Alertas.alertarAtencao("Nâo deu para continuar!!", "Ops, acho que alguns dados informados não estão legais!");
+    }
+
+    public contarCriancasPrimeiroResponsavel(): number {
+        if (this.dadosTela.criancas == null)
+            return 0;
+        else
+            return this.dadosTela.criancas.filter(x => x.Responsaveis[0] != null && x.Responsaveis[0].Id == this.inscricao.Id).length;        
     }
 
     private atualizar(): void {
@@ -190,6 +199,8 @@ class DadosTela {
     departamentoEscolhido: DTODepartamento;
     sarais: DTOSarau[];
     inscricaoSimples: DTOInscricaoSimplificada;
+
+    criancas: DTOCrianca[];
 
     constructor(private coordenacao: CoordenacaoCentral) { }
 

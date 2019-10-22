@@ -7,30 +7,31 @@ import localePt from '@angular/common/locales/pt';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import {  
-  MatSidenavModule,
-  MatDialogModule,
-  MatToolbarModule,
-  MatButtonModule,
-  MatDividerModule,
-  MatCardModule,
-  MatTabsModule
+import {
+    MatSidenavModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatCardModule,
+    MatTabsModule
 } from '@angular/material';
 
 import {
-  DxDataGridModule,
-  DxTextBoxModule,
-  DxNumberBoxModule,
-  DxDateBoxModule,
-  DxDropDownBoxModule,
-  DxListModule,
-  DxRadioGroupModule,
-  DxCheckBoxModule,
-  DxPopoverModule,
-  DxTextAreaModule,
-  DxValidatorModule,
-  DxValidationGroupModule,
-  DxSelectBoxModule
+    DxDataGridModule,
+    DxTextBoxModule,
+    DxNumberBoxModule,
+    DxDateBoxModule,
+    DxDropDownBoxModule,
+    DxListModule,
+    DxRadioGroupModule,
+    DxCheckBoxModule,
+    DxPopoverModule,
+    DxTextAreaModule,
+    DxValidatorModule,
+    DxValidationGroupModule,
+    DxSelectBoxModule,
+    DxFileUploaderModule
 } from 'devextreme-angular';
 
 import { locale, loadMessages } from 'devextreme/localization';
@@ -55,6 +56,7 @@ import { ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalas
 import { ComponenteDepartamentos } from './inscricao/atividades/comp-departamentos';
 import { ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DialogosSarau } from './inscricao/atividades/comp-sarau';
 import { ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario, DialogosCrianca } from './inscricao/criancas/comp-criancas';
+import { ComponentePagamento } from './inscricao/pagamento/comp-pagamento';
 
 declare function require(url: string);
 
@@ -71,7 +73,8 @@ locale('pt');
         ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
         ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
         ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
-        ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario
+        ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario,
+        ComponentePagamento
     ],
     imports: [
         BrowserModule,
@@ -96,6 +99,7 @@ locale('pt');
         DxValidatorModule,
         DxValidationGroupModule,
         DxSelectBoxModule,
+        DxFileUploaderModule,
         RouterModule.forRoot([
             { path: '', component: TelaPrincipal },
             { path: 'comecar/:idevento', component: TelaCriacaoInscricao },
