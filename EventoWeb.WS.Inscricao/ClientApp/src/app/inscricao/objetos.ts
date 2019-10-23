@@ -58,9 +58,7 @@ export class DTOInscricaoDadosPessoais {
     PrimeiroEncontro: boolean;
 }
 
-export class DTOInscricaoCompleta {
-    Id: number;
-    Evento: DTOEventoCompleto;
+export class DTOInscricaoAtualizacao {
     DadosPessoais: DTOInscricaoDadosPessoais;
     CentroEspirita: string;
     TempoEspirita: string;
@@ -68,6 +66,7 @@ export class DTOInscricaoCompleta {
     TelefoneResponsavelCentro: string;
     NomeResponsavelLegal: string;
     TelefoneResponsavelLegal: string;
+    Observacoes: string;
 
     Oficina: DTOInscricaoOficina;
     SalasEstudo: DTOInscricaoSalaEstudo;
@@ -77,6 +76,11 @@ export class DTOInscricaoCompleta {
     Criancas: DTOCrianca[];
 
     Pagamento: DTOPagamento;
+}
+
+export class DTOInscricaoCompleta extends DTOInscricaoAtualizacao {
+    Id: number;
+    Evento: DTOEventoCompleto;
 }
 
 export class DTOInscricaoOficina {
@@ -128,24 +132,4 @@ export class DTOPagamento {
     Forma: EnumPagamento;
     ComprovantesBase64: string[];
     Observacao: string;
-}
-
-export class DTOInscricaoAtualizacao {
-    DadosPessoais: DTOInscricaoDadosPessoais;
-    CentroEspirita: string;
-    TempoEspirita: string;
-    NomeResponsavelCentro: string;
-    TelefoneResponsavelCentro: string;
-    NomeResponsavelLegal: string;
-    TelefoneResponsavelLegal: string;
-    Observacoes: string;
-
-    Oficina: DTOInscricaoOficina;
-    SalasEstudo: DTOInscricaoSalaEstudo;
-    Departamento: DTOInscricaoDepartamento;
-    Sarais: DTOSarau[];
-
-    Criancas: DTOCrianca[];
-
-    Pagamento: DTOPagamento;
 }

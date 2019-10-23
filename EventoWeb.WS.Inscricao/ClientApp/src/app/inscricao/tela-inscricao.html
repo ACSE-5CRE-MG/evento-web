@@ -203,7 +203,7 @@
           <comp-salas [salas]="inscricao.Evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="inscricao.Evento.CnfSalaEstudo" [(escolhido)]="dadosTela.salasEscolhidas"></comp-salas>
         </mat-tab>
         <mat-tab label="Departamentos" *ngIf="inscricao.Evento.TemDepartamentos">
-          <comp-departamentos [departamentos]="inscricao.Evento.Departamentos" [forma]="dadosTela.formaEscolha" [(escolhido)]="dadosTela.departamentoEscolhido"></comp-departamentos>
+          <comp-departamentos [departamentos]="inscricao.Evento.Departamentos" [forma]="dadosTela.formaEscolha" [(valor)]="dadosTela.departamentoEscolhido"></comp-departamentos>
         </mat-tab>
         <mat-tab label="Sarau" *ngIf="inscricao.Evento.TemSarau" style="padding: 5px">
           <comp-sarau [(valor)]="dadosTela.sarais" [inscrito]="dadosTela.inscricaoSimples"></comp-sarau>

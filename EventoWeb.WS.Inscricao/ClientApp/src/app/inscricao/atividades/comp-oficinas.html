@@ -9,9 +9,9 @@
     </div>
   </div>
 
-  <comp-oficina-participante *ngIf="opcaoEscolhida == opcoes[0]" [oficinas]="oficinas" [(valor)]="oficinasEscolhidas">
+  <comp-oficina-participante *ngIf="opcaoEscolhida == opcoes[0]" [oficinas]="oficinas" [(valor)]="participante">
   </comp-oficina-participante>
 
-  <comp-oficina-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [oficinas]="oficinas" [(valor)]="oficinasEscolhidas">
+  <comp-oficina-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [oficinas]="oficinas" [(valor)]="coordenador">
   </comp-oficina-coordenador>
 </div>

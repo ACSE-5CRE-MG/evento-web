@@ -9,12 +9,12 @@
     </div>
   </div>
 
-  <comp-sala-participante-com-escolha *ngIf="opcaoEscolhida == opcoes[0] && configuracaoSala == 1" [salas]="salas" [(valor)]="salasEscolhidas">
+  <comp-sala-participante-com-escolha *ngIf="opcaoEscolhida == opcoes[0] && configuracaoSala == 1" [salas]="salas" [(valor)]="participante">
   </comp-sala-participante-com-escolha>
 
   <comp-sala-participante-sem-escolha *ngIf="opcaoEscolhida == opcoes[0] && configuracaoSala == 0">
   </comp-sala-participante-sem-escolha>
 
-  <comp-sala-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [salas]="salas" [(valor)]="salasEscolhidas">
+  <comp-sala-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [salas]="salas" [(valor)]="coordenador">
   </comp-sala-coordenador>
 </div>
