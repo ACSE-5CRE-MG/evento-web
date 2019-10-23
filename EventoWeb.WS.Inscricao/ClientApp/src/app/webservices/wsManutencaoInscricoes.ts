@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { DTOInscricaoCompleta, DTOInscricaoDadosPessoais, EnumSexo, EnumTipoInscricao, DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOSarau, DTOInscricaoSimplificada, DTOCrianca } from '../inscricao/objetos';
+import { DTOInscricaoCompleta, DTOInscricaoDadosPessoais, EnumSexo, EnumTipoInscricao, DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOSarau, DTOInscricaoSimplificada, DTOCrianca, DTOInscricaoAtualizacao } from '../inscricao/objetos';
 import { Periodo, DTOEventoCompleto, EnumPublicoEvangelizacao, EnumModeloDivisaoSalasEstudo } from '../principal/objetos';
 
 @Injectable()
@@ -46,7 +46,7 @@ export class WsManutencaoInscricoes {
         });
     }
 
-    atualizar(inscricao: DTOInscricaoCompleta): Observable<void> {
+    atualizar(id: number, inscricao: DTOInscricaoAtualizacao): Observable<void> {
         return new Observable<void>((x) => {
 
             x.next();

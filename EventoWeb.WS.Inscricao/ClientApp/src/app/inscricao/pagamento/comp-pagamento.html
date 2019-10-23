@@ -14,7 +14,7 @@
       </dx-radio-group>
     </div>
   </div>
-  <div *nfIf="opcaoEscolhida == opcoes[0]" fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+  <div *ngIf="opcaoEscolhida == opcoes[0]" fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
     <label class="label_campos" fxFlex.xs="106px">Comprovante (.jpg, .jpeg):</label>
     <dx-file-uploader [multiple]="true"
                       [uploadMode]="useButtons"

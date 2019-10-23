@@ -129,3 +129,23 @@ export class DTOPagamento {
     ComprovantesBase64: string[];
     Observacao: string;
 }
+
+export class DTOInscricaoAtualizacao {
+    DadosPessoais: DTOInscricaoDadosPessoais;
+    CentroEspirita: string;
+    TempoEspirita: string;
+    NomeResponsavelCentro: string;
+    TelefoneResponsavelCentro: string;
+    NomeResponsavelLegal: string;
+    TelefoneResponsavelLegal: string;
+    Observacoes: string;
+
+    Oficina: DTOInscricaoOficina;
+    SalasEstudo: DTOInscricaoSalaEstudo;
+    Departamento: DTOInscricaoDepartamento;
+    Sarais: DTOSarau[];
+
+    Criancas: DTOCrianca[];
+
+    Pagamento: DTOPagamento;
+}
