@@ -1,4 +1,5 @@
 ﻿using EventoWeb.Nucleo.Negocio.Entidades;
+using System;
 using System.Collections.Generic;
 
 namespace EventoWeb.Nucleo.Negocio.Repositorios
@@ -9,5 +10,6 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
 
         public abstract IList<Evento> ObterTodosEventos();
         public abstract Evento ObterEventoPeloId(int id);
+        public abstract IList<Evento> ObterTodosEventosEmPeriodoInscricaoOnline(DateTime now);
     }
 }

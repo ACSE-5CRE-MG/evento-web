@@ -18,6 +18,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         public ConfiguracaoEvangelizacao ConfiguracaoEvangelizacao { get; set; }
         public ConfiguracaoSalaEstudo ConfiguracaoSalaEstudo { get; set; }
         public ConfiguracaoSarau ConfiguracaoSarau { get; set; }
+        public int IdadeMinimaInscricaoAdulto { get; set; }
     }
 
     public class DTOEventoCompleto : DTOEvento

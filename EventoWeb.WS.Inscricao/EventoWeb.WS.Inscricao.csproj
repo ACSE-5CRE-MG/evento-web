@@ -24,11 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Remove="ClientApp\src\app\configuracao-sistema-service.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\permissao-acesso-inscricao.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\webservices\cliente-ws.ts" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
@@ -39,6 +40,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\EventoWeb.Nucleo\EventoWeb.Nucleo.csproj" />
   </ItemGroup>
 
   <ItemGroup>

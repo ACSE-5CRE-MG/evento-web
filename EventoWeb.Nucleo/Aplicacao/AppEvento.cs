@@ -57,7 +57,8 @@ namespace EventoWeb.Nucleo.Aplicacao
 
         public DTOId Incluir(DTOEvento dto)
         {
-            Evento evento = new Evento(dto.Nome, dto.PeriodoInscricao, dto.PeriodoRealizacao)
+            Evento evento = new Evento(dto.Nome, dto.PeriodoInscricao, dto.PeriodoRealizacao, 
+                dto.IdadeMinimaInscricaoAdulto)
             {
                 Logotipo = dto.Logotipo,
                 TemDepartamentalizacao = dto.TemDepartamentalizacao,

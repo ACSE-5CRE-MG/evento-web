@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID } from '@angular/core';
+import { NgModule, LOCALE_ID, Injectable, APP_INITIALIZER } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
@@ -57,6 +58,9 @@ import { ComponenteDepartamentos } from './inscricao/atividades/comp-departament
 import { ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DialogosSarau } from './inscricao/atividades/comp-sarau';
 import { ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario, DialogosCrianca } from './inscricao/criancas/comp-criancas';
 import { ComponentePagamento } from './inscricao/pagamento/comp-pagamento';
+import { ClienteWs } from './webservices/cliente-ws';
+import { Observable } from 'rxjs';
+import { Configuracao, ConfiguracaoSistemaService } from './configuracao-sistema-service';
 
 declare function require(url: string);
 
@@ -65,6 +69,32 @@ registerLocaleData(localePt);
 let ptMessages = require("devextreme/localization/messages/pt.json");
 loadMessages(ptMessages);
 locale('pt');
+
+@Injectable()
+export class AppLoadService {
+
+    constructor(private http: HttpClient) { }
+
+    initializeApp(): Promise<any> {
+
+        let controle = new Observable((observador) => {
+            this.http.get<Configuracao>('assets/configuracao.json')
+                .subscribe(
+                    (cnf) => {
+                        ConfiguracaoSistemaService.configuracao = cnf;
+                    },
+                    (erro) => observador.error(erro)
+                );
+        })
+        .toPromise();
+
+        return controle;
+    }
+}
+
+export function init_app(appLoadService: AppLoadService) {
+    return () => appLoadService.initializeApp();
+}
 
 @NgModule({
     declarations: [
@@ -100,6 +130,7 @@ locale('pt');
         DxValidationGroupModule,
         DxSelectBoxModule,
         DxFileUploaderModule,
+        HttpClientModule,
         RouterModule.forRoot([
             { path: '', component: TelaPrincipal },
             { path: 'comecar/:idevento', component: TelaCriacaoInscricao },
@@ -111,8 +142,11 @@ locale('pt');
         BrowserAnimationsModule
     ],
     entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario],
-    providers: [{ provide: LOCALE_ID, useValue: 'pt' },
-        CoordenacaoCentral, WsEventos, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau, DialogosCrianca
+    providers: [
+        AppLoadService,
+        { provide: LOCALE_ID, useValue: 'pt' },
+        { provide: APP_INITIALIZER, useFactory: init_app, deps: [AppLoadService], multi: true },
+        CoordenacaoCentral, WsEventos, ClienteWs, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau, DialogosCrianca
     ],
     bootstrap: [TelaBase]
 })

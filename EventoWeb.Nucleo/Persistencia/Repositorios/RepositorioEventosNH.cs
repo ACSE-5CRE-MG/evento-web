@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using EventoWeb.Nucleo.Negocio.Entidades;
 using EventoWeb.Nucleo.Negocio.Repositorios;
 using NHibernate;
@@ -25,6 +23,14 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
         public override Evento ObterEventoPeloId(int id)
         {
             return mSessao.Get<Evento>(id);
+        }
+
+        public override IList<Evento> ObterTodosEventosEmPeriodoInscricaoOnline(DateTime data)
+        {
+            return mSessao
+                .QueryOver<Evento>()
+                .Where(x => x.PeriodoInscricaoOnLine.DataInicial <= data && x.PeriodoInscricaoOnLine.DataFinal >= data)
+                .List();
         }
     }
 }

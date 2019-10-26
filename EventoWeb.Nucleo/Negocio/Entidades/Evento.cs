@@ -16,16 +16,18 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         private ConfiguracaoEvangelizacao m_ConfiguracaoEvangelizacao;
         private ConfiguracaoSarau m_ConfiguracaoSarau;
         private ConfiguracaoSalaEstudo m_ConfiguracaoSalaEstudo;
+        private int m_IdadeMinimaInscricaoAdulto;
 
         protected Evento()
         {
         }
 
-        public Evento(string nome, Periodo periodoInscricaoOnline, Periodo periodoRealizacaoEvento)
+        public Evento(string nome, Periodo periodoInscricaoOnline, Periodo periodoRealizacaoEvento, int idadeMinimaInscricaoAdulto)
         {
             Nome = nome;
             PeriodoInscricaoOnLine = periodoInscricaoOnline;
             PeriodoRealizacaoEvento = periodoRealizacaoEvento;
+            IdadeMinimaInscricaoAdulto = idadeMinimaInscricaoAdulto;
             m_DataRegistro = DateTime.Today;
         }
 
@@ -93,6 +95,16 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         {
             get => m_ConfiguracaoSarau;
             set => m_ConfiguracaoSarau = value;
+        }
+        public int IdadeMinimaInscricaoAdulto 
+        {
+            get => m_IdadeMinimaInscricaoAdulto;
+            set
+            {
+                if (value <= 0)
+                    throw new ExcecaoNegocioAtributo("Evento", "IdadeMinimaInscricaoAdulto", "IdadeMinimaInscricaoAdulto Deve ser maior que zero.");
+                m_IdadeMinimaInscricaoAdulto = value;
+            }
         }
     }
 

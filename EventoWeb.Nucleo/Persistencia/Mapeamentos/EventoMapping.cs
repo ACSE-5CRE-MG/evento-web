@@ -2,9 +2,6 @@
 using NHibernate;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
@@ -116,7 +113,14 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                     m.NotNullable(false);
                     m.Column("TEMPO_SARAU_MIN");
                 });
-            });            
+            });
+
+            this.Property(x => x.IdadeMinimaInscricaoAdulto, m =>
+             {
+                 m.Access(Accessor.NoSetter);
+                 m.NotNullable(true);
+                 m.Column("IDADE_MINIMA_INSC_ADULTO");
+             });
         }
     }
 }

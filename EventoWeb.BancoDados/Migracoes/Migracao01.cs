@@ -22,11 +22,11 @@ namespace EventoWeb.BancoDados.Migracoes
         public override void Up()
         {
             CriarTabelaEventos();
-            CriarTabelaUsuarios();
-            CriarTabelaSalasEstudo();
-            CriarTabelaAfracs();
-            CriarTabelaDepartamentos();
-            CriarTabelaConfiguracaoEmail();
+            //CriarTabelaUsuarios();
+            //CriarTabelaSalasEstudo();
+            //CriarTabelaAfracs();
+            //CriarTabelaDepartamentos();
+            //CriarTabelaConfiguracaoEmail();
         }
 
         private void CriarTabelaEventos()
@@ -45,7 +45,8 @@ namespace EventoWeb.BancoDados.Migracoes
                 .WithColumn("TEM_OFICINAS").AsInt16().NotNullable()
                 .WithColumn("TEM_DORMITORIOS").AsInt16().NotNullable()
                 .WithColumn("PUBLICO_EVANGELIZACAO").AsInt16().Nullable()
-                .WithColumn("TEMPO_SARAU_MIN").AsInt32().Nullable();
+                .WithColumn("TEMPO_SARAU_MIN").AsInt32().Nullable()
+                .WithColumn("IDADE_MINIMA_INSC_ADULTO").AsInt32().NotNullable();
         }
 
         private void CriarTabelaUsuarios()
