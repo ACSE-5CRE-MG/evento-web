@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EventoWeb.Nucleo.AplicacaoInscricaoOnLine;
-using Microsoft.AspNetCore.Http;
+﻿using EventoWeb.Nucleo.Aplicacao;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace EventoWeb.WS.Inscricao.Controllers
 {
@@ -12,23 +8,23 @@ namespace EventoWeb.WS.Inscricao.Controllers
     [ApiController]
     public class EventosController : ControllerBase
     {
-        private AppEvento mAppEvento;
+        private readonly AppInscOnlineEvento mAppEvento;
 
-        public EventosController(AppEvento appEvento)
+        public EventosController(IContexto contexto)
         {
-            mAppEvento = appEvento;
+            mAppEvento = new AppInscOnlineEvento(contexto);
         }
 
         [HttpGet("disponiveis")]
         public IEnumerable<DTOEventoListagem> ListarEventosDisponiveis()
         {
-            return mAppEvento.ListarEventosDisponiveis();
+            return mAppEvento.ListarEventosDisponiveisInscricaoOnline();
         }
 
         [HttpGet("{id}")]
         public DTOEventoListagem ObterEventos(int id)
         {
-            return mAppEvento.ObterPorId(id);
+            return mAppEvento.ObterPorIdDisponivelInscricaoOnline(id);
         }
     }
 }

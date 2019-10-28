@@ -96,7 +96,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             get => m_ConfiguracaoSarau;
             set => m_ConfiguracaoSarau = value;
         }
-        public int IdadeMinimaInscricaoAdulto 
+        public virtual int IdadeMinimaInscricaoAdulto 
         {
             get => m_IdadeMinimaInscricaoAdulto;
             set

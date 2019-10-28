@@ -40,5 +40,6 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
         IList<Inscricao> ListarInscricoesDaPessoaComEvento(int idPessoa);
 
         IList<CrachaInscrito> ListarCrachasInscritosPorEvento(int idEvento);
+        Inscricao ObterInscricaoPeloId(int id);
     }
 }

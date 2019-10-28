@@ -82,6 +82,7 @@ export class AppLoadService {
                 .subscribe(
                     (cnf) => {
                         ConfiguracaoSistemaService.configuracao = cnf;
+                        observador.complete();
                     },
                     (erro) => observador.error(erro)
                 );

@@ -51,13 +51,4 @@ export class WsInscricoes {
       x.next(evento);
     });
   }
-
-  obterInscricaoCompleta(idInscricao: number): Observable<DTOInscricaoCompleta> {
-    return new Observable<DTOInscricaoCompleta>((x) => {
-
-      let evento = new DTOInscricaoCompleta();
-
-      x.next(evento);
-    });
-  }
 }

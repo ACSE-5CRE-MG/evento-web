@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using EventoWeb.Nucleo.Aplicacao;
+using EventoWeb.Nucleo.Persistencia;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -7,6 +9,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NHibernate;
 using System;
 using System.Net;
 
@@ -18,6 +21,12 @@ namespace EventoWeb.WS.Inscricao
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(new ConfiguracaoNHibernate().GerarFabricaSessao());
+            services.AddScoped<IContexto>((provider) => {
+                var factory = provider.GetService<ISessionFactory>();
+                return new Contexto(factory.OpenSession());
+            });
+
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
@@ -51,6 +60,8 @@ namespace EventoWeb.WS.Inscricao
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
+            app.UseMvc();
+
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
@@ -60,8 +71,6 @@ namespace EventoWeb.WS.Inscricao
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
-
-            app.UseMvc();
         }
 
         private static Object ProcessarErro(Exception erro)
