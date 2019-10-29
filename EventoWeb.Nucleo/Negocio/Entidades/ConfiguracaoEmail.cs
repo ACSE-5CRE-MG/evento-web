@@ -14,8 +14,6 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         private String m_ServidorEmail;
         private int? m_PortaServidor;
         private TipoSegurancaEmail? m_TipoSeguranca;
-        private ModeloMensagem m_MensagemInscricaoRegistrada;
-        private ModeloMensagem m_MensagemInscricaoConfirmada;
         private Evento m_Evento;
 
         public ConfiguracaoEmail(Evento evento)
@@ -78,19 +76,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         {
             get { return m_TipoSeguranca; }
             set { m_TipoSeguranca = value; }
-        }
-
-        public virtual ModeloMensagem MensagemInscricaoRegistrada
-        {
-            get { return m_MensagemInscricaoRegistrada; }
-            set { m_MensagemInscricaoRegistrada = value; }
-        }
-
-        public virtual ModeloMensagem MensagemInscricaoConfirmada
-        {
-            get { return m_MensagemInscricaoConfirmada; }
-            set { m_MensagemInscricaoConfirmada = value; }
-        }
+        }        
 
         public virtual Boolean ConfiguracaoInformada
         {
@@ -103,6 +89,49 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                        m_PortaServidor != null &&
                        m_TipoSeguranca != null;
             }
+        }
+    }
+
+    public class MensagemEmailPadrao : Entidade
+    {
+        private Evento m_Evento;
+        private ModeloMensagem m_MensagemInscricaoRegistrada;
+        private ModeloMensagem m_MensagemInscricaoConfirmada;
+        private ModeloMensagem m_MensagemInscricaoCodigoAcessoAcompanhamento;
+        private ModeloMensagem m_MensagemInscricaoCodigoAcessoCriacao;
+
+        public MensagemEmailPadrao(Evento evento)
+        {
+            if (evento == null)
+                throw new ExcecaoNegocioAtributo("MensagemEmailPadrao", "evento", "Evento não informado.");
+
+            m_Evento = evento;
+        }
+
+        protected MensagemEmailPadrao() { }
+
+        public virtual Evento Evento { get => m_Evento; }
+
+        public virtual ModeloMensagem MensagemInscricaoRegistrada
+        {
+            get { return m_MensagemInscricaoRegistrada; }
+            set { m_MensagemInscricaoRegistrada = value; }
+        }
+
+        public virtual ModeloMensagem MensagemInscricaoConfirmada
+        {
+            get { return m_MensagemInscricaoConfirmada; }
+            set { m_MensagemInscricaoConfirmada = value; }
+        }
+        public virtual ModeloMensagem MensagemInscricaoCodigoAcessoAcompanhamento
+        {
+            get { return m_MensagemInscricaoCodigoAcessoAcompanhamento; }
+            set { m_MensagemInscricaoCodigoAcessoAcompanhamento = value; }
+        }
+        public virtual ModeloMensagem MensagemInscricaoCodigoAcessoCriacao
+        {
+            get { return m_MensagemInscricaoCodigoAcessoCriacao; }
+            set { m_MensagemInscricaoCodigoAcessoCriacao = value; }
         }
     }
 
@@ -123,7 +152,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             m_Mensagem = mensagem;
         }
 
-        public string Assunto { get => m_Assunto; }
-        public string Mensagem { get => m_Mensagem; }
+        protected ModeloMensagem() { }
+
+        public virtual string Assunto { get => m_Assunto; }
+        public virtual string Mensagem { get => m_Mensagem; }
     }
 }

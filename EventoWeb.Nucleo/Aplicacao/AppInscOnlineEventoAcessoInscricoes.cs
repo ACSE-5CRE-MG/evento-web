@@ -85,7 +85,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                                 var codigo = "";
                                 do
                                 {
-                                    codigo = Contexto.ServicoGeradorCodigoSeguro.Gerar(5);
+                                    codigo = Contexto.ServicoGeradorCodigoSeguro.GerarCodigo5Caracteres();
                                 } while (repCodigo.ObterPeloCodigo(codigo) != null);
                                 
                                 codigoAcesso = new CodigoAcessoInscricao(codigo, inscricao, DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59));

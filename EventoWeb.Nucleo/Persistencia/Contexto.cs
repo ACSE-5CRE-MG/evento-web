@@ -1,5 +1,6 @@
 ﻿using EventoWeb.Nucleo.Aplicacao;
 using EventoWeb.Nucleo.Negocio.Repositorios;
+using EventoWeb.Nucleo.Persistencia.Infra;
 using EventoWeb.Nucleo.Persistencia.Repositorios;
 using NHibernate;
 using NHibernate.Cfg;
@@ -72,5 +73,7 @@ namespace EventoWeb.Nucleo.Persistencia
         public AConfiguracoesEmail RepositorioConfiguracoesEmail => new RepositorioConfiguracoesEmailNH(m_Sessao);
         public AInscricoes RepositorioInscricoes => throw new System.NotImplementedException();
         public ACodigosAcessoInscricao RepositorioCodigosAcessoInscricao => new RepositorioCodigosAcessoInscricaoNH(m_Sessao);
+
+        public IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro => new ServicoGeradorCodigoSeguro();
     }
 }

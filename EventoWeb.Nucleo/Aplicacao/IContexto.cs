@@ -21,5 +21,6 @@ namespace EventoWeb.Nucleo.Aplicacao
         AConfiguracoesEmail RepositorioConfiguracoesEmail { get; }
         AInscricoes RepositorioInscricoes { get; }
         ACodigosAcessoInscricao RepositorioCodigosAcessoInscricao { get; }
+        IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro { get; }
     }
 }
