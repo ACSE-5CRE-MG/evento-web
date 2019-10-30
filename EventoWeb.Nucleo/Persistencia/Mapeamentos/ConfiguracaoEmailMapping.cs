@@ -57,45 +57,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.NotNullable(false);
                 m.Column("TIPO_SEGURANCA");
                 m.Type<EnumGeneric<TipoSegurancaEmail>>();
-            });
-
-            this.Component(x => x.MensagemInscricaoConfirmada, c =>
-              {
-                  c.Access(Accessor.NoSetter);
-                  c.Property(o => o.Assunto, m =>
-                    {
-                        m.Access(Accessor.NoSetter);
-                        m.NotNullable(false);
-                        m.Column("ASSUNTO_INSC_CONFIRMADA");
-                        m.Length(150);
-                    });
-                  c.Property(O => O.Mensagem, m =>
-                   {
-                       m.Access(Accessor.NoSetter);
-                       m.NotNullable(false);
-                       m.Column("MENSAGEM_INSC_CONFIRMADA");
-                       m.Type(NHibernateUtil.StringClob);
-                   });
-              });
-
-            this.Component(x => x.MensagemInscricaoRegistrada, c =>
-            {
-                c.Access(Accessor.NoSetter);
-                c.Property(o => o.Assunto, m =>
-                {
-                    m.Access(Accessor.NoSetter);
-                    m.NotNullable(false);
-                    m.Column("ASSUNTO_INSC_REGISTRADA");
-                    m.Length(150);
-                });
-                c.Property(O => O.Mensagem, m =>
-                {
-                    m.Access(Accessor.NoSetter);
-                    m.NotNullable(false);
-                    m.Column("MENSAGEM_INSC_REGISTRADA");
-                    m.Type(NHibernateUtil.StringClob);
-                });
-            });
+            });            
 
             this.ManyToOne(x => x.Evento, m =>
               {

@@ -1,4 +1,5 @@
 ﻿using EventoWeb.Nucleo.Negocio.Entidades;
+using EventoWeb.Nucleo.Negocio.Servicos;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -72,34 +73,23 @@ namespace EventoWeb.Nucleo.Aplicacao
 
                         if (dto.Resultado == EnumResultadoEnvio.InscricaoOK)
                         {
-                            var repCodigo = Contexto.RepositorioCodigosAcessoInscricao;
-                            repCodigo.ExcluirCodigosVencidos();
-
-                            var codigoAcesso = repCodigo.ObterIdInscricao(idInscricao);
-                            if (codigoAcesso != null)
-                            {
-                                // Envia email
-                            }
-                            else
-                            {
-                                var codigo = "";
-                                do
-                                {
-                                    codigo = Contexto.ServicoGeradorCodigoSeguro.GerarCodigo5Caracteres();
-                                } while (repCodigo.ObterPeloCodigo(codigo) != null);
-                                
-                                codigoAcesso = new CodigoAcessoInscricao(codigo, inscricao, DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59));
-                                repCodigo.Incluir(codigoAcesso);
-                                //Envia email
-                            }
+                            string codigo = Contexto.ServicoGeradorCodigoSeguro.GerarCodigoInscricao(inscricao);
+                            Contexto.ServicoEmail.EnviarEmailCodigoInscricao(inscricao, codigo);
                         }
                     }
+                    else
+                        dto.Resultado = EnumResultadoEnvio.InscricaoNaoEncontrada;
                 }
                 else
                     dto.Resultado = EnumResultadoEnvio.IdentificacaoInvalida;
             });
 
             return dto;
+        }
+
+        private void EnviarEmailInscricao(MensagemEmailPadrao mensagem)
+        {
+
         }
     }
 }

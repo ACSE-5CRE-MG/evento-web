@@ -5,9 +5,9 @@ using EventoWeb.Nucleo.Negocio.Entidades;
 
 namespace EventoWeb.Nucleo.Negocio.Repositorios
 {
-    public interface IServicoGeradorCodigoSeguro
+    public interface IServicoEmail
     {
-        string GerarCodigo5Caracteres();
-        string GerarCodigoInscricao(Inscricao inscricao);
+        void Enviar(Evento evento, ModeloMensagem mensagem);
+        void EnviarEmailCodigoInscricao(Inscricao inscricao, string codigo);
     }
 }

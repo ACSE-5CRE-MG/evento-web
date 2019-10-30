@@ -18,9 +18,13 @@ namespace EventoWeb.Nucleo.Aplicacao
         ADepartamentos RepositorioDepartamentos { get; }
         ASalasEstudo RepositorioSalasEstudo { get; }
         AAfracs RepositorioAfracs { get; }
-        AConfiguracoesEmail RepositorioConfiguracoesEmail { get; }
         AInscricoes RepositorioInscricoes { get; }
+        AConfiguracoesEmail RepositorioConfiguracoesEmail { get; }
+        AMensagensEmailPadrao RepositorioMensagensEmailPadrao { get; }
         ACodigosAcessoInscricao RepositorioCodigosAcessoInscricao { get; }
+        AVariaveisEmailInscricao RepositorioVariaveisEmailIncricao { get; }
+
         IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro { get; }
+        IServicoEmail ServicoEmail { get; }
     }
 }

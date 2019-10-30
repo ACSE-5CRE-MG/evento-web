@@ -1,4 +1,5 @@
-﻿using EventoWeb.Nucleo.Negocio.Repositorios;
+﻿using EventoWeb.Nucleo.Negocio.Entidades;
+using EventoWeb.Nucleo.Negocio.Repositorios;
 using System;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -8,9 +9,38 @@ namespace EventoWeb.Nucleo.Persistencia.Infra
 {
     public class ServicoGeradorCodigoSeguro : IServicoGeradorCodigoSeguro
     {
+        private readonly ACodigosAcessoInscricao m_RepCodigosAcessoInscricao;
+
+        public ServicoGeradorCodigoSeguro(ACodigosAcessoInscricao repCodigosAcessoInscricao)
+        {
+            m_RepCodigosAcessoInscricao = repCodigosAcessoInscricao;
+        }
+
         public string GerarCodigo5Caracteres()
         {
             return GetUniqueToken(5);
+        }
+
+        public string GerarCodigoInscricao(Inscricao inscricao)
+        {
+            m_RepCodigosAcessoInscricao.ExcluirCodigosVencidos();
+
+            var codigoAcesso = m_RepCodigosAcessoInscricao.ObterIdInscricao(inscricao.Id);
+            if (codigoAcesso != null)
+                return codigoAcesso.Codigo;
+            else
+            {
+                string codigo;
+                do
+                {
+                    codigo = GerarCodigo5Caracteres();
+                } while (m_RepCodigosAcessoInscricao.ObterPeloCodigo(codigo) != null);
+
+                codigoAcesso = new CodigoAcessoInscricao(codigo, inscricao, DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59));
+                m_RepCodigosAcessoInscricao.Incluir(codigoAcesso);
+
+                return codigo;
+            }
         }
 
         //https://blog.bitscry.com/2018/04/13/cryptographically-secure-random-string/
