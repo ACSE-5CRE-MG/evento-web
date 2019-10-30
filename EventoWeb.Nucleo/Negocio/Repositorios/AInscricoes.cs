@@ -25,7 +25,6 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
         IList<Inscricao> ListarInscricoesComPessoasPorEventoENomePessoa(int idEvento, string nome);
         IList<Inscricao> ListarInscricoesParticipanteTrabalhadorPeloNomePessoaPorEvento(int idEvento, String nome);
         IList<InscricaoInfantil> ListarInscricoesInfantisPorEvento(int idEvento);
-
         IList<Pessoa> ListarPessoasNaoInscritasEventoPeloNomePessoa(int idEvento, string nome);
         Inscricao ObterInscricaoPeloIdEventoEInscricao(int idEvento, int idInscricao);
         Boolean PessoaInscritaEvento(int idEvento, int idPessoa);

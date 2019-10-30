@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,35 +8,72 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public enum SexoPessoa { Masculino, Feminino }
 
-    public class Pessoa: PessoaComum
+    public class Pessoa
     {
-        private DateTime mDataNascimento;
-        private Endereco mEndereco;
-        private Boolean mEhVegetariano;
-        private String mMedicamentosUsados;
-        private SexoPessoa mSexo;
-        private String mInstituicoesEspiritasFrequenta;
-        private String mObservacoes;
+        private string m_Nome;
+        private DateTime m_DataNascimento;
+        private Endereco m_Endereco;
+        private Boolean m_EhVegetariano;
+        private String m_MedicamentosUsados;
+        private SexoPessoa m_Sexo;
+        private String m_InstituicoesEspiritasFrequenta;
+        private String m_Observacoes;
+        private string m_Email;
 
         protected Pessoa()
         {
         }
 
-        public Pessoa(string nome, Endereco endereco, DateTime dataNascimento, SexoPessoa sexo)
-            :base(nome)
+        public string Cidade { get; set; }
+        public string UF { get; set; }
+
+        public Pessoa(string nome, Endereco endereco, DateTime dataNascimento, SexoPessoa sexo, string email)
         {
-            if (endereco == null)
-                throw new ArgumentNullException("Endereco");
-            mEndereco = endereco;
+            Nome = nome;
             DataNascimento = dataNascimento;
-            mSexo = sexo;
+            Email = email;
+            m_Endereco = endereco ?? throw new ExcecaoNegocioAtributo("Pessoa", "endereco", "Endereço não informado");
+            m_Sexo = sexo;
+        }
+
+        public virtual string Nome
+        {
+            get
+            {
+                return m_Nome;
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ExcecaoNegocioAtributo("Pessoa", "Nome", "Nome esta vazio");
+
+                m_Nome = value;
+            }
+        }
+
+        public virtual String NomeCracha { get; set; }
+
+        public virtual string TelefoneFixo { get; set; }
+
+        public virtual string Celular { get; set; }
+
+        public virtual string Email 
+        {
+            get => m_Email;
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ExcecaoNegocioAtributo("Pessoa", "Email", "Email esta vazio");
+
+                m_Email = value;
+            }
         }
 
         public virtual DateTime DataNascimento
         {
             get
             {
-                return mDataNascimento;
+                return m_DataNascimento;
             }
 
             set
@@ -47,16 +85,16 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 if (value > dataHoje)
                     throw new ArgumentException("Data deve ser menor que a data atual do sistema.", "DataNascimento");
 
-                mDataNascimento = value;
+                m_DataNascimento = value;
             }
         }
 
-        public virtual Endereco Endereco { get { return mEndereco; } }
+        public virtual Endereco Endereco { get { return m_Endereco; } }
 
         public virtual Boolean EhVegetariano 
         {
-            get { return mEhVegetariano; }
-            set { mEhVegetariano = value; }
+            get { return m_EhVegetariano; }
+            set { m_EhVegetariano = value; }
         }
 
         public virtual Boolean EhDiabetico { get; set; }
@@ -71,36 +109,36 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual String MedicamentosUsados
         {
-            get { return mMedicamentosUsados; }
-            set { mMedicamentosUsados = value; }
+            get { return m_MedicamentosUsados; }
+            set { m_MedicamentosUsados = value; }
         }      
 
         public virtual SexoPessoa Sexo
         {
-            get { return mSexo; }
-            set { mSexo = value; }
+            get { return m_Sexo; }
+            set { m_Sexo = value; }
         }
 
         public virtual String InstituicoesEspiritasFrequenta
         {
-            get { return mInstituicoesEspiritasFrequenta; }
-            set { mInstituicoesEspiritasFrequenta = value; }
+            get { return m_InstituicoesEspiritasFrequenta; }
+            set { m_InstituicoesEspiritasFrequenta = value; }
         }
 
         public virtual String Observacoes
         {
-            get { return mObservacoes; }
-            set { mObservacoes = value; }
+            get { return m_Observacoes; }
+            set { m_Observacoes = value; }
         }
 
         public virtual int CalcularIdadeEmAnos(DateTime dataAtual)
         {
-            if (dataAtual < mDataNascimento)
+            if (dataAtual < m_DataNascimento)
                 throw new ArgumentException("A data de comparação deve ser maior ou igual a do nascimento.", "dataAtual");
 
-            return (dataAtual.Year - mDataNascimento.Year - 1) +
-                    (((dataAtual.Month > mDataNascimento.Month) ||
-                    ((dataAtual.Month == mDataNascimento.Month) && (dataAtual.Day >= mDataNascimento.Day))) ? 1 : 0);
+            return (dataAtual.Year - m_DataNascimento.Year - 1) +
+                    (((dataAtual.Month > m_DataNascimento.Month) ||
+                    ((dataAtual.Month == m_DataNascimento.Month) && (dataAtual.Day >= m_DataNascimento.Day))) ? 1 : 0);
         }
     }
 }

@@ -73,10 +73,10 @@ namespace EventoWeb.WS.Inscricao.Controllers
             return mAppInscricao.EnviarCodigo(identificacao);
         }
 
-        [HttpPost("criar/{id}")]
-        public DTODadosConfirmacao CriarInscricao(int id, [FromBody] DTODadosCriarInscricao dadosInscricao)
+        [HttpPost("criar/{idEvento}")]
+        public DTODadosConfirmacao CriarInscricao(int idEvento, [FromBody] DTODadosCriarInscricao dadosInscricao)
         {
-
+            return mAppInscricao.CriarInscricao(idEvento, dadosInscricao);
         }
     }
 }

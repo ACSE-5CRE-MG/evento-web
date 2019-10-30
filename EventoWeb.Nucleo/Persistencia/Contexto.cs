@@ -71,7 +71,7 @@ namespace EventoWeb.Nucleo.Persistencia
         public ASalasEstudo RepositorioSalasEstudo => new RepositorioSalasEstudoNH(m_Sessao);
         public AAfracs RepositorioAfracs => new RepositorioAfracsNH(m_Sessao);
         public AConfiguracoesEmail RepositorioConfiguracoesEmail => new RepositorioConfiguracoesEmailNH(m_Sessao);
-        public AInscricoes RepositorioInscricoes => throw new System.NotImplementedException();
+        public AInscricoes RepositorioInscricoes => new InscricoesNH(m_Sessao);
         public ACodigosAcessoInscricao RepositorioCodigosAcessoInscricao => new RepositorioCodigosAcessoInscricaoNH(m_Sessao);
         public IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro => new ServicoGeradorCodigoSeguro(RepositorioCodigosAcessoInscricao);
         public AMensagensEmailPadrao RepositorioMensagensEmailPadrao => new RepositorioMensagensEmailPadrao(m_Sessao);

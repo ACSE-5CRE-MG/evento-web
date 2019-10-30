@@ -8,12 +8,13 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
 {
     public class RepositorioVariaveisEmailIncricao : AVariaveisEmailInscricao
     {
-        public override IEnumerable<VariavelEmailInscricao> ListarTodas()
+        public override IEnumerable<AVariavelEmailInscricao> ListarTodas()
         {
-            return new List<VariavelEmailInscricao>()
+            return new List<AVariavelEmailInscricao>()
             {
                 new VariavelEmailInscricao("Nome","#[NOME]","Pessoa.Nome"),
                 new VariavelEmailInscricao("Evento","#[EVENTO]","Evento.nome"),
+                new VariavelEmailInscricaoInformado("Codigo","#[CODIGO]")
             };
         }
     }

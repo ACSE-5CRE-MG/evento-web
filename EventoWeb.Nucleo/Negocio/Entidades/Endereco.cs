@@ -1,60 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using System;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class Endereco
     {
-        private string mLogradouro;
-        private string mNumero;
-        private string mBairro;
         private string mCidade;
         private string mUF;
-        private string mComplemento;
         private string mCEP;
 
-        public Endereco(string logradouro, string numero, string bairro, string cidade, string uf)
+        public Endereco(string cidade, string uf)
         {
-            Logradouro = logradouro;
-            Numero = numero;
-            Bairro = bairro;
             Cidade = cidade;
             UF = uf;
         }
 
         protected Endereco() { }
 
-        public virtual string Logradouro 
-        {
-            get { return mLogradouro; }
-            set
-            {
-                ValidarSeValorNuloOuVazio(value, "Logradouro");
-                mLogradouro = value;
-            }
-        }
+        public virtual string Logradouro { get; set; }
 
-        public virtual string Numero 
-        {
-            get { return mNumero; }
-            set
-            {
-                ValidarSeValorNuloOuVazio(value, "Numero");
-                mNumero = value;
-            }
-        }
+        public virtual string Numero { get; set; }
 
-        public virtual string Bairro 
-        {
-            get { return mBairro; }
-            set
-            {
-                ValidarSeValorNuloOuVazio(value, "Bairro");
-                mBairro = value;
-            }
-        }
+        public virtual string Bairro { get; set; }
 
         public virtual string Cidade 
         {
@@ -78,19 +45,11 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         private void ValidarSeValorNuloOuVazio(String valor, String nomeCampo)
         {
-            if (valor == null)
-                throw new ArgumentNullException(nomeCampo);
-
-            if (valor.Trim().Length == 0)
-                throw new ArgumentException("Valor vazio", nomeCampo);
-
+            if (String.IsNullOrEmpty(valor))
+                throw new ExcecaoNegocioAtributo("Endereco", nomeCampo, nomeCampo + " não foi informado");
         }
 
-        public virtual string Complemento 
-        {
-            get { return mComplemento; }
-            set { mComplemento = value; }
-        }
+        public virtual string Complemento { get; set; }
 
         public virtual string CEP 
         {
@@ -98,7 +57,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             set
             {
                 if (!String.IsNullOrEmpty(value) && value.Trim().Length != 8)
-                    throw new ArgumentException("CEP deve ter 8 digitos.", "CEP");
+                    throw new ExcecaoNegocioAtributo("Endereco", "CEP", "CEP deve ter 8 digitos.");
 
                 mCEP = value;
             }

@@ -7,7 +7,7 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
 {
     public interface IServicoEmail
     {
-        void Enviar(Evento evento, ModeloMensagem mensagem);
+        void Enviar(Evento evento, ModeloMensagem mensagem, string emailDestino);
         void EnviarEmailCodigoInscricao(Inscricao inscricao, string codigo);
     }
 }

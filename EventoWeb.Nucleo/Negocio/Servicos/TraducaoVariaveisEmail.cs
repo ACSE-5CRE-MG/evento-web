@@ -10,16 +10,18 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
 {
     public class TraducaoVariaveisEmail
     {
-        private IEnumerable<VariavelEmailInscricao> m_Variaveis;
+        private IEnumerable<AVariavelEmailInscricao> m_Variaveis;
         private Inscricao m_Inscricao;
 
-        public TraducaoVariaveisEmail(IEnumerable<VariavelEmailInscricao> variaveis, Inscricao inscricao)
+        public TraducaoVariaveisEmail(IEnumerable<AVariavelEmailInscricao> variaveis, Inscricao inscricao)
         {
             Variaveis = variaveis;
             Inscricao = inscricao;
         }
 
-        public IEnumerable<VariavelEmailInscricao> Variaveis 
+        public event Func<VariavelEmailInscricaoInformado, string> AoObterValor;
+
+        public IEnumerable<AVariavelEmailInscricao> Variaveis 
         {
             get => m_Variaveis;
             set
@@ -41,33 +43,44 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             var variavelEmail = m_Variaveis.FirstOrDefault(x => x.Variavel.ToUpper() == variavel.ToUpper());
             if (variavelEmail != null)
             {
-                String[] vPropriedades = variavelEmail.CampoInscricao.Split(new char[] { '.' });
-                PropertyInfo vPropriedadeAtual = null;
-                Object vObjetoAtual = m_Inscricao;
-
-                if (vPropriedades.Count() == 1)
-                    vPropriedadeAtual = vObjetoAtual.GetType().GetProperty(variavelEmail.CampoInscricao);
+                if (variavelEmail is VariavelEmailInscricaoInformado)
+                {
+                    if (AoObterValor != null)
+                        return AoObterValor((VariavelEmailInscricaoInformado)variavelEmail);
+                    else
+                        return "";
+                }
                 else
                 {
-                    int vIndiceUltimaPropriedade = vPropriedades.Count() - 1;
-                    for (int vCont = 0; vCont < vIndiceUltimaPropriedade; vCont++)
-                    {
-                        if (vObjetoAtual != null)
-                        {
-                            vPropriedadeAtual = vObjetoAtual.GetType().GetProperty(vPropriedades[vCont]);
-                            vObjetoAtual = vPropriedadeAtual.GetValue(vObjetoAtual, null);
-                        }
-                    }
-                    if (vObjetoAtual != null)
-                        vPropriedadeAtual = vObjetoAtual.GetType().GetProperty(vPropriedades[vIndiceUltimaPropriedade]);
-                    else
-                        vPropriedadeAtual = null;
-                }
+                    var variavelEmailPadrao = (VariavelEmailInscricao)variavelEmail;
+                    String[] vPropriedades = variavelEmailPadrao.CampoInscricao.Split(new char[] { '.' });
+                    PropertyInfo vPropriedadeAtual = null;
+                    Object vObjetoAtual = m_Inscricao;
 
-                if (vPropriedadeAtual != null)
-                    return (String)vPropriedadeAtual.GetValue(vObjetoAtual, null);
-                else
-                    return "";
+                    if (vPropriedades.Count() == 1)
+                        vPropriedadeAtual = vObjetoAtual.GetType().GetProperty(variavelEmailPadrao.CampoInscricao);
+                    else
+                    {
+                        int vIndiceUltimaPropriedade = vPropriedades.Count() - 1;
+                        for (int vCont = 0; vCont < vIndiceUltimaPropriedade; vCont++)
+                        {
+                            if (vObjetoAtual != null)
+                            {
+                                vPropriedadeAtual = vObjetoAtual.GetType().GetProperty(vPropriedades[vCont]);
+                                vObjetoAtual = vPropriedadeAtual.GetValue(vObjetoAtual, null);
+                            }
+                        }
+                        if (vObjetoAtual != null)
+                            vPropriedadeAtual = vObjetoAtual.GetType().GetProperty(vPropriedades[vIndiceUltimaPropriedade]);
+                        else
+                            vPropriedadeAtual = null;
+                    }
+
+                    if (vPropriedadeAtual != null)
+                        return (String)vPropriedadeAtual.GetValue(vObjetoAtual, null);
+                    else
+                        return "";
+                }
             }
             else
                 throw new ExcecaoNegocioAtributo("TraducaoVariaveisEmail", "variavel", "Variável não existe");

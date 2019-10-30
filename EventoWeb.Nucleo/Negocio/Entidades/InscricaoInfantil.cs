@@ -12,15 +12,15 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         protected InscricaoInfantil() { }
 
-        public InscricaoInfantil(Pessoa pessoa, Evento evento, Inscricao inscricaoResponsavel, DateTime dataRecebimento)
-            : base(pessoa, evento, dataRecebimento)
+        public InscricaoInfantil(Evento evento, Pessoa pessoa, Inscricao inscricaoResponsavel, DateTime dataRecebimento)
+            : base(evento, pessoa, dataRecebimento)
         {
             AtribuirResponsaveis(inscricaoResponsavel, null);
         }
 
         public InscricaoInfantil(Pessoa pessoa, Evento evento, Inscricao inscricaoResponsavel,
             Inscricao inscricaoResponsavel2, DateTime dataRecebimento)
-            : base(pessoa, evento, dataRecebimento)
+            : base(evento, pessoa, dataRecebimento)
         {
             if (inscricaoResponsavel2 == null)
                 throw new ArgumentNullException("InscricaoResponsavel2", "Responsável deve ser informado.");
@@ -97,6 +97,11 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public override bool EhValidaIdade(int idade)
         {
             return idade < 13;
+        }
+
+        protected override void ValidarInscricaoParaSeTornarPendente()
+        {
+            throw new NotImplementedException();
         }
     }
 }

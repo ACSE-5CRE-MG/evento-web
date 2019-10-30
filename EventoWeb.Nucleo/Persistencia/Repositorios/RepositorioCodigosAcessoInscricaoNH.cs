@@ -11,7 +11,7 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
 {
     public class RepositorioCodigosAcessoInscricaoNH : ACodigosAcessoInscricao
     {
-        private ISession mSessao;
+        private readonly ISession mSessao;
 
         public RepositorioCodigosAcessoInscricaoNH(ISession sessao)
             : base(new PersistenciaNH<CodigoAcessoInscricao>(sessao))
@@ -25,6 +25,14 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
                 .Query<CodigoAcessoInscricao>()
                 .Where(x => x.DataHoraValidade < DateTime.Now)
                 .Delete();
+        }
+
+        public override CodigoAcessoInscricao ObterIdInscricao(int idInscricao)
+        {
+            return mSessao
+                .QueryOver<CodigoAcessoInscricao>()
+                .Where(x => x.Inscricao.Id == idInscricao)
+                .SingleOrDefault();
         }
 
         public override CodigoAcessoInscricao ObterPeloCodigo(string codigo)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,14 +8,15 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public enum TipoSituacaoPagamento { Pago, Pagar, Isento }
 
+    public enum EnumSituacaoInscricao { Incompleta, Pendente, Aceita, Rejeitada }
+
     public abstract class Inscricao: Entidade
     {
-        private Pessoa mPessoa;
-        private Evento mEvento;
-        private DateTime mDataRecebimento;
-        private bool mDormeEvento;
+        private Pessoa m_Pessoa;
+        private Evento m_Evento;
+        private EnumSituacaoInscricao m_Situacao;
 
-        public Inscricao(Pessoa pessoa, Evento evento, DateTime dataRecebimento)
+        public Inscricao(Evento evento, Pessoa pessoa, DateTime dataRecebimento)
         {
             if (evento == null)
                 throw new ArgumentNullException("Evento");
@@ -25,8 +27,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (!EhValidaIdade(pessoa.CalcularIdadeEmAnos(evento.PeriodoRealizacaoEvento.DataInicial)))
                 throw new ArgumentException("A idade da pessoa é inválida para este tipo de inscrição.");
 
-            mPessoa = pessoa;
-            mEvento = evento;
+            m_Pessoa = pessoa;
+            m_Evento = evento;
+            m_Situacao = EnumSituacaoInscricao.Incompleta;
             DataRecebimento = dataRecebimento;
 
             IsentarInscricao();
@@ -34,30 +37,22 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         protected Inscricao() { }
 
-        public virtual Pessoa Pessoa { get { return mPessoa; } }
-        public virtual Evento Evento { get { return mEvento; } }
+        public virtual Pessoa Pessoa { get { return m_Pessoa; } }
+        public virtual Evento Evento { get { return m_Evento; } }
         
-        public virtual DateTime DataRecebimento 
-        { 
-            get { return mDataRecebimento; }
-            set
-            {
-                mDataRecebimento = value;
-            }
-        }
+        public virtual DateTime DataRecebimento { get; set; }
 
-        public virtual Boolean DormeEvento
-        {
-            get { return mDormeEvento; }
-            set { mDormeEvento = value; }
-        }
+        public virtual Boolean DormeEvento { get; set; }
 
         public virtual Titulo TituloPagar { get; protected set; }
 
         public virtual Transacao TransacaoPagamento { get; protected set; }
 
         public virtual TipoSituacaoPagamento SituacaoFinanceiro { get; protected set; }
+
         public virtual bool ConfirmadoNoEvento { get; set; }
+
+        public virtual EnumSituacaoInscricao Situacao { get => m_Situacao; }
 
         public virtual void PagarDepois(Titulo titulo)
         {
@@ -94,5 +89,33 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         }
 
         public abstract Boolean EhValidaIdade(int idade);
+
+        public virtual void TornarPendente()
+        {
+            if (m_Situacao != EnumSituacaoInscricao.Incompleta)
+                throw new ExcecaoNegocio("Inscricao", "Só se pode tornar uma inscrição pendente se ela estiver na situação Incompleta");
+
+            ValidarInscricaoParaSeTornarPendente();
+
+            m_Situacao = EnumSituacaoInscricao.Pendente;
+        }
+
+        protected abstract void ValidarInscricaoParaSeTornarPendente();
+
+        public virtual void Aceitar()
+        {
+            if (m_Situacao != EnumSituacaoInscricao.Pendente)
+                throw new ExcecaoNegocio("Inscricao", "Só se pode tornar uma inscrição aceita se ela estiver na situação Pendente");
+
+            m_Situacao = EnumSituacaoInscricao.Aceita;
+        }
+
+        public virtual void Rejeitar()
+        {
+            if (m_Situacao != EnumSituacaoInscricao.Pendente)
+                throw new ExcecaoNegocio("Inscricao", "Só se pode tornar uma inscrição aceita se ela estiver na situação Pendente");
+
+            m_Situacao = EnumSituacaoInscricao.Rejeitada;
+        }
     }
 }

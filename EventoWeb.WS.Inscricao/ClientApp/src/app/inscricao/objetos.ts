@@ -43,10 +43,10 @@ export class DTOEnvioCodigoAcessoInscricao {
 
 export class DTOInscricaoDadosPessoais {
     Nome: string;
+    NomeCracha: string;
     DataNascimento: Date;
     Email: string;
-    Sexo: EnumSexo;
-    TipoInscricao: EnumTipoInscricao;
+    Sexo: EnumSexo;    
     Cidade: string;
     Uf: string;
     EhVegetariano: boolean;
@@ -60,6 +60,7 @@ export class DTOInscricaoDadosPessoais {
 
 export class DTOInscricaoAtualizacao {
     DadosPessoais: DTOInscricaoDadosPessoais;
+    TipoInscricao: EnumTipoInscricao;
     CentroEspirita: string;
     TempoEspirita: string;
     NomeResponsavelCentro: string;

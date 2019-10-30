@@ -1,11 +1,10 @@
-﻿using System;
+﻿using EventoWeb.Nucleo.Negocio.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
-    public enum EnumSexo { Feminino, Masculino }
-    public enum EnumTipoInscricao { Participante, ParticipanteTrabalhador }
     public enum EnumApresentacaoAtividades { ApenasParticipante, PodeEscolher }
     public enum EnumResultadoEnvio { InscricaoNaoEncontrada, EventoEncerradoInscricao, InscricaoOK, IdentificacaoInvalida }
 
@@ -14,8 +13,8 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string Nome { get; set; }
         public DateTime DataNascimento { get; set; }
         public string Email { get; set; }
-        public EnumSexo Sexo { get; set; }
-        public EnumTipoInscricao TipoInscricao { get; set; }
+        public SexoPessoa Sexo { get; set; }
+        public EnumTipoParticipante TipoInscricao { get; set; }
         public string Cidade { get; set; }
         public string UF { get; set; }
     }

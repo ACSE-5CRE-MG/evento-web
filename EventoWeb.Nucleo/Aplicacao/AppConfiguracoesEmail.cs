@@ -26,8 +26,6 @@ namespace EventoWeb.Nucleo.Aplicacao
                     EhParaCriar = false;
 
                 configuracao.EnderecoEmail = dto.EnderecoEmail;
-                configuracao.MensagemInscricaoConfirmada = dto.MensagemInscricaoConfirmada;
-                configuracao.MensagemInscricaoRegistrada = dto.MensagemInscricaoRegistrada;
                 configuracao.PortaServidor = dto.PortaServidor;
                 configuracao.SenhaEmail = dto.SenhaEmail;
                 configuracao.ServidorEmail = dto.ServidorEmail;
@@ -52,8 +50,6 @@ namespace EventoWeb.Nucleo.Aplicacao
                 dto = new DTOConfiguracaoEmail
                 {
                     EnderecoEmail = configuracao.EnderecoEmail,
-                    MensagemInscricaoConfirmada = configuracao.MensagemInscricaoConfirmada,
-                    MensagemInscricaoRegistrada = configuracao.MensagemInscricaoRegistrada,
                     PortaServidor = configuracao.PortaServidor,
                     SenhaEmail = configuracao.SenhaEmail,
                     ServidorEmail = configuracao.ServidorEmail,

@@ -5,15 +5,15 @@ using System.Text;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
-    public enum EnumTipoParticipante { Trabalhador, Participante, ParticipanteTrabalhador }
+    public enum EnumTipoParticipante { Participante, ParticipanteTrabalhador }
 
     public class InscricaoParticipante: Inscricao
     {
         private IList<AAtividadeInscricao> mAtividades;
         private EnumTipoParticipante mTipo;
 
-        public InscricaoParticipante(Pessoa pessoa, Evento evento, DateTime dataRecebimento, EnumTipoParticipante tipo = EnumTipoParticipante.Participante) :
-            base(pessoa, evento, dataRecebimento)
+        public InscricaoParticipante(Evento evento, Pessoa pessoa, DateTime dataRecebimento, EnumTipoParticipante tipo) :
+            base(evento, pessoa, dataRecebimento)
         {
             mAtividades = new List<AAtividadeInscricao>();
             mTipo = tipo;
@@ -53,6 +53,11 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public override bool EhValidaIdade(int idade)
         {
             return idade >= 13;
+        }
+
+        protected override void ValidarInscricaoParaSeTornarPendente()
+        {
+            throw new NotImplementedException();
         }
     }
 }

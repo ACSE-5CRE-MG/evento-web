@@ -1,8 +1,5 @@
 ﻿using EventoWeb.Nucleo.Negocio.Entidades;
-using EventoWeb.Nucleo.Negocio.Servicos;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
@@ -87,9 +84,34 @@ namespace EventoWeb.Nucleo.Aplicacao
             return dto;
         }
 
-        private void EnviarEmailInscricao(MensagemEmailPadrao mensagem)
+        public DTODadosConfirmacao CriarInscricao(int idEvento, DTODadosCriarInscricao dadosInscricao)
         {
+            DTODadosConfirmacao dto = null;
+            ExecutarSeguramente(() =>
+            {
+                var evento = Contexto.RepositorioEventos.ObterEventoPeloId(idEvento);
+                if (evento.PeriodoInscricaoOnLine.DataFinal < DateTime.Now || evento.PeriodoInscricaoOnLine.DataInicial > DateTime.Now)
+                    throw new ExcecaoAplicacao("AppInscOnlineEventoAcessoInscricoes", "Evento encerrado");
 
+
+                var pessoa = new Pessoa(dadosInscricao.Nome,
+                    new Endereco(dadosInscricao.Cidade, dadosInscricao.UF), dadosInscricao.DataNascimento,
+                    dadosInscricao.Sexo, dadosInscricao.Email);
+
+                var novaInscricao = new InscricaoParticipante(evento, pessoa, DateTime.Now, dadosInscricao.TipoInscricao);
+                Contexto.RepositorioInscricoes.Incluir(novaInscricao);
+
+                string codigo = Contexto.ServicoGeradorCodigoSeguro.GerarCodigoInscricao(novaInscricao);
+                Contexto.ServicoEmail.EnviarEmailCodigoInscricao(novaInscricao, codigo);
+
+                dto = new DTODadosConfirmacao
+                {
+                    EnderecoEmail = novaInscricao.Pessoa.Email,
+                    IdInscricao = novaInscricao.Id
+                };
+            });
+
+            return dto;
         }
     }
 }
