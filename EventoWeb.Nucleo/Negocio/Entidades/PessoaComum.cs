@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public abstract class PessoaComum: Entidade
     {
-        private string mNome;
+        private string m_Nome;
         public PessoaComum(string nome)
         {
             Nome = nome;
@@ -19,21 +20,16 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         {
             get
             {
-                return mNome;
+                return m_Nome;
             }
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("Nome");
+                if (string.IsNullOrWhiteSpace(value))
+                    throw new ExcecaoNegocioAtributo("PessoaComum", "Nome", "Nome esta vazio");
 
-                if (value.Trim().Length == 0)
-                    throw new ArgumentException("Nome não pode ser vazio.", "Nome");
-
-                mNome = value;
+                m_Nome = value;
             }
         }
-
-        public virtual String NomeConhecido { get; set; }
 
         public virtual string TelefoneFixo { get; set; }
 

@@ -1,72 +1,30 @@
 ﻿using EventoWeb.Nucleo.Negocio.Excecoes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public enum SexoPessoa { Masculino, Feminino }
 
-    public class Pessoa
+    public class Pessoa: PessoaComum
     {
-        private string m_Nome;
         private DateTime m_DataNascimento;
-        private Endereco m_Endereco;
-        private Boolean m_EhVegetariano;
-        private String m_MedicamentosUsados;
-        private SexoPessoa m_Sexo;
-        private String m_InstituicoesEspiritasFrequenta;
-        private String m_Observacoes;
-        private string m_Email;
+        private readonly Endereco m_Endereco;
 
         protected Pessoa()
         {
         }
 
-        public string Cidade { get; set; }
-        public string UF { get; set; }
-
         public Pessoa(string nome, Endereco endereco, DateTime dataNascimento, SexoPessoa sexo, string email)
+            :base(nome)
         {
-            Nome = nome;
             DataNascimento = dataNascimento;
+
+            if (string.IsNullOrWhiteSpace(email))
+                throw new ExcecaoNegocioAtributo("Pessoa", "Email", "Email esta vazio");
             Email = email;
+                        
             m_Endereco = endereco ?? throw new ExcecaoNegocioAtributo("Pessoa", "endereco", "Endereço não informado");
-            m_Sexo = sexo;
-        }
-
-        public virtual string Nome
-        {
-            get
-            {
-                return m_Nome;
-            }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ExcecaoNegocioAtributo("Pessoa", "Nome", "Nome esta vazio");
-
-                m_Nome = value;
-            }
-        }
-
-        public virtual String NomeCracha { get; set; }
-
-        public virtual string TelefoneFixo { get; set; }
-
-        public virtual string Celular { get; set; }
-
-        public virtual string Email 
-        {
-            get => m_Email;
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value))
-                    throw new ExcecaoNegocioAtributo("Pessoa", "Email", "Email esta vazio");
-
-                m_Email = value;
-            }
+            Sexo = sexo;
         }
 
         public virtual DateTime DataNascimento
@@ -91,11 +49,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual Endereco Endereco { get { return m_Endereco; } }
 
-        public virtual Boolean EhVegetariano 
-        {
-            get { return m_EhVegetariano; }
-            set { m_EhVegetariano = value; }
-        }
+        public virtual Boolean EhVegetariano { get; set; }
 
         public virtual Boolean EhDiabetico { get; set; }
 
@@ -105,31 +59,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual String TiposCarneNaoCome { get; set; }
 
-        public virtual String MedicamentosControlados { get; set; }
+        public virtual String MedicamentosUsados { get; set; }
 
-        public virtual String MedicamentosUsados
-        {
-            get { return m_MedicamentosUsados; }
-            set { m_MedicamentosUsados = value; }
-        }      
-
-        public virtual SexoPessoa Sexo
-        {
-            get { return m_Sexo; }
-            set { m_Sexo = value; }
-        }
-
-        public virtual String InstituicoesEspiritasFrequenta
-        {
-            get { return m_InstituicoesEspiritasFrequenta; }
-            set { m_InstituicoesEspiritasFrequenta = value; }
-        }
-
-        public virtual String Observacoes
-        {
-            get { return m_Observacoes; }
-            set { m_Observacoes = value; }
-        }
+        public virtual SexoPessoa Sexo { get; set; }              
 
         public virtual int CalcularIdadeEmAnos(DateTime dataAtual)
         {

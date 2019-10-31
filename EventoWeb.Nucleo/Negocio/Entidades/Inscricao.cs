@@ -38,8 +38,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         protected Inscricao() { }
 
         public virtual Pessoa Pessoa { get { return m_Pessoa; } }
-        public virtual Evento Evento { get { return m_Evento; } }
-        
+        public virtual Evento Evento { get { return m_Evento; } }        
+
         public virtual DateTime DataRecebimento { get; set; }
 
         public virtual Boolean DormeEvento { get; set; }
@@ -53,6 +53,15 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual bool ConfirmadoNoEvento { get; set; }
 
         public virtual EnumSituacaoInscricao Situacao { get => m_Situacao; }
+        public virtual String InstituicoesEspiritasFrequenta { get; set; }
+        public virtual String NomeCracha { get; set; }
+        public virtual bool PrimeiroEncontro { get; set; }
+        public virtual string TempoEspirita { get; set; }
+        public virtual string NomeResponsavelCentro { get; set; }
+        public virtual string TelefoneResponsavelCentro { get; set; }
+        public virtual string NomeResponsavelLegal { get; set; }
+        public virtual string TelefoneResponsavelLegal { get; set; }
+        public virtual string Observacoes { get; set; }
 
         public virtual void PagarDepois(Titulo titulo)
         {
