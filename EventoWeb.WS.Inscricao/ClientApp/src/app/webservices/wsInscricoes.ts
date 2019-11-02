@@ -1,54 +1,31 @@
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { DTODadosCriarInscricao, DTODadosConfirmacao, DTOBasicoInscricao, DTOAcessoInscricao, DTOEnvioCodigoAcessoInscricao, EnumResultadoEnvio, DTOInscricaoCompleta } from '../inscricao/objetos';
+import { DTODadosCriarInscricao, DTODadosConfirmacao, DTOBasicoInscricao, DTOAcessoInscricao, DTOEnvioCodigoAcessoInscricao } from '../inscricao/objetos';
+import { ClienteWs } from './cliente-ws';
+import { ConfiguracaoSistemaService } from '../configuracao-sistema-service';
 
 @Injectable()
 export class WsInscricoes {
 
-  public obterBasicoInscricao(idInscricao: number): Observable<DTOBasicoInscricao> {
-    return new Observable<DTOBasicoInscricao>((x) => {
+    constructor(private clienteWs: ClienteWs) { }
 
-      let evento = new DTOBasicoInscricao();
-      evento.IdInscricao = 1;
-      evento.NomeInscrito = "João da Silva"
-      evento.NomeEvento = "Evento Teste";
-      evento.IdEvento = 1;
-      evento.Email = "joao@uol.com.br"
+    public obterBasicoInscricao(idInscricao: number): Observable<DTOBasicoInscricao> {
+        this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'inscricoes/basicoPorId/' + idInscricao.toString();
+        return this.clienteWs.executarGet("");
+    }
 
-      x.next(evento);
-    });
-  }
+    public enviarCodigoAcesso(identificacao: string): Observable<DTOEnvioCodigoAcessoInscricao> {
+        this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'inscricoes/enviarCodigo/' + identificacao.toString();
+        return this.clienteWs.executarPut("", null);
+    }
 
-  public enviarCodigoAcesso(identificacao: string): Observable<DTOEnvioCodigoAcessoInscricao> {
-    return new Observable<DTOEnvioCodigoAcessoInscricao>((x) => {
+    public criar(idEvento: number, dadosIniciais: DTODadosCriarInscricao): Observable<DTODadosConfirmacao> {
+        this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'inscricoes/criar/' + idEvento.toString();
+        return this.clienteWs.executarPost("", dadosIniciais);
+    }
 
-      let evento = new DTOEnvioCodigoAcessoInscricao();
-      evento.IdInscricao = 1;
-      evento.Resultado = EnumResultadoEnvio.InscricaoOK;
-
-      x.next(evento);
-    });
-  }
-
-  public criar(idEvento: number, dadosIniciais: DTODadosCriarInscricao): Observable<DTODadosConfirmacao> {
-    return new Observable<DTODadosConfirmacao>((x) => {
-
-      let evento = new DTODadosConfirmacao();
-      evento.IdInscricao = 1;
-      evento.EnderecoEmail = dadosIniciais.Email;
-
-      x.next(evento);
-    });
-  }  
-
-  public validarAcessoInscricao(IdInscricao: number, codigo: string): Observable<DTOAcessoInscricao> {
-    return new Observable<DTOAcessoInscricao>((x) => {
-
-      let evento = new DTOAcessoInscricao();
-      evento.IdInscricao = 1;
-      evento.Autorizacao = "Autorizacao";
-
-      x.next(evento);
-    });
-  }
+    public validarAcessoInscricao(IdInscricao: number, codigo: string): Observable<DTOAcessoInscricao> {
+        this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'inscricoes/validarCodigo/' + IdInscricao.toString();
+        return this.clienteWs.executarPut("", codigo);
+    }
 }

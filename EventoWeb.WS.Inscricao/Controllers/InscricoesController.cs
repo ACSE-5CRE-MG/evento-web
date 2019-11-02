@@ -30,7 +30,7 @@ namespace EventoWeb.WS.Inscricao.Controllers
             return mAppInscricao.ObterPorId(id);
         }
 
-        [HttpGet("validarCodigo/{id}")]
+        [HttpPut("validarCodigo/{id}")]
         public DTOAcessoInscricao ValidarCodigo(int id, [FromBody]string codigo)
         {
             if (!mAppInscricao.ValidarCodigo(id, codigo))
