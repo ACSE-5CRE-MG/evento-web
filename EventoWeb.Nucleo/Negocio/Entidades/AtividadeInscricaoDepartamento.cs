@@ -4,7 +4,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class AtividadeInscricaoDepartamento: AAtividadeInscricao
     {
-        private Departamento mDepartamentoEscolhido;
+        private Departamento m_DepartamentoEscolhido;
 
         public AtividadeInscricaoDepartamento(InscricaoParticipante inscrito, Departamento departamentoEscolhido)
             : base(inscrito)
@@ -17,13 +17,13 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual Departamento DepartamentoEscolhido
         {
-            get { return mDepartamentoEscolhido; }
+            get { return m_DepartamentoEscolhido; }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("DepartamentoEscolhido");
 
-                mDepartamentoEscolhido = value;
+                m_DepartamentoEscolhido = value;
             }
         }
 

@@ -4,7 +4,7 @@ using NHibernate.Mapping.ByCode.Conformist;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
-    class CodigoAcessoInscricaoMapping : ClassMapping<CodigoAcessoInscricao>
+    public class CodigoAcessoInscricaoMapping : ClassMapping<CodigoAcessoInscricao>
     {
         public CodigoAcessoInscricaoMapping()
         {

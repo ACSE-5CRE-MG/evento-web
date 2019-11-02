@@ -8,31 +8,31 @@ using System.Linq;
 
 namespace EventoWeb.Nucleo.Persistencia
 {
-    public class RepositorioAfracsNH: PersistenciaNH<Afrac>, AAfracs
+    public class RepositorioOficinasNH: PersistenciaNH<Oficina>, AOficinas
     {
         private ISession mSessao;
 
-        public RepositorioAfracsNH(ISession sessao)
+        public RepositorioOficinasNH(ISession sessao)
             : base(sessao)
         {
             mSessao = sessao;
         }
 
-        public IList<Afrac> ListarTodasPorEvento(int idEvento)
+        public IList<Oficina> ListarTodasPorEvento(int idEvento)
         {
-            return mSessao.QueryOver<Afrac>()
+            return mSessao.QueryOver<Oficina>()
                 .Where(afrac => afrac.Evento.Id == idEvento)
                 .List();
         }
 
-        public Afrac ObterPorId(int id)
+        public Oficina ObterPorId(int id)
         {
-            return mSessao.QueryOver<Afrac>()
+            return mSessao.QueryOver<Oficina>()
                 .Where(afrac => afrac.Id == id)
                 .SingleOrDefault();
         }
 
-        public bool InscritoEhResponsavelPorAfrac(Evento evento, InscricaoParticipante inscParticipante)
+        public bool InscritoEhResponsavelPorOficina(Evento evento, InscricaoParticipante inscParticipante)
         {
             return mSessao.QueryOver<AtividadeInscricaoOficinasCoordenacao>()
                 .Where(x => x.Inscrito.Id == inscParticipante.Id)
@@ -42,13 +42,13 @@ namespace EventoWeb.Nucleo.Persistencia
                 .RowCount() > 0;
         }
 
-        public IList<Afrac> ListarTodasAfracsComParticipantesPorEvento(Evento evento)
+        public IList<Oficina> ListarTodasComParticipantesPorEvento(Evento evento)
         {
-            var consulta = mSessao.QueryOver<Afrac>()
+            var consulta = mSessao.QueryOver<Oficina>()
                 .Where(afrac => afrac.Evento == evento)
                 .Future();
 
-            mSessao.QueryOver<Afrac>()
+            mSessao.QueryOver<Oficina>()
                 .Where(afrac => afrac.Evento == evento)
                 .Left.JoinQueryOver(x => x.Participantes)
                 .Left.JoinQueryOver(y=>y.Pessoa)
@@ -57,12 +57,12 @@ namespace EventoWeb.Nucleo.Persistencia
             return consulta.ToList();
         }
 
-        public IList<InscricaoParticipante> ListarParticipantesSemAfracNoEvento(Evento evento)
+        public IList<InscricaoParticipante> ListarParticipantesSemOficinaNoEvento(Evento evento)
         {
             InscricaoParticipante aliasParticipante = null;
             AtividadeInscricaoOficinas aliasAtividade = null;
 
-            var subQueryParticipantes = QueryOver.Of<Afrac>()
+            var subQueryParticipantes = QueryOver.Of<Oficina>()
                 .JoinQueryOver<InscricaoParticipante>(x => x.Participantes, () => aliasParticipante)
                 .Where(x => x.Id == aliasAtividade.Inscrito.Id)
                 .SelectList(x => x.Select(() => aliasParticipante.Id));
@@ -80,35 +80,35 @@ namespace EventoWeb.Nucleo.Persistencia
                 .List<InscricaoParticipante>();
         }
 
-        public bool HaAfracsSemResponsavelDefinidoDoEvento(Evento evento)
+        public bool HaAOficinasSemResponsavelDefinidoDoEvento(Evento evento)
         {
-            Afrac aliasAfrac = null;
+            Oficina aliasAfrac = null;
 
             var consultaResponsaveis =
                 QueryOver.Of<AtividadeInscricaoOficinasCoordenacao>()
-                    .Where(x => x.AfracEscolhida.Id == aliasAfrac.Id)
+                    .Where(x => x.OficinaEscolhida.Id == aliasAfrac.Id)
                     .SelectList(x => x.Select(y => y.Inscrito));
 
-            return mSessao.QueryOver<Afrac>(() => aliasAfrac)
+            return mSessao.QueryOver<Oficina>(() => aliasAfrac)
                 .Where(x => x.Evento.Id == evento.Id)
                 .WithSubquery.WhereNotExists(consultaResponsaveis)
                 .RowCount() > 0;
         }
 
-        public bool EhParticipanteDeAfracNoEvento(Evento evento, InscricaoParticipante participante)
+        public bool EhParticipanteDeOficinaNoEvento(Evento evento, InscricaoParticipante participante)
         {
-            return mSessao.QueryOver<Afrac>()
+            return mSessao.QueryOver<Oficina>()
                 .Where(x => x.Evento == evento)
                     .JoinQueryOver(x => x.Participantes)
                         .Where(c => c.Id == participante.Id)
                 .RowCount() > 0;
         }
 
-        public bool HaParticipatesOuResponsaveisEmOutraAfrac(Afrac afrac)
+        public bool HaParticipatesOuResponsaveisEmOutraOficina(Oficina afrac)
         {
             InscricaoParticipante aliasParticipante = null;
 
-            var queryParticipantes = mSessao.QueryOver<Afrac>()
+            var queryParticipantes = mSessao.QueryOver<Oficina>()
                 .Where(x => x.Id != afrac.Id)
                 .JoinQueryOver<InscricaoParticipante>(x => x.Participantes, () => aliasParticipante)
                 .SelectList(x => x.Select(() => aliasParticipante.Id))
@@ -117,11 +117,11 @@ namespace EventoWeb.Nucleo.Persistencia
             return queryParticipantes.Where(x => afrac.Participantes.Select(i => i.Id).Contains(x)).Count() > 0;
         }
 
-        public Afrac BuscarAfracDoInscrito(int idEvento, int idInscricao)
+        public Oficina BuscarOficinaDoInscrito(int idEvento, int idInscricao)
         {
-            Afrac aliasAfrac = null;
+            Oficina aliasAfrac = null;
 
-            var consultaParticipantes = QueryOver.Of<Afrac>()
+            var consultaParticipantes = QueryOver.Of<Oficina>()
                 .Where(x => x.Id == aliasAfrac.Id)
                 .JoinQueryOver(x => x.Participantes)
                     .Where(y => y.Id == idInscricao)
@@ -129,13 +129,13 @@ namespace EventoWeb.Nucleo.Persistencia
                     .Select(x => x.Id));
 
             var consultaCoordenadores = QueryOver.Of<AtividadeInscricaoOficinasCoordenacao>()
-                .Where(x => x.AfracEscolhida.Id == aliasAfrac.Id && x.Inscrito.Id == idInscricao)
+                .Where(x => x.OficinaEscolhida.Id == aliasAfrac.Id && x.Inscrito.Id == idInscricao)
                 .SelectList(lista => lista
                     .Select(x => x.Inscrito.Id));
 
-            return mSessao.QueryOver<Afrac>(() => aliasAfrac)
+            return mSessao.QueryOver<Oficina>(() => aliasAfrac)
                 .Where(Restrictions.Conjunction()
-                    .Add<Afrac>(x => x.Evento.Id == idEvento)
+                    .Add<Oficina>(x => x.Evento.Id == idEvento)
                     .Add(Restrictions.Disjunction()
                         .Add(Subqueries.WhereExists(consultaCoordenadores))
                         .Add(Subqueries.WhereExists(consultaParticipantes)
@@ -145,9 +145,9 @@ namespace EventoWeb.Nucleo.Persistencia
                 .SingleOrDefault();
         }
 
-        public int ContarTotalAfracs(Evento mEvento)
+        public int ContarTotalOficinas(Evento mEvento)
         {
-            return mSessao.QueryOver<Afrac>().RowCount();
+            return mSessao.QueryOver<Oficina>().RowCount();
         }
     }
 }

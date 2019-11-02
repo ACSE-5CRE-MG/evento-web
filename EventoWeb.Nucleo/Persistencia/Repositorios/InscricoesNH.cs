@@ -153,10 +153,10 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
             Inscricao aliasInscricao = null;
             CrachaInscrito aliasCracha = null;
             Pessoa aliasPessoa = null;
-            Afrac aliasAfrac = null;
+            Oficina aliasAfrac = null;
             SalaEstudo aliasSala = null;
 
-            var subConsultaParticipantesAfrac = QueryOver.Of<Afrac>()
+            var subConsultaParticipantesAfrac = QueryOver.Of<Oficina>()
                 .Where(x => x.Id == aliasAfrac.Id)
                 .JoinQueryOver(x => x.Participantes)
                     .Where(y => y.Id == aliasInscricao.Id)
@@ -164,13 +164,13 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
                     .Select(x => x.Id));
 
             var subConsultaCoordenadoresAfrac = QueryOver.Of<AtividadeInscricaoOficinasCoordenacao>()
-                .Where(x => x.AfracEscolhida.Id == aliasAfrac.Id && x.Inscrito.Id == aliasInscricao.Id)
+                .Where(x => x.OficinaEscolhida.Id == aliasAfrac.Id && x.Inscrito.Id == aliasInscricao.Id)
                 .SelectList(lista => lista
                     .Select(x => x.Inscrito.Id));
 
-            var subConsultaAfrac = QueryOver.Of<Afrac>(() => aliasAfrac)
+            var subConsultaAfrac = QueryOver.Of<Oficina>(() => aliasAfrac)
                 .Where(Restrictions.Conjunction()
-                    .Add<Afrac>(x => x.Evento.Id == idEvento)
+                    .Add<Oficina>(x => x.Evento.Id == idEvento)
                     .Add(Restrictions.Disjunction()
                         .Add(Subqueries.WhereExists(subConsultaCoordenadoresAfrac))
                         .Add(Subqueries.WhereExists(subConsultaParticipantesAfrac)
@@ -228,7 +228,7 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
                     .SelectSubQuery(subConsultaQuarto).WithAlias(() => aliasCracha.Quarto)
                     .SelectSubQuery(subConsultaDepartamento).WithAlias(() => aliasCracha.Departamento)
                     .Select(() => aliasPessoa.Nome).WithAlias(() => aliasCracha.Nome)
-                    .Select(() => aliasPessoa.NomeCracha).WithAlias(() => aliasCracha.NomeConhecido)
+                    .Select(() => aliasInscricao.NomeCracha).WithAlias(() => aliasCracha.NomeConhecido)
                     .Select(() => aliasPessoa.Endereco.Cidade).WithAlias(() => aliasCracha.Cidade)
                     .Select(() => aliasPessoa.Endereco.UF).WithAlias(() => aliasCracha.UF))
                 .TransformUsing(Transformers.AliasToBean<CrachaInscrito>())

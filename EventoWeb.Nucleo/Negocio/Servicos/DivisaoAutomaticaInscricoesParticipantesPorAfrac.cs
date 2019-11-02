@@ -12,15 +12,15 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
         private class OrdenaDivisao
         {
             public InscricaoParticipante Inscrito { get; set; }
-            public Afrac Afrac { get; set; }
+            public Oficina Afrac { get; set; }
             public int PosicaoAfrac { get; set; }
         }
 
         private Evento mEvento;
         private AInscricoes mRepositorioInscricoes;
-        private AAfracs mRepositorioAfracs;
+        private AOficinas mRepositorioAfracs;
 
-        public DivisaoAutomaticaInscricoesParticipantesPorAfrac(Evento evento, AInscricoes inscricoes, AAfracs afracs)
+        public DivisaoAutomaticaInscricoesParticipantesPorAfrac(Evento evento, AInscricoes inscricoes, AOficinas afracs)
         {
             if (inscricoes == null)
                 throw new ArgumentNullException("inscricoes", "Repositorio de inscrições não informado.");
@@ -36,9 +36,9 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             mRepositorioAfracs = afracs;
         }
 
-        public virtual IList<Afrac> Dividir()
+        public virtual IList<Oficina> Dividir()
         {
-            var afracs = mRepositorioAfracs.ListarTodasAfracsComParticipantesPorEvento(mEvento);
+            var afracs = mRepositorioAfracs.ListarTodasComParticipantesPorEvento(mEvento);
 
             if (afracs.Count() == 0)
                 throw new InvalidOperationException("Não há afracs para realizar a divisão.");
@@ -55,7 +55,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             foreach (var inscricao in participantesDividir)
             {
                 int posicao = 1;
-                foreach (var afrac in inscricao.Afracs)
+                foreach (var afrac in inscricao.Oficinas)
                 {
                     listaOrdenada.Add(new OrdenaDivisao()
                     {

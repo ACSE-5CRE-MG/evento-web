@@ -6,45 +6,26 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class ApresentacaoSarau : Entidade
     {
-        private Evento mEvento;
-        private string mNome;
-        private string mTipo;
-        private int mDuracaoMin;
-        private IList<Inscricao> mInscritos;
-        private IList<Pessoa> mPessoasAguardandoInscricao;
+        private Evento m_Evento;
+        private string m_Tipo;
+        private int m_DuracaoMin;
+        private IList<Inscricao> m_Inscritos;
 
-        public ApresentacaoSarau(Evento evento, string nome, int duracaoMin, string tipo, IEnumerable<Inscricao> inscritos)
+        public ApresentacaoSarau(Evento evento, int duracaoMin, string tipo, IEnumerable<Inscricao> inscritos)
         {
             Evento = evento;
-            Nome = nome;
             DuracaoMin = duracaoMin;
             Tipo = tipo;
 
-            mPessoasAguardandoInscricao = new List<Pessoa>();
-            mInscritos = new List<Inscricao>();
+            m_Inscritos = new List<Inscricao>();
             AtualizarInscricoes(inscritos);
         }
 
-        protected ApresentacaoSarau() { }
-
-        public virtual String Nome
-        {
-            get { return mNome; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("Nome", "O nome não pode ser nulo.");
-
-                if (String.IsNullOrEmpty(value))
-                    throw new ArgumentException("Nome não pode ser vazio.");
-
-                mNome = value;
-            }
-        }
+        protected ApresentacaoSarau() { }        
 
         public virtual Evento Evento
         {
-            get { return mEvento; }
+            get { return m_Evento; }
             protected set
             {
                 if (value == null)
@@ -53,13 +34,13 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 if (value.ConfiguracaoSarau == null)
                     throw new InvalidOperationException("Este evento não está configurado para ter Sarau.");
 
-                mEvento = value;
+                m_Evento = value;
             }
         }
 
         public virtual String Tipo
         {
-            get { return mTipo; }
+            get { return m_Tipo; }
             set
             {
                 if (value == null)
@@ -68,23 +49,21 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 if (String.IsNullOrEmpty(value))
                     throw new ArgumentException("Tipo não pode ser vazio.");
 
-                mTipo = value;
+                m_Tipo = value;
             }
         }
 
-        public virtual IEnumerable<Inscricao> Inscritos { get { return mInscritos; } }
-
-        public virtual IEnumerable<Pessoa> PessoasAguardandoInscricao { get { return mPessoasAguardandoInscricao; } }
+        public virtual IEnumerable<Inscricao> Inscritos { get { return m_Inscritos; } }
 
         public virtual int DuracaoMin
         {
-            get { return mDuracaoMin; }
+            get { return m_DuracaoMin; }
             set
             {
                 if (value <= 0)
                     throw new ArgumentException("A Duração deve ser dada em minutos e o seu valor deve ser maior que zero.");
 
-                mDuracaoMin = value;
+                m_DuracaoMin = value;
             }
         }
 
@@ -93,10 +72,10 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (inscricao == null)
                 throw new ArgumentNullException("inscricao", "Inscrição não pode ser nula.");
 
-            if (mInscritos.FirstOrDefault(x => x == inscricao) != null)
+            if (m_Inscritos.FirstOrDefault(x => x == inscricao) != null)
                 throw new ArgumentException("Esta inscrição já consta nesta apresentação.");
 
-            mInscritos.Add(inscricao);
+            m_Inscritos.Add(inscricao);
         }
 
         public virtual void AtualizarInscricoes(IEnumerable<Inscricao> inscricoes)
@@ -110,33 +89,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (inscricoes != null && inscricoes.GroupBy(x => x.Id).Count(y => y.Count() > 1) > 0)
                 throw new ArgumentException("Há inscrições mais de uma vez na lista.");
 
-            mInscritos.Clear();
+            m_Inscritos.Clear();
             foreach (var inscricao in inscricoes)
-                mInscritos.Add(inscricao);
-        }
-
-        public virtual void AdicionarPessoaSerInscrita(Pessoa pessoa)
-        {
-            if (pessoa == null)
-                throw new ArgumentNullException("pessoa", "Pessoa não pode ser nula.");
-
-            if (mPessoasAguardandoInscricao.FirstOrDefault(x => x == pessoa) != null)
-                throw new ArgumentException("Esta pessoa já consta na apresentação.");
-
-            mPessoasAguardandoInscricao.Add(pessoa);
-        }
-
-        public virtual void AtualizarPessoas(IEnumerable<Pessoa> pessoas)
-        {
-            if (pessoas != null && pessoas.GroupBy(x => x.Id).Count(y=> y.Count() > 1) > 0)
-                throw new ArgumentException("Há pessoas mais de uma vez na lista.");
-
-            mPessoasAguardandoInscricao.Clear();
-            if (pessoas != null && pessoas.Count() > 0)
-            {
-                foreach (var pessoa in pessoas)
-                    mPessoasAguardandoInscricao.Add(pessoa);
-            }
+                m_Inscritos.Add(inscricao);
         }
     }
 }

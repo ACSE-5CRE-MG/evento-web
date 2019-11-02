@@ -17,7 +17,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         AUsuarios RepositorioUsuarios { get; }
         ADepartamentos RepositorioDepartamentos { get; }
         ASalasEstudo RepositorioSalasEstudo { get; }
-        AAfracs RepositorioAfracs { get; }
+        AOficinas RepositorioOficinas { get; }
         AInscricoes RepositorioInscricoes { get; }
         AConfiguracoesEmail RepositorioConfiguracoesEmail { get; }
         AMensagensEmailPadrao RepositorioMensagensEmailPadrao { get; }

@@ -14,6 +14,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         }
 
+        protected CodigoAcessoInscricao() { }
+
         public virtual Inscricao Inscricao { get; protected set; }
         public virtual string Codigo { get; protected set; }
         public virtual DateTime DataHoraValidade { get; protected set; }

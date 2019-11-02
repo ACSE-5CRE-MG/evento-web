@@ -8,11 +8,11 @@ using System.Text;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
-    class MensagemEmailPadraoMapping: ClassMapping<MensagemEmailPadrao>
+    public class MensagemEmailPadraoMapping : ClassMapping<MensagemEmailPadrao>
     {
         public MensagemEmailPadraoMapping()
         {
-            this.Table("MENSAGEM_EMAIL_PADRAO");
+            this.Table("MENSAGENS_EMAIL_PADRAO");
             this.Id(x => x.Id, m =>
             {
                 m.Access(NHibernate.Mapping.ByCode.Accessor.NoSetter);
@@ -97,6 +97,13 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                     m.Column("MENSAGEM_INSC_COD_ACESSO_CRI");
                     m.Type(NHibernateUtil.StringClob);
                 });
+            });
+
+            this.ManyToOne(x => x.Evento, m =>
+            {
+                m.Access(Accessor.NoSetter);
+                m.Column("ID_EVENTO");
+                m.NotNullable(true);
             });
         }
     }

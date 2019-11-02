@@ -15,7 +15,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             var lista = new List<DTOAfrac>();
             ExecutarSeguramente(() =>
             {
-                var afracs = Contexto.RepositorioAfracs.ListarTodasPorEvento(idEvento);
+                var afracs = Contexto.RepositorioOficinas.ListarTodasPorEvento(idEvento);
                 if (afracs.Count > 0)
                     lista.AddRange(afracs.Select(x => Converter(x)));
             });
@@ -28,7 +28,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             DTOAfrac dto = null;
             ExecutarSeguramente(() =>
             {
-                var afrac = Contexto.RepositorioAfracs.ObterPorId(id);
+                var afrac = Contexto.RepositorioOficinas.ObterPorId(id);
 
                 if (afrac != null)
                     dto = Converter(afrac);
@@ -37,7 +37,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             return dto;
         }
 
-        private DTOAfrac Converter(Afrac afrac)
+        private DTOAfrac Converter(Oficina afrac)
         {
             return new DTOAfrac
             {
@@ -55,13 +55,13 @@ namespace EventoWeb.Nucleo.Aplicacao
             ExecutarSeguramente(() =>
             {
                 var evento = Contexto.RepositorioEventos.ObterEventoPeloId(idEvento);
-                var afrac = new Afrac(evento, dto.Nome)
+                var afrac = new Oficina(evento, dto.Nome)
                 {
                     DeveSerParNumeroTotalParticipantes = dto.DeveSerParNumeroTotalParticipantes,
                     NumeroTotalParticipantes = dto.NumeroTotalParticipantes
                 };
 
-                Contexto.RepositorioAfracs.Incluir(afrac);
+                Contexto.RepositorioOficinas.Incluir(afrac);
                 retorno.Id = afrac.Id;
             });
 
@@ -77,7 +77,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                 afrac.DeveSerParNumeroTotalParticipantes = dto.DeveSerParNumeroTotalParticipantes;
                 afrac.NumeroTotalParticipantes = dto.NumeroTotalParticipantes;
 
-                Contexto.RepositorioAfracs.Atualizar(afrac);
+                Contexto.RepositorioOficinas.Atualizar(afrac);
             });
         }
 
@@ -87,13 +87,13 @@ namespace EventoWeb.Nucleo.Aplicacao
             {
                 var sala = ObterAfracOuExcecaoSeNaoEncontrar(id);
 
-                Contexto.RepositorioAfracs.Excluir(sala);
+                Contexto.RepositorioOficinas.Excluir(sala);
             });
         }
 
-        private Afrac ObterAfracOuExcecaoSeNaoEncontrar(int id)
+        private Oficina ObterAfracOuExcecaoSeNaoEncontrar(int id)
         {
-            var afrac = Contexto.RepositorioAfracs.ObterPorId(id);
+            var afrac = Contexto.RepositorioOficinas.ObterPorId(id);
 
             if (afrac != null)
                 return afrac;

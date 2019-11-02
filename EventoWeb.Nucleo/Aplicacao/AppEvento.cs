@@ -23,7 +23,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                         PeriodoInscricao = evento.PeriodoInscricaoOnLine,
                         PeriodoRealizacao = evento.PeriodoRealizacaoEvento,
                         DataRegistro = evento.DataRegistro,
-                        Logotipo = evento.Logotipo,
+                        Logotipo = Convert.ToBase64String(evento.Logotipo.Arquivo),
                         Nome = evento.Nome,
                         TemDepartamentalizacao = evento.TemDepartamentalizacao,
                         TemDormitorios = evento.TemDormitorios,
@@ -48,7 +48,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                     Id = x.Id,
                     PeriodoInscricao = x.PeriodoInscricaoOnLine,
                     Nome = x.Nome,
-                    Logotipo = x.Logotipo
+                    Logotipo = Convert.ToBase64String(x.Logotipo.Arquivo)
                 }).ToList();
             });
 
@@ -60,7 +60,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             Evento evento = new Evento(dto.Nome, dto.PeriodoInscricao, dto.PeriodoRealizacao, 
                 dto.IdadeMinimaInscricaoAdulto)
             {
-                Logotipo = dto.Logotipo,
+                Logotipo = new ArquivoBinario(Convert.FromBase64String(dto.Logotipo), EnumTipoArquivoBinario.ImagemJPEG),
                 TemDepartamentalizacao = dto.TemDepartamentalizacao,
                 TemDormitorios = dto.TemDormitorios,
                 TemOficinas = dto.TemOficinas,
@@ -89,13 +89,17 @@ namespace EventoWeb.Nucleo.Aplicacao
                 evento.Nome = dto.Nome;
                 evento.PeriodoInscricaoOnLine = dto.PeriodoInscricao;
                 evento.PeriodoRealizacaoEvento = dto.PeriodoRealizacao;
-                evento.Logotipo = dto.Logotipo;
                 evento.TemDepartamentalizacao = dto.TemDepartamentalizacao;
                 evento.TemDormitorios = dto.TemDormitorios;
                 evento.TemOficinas = dto.TemOficinas;
                 evento.ConfiguracaoEvangelizacao = dto.ConfiguracaoEvangelizacao;
                 evento.ConfiguracaoSalaEstudo = dto.ConfiguracaoSalaEstudo;
                 evento.ConfiguracaoSarau = dto.ConfiguracaoSarau;
+
+                if (evento.Logotipo == null)
+                    evento.Logotipo = new ArquivoBinario(Convert.FromBase64String(dto.Logotipo), EnumTipoArquivoBinario.ImagemJPEG);
+                else
+                    evento.Logotipo.Arquivo = Convert.FromBase64String(dto.Logotipo);
 
                 Contexto.RepositorioEventos.Atualizar(evento);
             });

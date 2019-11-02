@@ -4,7 +4,7 @@ using NHibernate.Mapping.ByCode.Conformist;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
-    class DepartamentoMapping: ClassMapping<Departamento>
+    public class DepartamentoMapping: ClassMapping<Departamento>
     {
         public DepartamentoMapping()
         {

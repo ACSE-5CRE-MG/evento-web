@@ -69,7 +69,7 @@ namespace EventoWeb.Nucleo.Persistencia
         public AUsuarios RepositorioUsuarios => new RepositorioUsuariosNH(m_Sessao);
         public ADepartamentos RepositorioDepartamentos => new RepositorioDepartamentosNH(m_Sessao);
         public ASalasEstudo RepositorioSalasEstudo => new RepositorioSalasEstudoNH(m_Sessao);
-        public AAfracs RepositorioAfracs => new RepositorioAfracsNH(m_Sessao);
+        public AOficinas RepositorioOficinas => new RepositorioOficinasNH(m_Sessao);
         public AConfiguracoesEmail RepositorioConfiguracoesEmail => new RepositorioConfiguracoesEmailNH(m_Sessao);
         public AInscricoes RepositorioInscricoes => new InscricoesNH(m_Sessao);
         public ACodigosAcessoInscricao RepositorioCodigosAcessoInscricao => new RepositorioCodigosAcessoInscricaoNH(m_Sessao);

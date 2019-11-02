@@ -62,11 +62,10 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.NotNullable(true);
                 m.Column("DATA_REGISTRO");
             });
-            this.Property(x => x.Logotipo, m => {
+            this.ManyToOne(x => x.Logotipo, m => {
                 m.Access(Accessor.Property);
                 m.NotNullable(false);
-                m.Column("LOGOTIPO");
-                m.Type(NHibernateUtil.StringClob);
+                m.Column("ID_ARQUIVO_LOGOTIPO");
             });
             this.Property(x => x.TemDepartamentalizacao, m => {
                 m.Access(Accessor.Property);

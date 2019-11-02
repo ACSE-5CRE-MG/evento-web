@@ -8,7 +8,7 @@ using System.Text;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
-    class ConfiguracaoEmailMapping: ClassMapping<ConfiguracaoEmail>
+    public class ConfiguracaoEmailMapping : ClassMapping<ConfiguracaoEmail>
     {
         public ConfiguracaoEmailMapping()
         {

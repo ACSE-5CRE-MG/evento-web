@@ -4,7 +4,7 @@ using NHibernate.Mapping.ByCode.Conformist;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
-    class SalaMapping: ClassMapping<SalaEstudo>
+    public class SalaMapping : ClassMapping<SalaEstudo>
     {
         public SalaMapping()
         {

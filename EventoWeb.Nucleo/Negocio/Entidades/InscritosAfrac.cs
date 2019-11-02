@@ -7,16 +7,16 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class InscritosAfrac
     {
-        private Afrac mAfrac;
+        private Oficina mAfrac;
         private InscricaoParticipante[] mInscritos;
 
-        public InscritosAfrac(Afrac afrac, InscricaoParticipante[] inscricao)
+        public InscritosAfrac(Oficina afrac, InscricaoParticipante[] inscricao)
         {
             mAfrac = afrac;
             mInscritos = inscricao;
         }
 
-        public Afrac Afrac { get { return mAfrac; } }
+        public Oficina Afrac { get { return mAfrac; } }
         public IEnumerable<InscricaoParticipante> Inscritos { get { return mInscritos; } }
     }
 }

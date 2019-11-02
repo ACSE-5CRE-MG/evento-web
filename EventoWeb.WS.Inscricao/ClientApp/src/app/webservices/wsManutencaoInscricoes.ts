@@ -16,7 +16,7 @@ export class WsManutencaoInscricoes {
             inscricao.DadosPessoais.Email = "joao@uol.com.br";
             inscricao.DadosPessoais.Nome = "João da Silva";
             inscricao.DadosPessoais.Sexo = EnumSexo.Masculino;
-            inscricao.DadosPessoais.TipoInscricao = EnumTipoInscricao.Participante;
+            inscricao.TipoInscricao = EnumTipoInscricao.Participante;
             inscricao.DadosPessoais.Uf = "MG";
             inscricao.Evento = new DTOEventoCompleto();
             inscricao.Evento.Id = 1;

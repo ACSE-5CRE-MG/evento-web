@@ -45,7 +45,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                 PeriodoInscricao = evento.PeriodoInscricaoOnLine,
                 PeriodoRealizacao = evento.PeriodoRealizacaoEvento,
                 IdadeMinima = evento.IdadeMinimaInscricaoAdulto,
-                Logotipo = evento.Logotipo,
+                Logotipo = evento.Logotipo.Arquivo.ToString(),
                 Nome = evento.Nome
             };
         }

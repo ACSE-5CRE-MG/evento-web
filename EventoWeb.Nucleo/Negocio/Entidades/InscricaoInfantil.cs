@@ -7,8 +7,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         private const String MSG_ERRO_RESPONSAVEL = "A inscrição do responsável não pode ser do tipo infantil.";
         private const String MSG_ERRO_INSCRICAO_OUTRO_EVENTO = "A inscrição do responsável deve ser do mesmo evento da inscrição infantil.";
 
-        private Inscricao mInscricaoResponsavel1;
-        private Inscricao mInscricaoResponsavel2;
+        private Inscricao m_InscricaoResponsavel1;
+        private Inscricao m_InscricaoResponsavel2;
 
         protected InscricaoInfantil() { }
 
@@ -45,11 +45,11 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual Inscricao InscricaoResponsavel1 
         { 
-            get { return mInscricaoResponsavel1; }
+            get { return m_InscricaoResponsavel1; }
         }
         public virtual Inscricao InscricaoResponsavel2 
         { 
-            get { return mInscricaoResponsavel2; }
+            get { return m_InscricaoResponsavel2; }
         }
 
         public virtual void AtribuirResponsaveis(Inscricao responsavel1, Inscricao responsavel2)
@@ -78,8 +78,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (DormeEvento)
                 ValidarInscricaoParaQuartoFamilia(responsavel1, responsavel2);
 
-            mInscricaoResponsavel1 = responsavel1;
-            mInscricaoResponsavel2 = responsavel2;
+            m_InscricaoResponsavel1 = responsavel1;
+            m_InscricaoResponsavel2 = responsavel2;
         }
 
         private void ValidarInscricaoParaQuartoFamilia(Inscricao responsavel1, Inscricao responsavel2)

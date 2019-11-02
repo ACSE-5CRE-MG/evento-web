@@ -7,18 +7,18 @@ using System.Text;
 
 namespace EventoWeb.Nucleo.Negocio.Servicos
 {
-    internal class ParaOndeMoverParticipanteAfrac : IParaOndeMover<Afrac>
+    internal class ParaOndeMoverParticipanteAfrac : IParaOndeMover<Oficina>
     {
         private InscricaoParticipante mParticipante;
-        private Afrac mAfracOrigem;
+        private Oficina mAfracOrigem;
 
-        public ParaOndeMoverParticipanteAfrac(Afrac AfracOrigem, InscricaoParticipante participante)
+        public ParaOndeMoverParticipanteAfrac(Oficina AfracOrigem, InscricaoParticipante participante)
         {
             mParticipante = participante;
             mAfracOrigem = AfracOrigem;
         }
 
-        public void Para(Afrac afrac)
+        public void Para(Oficina afrac)
         {
             if (afrac == null)
                 throw new ArgumentNullException("afrac", "Afrac não pode ser vazia.");
@@ -34,12 +34,12 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
         }
     }
 
-    internal class MovimentacaoParticipanteAfrac : IMovimentacaoParticipante<Afrac>
+    internal class MovimentacaoParticipanteAfrac : IMovimentacaoParticipante<Oficina>
     {
-        private Afrac mAfrac;
-        private AAfracs mAfracs;
+        private Oficina mAfrac;
+        private AOficinas mAfracs;
 
-        public MovimentacaoParticipanteAfrac(Afrac afrac, AAfracs afracs)
+        public MovimentacaoParticipanteAfrac(Oficina afrac, AOficinas afracs)
         {
             mAfrac = afrac;
             mAfracs = afracs;
@@ -53,16 +53,16 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             if (participante.Evento != mAfrac.Evento)
                 throw new ArgumentException("Este participante é de outro evento.", "participante");
 
-            if (mAfracs.EhParticipanteDeAfracNoEvento(mAfrac.Evento, participante))
+            if (mAfracs.EhParticipanteDeOficinaNoEvento(mAfrac.Evento, participante))
                 throw new ArgumentException("Este participante já tem afrac informada.", "participante");
 
-            if (mAfracs.InscritoEhResponsavelPorAfrac(mAfrac.Evento, participante))
+            if (mAfracs.InscritoEhResponsavelPorOficina(mAfrac.Evento, participante))
                 throw new ArgumentException("Este participante é responsável de Afrac.", "participante");
 
             mAfrac.AdicionarParticipante(participante);
         }
 
-        public IParaOndeMover<Afrac> MoverParticipante(InscricaoParticipante participante)
+        public IParaOndeMover<Oficina> MoverParticipante(InscricaoParticipante participante)
         {
             if (participante == null)
                 throw new ArgumentNullException("participante", "Participante não pode ser nulo.");
@@ -70,10 +70,10 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             if (participante.Evento != mAfrac.Evento)
                 throw new ArgumentException("Este participante é de outro evento.", "participante");
 
-            if (mAfracs.InscritoEhResponsavelPorAfrac(mAfrac.Evento, participante))
+            if (mAfracs.InscritoEhResponsavelPorOficina(mAfrac.Evento, participante))
                 throw new ArgumentException("Este participante é responsável de Afrac.", "participante");
 
-            if (!mAfracs.EhParticipanteDeAfracNoEvento(mAfrac.Evento, participante))
+            if (!mAfracs.EhParticipanteDeOficinaNoEvento(mAfrac.Evento, participante))
                 throw new ArgumentException("Este participante não tem afrac informada.", "participante");
 
             return new ParaOndeMoverParticipanteAfrac(mAfrac, participante);
@@ -94,9 +94,9 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
     public class DivisaoManualParticipantesPorAfrac
     {
         private Evento mEvento;
-        private AAfracs mAfracs;
+        private AOficinas mAfracs;
 
-        public DivisaoManualParticipantesPorAfrac(Evento evento, AAfracs afracs)
+        public DivisaoManualParticipantesPorAfrac(Evento evento, AOficinas afracs)
         {
             if (evento == null)
                 throw new ArgumentNullException("evento", "Evento não pode ser nulo.");
@@ -104,14 +104,14 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             if (afracs == null)
                 throw new ArgumentNullException("evento", "Afracs não pode ser nulo.");
 
-            if (afracs.HaAfracsSemResponsavelDefinidoDoEvento(evento))
+            if (afracs.HaAOficinasSemResponsavelDefinidoDoEvento(evento))
                 throw new InvalidOperationException("Há afracs sem responsável definido.");
             
             mEvento = evento;
             mAfracs = afracs;
         }
 
-        public IMovimentacaoParticipante<Afrac> Afrac(Afrac afrac)
+        public IMovimentacaoParticipante<Oficina> Afrac(Oficina afrac)
         {
             if (afrac == null)
                 throw new ArgumentNullException("afrac", "Afrac não pode ser vazia.");

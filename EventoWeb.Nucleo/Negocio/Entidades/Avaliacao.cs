@@ -76,9 +76,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         }
     }
 
-    public class AvaliacaoOficina : AvaliacaoAtividade<Afrac>
+    public class AvaliacaoOficina : AvaliacaoAtividade<Oficina>
     {
-        public AvaliacaoOficina(Evento evento, Afrac qual, EnumValorAvaliacao valor)
+        public AvaliacaoOficina(Evento evento, Oficina qual, EnumValorAvaliacao valor)
             : base(evento, qual, valor)
         {
         }

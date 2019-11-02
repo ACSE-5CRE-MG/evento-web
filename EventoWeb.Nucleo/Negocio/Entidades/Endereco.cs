@@ -5,9 +5,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class Endereco
     {
-        private string mCidade;
-        private string mUF;
-        private string mCEP;
+        private string m_Cidade;
+        private string m_UF;
 
         public Endereco(string cidade, string uf)
         {
@@ -17,29 +16,23 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         protected Endereco() { }
 
-        public virtual string Logradouro { get; set; }
-
-        public virtual string Numero { get; set; }
-
-        public virtual string Bairro { get; set; }
-
         public virtual string Cidade 
         {
-            get { return mCidade; }
+            get { return m_Cidade; }
             set
             {
                 ValidarSeValorNuloOuVazio(value, "Cidade");
-                mCidade = value;
+                m_Cidade = value;
             }
         }
 
         public virtual string UF 
         {
-            get { return mUF; }
+            get { return m_UF; }
             set
             {
                 ValidarSeValorNuloOuVazio(value, "UF");
-                mUF = value;
+                m_UF = value;
             }
         }
 
@@ -47,20 +40,6 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         {
             if (String.IsNullOrEmpty(valor))
                 throw new ExcecaoNegocioAtributo("Endereco", nomeCampo, nomeCampo + " não foi informado");
-        }
-
-        public virtual string Complemento { get; set; }
-
-        public virtual string CEP 
-        {
-            get { return mCEP; }
-            set
-            {
-                if (!String.IsNullOrEmpty(value) && value.Trim().Length != 8)
-                    throw new ExcecaoNegocioAtributo("Endereco", "CEP", "CEP deve ter 8 digitos.");
-
-                mCEP = value;
-            }
         }
     }
 }

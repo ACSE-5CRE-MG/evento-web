@@ -51,7 +51,7 @@ export class TelaInscricao implements OnInit {
                                     this.dadosTela.descricaoEvento = this.inscricao.Evento.Nome;
                                     this.dadosTela.idadeMinima = this.inscricao.Evento.IdadeMinima;
                                     this.dadosTela.sexoEscolhido = this.coordenacao.Sexos[this.inscricao.DadosPessoais.Sexo];
-                                    this.dadosTela.tipoInscricaoEscolhida = this.coordenacao.TiposInscricao[this.inscricao.DadosPessoais.TipoInscricao];
+                                    this.dadosTela.tipoInscricaoEscolhida = this.coordenacao.TiposInscricao[this.inscricao.TipoInscricao];
                                     this.dadosTela.cidade = this.inscricao.DadosPessoais.Cidade;
                                     this.dadosTela.uf = this.inscricao.DadosPessoais.Uf;
                                     this.dadosTela.ehVegetariano = this.inscricao.DadosPessoais.EhVegetariano;
@@ -62,7 +62,7 @@ export class TelaInscricao implements OnInit {
                                     this.dadosTela.medicamentosUsa = this.inscricao.DadosPessoais.MedicamentosUsa;
                                     this.dadosTela.centroEspirita = this.inscricao.CentroEspirita;
                                     this.dadosTela.tempoEspirita = this.inscricao.TempoEspirita;
-                                    this.dadosTela.primeiroEncontro = this.inscricao.DadosPessoais.PrimeiroEncontro;
+                                    this.dadosTela.primeiroEncontro = this.inscricao.PrimeiroEncontro;
                                     this.dadosTela.nomeResponsavelCentro = this.inscricao.NomeResponsavelCentro;
                                     this.dadosTela.telefoneResponsavelCentro = this.inscricao.TelefoneResponsavelCentro;
                                     this.dadosTela.nomeResponsavelLegal = this.inscricao.NomeResponsavelLegal;
@@ -189,8 +189,8 @@ export class TelaInscricao implements OnInit {
             atualizacao.DadosPessoais.EhDiabetico = this.dadosTela.ehDiabetico;
             atualizacao.DadosPessoais.EhVegetariano = this.dadosTela.ehVegetariano;
             atualizacao.DadosPessoais.MedicamentosUsa = this.dadosTela.medicamentosUsa;
-            atualizacao.DadosPessoais.PrimeiroEncontro = this.dadosTela.primeiroEncontro;
-            atualizacao.DadosPessoais.TipoInscricao = (this.coordenacao.TiposInscricao[0] == this.dadosTela.tipoInscricao ? EnumTipoInscricao.Participante : EnumTipoInscricao.ParticipanteTrabalhador);
+            atualizacao.PrimeiroEncontro = this.dadosTela.primeiroEncontro;
+            atualizacao.TipoInscricao = (this.coordenacao.TiposInscricao[0] == this.dadosTela.tipoInscricao ? EnumTipoInscricao.Participante : EnumTipoInscricao.ParticipanteTrabalhador);
             atualizacao.DadosPessoais.Uf = this.dadosTela.uf;
             atualizacao.DadosPessoais.UsaAdocanteDiariamente = this.dadosTela.usaAdocanteDiariamente;
 

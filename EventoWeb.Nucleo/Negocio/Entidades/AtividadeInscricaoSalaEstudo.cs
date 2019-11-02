@@ -17,7 +17,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
     public class AtividadeInscricaoSalaEstudoCoordenacao : AAtividadeInscricao
     {
-        private SalaEstudo mSalaEscolhida;
+        private SalaEstudo m_SalaEscolhida;
 
         public AtividadeInscricaoSalaEstudoCoordenacao(InscricaoParticipante inscrito, SalaEstudo sala)
             : base(inscrito)
@@ -29,13 +29,13 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual SalaEstudo SalaEscolhida
         {
-            get { return mSalaEscolhida; }
+            get { return m_SalaEscolhida; }
             set
             {
                 if (value == null)
                     throw new ArgumentNullException("SalaEscolhida");
 
-                mSalaEscolhida = value;
+                m_SalaEscolhida = value;
             }
         }
     }

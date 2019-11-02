@@ -7,48 +7,48 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class AtividadeInscricaoOficinas : AAtividadeInscricao
     {
-        private IList<Afrac> mAfracs;
+        private IList<Oficina> m_Oficinas;
 
-        public AtividadeInscricaoOficinas(InscricaoParticipante inscrito, GestaoAfracsEscolhidas gestaoEscolhaAfracs)
+        public AtividadeInscricaoOficinas(InscricaoParticipante inscrito, GestaoOficinasEscolhidas gestaoEscolhaOficinas)
             : base(inscrito)
         {
-            AtualizarAfracs(gestaoEscolhaAfracs);
+            AtualizarOficinas(gestaoEscolhaOficinas);
         }
 
         protected AtividadeInscricaoOficinas() { }
 
-        public virtual void AtualizarAfracs(GestaoAfracsEscolhidas gestaoEscolhaAfracs)
+        public virtual void AtualizarOficinas(GestaoOficinasEscolhidas gestaoEscolhaOficinas)
         {
-            if (gestaoEscolhaAfracs == null)
-                throw new ArgumentException("É preciso informar as escolhas feitas das oficinas", "afracs");
+            if (gestaoEscolhaOficinas == null)
+                throw new ArgumentException("É preciso informar as escolhas feitas das oficinas", "oficinas");
 
-            mAfracs = new List<Afrac>(gestaoEscolhaAfracs.GerarLista());
+            m_Oficinas = new List<Oficina>(gestaoEscolhaOficinas.GerarLista());
         }
 
-        public virtual IEnumerable<Afrac> Afracs { get { return mAfracs; } }
+        public virtual IEnumerable<Oficina> Oficinas { get { return m_Oficinas; } }
     }
 
     public class AtividadeInscricaoOficinasCoordenacao : AAtividadeInscricao
     {
-        private Afrac mAfracEscolhida;
+        private Oficina m_OficinaEscolhida;
 
-        public AtividadeInscricaoOficinasCoordenacao(InscricaoParticipante inscrito, Afrac afrac)
+        public AtividadeInscricaoOficinasCoordenacao(InscricaoParticipante inscrito, Oficina oficina)
             : base(inscrito)
         {
-            AfracEscolhida = afrac;
+            OficinaEscolhida = oficina;
         }
 
         protected AtividadeInscricaoOficinasCoordenacao() { }
 
-        public virtual Afrac AfracEscolhida
+        public virtual Oficina OficinaEscolhida
         {
-            get { return mAfracEscolhida; }
+            get { return m_OficinaEscolhida; }
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("AfracEscolhida");
+                    throw new ArgumentNullException("OficinaEscolhida");
 
-                mAfracEscolhida = value;
+                m_OficinaEscolhida = value;
             }
         }
     }

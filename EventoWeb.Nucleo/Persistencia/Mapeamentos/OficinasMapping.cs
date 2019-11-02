@@ -4,18 +4,18 @@ using NHibernate.Mapping.ByCode.Conformist;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
-    class AfracMapping: ClassMapping<Afrac>
+    public class OficinasMapping: ClassMapping<Oficina>
     {
-        public AfracMapping()
+        public OficinasMapping()
         {
-            this.Table("AFRACS");
+            this.Table("OFICINAS");
             this.Id(x => x.Id, m =>
             {
                 m.Access(NHibernate.Mapping.ByCode.Accessor.NoSetter);
-                m.Column("ID_AFRAC");
+                m.Column("ID_OFICINA");
                 m.Generator(Generators.Native, g =>
                 {
-                    g.Params(new { sequence = "GEN_AFRACS" });
+                    g.Params(new { sequence = "GEN_OFICINAS" });
                 });
             });
 

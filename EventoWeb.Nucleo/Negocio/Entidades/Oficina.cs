@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
-    public class Afrac: Entidade
+    public class Oficina: Entidade
     {
         private string m_Nome;
         private Evento m_Evento;
@@ -13,7 +13,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         private bool m_DeveSerParNumeroTotalParticipantes;
         private IList<InscricaoParticipante> m_Participantes;
 
-        public Afrac(Evento evento, string nome)
+        public Oficina(Evento evento, string nome)
         {
             Evento = evento;
             Nome = nome;
@@ -21,7 +21,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             m_Participantes = new List<InscricaoParticipante>();
         }
 
-        protected Afrac() { }
+        protected Oficina() { }
 
         public virtual String Nome
         {

@@ -11,12 +11,10 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public int Criancas { get; set; }
         public int Participantes { get; set; }
         public int ParticipantesTrabalhadores { get; set; }
-        public int Trabalhadores { get; set; }
 
         public int CriancasPresentes { get; set; }
         public int ParticipantesPresentes { get; set; }
         public int ParticipantesTrabalhadoresPresentes { get; set; }
-        public int TrabalhadoresPresentes { get; set; }
     }
 
     public class EstatisticaSexo
@@ -91,7 +89,6 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public EstatisticaDiabeticos Diabeticos { get; set; }
         public EstatisticaEvangelizacao Evangelizacao { get; set; }
         public IEnumerable<String> CarnesNaoCome { get; set; }
-        public IEnumerable<String> MedicamentosControlados { get; set; }
         public IEnumerable<String> Medicamentos { get; set; }
         public IEnumerable<String> Alergias { get; set; }
         public IEnumerable<EstatisticaCidades> InscritosCidade { get; set; }
@@ -124,7 +121,6 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             estatistica.UsamAdocante = GerarEstatisticasUsamAdocante(inscricoes);
             estatistica.Diabeticos = GerarEstatisticasDiabeticos(inscricoes);
             estatistica.CarnesNaoCome = GerarEstatisticasCarnesNaoCome(inscricoes);
-            estatistica.MedicamentosControlados = GerarEstatisticasMedicamentosControlados(inscricoes);
             estatistica.Medicamentos = GerarEstatisticasMedicamentos(inscricoes);
             estatistica.Alergias = GerarEstatisticasAlergias(inscricoes);
             estatistica.Evangelizacao = GerarEstatisticasEvangelizacao(inscricoes);
@@ -148,11 +144,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 {
                     estatistica.Participantes = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.Participante);
                     estatistica.ParticipantesTrabalhadores = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.ParticipanteTrabalhador);
-                    estatistica.Trabalhadores = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.Trabalhador);
 
                     estatistica.ParticipantesPresentes = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.Participante && x.ConfirmadoNoEvento);
                     estatistica.ParticipantesTrabalhadoresPresentes = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.ParticipanteTrabalhador && x.ConfirmadoNoEvento);
-                    estatistica.TrabalhadoresPresentes = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.Trabalhador && x.ConfirmadoNoEvento);
                 }
             }
 
@@ -248,15 +242,6 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             return inscricoes
                 .Where(x => !String.IsNullOrWhiteSpace(x.Pessoa.TiposCarneNaoCome))
                 .GroupBy(x=>x.Pessoa.TiposCarneNaoCome.ToUpper())
-                .Select(x => x.Key)
-                .OrderBy(x => x);
-        }
-
-        private IEnumerable<string> GerarEstatisticasMedicamentosControlados(IList<Inscricao> inscricoes)
-        {
-            return inscricoes
-                .Where(x => !String.IsNullOrWhiteSpace(x.Pessoa.MedicamentosControlados))
-                .GroupBy(x=>x.Pessoa.MedicamentosControlados.ToUpper())
                 .Select(x => x.Key)
                 .OrderBy(x => x);
         }

@@ -71,7 +71,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual DateTime DataRegistro { get { return m_DataRegistro; } }
 
-        public virtual String Logotipo { get; set; }
+        public virtual ArquivoBinario Logotipo { get; set; }
 
         public virtual Boolean TemOficinas { get; set; }
 

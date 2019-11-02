@@ -8,8 +8,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class FaixaEtaria
     {
-        private int mIdadeMax;
-        private int mIdadeMin;
+        private int m_IdadeMax;
+        private int m_IdadeMin;
 
         public FaixaEtaria(int idadeMin, int idadeMax)
         {
@@ -29,11 +29,11 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (idadeMin > idadeMax)
                 throw new ArgumentException("Idade Mínima deve ser igual ou menor a Idade Máxima", "idadeMin");
 
-            mIdadeMin = idadeMin;
-            mIdadeMax = idadeMax;
+            m_IdadeMin = idadeMin;
+            m_IdadeMax = idadeMax;
         }
 
-        public virtual int IdadeMin { get { return mIdadeMin; } }
-        public virtual int IdadeMax { get { return mIdadeMax; } }
+        public virtual int IdadeMin { get { return m_IdadeMin; } }
+        public virtual int IdadeMax { get { return m_IdadeMax; } }
     }
 }

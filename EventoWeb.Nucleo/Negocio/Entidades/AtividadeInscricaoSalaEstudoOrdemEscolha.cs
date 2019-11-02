@@ -5,7 +5,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 {
     public class AtividadeInscricaoSalaEstudoOrdemEscolha: AAtividadeInscricao
     {
-        private IEnumerable<SalaEstudo> mSalas;
+        private IEnumerable<SalaEstudo> m_Salas;
 
         public AtividadeInscricaoSalaEstudoOrdemEscolha(InscricaoParticipante inscrito, GestaoSalasEstudoEscolhidas gestaoEscolha)
             : base(inscrito)
@@ -20,9 +20,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (gestao == null)
                 throw new ArgumentException("É preciso informar as escolhas feitas das salas de estudo", "gestao");
 
-            mSalas = new List<SalaEstudo>(gestao.GerarLista());
+            m_Salas = new List<SalaEstudo>(gestao.GerarLista());
         }
 
-        public virtual IEnumerable<SalaEstudo> Salas { get { return mSalas; } }
+        public virtual IEnumerable<SalaEstudo> Salas { get { return m_Salas; } }
     }
 }
