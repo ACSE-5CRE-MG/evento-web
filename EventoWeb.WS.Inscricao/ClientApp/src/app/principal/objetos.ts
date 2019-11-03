@@ -27,17 +27,17 @@ export class DTOEventoCompleto extends DTOEventoListagem {
 
 export class DTOOficina {
     public Id: number;
-    public Descricao: string;
+    public Nome: string;
 }
 
 export class DTOSalaEstudo {
     public Id: number;
-    public Descricao: string;
+    public Nome: string;
 }
 
 export class DTODepartamento {
     public Id: number;
-    public Descricao: string;
+    public Nome: string;
 }
 
 export enum EnumModeloDivisaoSalasEstudo { PorIdadeCidade, PorOrdemEscolhaInscricao }

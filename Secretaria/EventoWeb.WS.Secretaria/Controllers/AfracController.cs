@@ -19,7 +19,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         // GET api/afrac/obter/1
         [Authorize("Bearer")]
         [HttpGet("obter")]
-        public DTOAfrac GetObterAfrac(int id)
+        public DTOOficina GetObterAfrac(int id)
         {
             var afrac = mAppAfracs.ObterPorId(id);
             return afrac;
@@ -28,7 +28,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         // GET api/afrac/?idEvento=5
         [Authorize("Bearer")]
         [HttpGet("listarTodos")]
-        public IEnumerable<DTOAfrac> ListarAfracs(int idEvento)
+        public IEnumerable<DTOOficina> ListarAfracs(int idEvento)
         {
             var lista = mAppAfracs.ObterTodos(idEvento);
 
@@ -38,7 +38,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         // POST api/afrac/?idEvento=5
         [Authorize("Bearer")]
         [HttpPost("criar")]
-        public DTOId IncluirAfrac(int idEvento, [FromBody] DTOAfrac dtoAfrac)
+        public DTOId IncluirAfrac(int idEvento, [FromBody] DTOOficina dtoAfrac)
         {
             var id = mAppAfracs.Incluir(idEvento, dtoAfrac);
 
@@ -48,7 +48,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         // PUT api/afrac/1
         [Authorize("Bearer")]
         [HttpPut("atualizar")]
-        public void AlterarAfrac(int id, [FromBody] DTOAfrac dtoAfrac)
+        public void AlterarAfrac(int id, [FromBody] DTOOficina dtoAfrac)
         {
             mAppAfracs.Atualizar(id, dtoAfrac);
         }

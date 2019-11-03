@@ -10,9 +10,9 @@ namespace EventoWeb.Nucleo.Aplicacao
         {
         }
 
-        public IList<DTOAfrac> ObterTodos(int idEvento)
+        public IList<DTOOficina> ObterTodos(int idEvento)
         {
-            var lista = new List<DTOAfrac>();
+            var lista = new List<DTOOficina>();
             ExecutarSeguramente(() =>
             {
                 var afracs = Contexto.RepositorioOficinas.ListarTodasPorEvento(idEvento);
@@ -23,9 +23,9 @@ namespace EventoWeb.Nucleo.Aplicacao
             return lista;
         }
 
-        public DTOAfrac ObterPorId(int id)
+        public DTOOficina ObterPorId(int id)
         {
-            DTOAfrac dto = null;
+            DTOOficina dto = null;
             ExecutarSeguramente(() =>
             {
                 var afrac = Contexto.RepositorioOficinas.ObterPorId(id);
@@ -37,9 +37,9 @@ namespace EventoWeb.Nucleo.Aplicacao
             return dto;
         }
 
-        private DTOAfrac Converter(Oficina afrac)
+        private DTOOficina Converter(Oficina afrac)
         {
-            return new DTOAfrac
+            return new DTOOficina
             {
                 Id = afrac.Id,
                 Nome = afrac.Nome,
@@ -48,7 +48,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             };
         }
 
-        public DTOId Incluir(int idEvento, DTOAfrac dto)
+        public DTOId Incluir(int idEvento, DTOOficina dto)
         {
             DTOId retorno = new DTOId();
 
@@ -68,7 +68,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             return retorno;
         }
 
-        public void Atualizar(int id, DTOAfrac dto)
+        public void Atualizar(int id, DTOOficina dto)
         {
             ExecutarSeguramente(() =>
             {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
-    public class DTOAfrac : DTOId
+    public class DTOOficina : DTOId
     {
         public string Nome { get; set; }
         public bool DeveSerParNumeroTotalParticipantes { get; set; }

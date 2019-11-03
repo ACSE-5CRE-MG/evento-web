@@ -30,7 +30,9 @@ namespace EventoWeb.Nucleo.Aplicacao
                         TemOficinas = evento.TemOficinas,
                         ConfiguracaoSalaEstudo = evento.ConfiguracaoSalaEstudo,
                         ConfiguracaoEvangelizacao = evento.ConfiguracaoEvangelizacao,
-                        ConfiguracaoSarau = evento.ConfiguracaoSarau
+                        ConfiguracaoSarau = evento.ConfiguracaoSarau,
+                        IdadeMinimaInscricaoAdulto = evento.IdadeMinimaInscricaoAdulto,
+                        PodeAlterar = true
                     };
             });
 
