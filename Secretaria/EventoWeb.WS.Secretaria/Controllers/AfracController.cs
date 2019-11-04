@@ -9,11 +9,11 @@ namespace EventoWeb.WS.Secretaria.Controllers
     [ApiController]
     public class AfracController : ControllerBase
     {
-        private AppAfracs mAppAfracs;
+        private AppOficinas mAppAfracs;
 
         public AfracController(IContexto contexto)
         {
-            mAppAfracs = new AppAfracs(contexto);
+            mAppAfracs = new AppOficinas(contexto);
         }
 
         // GET api/afrac/obter/1

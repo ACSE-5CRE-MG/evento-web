@@ -1,4 +1,5 @@
-﻿using EventoWeb.Nucleo.Negocio.Entidades;
+﻿using EventoWeb.Nucleo.Aplicacao.ConversoresDTO;
+using EventoWeb.Nucleo.Negocio.Entidades;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +18,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             {
                 var salas = Contexto.RepositorioSalasEstudo.ListarTodasPorEvento(idEvento);
                 if (salas.Count > 0)
-                    lista.AddRange(salas.Select(x => Converter(x)));
+                    lista.AddRange(salas.Select(x => x.Converter()));
             });
 
             return lista;
@@ -31,24 +32,12 @@ namespace EventoWeb.Nucleo.Aplicacao
                 var sala = Contexto.RepositorioSalasEstudo.ObterPorId(id);
 
                 if (sala != null)
-                    dto = Converter(sala);
+                    dto = sala.Converter();
             });
 
             return dto;
         }
-
-        private DTOSalaEstudo Converter(SalaEstudo sala)
-        {
-            return new DTOSalaEstudo
-            {
-                Id = sala.Id,
-                Nome = sala.Nome,
-                DeveSerParNumeroTotalParticipantes = sala.DeveSerParNumeroTotalParticipantes,
-                IdadeMinima = sala.FaixaEtaria== null? (int?)null: sala.FaixaEtaria.IdadeMin,
-                IdadeMaxima = sala.FaixaEtaria == null ? (int?)null : sala.FaixaEtaria.IdadeMax
-            };
-        }
-
+        
         public DTOId Incluir(int idEvento, DTOSalaEstudo dto)
         {
             DTOId retorno = new DTOId();

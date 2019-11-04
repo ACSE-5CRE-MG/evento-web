@@ -1,12 +1,13 @@
-﻿using EventoWeb.Nucleo.Negocio.Entidades;
+﻿using EventoWeb.Nucleo.Aplicacao.ConversoresDTO;
+using EventoWeb.Nucleo.Negocio.Entidades;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
-    public class AppAfracs : AppBase
+    public class AppOficinas : AppBase
     {
-        public AppAfracs(IContexto contexto) : base(contexto)
+        public AppOficinas(IContexto contexto) : base(contexto)
         {
         }
 
@@ -17,7 +18,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             {
                 var afracs = Contexto.RepositorioOficinas.ListarTodasPorEvento(idEvento);
                 if (afracs.Count > 0)
-                    lista.AddRange(afracs.Select(x => Converter(x)));
+                    lista.AddRange(afracs.Select(x => x.Converter()));
             });
 
             return lista;
@@ -28,24 +29,13 @@ namespace EventoWeb.Nucleo.Aplicacao
             DTOOficina dto = null;
             ExecutarSeguramente(() =>
             {
-                var afrac = Contexto.RepositorioOficinas.ObterPorId(id);
+                var oficina = Contexto.RepositorioOficinas.ObterPorId(id);
 
-                if (afrac != null)
-                    dto = Converter(afrac);
+                if (oficina != null)
+                    dto = oficina.Converter();
             });
 
             return dto;
-        }
-
-        private DTOOficina Converter(Oficina afrac)
-        {
-            return new DTOOficina
-            {
-                Id = afrac.Id,
-                Nome = afrac.Nome,
-                DeveSerParNumeroTotalParticipantes = afrac.DeveSerParNumeroTotalParticipantes,
-                NumeroTotalParticipantes = afrac.NumeroTotalParticipantes                
-            };
         }
 
         public DTOId Incluir(int idEvento, DTOOficina dto)
@@ -72,12 +62,12 @@ namespace EventoWeb.Nucleo.Aplicacao
         {
             ExecutarSeguramente(() =>
             {
-                var afrac = ObterAfracOuExcecaoSeNaoEncontrar(id);
-                afrac.Nome = dto.Nome;
-                afrac.DeveSerParNumeroTotalParticipantes = dto.DeveSerParNumeroTotalParticipantes;
-                afrac.NumeroTotalParticipantes = dto.NumeroTotalParticipantes;
+                var oficina = ObterOficinaOuExcecaoSeNaoEncontrar(id);
+                oficina.Nome = dto.Nome;
+                oficina.DeveSerParNumeroTotalParticipantes = dto.DeveSerParNumeroTotalParticipantes;
+                oficina.NumeroTotalParticipantes = dto.NumeroTotalParticipantes;
 
-                Contexto.RepositorioOficinas.Atualizar(afrac);
+                Contexto.RepositorioOficinas.Atualizar(oficina);
             });
         }
 
@@ -85,18 +75,18 @@ namespace EventoWeb.Nucleo.Aplicacao
         {
             ExecutarSeguramente(() =>
             {
-                var sala = ObterAfracOuExcecaoSeNaoEncontrar(id);
+                var oficina = ObterOficinaOuExcecaoSeNaoEncontrar(id);
 
-                Contexto.RepositorioOficinas.Excluir(sala);
+                Contexto.RepositorioOficinas.Excluir(oficina);
             });
         }
 
-        private Oficina ObterAfracOuExcecaoSeNaoEncontrar(int id)
+        private Oficina ObterOficinaOuExcecaoSeNaoEncontrar(int id)
         {
-            var afrac = Contexto.RepositorioOficinas.ObterPorId(id);
+            var oficina = Contexto.RepositorioOficinas.ObterPorId(id);
 
-            if (afrac != null)
-                return afrac;
+            if (oficina != null)
+                return oficina;
             else
                 throw new ExcecaoAplicacao("AppAfracs", "Não foi encontrado nenhuma afrac com o id informado.");
         }

@@ -1,4 +1,5 @@
-﻿using EventoWeb.Nucleo.Negocio.Entidades;
+﻿using EventoWeb.Nucleo.Aplicacao.ConversoresDTO;
+using EventoWeb.Nucleo.Negocio.Entidades;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +18,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             {
                 var departamentos = Contexto.RepositorioDepartamentos.ListarTodosPorEvento(idEvento);
                 if (departamentos.Count > 0)
-                    lista.AddRange(departamentos.Select(x => Converter(x)));
+                    lista.AddRange(departamentos.Select(x => x.Converter()));
             });
 
             return lista;
@@ -31,21 +32,12 @@ namespace EventoWeb.Nucleo.Aplicacao
                 var departamento = Contexto.RepositorioDepartamentos.ObterPorId(id);
 
                 if (departamento != null)
-                    dto = Converter(departamento);
+                    dto = departamento.Converter();
             });
 
             return dto;
         }
-
-        private DTODepartamento Converter(Departamento departamento)
-        {
-            return new DTODepartamento
-            {
-                Id = departamento.Id,
-                Nome = departamento.Nome
-            };
-        }
-
+        
         public DTOId Incluir(int idEvento, string nome)
         {
             DTOId retorno = new DTOId();

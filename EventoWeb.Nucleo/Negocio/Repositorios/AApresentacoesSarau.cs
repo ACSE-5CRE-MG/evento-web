@@ -11,5 +11,6 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
         IList<ApresentacaoSarau> ListarTodas(int idEvento);
         int ObterTempoTotalApresentacoes(Evento evento, ApresentacaoSarau apresentacaoNaoConsiderar = null);
         ApresentacaoSarau ObterPorId(int idEvento, int id);
+        IList<ApresentacaoSarau> ListarPorInscricao(int idInscricao);
     }
 }

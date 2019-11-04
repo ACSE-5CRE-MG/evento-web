@@ -52,12 +52,9 @@ namespace EventoWeb.Nucleo.Aplicacao
             };
             ExecutarSeguramente(() =>
             {
-                int idInscricao = -1;
-
-                if (identificacao.Length == 10 &&
-                    identificacao.Substring(0, 4) == "INSC" &&
-                    int.TryParse(identificacao.Substring(4, 6), out idInscricao))
+                try
                 {
+                    int idInscricao = new AppInscOnLineCodigoInscricao().ExtrarId(identificacao);
                     var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(idInscricao);
 
                     if (inscricao != null)
@@ -77,8 +74,13 @@ namespace EventoWeb.Nucleo.Aplicacao
                     else
                         dto.Resultado = EnumResultadoEnvio.InscricaoNaoEncontrada;
                 }
-                else
-                    dto.Resultado = EnumResultadoEnvio.IdentificacaoInvalida;
+                catch (Exception ex)
+                {
+                    if (ex is ExcecaoAplicacao)
+                        dto.Resultado = EnumResultadoEnvio.IdentificacaoInvalida;
+                    else
+                        throw ex;
+                }
             });
 
             return dto;

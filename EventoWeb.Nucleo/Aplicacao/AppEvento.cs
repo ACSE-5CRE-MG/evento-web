@@ -1,4 +1,5 @@
-﻿using EventoWeb.Nucleo.Negocio.Entidades;
+﻿using EventoWeb.Nucleo.Aplicacao.ConversoresDTO;
+using EventoWeb.Nucleo.Negocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,24 +17,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             ExecutarSeguramente(() =>
             {
                 var evento = Contexto.RepositorioEventos.ObterEventoPeloId(id);
-                if (evento != null)
-                    dtoEvento = new DTOEventoCompleto
-                    {
-                        Id = evento.Id,
-                        PeriodoInscricao = evento.PeriodoInscricaoOnLine,
-                        PeriodoRealizacao = evento.PeriodoRealizacaoEvento,
-                        DataRegistro = evento.DataRegistro,
-                        Logotipo = Convert.ToBase64String(evento.Logotipo.Arquivo),
-                        Nome = evento.Nome,
-                        TemDepartamentalizacao = evento.TemDepartamentalizacao,
-                        TemDormitorios = evento.TemDormitorios,
-                        TemOficinas = evento.TemOficinas,
-                        ConfiguracaoSalaEstudo = evento.ConfiguracaoSalaEstudo,
-                        ConfiguracaoEvangelizacao = evento.ConfiguracaoEvangelizacao,
-                        ConfiguracaoSarau = evento.ConfiguracaoSarau,
-                        IdadeMinimaInscricaoAdulto = evento.IdadeMinimaInscricaoAdulto,
-                        PodeAlterar = true
-                    };
+                dtoEvento = evento?.Converter();
             });
 
             return dtoEvento;
@@ -45,13 +29,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             ExecutarSeguramente(() =>
             {
                 var eventos = Contexto.RepositorioEventos.ObterTodosEventos();
-                dtoEventos = eventos.Select(x => new DTOEventoMinimo()
-                {
-                    Id = x.Id,
-                    PeriodoInscricao = x.PeriodoInscricaoOnLine,
-                    Nome = x.Nome,
-                    Logotipo = Convert.ToBase64String(x.Logotipo.Arquivo)
-                }).ToList();
+                dtoEventos = eventos.Select(x => x.ConverterMinimo()).ToList();
             });
 
             return dtoEventos;

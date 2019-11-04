@@ -32,17 +32,9 @@ namespace EventoWeb.Nucleo.Aplicacao
     {
         public int Id { get; set; }
         public Periodo PeriodoInscricao { get; set; }
-        public string Nome { get; set; }
-        public String Logotipo { get; set; }
-    }
-
-    public class DTOEventoListagem
-    {
-        public int Id { get; set; }
-        public Periodo PeriodoInscricao { get; set; }
         public Periodo PeriodoRealizacao { get; set; }
         public string Nome { get; set; }
-        public string Logotipo { get; set; }
+        public String Logotipo { get; set; }
         public int IdadeMinima { get; set; }
     }
 }

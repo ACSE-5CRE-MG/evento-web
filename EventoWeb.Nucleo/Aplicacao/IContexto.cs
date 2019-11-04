@@ -23,6 +23,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         AMensagensEmailPadrao RepositorioMensagensEmailPadrao { get; }
         ACodigosAcessoInscricao RepositorioCodigosAcessoInscricao { get; }
         AVariaveisEmailInscricao RepositorioVariaveisEmailIncricao { get; }
+        AApresentacoesSarau RepositorioApresentacoesSarau { get; }
 
         IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro { get; }
         IServicoEmail ServicoEmail { get; }

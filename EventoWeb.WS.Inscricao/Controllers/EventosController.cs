@@ -16,13 +16,13 @@ namespace EventoWeb.WS.Inscricao.Controllers
         }
 
         [HttpGet("disponiveis")]
-        public IEnumerable<DTOEventoListagem> ListarEventosDisponiveis()
+        public IEnumerable<DTOEventoMinimo> ListarEventosDisponiveis()
         {
             return mAppEvento.ListarEventosDisponiveisInscricaoOnline();
         }
 
         [HttpGet("{id}")]
-        public DTOEventoListagem ObterEventos(int id)
+        public DTOEventoMinimo ObterEventos(int id)
         {
             return mAppEvento.ObterPorIdDisponivelInscricaoOnline(id);
         }
