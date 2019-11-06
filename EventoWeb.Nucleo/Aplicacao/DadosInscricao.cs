@@ -139,11 +139,12 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string AlimentosAlergia { get; set; }
         public string MedicamentosUsa { get; set; }
         public IList<DTOInscricaoSimplificada> Responsaveis { get; set; }
-        public string Cidade { get; internal set; }
-        public string Uf { get; internal set; }
-        public string Email { get; internal set; }
-        public string NomeCracha { get; internal set; }
-        public bool PrimeiroEncontro { get; internal set; }
+        public string Cidade { get; set; }
+        public string Uf { get; set; }
+        public string Email { get; set; }
+        public string NomeCracha { get; set; }
+        public bool PrimeiroEncontro { get; set; }
+        public IList<DTOSarau> Sarais { get; set; }
     }
 
     public class DTOPagamento

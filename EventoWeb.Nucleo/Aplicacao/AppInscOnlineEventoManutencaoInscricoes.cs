@@ -62,8 +62,18 @@ namespace EventoWeb.Nucleo.Aplicacao
                 new AppInscricaoInfantil(Contexto)
                     .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Criancas);
 
-                new AppApresentacaoSarau(Contexto)
+                var appApresentacaoSarau = new AppApresentacaoSarau(Contexto);
+                appApresentacaoSarau
                     .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Sarais);
+
+                foreach(var dtoCrianca in dtoInscricao.Criancas.Where(x=>x.Sarais?.Count > 0))
+                {
+                    var crianca = repInscricoes.ObterInscricaoPeloId(dtoCrianca.Id.Value);
+                    appApresentacaoSarau
+                        .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(crianca, dtoCrianca.Sarais);
+                }
+
+                Contexto.ServicoEmail.EnviarEmailInscricaoRegistrada();
             });
         }
 

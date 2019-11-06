@@ -49,6 +49,8 @@ namespace EventoWeb.Nucleo.Aplicacao
                     inscricaoInfantil.AtribuirDados(dtoCrianca);
 
                     repInscricoes.Incluir(inscricaoInfantil);
+
+                    dtoCrianca.Id = inscricaoInfantil.Id;
                 }
                 else
                 {

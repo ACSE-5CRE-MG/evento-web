@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Security.Cryptography;
-using System.Security.Principal;
-using System.Threading.Tasks;
-using EventoWeb.Nucleo.Aplicacao;
-using Microsoft.AspNetCore.Http;
+﻿using EventoWeb.Nucleo.Aplicacao;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace EventoWeb.WS.Inscricao.Controllers
 {
@@ -18,10 +8,12 @@ namespace EventoWeb.WS.Inscricao.Controllers
     public class InscricoesController : ControllerBase
     {
         private readonly AppInscOnlineEventoAcessoInscricoes mAppInscricao;
+        private readonly ConfiguracaoJwtBearer mConfiguracaoJwt;
 
-        public InscricoesController(IContexto contexto)
+        public InscricoesController(IContexto contexto, ConfiguracaoJwtBearer configuracaoJwt)
         {
             mAppInscricao = new AppInscOnlineEventoAcessoInscricoes(contexto);
+            mConfiguracaoJwt = configuracaoJwt;
         }
 
         [HttpGet("basicoPorId/{id}")]
@@ -36,35 +28,11 @@ namespace EventoWeb.WS.Inscricao.Controllers
             if (!mAppInscricao.ValidarCodigo(id, codigo))
                 return null;
             else
-            { 
-                ClaimsIdentity identidade = new ClaimsIdentity(
-                    new GenericIdentity(id.ToString() + codigo, "IdInscricao"),
-                    new[] {
-                        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                        new Claim(JwtRegisteredClaimNames.UniqueName, id.ToString() + codigo)
-                    }
-                );
-
-                using (var provider = new RSACryptoServiceProvider(2048))
+                return new DTOAcessoInscricao
                 {
-                    var handler = new JwtSecurityTokenHandler();
-                    var securityToken = handler.CreateToken(new SecurityTokenDescriptor
-                    {
-                        Issuer = "EventoWeb",
-                        Audience = "EventoWeb_Emissor",
-                        SigningCredentials = new SigningCredentials(new RsaSecurityKey(provider.ExportParameters(true)), SecurityAlgorithms.RsaSha256Signature),
-                        Subject = identidade,
-                        NotBefore = DateTime.Now,
-                        Expires = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59)
-                    });
-
-                    return new DTOAcessoInscricao
-                    {
-                        Autorizacao = handler.WriteToken(securityToken),
-                        IdInscricao = id
-                    };
-                }
-            }
+                    Autorizacao = mConfiguracaoJwt.GerarTokenJWTBearer(id.ToString() + codigo),
+                    IdInscricao = id
+                };            
         }
 
         [HttpPut("enviarCodigo/{identificacao}")]

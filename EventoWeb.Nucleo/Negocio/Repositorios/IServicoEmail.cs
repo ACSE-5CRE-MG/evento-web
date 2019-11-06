@@ -9,5 +9,6 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
     {
         void Enviar(Evento evento, ModeloMensagem mensagem, string emailDestino);
         void EnviarEmailCodigoInscricao(Inscricao inscricao, string codigo);
+        void EnviarEmailInscricaoRegistrada();
     }
 }

@@ -1,5 +1,7 @@
 ﻿using EventoWeb.Nucleo.Aplicacao;
 using EventoWeb.Nucleo.Persistencia;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
@@ -25,6 +27,42 @@ namespace EventoWeb.WS.Inscricao
             services.AddScoped<IContexto>((provider) => {
                 var factory = provider.GetService<ISessionFactory>();
                 return new Contexto(factory.OpenSession());
+            });
+
+            var configuracao = new ConfiguracaoJwtBearer();
+            services.AddSingleton(configuracao);
+
+            services.AddAuthentication(authOptions =>
+            {
+                authOptions.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                authOptions.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(bearerOptions =>
+            {
+                var paramsValidation = bearerOptions.TokenValidationParameters;
+                paramsValidation.IssuerSigningKey = configuracao.ChaveEmissor;
+                paramsValidation.ValidAudience = configuracao.Publico;
+                paramsValidation.ValidIssuer = configuracao.Emissor;
+
+                // Valida a assinatura de um token recebido
+                paramsValidation.ValidateIssuerSigningKey = true;
+
+                // Verifica se um token recebido ainda é válido
+                paramsValidation.ValidateLifetime = true;
+
+                // Tempo de tolerância para a expiração de um token (utilizado
+                // caso haja problemas de sincronismo de horário entre diferentes
+                // computadores envolvidos no processo de comunicação)
+                paramsValidation.ClockSkew = TimeSpan.Zero;
+            });
+
+            // Ativa o uso do token como forma de autorizar o acesso
+            // a recursos deste projeto
+            services.AddAuthorization(auth =>
+            {
+                auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                    .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                    .RequireAuthenticatedUser().Build());
             });
 
             services.AddSpaStaticFiles(configuration =>

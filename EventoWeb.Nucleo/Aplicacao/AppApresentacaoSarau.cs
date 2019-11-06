@@ -11,7 +11,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         public AppApresentacaoSarau(IContexto contexto)
             : base(contexto) { }
 
-        internal void IncluirOuAtualizarPorParticipanteSemExecucaoSegura(InscricaoParticipante inscricao, IEnumerable<DTOSarau> dtoApresentacoes)
+        internal void IncluirOuAtualizarPorParticipanteSemExecucaoSegura(Inscricao inscricao, IEnumerable<DTOSarau> dtoApresentacoes)
         {
             var repApresentacoes = Contexto.RepositorioApresentacoesSarau;
             var apresentacoes = repApresentacoes.ListarPorInscricao(inscricao.Id);

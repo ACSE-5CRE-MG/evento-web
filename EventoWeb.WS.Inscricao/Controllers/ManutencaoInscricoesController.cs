@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EventoWeb.Nucleo.Aplicacao;
-using Microsoft.AspNetCore.Http;
+﻿using EventoWeb.Nucleo.Aplicacao;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventoWeb.WS.Inscricao.Controllers
@@ -19,24 +15,28 @@ namespace EventoWeb.WS.Inscricao.Controllers
             mAppInscricao = new AppInscOnlineEventoManutencaoInscricoes(contexto);
         }
 
+        [Authorize(Policy = "Bearer")]
         [HttpGet("obterInscricao/{id}")]
         public DTOInscricaoCompleta ObterInscricao(int id)
         {
             return mAppInscricao.ObterInscricao(id);
         }
 
+        [Authorize(Policy = "Bearer")]
         [HttpPut("atualizarInscricao/{id}")]
         public void AtualizarInscricao(int id, [FromBody]DTOInscricaoAtualizacao dtoInscricao)
         {
             mAppInscricao.AtualizarInscricao(id, dtoInscricao);
         }
 
+        [Authorize(Policy = "Bearer")]
         [HttpGet("evento/{idEvento}/obterSarau/{codigo}")]
         public DTOSarau ObterSarau(int idEvento, string codigo) 
         {
             return mAppInscricao.ObterSarau(idEvento, codigo);
         }
 
+        [Authorize(Policy = "Bearer")]
         [HttpGet("evento/{idEvento}/obterCrianca/{codigo}")]
         public DTOCrianca ObterCrianca(int idEvento, string codigo)
         {

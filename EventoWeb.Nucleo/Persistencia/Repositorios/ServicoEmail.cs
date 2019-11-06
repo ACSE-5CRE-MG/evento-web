@@ -62,5 +62,9 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
             else
                 throw new Exception("Não há mensagens de email definida para o evento");
         }
+
+        public void EnviarEmailInscricaoRegistrada()
+        {
+        }
     }
 }
