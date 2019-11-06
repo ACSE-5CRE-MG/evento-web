@@ -61,7 +61,15 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual EnumTipoParticipante Tipo { get; set; }
 
         public virtual Pagamento Pagamento { get; set; }
-       
+        public virtual String InstituicoesEspiritasFrequenta { get; set; }
+        public virtual string TempoEspirita { get; set; }
+        public virtual string NomeResponsavelCentro { get; set; }
+        public virtual string TelefoneResponsavelCentro { get; set; }
+        public virtual string NomeResponsavelLegal { get; set; }
+        public virtual string TelefoneResponsavelLegal { get; set; }
+        public virtual string Observacoes { get; set; }
+
+
         public virtual void AdicionarAtividade(AAtividadeInscricao atividade)
         {
             if (atividade.Inscrito != this)

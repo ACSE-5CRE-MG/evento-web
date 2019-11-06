@@ -113,7 +113,7 @@ namespace EventoWeb.Nucleo.Aplicacao
 
     public class DTOSarau
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Tipo { get; set; }
         public int DuracaoMin { get; set; }
         public IList<DTOInscricaoSimplificada> Participantes { get; set; }
@@ -128,7 +128,7 @@ namespace EventoWeb.Nucleo.Aplicacao
 
     public class DTOCrianca
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public string Nome { get; set; }
         public DateTime DataNascimento { get; set; }
         public SexoPessoa Sexo { get; set; }
@@ -139,6 +139,11 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string AlimentosAlergia { get; set; }
         public string MedicamentosUsa { get; set; }
         public IList<DTOInscricaoSimplificada> Responsaveis { get; set; }
+        public string Cidade { get; internal set; }
+        public string Uf { get; internal set; }
+        public string Email { get; internal set; }
+        public string NomeCracha { get; internal set; }
+        public bool PrimeiroEncontro { get; internal set; }
     }
 
     public class DTOPagamento

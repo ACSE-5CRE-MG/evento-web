@@ -31,6 +31,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             m_Evento = evento;
             m_Situacao = EnumSituacaoInscricao.Incompleta;
             DataRecebimento = dataRecebimento;
+            ConfirmadoNoEvento = false;
+            DormeEvento = true;
 
             IsentarInscricao();
         }
@@ -53,15 +55,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual bool ConfirmadoNoEvento { get; set; }
 
         public virtual EnumSituacaoInscricao Situacao { get => m_Situacao; }
-        public virtual String InstituicoesEspiritasFrequenta { get; set; }
         public virtual String NomeCracha { get; set; }
         public virtual bool PrimeiroEncontro { get; set; }
-        public virtual string TempoEspirita { get; set; }
-        public virtual string NomeResponsavelCentro { get; set; }
-        public virtual string TelefoneResponsavelCentro { get; set; }
-        public virtual string NomeResponsavelLegal { get; set; }
-        public virtual string TelefoneResponsavelLegal { get; set; }
-        public virtual string Observacoes { get; set; }
+
 
         public virtual void PagarDepois(Titulo titulo)
         {

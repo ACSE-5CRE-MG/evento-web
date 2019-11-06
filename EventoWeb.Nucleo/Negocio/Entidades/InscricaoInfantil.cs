@@ -16,6 +16,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             : base(evento, pessoa, dataRecebimento)
         {
             AtribuirResponsaveis(inscricaoResponsavel, null);
+            TornarPendente();
         }
 
         public InscricaoInfantil(Pessoa pessoa, Evento evento, Inscricao inscricaoResponsavel,
@@ -101,7 +102,6 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         protected override void ValidarInscricaoParaSeTornarPendente()
         {
-            throw new NotImplementedException();
         }
     }
 }

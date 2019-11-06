@@ -41,137 +41,29 @@ namespace EventoWeb.Nucleo.Aplicacao
         {
             ExecutarSeguramente(() =>
             {
-                var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(id) ??
+                var repInscricoes = Contexto.RepositorioInscricoes;
+                var inscricao = repInscricoes.ObterInscricaoPeloId(id) ??
                     throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "Inscrição não encontrada");
 
                 if (inscricao is InscricaoInfantil)
                     throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "Não é possível atualizar inscrição infantil");
 
                 var inscParticipante = (InscricaoParticipante)inscricao;
-
-                inscParticipante.InstituicoesEspiritasFrequenta = dtoInscricao.CentroEspirita;
-                inscParticipante.NomeCracha = dtoInscricao.NomeCracha;
-                inscParticipante.NomeResponsavelCentro = dtoInscricao.NomeResponsavelCentro;
-                inscParticipante.NomeResponsavelLegal = dtoInscricao.NomeResponsavelLegal;
-                inscParticipante.Observacoes = dtoInscricao.Observacoes;
-                inscParticipante.Pessoa.AlergiaAlimentos = dtoInscricao.DadosPessoais.AlimentosAlergia;
-                inscParticipante.Pessoa.Celular = dtoInscricao.DadosPessoais.Celular;
-                inscParticipante.Pessoa.DataNascimento = dtoInscricao.DadosPessoais.DataNascimento;
-                inscParticipante.Pessoa.EhDiabetico = dtoInscricao.DadosPessoais.EhDiabetico;
-                inscParticipante.Pessoa.EhVegetariano = dtoInscricao.DadosPessoais.EhVegetariano;
-                inscParticipante.Pessoa.Email = dtoInscricao.DadosPessoais.Email;
-                inscParticipante.Pessoa.Endereco.Cidade = dtoInscricao.DadosPessoais.Cidade;
-                inscParticipante.Pessoa.Endereco.UF = dtoInscricao.DadosPessoais.Uf;
-                inscParticipante.Pessoa.MedicamentosUsados = dtoInscricao.DadosPessoais.MedicamentosUsa;
-                inscParticipante.Pessoa.Nome = dtoInscricao.DadosPessoais.Nome;
-                inscParticipante.Pessoa.Sexo = dtoInscricao.DadosPessoais.Sexo;
-                inscParticipante.Pessoa.TelefoneFixo = dtoInscricao.DadosPessoais.TelefoneFixo;
-                inscParticipante.Pessoa.TiposCarneNaoCome = dtoInscricao.DadosPessoais.CarnesNaoCome;
-                inscParticipante.Pessoa.UsaAdocanteDiariamente = dtoInscricao.DadosPessoais.UsaAdocanteDiariamente;
-                inscParticipante.PrimeiroEncontro = dtoInscricao.PrimeiroEncontro;
-                inscParticipante.TelefoneResponsavelCentro = dtoInscricao.TelefoneResponsavelCentro;
-                inscParticipante.TelefoneResponsavelLegal = dtoInscricao.TelefoneResponsavelLegal;
-                inscParticipante.TempoEspirita = dtoInscricao.TempoEspirita;
-                inscParticipante.Tipo = dtoInscricao.TipoInscricao;
-
-                inscParticipante.Pagamento = new Pagamento(
-                    dtoInscricao.Pagamento.Forma,
-                    dtoInscricao.Pagamento.ComprovantesBase64
-                        .Select(x => new ArquivoBinario(Convert.FromBase64String(x), EnumTipoArquivoBinario.ImagemJPEG))
-                        .ToList(),
-                    dtoInscricao.Pagamento.Observacao);
+                inscParticipante.AtribuirDados(dtoInscricao);                
 
                 inscParticipante.RemoverTodasAtividade();
-                if (dtoInscricao.Oficina != null)
-                {
-                    if (dtoInscricao.Oficina.Coordenador != null)
-                        inscParticipante.AdicionarAtividade(
-                            new AtividadeInscricaoOficinasCoordenacao(
-                                inscParticipante,
-                                Contexto.RepositorioOficinas.ObterPorId(dtoInscricao.Oficina.Coordenador.Id)));
-                    else if (dtoInscricao.Oficina.EscolhidasParticipante != null)
-                    {
-                        var oficinas = Contexto.RepositorioOficinas.ListarTodasPorEvento(inscParticipante.Evento.Id);
-                        var escolhas = new OficinasEscolhidas(inscParticipante.Evento);
-                        foreach (var dtoOficina in dtoInscricao.Oficina.EscolhidasParticipante)
-                        {
-                            if (escolhas.Oficinas.Count() == 0)
-                                escolhas.DefinirPrimeiraPosicao(oficinas.FirstOrDefault(x => x.Id == dtoOficina.Id));
-                            else
-                                escolhas.DefinirProximaPosicao(oficinas.FirstOrDefault(x => x.Id == dtoOficina.Id));
-                        }
-
-                        var gestaoOficinas = new GestaoOficinasEscolhidas(
-                            Contexto.RepositorioOficinas,
-                            escolhas);
-
-                        inscParticipante.AdicionarAtividade(
-                            new AtividadeInscricaoOficinas(
-                                inscParticipante,
-                                gestaoOficinas));
-                    }
-                    else
-                        throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "As informações para as oficinas estão incompletas");
-                }
-
-                if (dtoInscricao.SalasEstudo != null)
-                {
-                    if (dtoInscricao.SalasEstudo.Coordenador != null)
-                        inscParticipante.AdicionarAtividade(
-                            new AtividadeInscricaoSalaEstudoCoordenacao(
-                                inscParticipante,
-                                Contexto.RepositorioSalasEstudo.ObterPorId(dtoInscricao.SalasEstudo.Coordenador.Id)));
-                    else if (dtoInscricao.Oficina.EscolhidasParticipante != null)
-                    {
-                        var salas = Contexto.RepositorioSalasEstudo.ListarTodasPorEvento(inscParticipante.Evento.Id);
-                        var escolhas = new SalasEstudoEscolhidas(inscParticipante.Evento);
-                        foreach (var dtoOficina in dtoInscricao.SalasEstudo.EscolhidasParticipante)
-                        {
-                            if (escolhas.Salas.Count() == 0)
-                                escolhas.DefinirPrimeiraPosicao(salas.FirstOrDefault(x => x.Id == dtoOficina.Id));
-                            else
-                                escolhas.DefinirProximaPosicao(salas.FirstOrDefault(x => x.Id == dtoOficina.Id));
-                        }
-
-                        var gestaoOficinas = new GestaoSalasEstudoEscolhidas(
-                            Contexto.RepositorioSalasEstudo,
-                            escolhas);
-
-                        inscParticipante.AdicionarAtividade(
-                            new AtividadeInscricaoSalaEstudoOrdemEscolha(
-                                inscParticipante,
-                                gestaoOficinas));
-                    }
-                    else
-                        inscParticipante.AdicionarAtividade(
-                            new AtividadeInscricaoSalaEstudo(inscParticipante));
-                }
-
-                if (dtoInscricao.Departamento != null)
-                {
-                    Departamento departamento;
-                    bool ehCoordenador = false;
-                    if (dtoInscricao.Departamento.Coordenador != null)
-                    {
-                        departamento = Contexto.RepositorioDepartamentos.ObterPorId(dtoInscricao.Departamento.Coordenador.Id);
-                        ehCoordenador = true;
-                    }
-                    else
-                        departamento = Contexto.RepositorioDepartamentos.ObterPorId(dtoInscricao.Departamento.Participante.Id);
-
-                    if (departamento == null)
-                        throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "As informações para departamento estão incompletas");
-
-                    inscParticipante.AdicionarAtividade(
-                        new AtividadeInscricaoDepartamento(inscParticipante, departamento) { EhCoordenacao = ehCoordenador });
-                }
+                inscParticipante.AtribuirAtividadeOficina(dtoInscricao.Oficina, Contexto.RepositorioOficinas);
+                inscParticipante.AtribuirAtividadeSalaEstudo(dtoInscricao.SalasEstudo, Contexto.RepositorioSalasEstudo);
+                inscParticipante.AtribuirAtividadeDepartamento(dtoInscricao.Departamento, Contexto.RepositorioDepartamentos);
 
                 inscParticipante.TornarPendente();
-                Contexto.RepositorioInscricoes.Atualizar(inscParticipante);
+                repInscricoes.Atualizar(inscParticipante);
 
-                // Atualizar/incluir inscrições infantis
+                new AppInscricaoInfantil(Contexto)
+                    .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Criancas);
 
-                // Atualizar/Incluir Apresentação Sarau
+                new AppApresentacaoSarau(Contexto)
+                    .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Sarais);
             });
         }
 
