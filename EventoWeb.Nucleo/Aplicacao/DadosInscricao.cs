@@ -62,7 +62,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string AlimentosAlergia { get; set; }
         public string MedicamentosUsa { get; set; }
         public string Celular { get; internal set; }
-        public string TelefoneFixo { get; internal set; }
+        public string TelefoneFixo { get; set; }
     }
 
     public class DTOInscricaoAtualizacao

@@ -17,8 +17,8 @@ namespace EventoWeb.Nucleo.Aplicacao
             {
                 var evento = Contexto.RepositorioEventos.ObterEventoPeloId(id);
                 if (evento != null &&
-                   evento.PeriodoInscricaoOnLine.DataInicial >= DateTime.Now &&
-                   evento.PeriodoInscricaoOnLine.DataFinal <= DateTime.Now)
+                   evento.PeriodoInscricaoOnLine.DataInicial <= DateTime.Now &&
+                   evento.PeriodoInscricaoOnLine.DataFinal >= DateTime.Now)
                     dtoEvento = evento.ConverterMinimo();
             });
 

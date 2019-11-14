@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, pipe } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
 @Injectable()
@@ -91,13 +91,13 @@ export class ClienteWs {
 
             return blobComoTextoNotificacao
                 .pipe(switchMap(errMsgJsonComoTexto => {
-                    return Observable.throw(JSON.parse(errMsgJsonComoTexto));
+                    return throwError(JSON.parse(errMsgJsonComoTexto));
                 }));
         }
         else if (erro.error != null && !(erro.error instanceof Blob)) {
-            return Observable.throw(erro.error);
+            return throwError(erro.error);
         }
         else
-            return Observable.throw(erro.message || "Erro no Servidor");
+            return throwError(erro.message || "Erro no Servidor");
     }
 }

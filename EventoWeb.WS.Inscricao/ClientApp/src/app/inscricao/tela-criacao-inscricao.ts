@@ -43,7 +43,7 @@ export class TelaCriacaoInscricao implements OnInit {
 
                 if (dadosEvento != null) {
                   this.dadosTela.descricaoEvento = dadosEvento.Nome;
-                  this.dadosTela.dataMinimaNascimento = dadosEvento.PeriodoRealizacao.DataInicial;
+                  this.dadosTela.dataMinimaNascimento = new Date(dadosEvento.PeriodoRealizacao.DataInicial);
                   this.dadosTela.dataMinimaNascimento.setFullYear(this.dadosTela.dataMinimaNascimento.getFullYear() - dadosEvento.IdadeMinima);
                   this.dadosTela.idadeMinima = dadosEvento.IdadeMinima;
                   this.dadosTela.idEvento = idEvento;

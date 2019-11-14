@@ -1,16 +1,18 @@
 ﻿using EventoWeb.Nucleo.Aplicacao.ConversoresDTO;
 using EventoWeb.Nucleo.Negocio.Entidades;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
     public class AppInscOnlineEventoManutencaoInscricoes : AppBase
     {
-        public AppInscOnlineEventoManutencaoInscricoes(IContexto contexto)
-            : base(contexto) { }
+        private readonly AppEmailMsgPadrao m_AppEmail;
+
+        public AppInscOnlineEventoManutencaoInscricoes(IContexto contexto, AppEmailMsgPadrao appEmail)
+            : base(contexto)
+        {
+            m_AppEmail = appEmail;
+        }
 
         public DTOInscricaoCompleta ObterInscricao(int id)
         {
@@ -49,7 +51,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                     throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "Não é possível atualizar inscrição infantil");
 
                 var inscParticipante = (InscricaoParticipante)inscricao;
-                inscParticipante.AtribuirDados(dtoInscricao);                
+                inscParticipante.AtribuirDados(dtoInscricao);
 
                 inscParticipante.RemoverTodasAtividade();
                 inscParticipante.AtribuirAtividadeOficina(dtoInscricao.Oficina, Contexto.RepositorioOficinas);
@@ -66,14 +68,14 @@ namespace EventoWeb.Nucleo.Aplicacao
                 appApresentacaoSarau
                     .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Sarais);
 
-                foreach(var dtoCrianca in dtoInscricao.Criancas.Where(x=>x.Sarais?.Count > 0))
+                foreach (var dtoCrianca in dtoInscricao.Criancas.Where(x => x.Sarais?.Count > 0))
                 {
                     var crianca = repInscricoes.ObterInscricaoPeloId(dtoCrianca.Id.Value);
                     appApresentacaoSarau
                         .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(crianca, dtoCrianca.Sarais);
                 }
 
-                Contexto.ServicoEmail.EnviarEmailInscricaoRegistrada();
+                m_AppEmail.EnviarInscricaoRegistrada(inscParticipante.Evento.Id, inscParticipante);
             });
         }
 

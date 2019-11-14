@@ -1,4 +1,5 @@
 ﻿using EventoWeb.Nucleo.Aplicacao;
+using EventoWeb.Nucleo.Persistencia.Comunicacao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,8 @@ namespace EventoWeb.WS.Inscricao.Controllers
 
         public ManutencaoInscricoesController(IContexto contexto)
         {
-            mAppInscricao = new AppInscOnlineEventoManutencaoInscricoes(contexto);
+            mAppInscricao = new AppInscOnlineEventoManutencaoInscricoes(contexto,
+                new AppEmailMsgPadrao(contexto, new ServicoEmail(), new GeracaoMensagemEmailRazor()));
         }
 
         [Authorize(Policy = "Bearer")]

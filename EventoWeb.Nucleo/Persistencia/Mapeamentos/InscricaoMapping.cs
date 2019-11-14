@@ -71,6 +71,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Access(Accessor.NoSetter);
                 m.Column("ID_PESSOA");
                 m.NotNullable(true);
+                m.Cascade(Cascade.All | Cascade.DeleteOrphans);
             });
             Property(x => x.PrimeiroEncontro, m =>
             {

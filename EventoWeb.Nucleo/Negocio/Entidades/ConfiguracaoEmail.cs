@@ -1,5 +1,4 @@
 ﻿using EventoWeb.Nucleo.Negocio.Excecoes;
-using EventoWeb.Nucleo.Negocio.Servicos;
 using System;
 using System.Net.Mail;
 
@@ -157,18 +156,5 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual string Assunto { get => m_Assunto; }
         public virtual string Mensagem { get => m_Mensagem; }
-
-        public virtual ModeloMensagem GerarMensagemTraduzidaVariaveis(TraducaoVariaveisEmail tradutor)
-        {
-            string assunto = "";
-            string mensagem = "";
-            foreach (var variavel in tradutor.Variaveis)
-            {
-                assunto = this.Assunto.Replace(variavel.Variavel, tradutor.ObterValor(variavel.Variavel));
-                mensagem = this.Mensagem.Replace(variavel.Variavel, tradutor.ObterValor(variavel.Variavel));
-            }
-
-            return new ModeloMensagem(assunto, mensagem);
-        }
     }
 }

@@ -1,12 +1,18 @@
-﻿using EventoWeb.Nucleo.Negocio.Entidades;
+﻿using EventoWeb.Nucleo.Aplicacao.Comunicacao;
+using EventoWeb.Nucleo.Negocio.Entidades;
 using System;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
     public class AppInscOnlineEventoAcessoInscricoes : AppBase
     {
-        public AppInscOnlineEventoAcessoInscricoes(IContexto contexto)
-            : base(contexto) { }
+        private AppEmailMsgPadrao m_AppEmail;
+
+        public AppInscOnlineEventoAcessoInscricoes(IContexto contexto, AppEmailMsgPadrao appEmail)
+            : base(contexto) 
+        {
+            m_AppEmail = appEmail;
+        }
 
         public DTOBasicoInscricao ObterPorId(int id)
         {
@@ -57,7 +63,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                     int idInscricao = new AppInscOnLineCodigoInscricao().ExtrarId(identificacao);
                     var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(idInscricao);
 
-                    if (inscricao != null)
+                    if (inscricao != null && inscricao is InscricaoParticipante)
                     {
                         dto.IdInscricao = inscricao.Id;
                         if (inscricao.Evento.PeriodoInscricaoOnLine.DataFinal < DateTime.Now || inscricao.Evento.PeriodoInscricaoOnLine.DataInicial > DateTime.Now)
@@ -68,11 +74,10 @@ namespace EventoWeb.Nucleo.Aplicacao
                         if (dto.Resultado == EnumResultadoEnvio.InscricaoOK)
                         {
                             string codigo = Contexto.ServicoGeradorCodigoSeguro.GerarCodigoInscricao(inscricao);
-                            Contexto.ServicoEmail.EnviarEmailCodigoInscricao(inscricao, codigo);
+
+                            m_AppEmail.EnviarCodigoAcompanhamentoInscricao((InscricaoParticipante)inscricao, codigo);                            
                         }
                     }
-                    else
-                        dto.Resultado = EnumResultadoEnvio.InscricaoNaoEncontrada;
                 }
                 catch (Exception ex)
                 {
@@ -104,7 +109,8 @@ namespace EventoWeb.Nucleo.Aplicacao
                 Contexto.RepositorioInscricoes.Incluir(novaInscricao);
 
                 string codigo = Contexto.ServicoGeradorCodigoSeguro.GerarCodigoInscricao(novaInscricao);
-                Contexto.ServicoEmail.EnviarEmailCodigoInscricao(novaInscricao, codigo);
+
+                m_AppEmail.EnviarCodigoCriacaoInscricao(novaInscricao, codigo);
 
                 dto = new DTODadosConfirmacao
                 {

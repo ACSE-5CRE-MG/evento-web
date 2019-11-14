@@ -15,7 +15,7 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
                 PeriodoInscricao = evento.PeriodoInscricaoOnLine,
                 PeriodoRealizacao = evento.PeriodoRealizacaoEvento,
                 DataRegistro = evento.DataRegistro,
-                Logotipo = Convert.ToBase64String(evento.Logotipo.Arquivo),
+                Logotipo = evento.Logotipo != null ? Convert.ToBase64String(evento.Logotipo.Arquivo) : null,
                 Nome = evento.Nome,
                 TemDepartamentalizacao = evento.TemDepartamentalizacao,
                 TemDormitorios = evento.TemDormitorios,
@@ -35,9 +35,9 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
                 Id = evento.Id,
                 PeriodoInscricao = evento.PeriodoInscricaoOnLine,
                 Nome = evento.Nome,
-                Logotipo = Convert.ToBase64String(evento.Logotipo.Arquivo),
+                Logotipo = evento.Logotipo != null ? Convert.ToBase64String(evento.Logotipo.Arquivo) : null,
                 IdadeMinima = evento.IdadeMinimaInscricaoAdulto,
-                PeriodoRealizacao = evento.PeriodoRealizacaoEvento                
+                PeriodoRealizacao = evento.PeriodoRealizacaoEvento
             };
         }
     }
