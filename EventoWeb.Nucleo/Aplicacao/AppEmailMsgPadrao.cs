@@ -22,7 +22,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             m_ServicoEmail.Configuracao = ObterCnfEmail(inscricao.Evento.Id);
             m_ServicoEmail.Enviar(new Email
             {
-                Assunto = mensagem.MensagemInscricaoRegistrada.Assunto,
+                Assunto = mensagem.MensagemInscricaoCodigoAcessoCriacao.Assunto,
                 Conteudo = m_GeradorMsgEmail.GerarMensagemModelo<EmailCodigoInscricao>(mensagem.MensagemInscricaoCodigoAcessoCriacao.Mensagem, 
                     new EmailCodigoInscricao
                     {
@@ -33,7 +33,8 @@ namespace EventoWeb.Nucleo.Aplicacao
                         UF = inscricao.Pessoa.Endereco.UF
                     }
                 ),
-                Endereco = inscricao.Pessoa.Email
+                Endereco = inscricao.Pessoa.Email,
+                EnderecoResposta = m_ServicoEmail.Configuracao.EnderecoEmail
             });
         }
 

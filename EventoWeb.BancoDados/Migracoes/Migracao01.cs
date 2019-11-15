@@ -28,7 +28,7 @@ namespace EventoWeb.BancoDados.Migracoes
             CriarTabelaInscricao();
             CriarTabelaAtividadesInscricao();
             CriarTabelaApresentacaoSarau();
-
+            CriarTabelaCodigoAcessoInscricao();
         }        
 
         private void CriarTabelaArquivoBinario()
@@ -130,7 +130,9 @@ namespace EventoWeb.BancoDados.Migracoes
                     .WithColumn("ASSUNTO_INSC_REGISTRADA").AsString(150).Nullable()
                     .WithColumn("MENSAGEM_INSC_REGISTRADA").AsString(Int32.MaxValue).Nullable()
                     .WithColumn("ASSUNTO_INSC_COD_ACESSO_ACOMP").AsString(150).Nullable()
-                    .WithColumn("MENSAGEM_INSC_COD_ACESSO_ACOMP").AsString(Int32.MaxValue).Nullable();
+                    .WithColumn("MENSAGEM_INSC_COD_ACESSO_ACOMP").AsString(Int32.MaxValue).Nullable()
+                    .WithColumn("ASSUNTO_INSC_COD_ACESSO_CRI").AsString(150).Nullable()
+                    .WithColumn("MENSAGEM_INSC_COD_ACESSO_CRI").AsString(Int32.MaxValue).Nullable();
         }
 
         private void CriarTabelaPessoa()
@@ -243,6 +245,17 @@ namespace EventoWeb.BancoDados.Migracoes
                       .ForeignKey("FK_ASI_APRESENTACAO", "APRESENTACOES_SARAU", "ID_APRESENTACAO_SARAU").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
                    .WithColumn("ID_INSCRICAO").AsInt32().PrimaryKey()
                       .ForeignKey("FK_ASI_INSCRICAO", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade);
+        }
+
+        private void CriarTabelaCodigoAcessoInscricao()
+        {
+            Create
+                .Table("CODIGOS_ACESSO_INSCRICAO")
+                    .WithColumn("ID_CODIGO_ACESSO_INS").AsInt32().PrimaryKey().Identity()
+                    .WithColumn("CODIGO").AsString(100).NotNullable()
+                    .WithColumn("DATA_HORA_VALIDADE").AsDateTime().NotNullable()
+                    .WithColumn("ID_INSCRICAO").AsInt32().NotNullable()
+                        .ForeignKey("FK_CAI_INSCRICAO", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade);
         }
     }
 }

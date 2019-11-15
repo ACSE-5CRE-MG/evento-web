@@ -10,7 +10,7 @@ namespace EventoWeb.Nucleo.Persistencia.Comunicacao
     {
         public override void Enviar(Email email)
         {
-            if (Configuracao != null)
+            if (Configuracao == null)
                 throw new ExcecaoNegocio("ServicoEmail", "Configuração de email precisa ser informada.");
 
             using (SmtpClient clienteSmtp = new SmtpClient(Configuracao.ServidorEmail, Configuracao.PortaServidor.Value))
