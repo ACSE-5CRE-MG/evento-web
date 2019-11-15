@@ -57,7 +57,9 @@ namespace EventoWeb.BancoDados.Migracoes
                 .WithColumn("TEM_DORMITORIOS").AsBoolean().NotNullable()
                 .WithColumn("PUBLICO_EVANGELIZACAO").AsInt16().Nullable()
                 .WithColumn("TEMPO_SARAU_MIN").AsInt32().Nullable()
-                .WithColumn("IDADE_MINIMA_INSC_ADULTO").AsInt32().NotNullable();
+                .WithColumn("IDADE_MINIMA_INSC_ADULTO").AsInt32().NotNullable()
+                .WithColumn("VALOR_INSC_ADULTO").AsDecimal(6, 2).NotNullable()
+                .WithColumn("VALOR_INSC_CRIANCA").AsDecimal(6, 2).NotNullable();
         }
 
         private void CriarTabelaUsuarios()

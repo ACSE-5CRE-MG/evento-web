@@ -23,8 +23,10 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
                 ConfiguracaoSalaEstudo = evento.ConfiguracaoSalaEstudo,
                 ConfiguracaoEvangelizacao = evento.ConfiguracaoEvangelizacao,
                 ConfiguracaoSarau = evento.ConfiguracaoSarau,
-                IdadeMinimaInscricaoAdulto = evento.IdadeMinimaInscricaoAdulto,
-                PodeAlterar = true
+                IdadeMinima = evento.IdadeMinimaInscricaoAdulto,
+                PodeAlterar = true,
+                ValorInscricaoAdulto = evento.ValorInscricaoAdulto,
+                ValorInscricaoCrianca = evento.ValorInscricaoCrianca
             };
         }
 

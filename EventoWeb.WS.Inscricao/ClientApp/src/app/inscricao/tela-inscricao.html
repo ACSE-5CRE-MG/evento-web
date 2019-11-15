@@ -47,6 +47,11 @@
             </dx-text-box>
           </div>
           <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Nome Crachá:</label>
+            <dx-text-box [(value)]="dadosTela.nomeCracha" fxFlex="100">
+            </dx-text-box>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
               <label class="label_campos" fxFlex="106px">Nascimento:</label>
               <dx-date-box [(value)]="dadosTela.dataNascimento" type="date">
@@ -60,7 +65,7 @@
           </div>
           <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
             <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
-              <label class="label_campos" fxFlex.xs="106px">Sexo:</label>
+              <label class="label_campos" fxFlex="106px">Sexo:</label>
               <dx-radio-group [items]="coordenacao.Sexos"
                               [(value)]="this.dadosTela.sexoEscolhido"
                               layout="horizontal">
@@ -105,6 +110,20 @@
                 <dxi-validation-rule type="required" message="Você não informou a UF."></dxi-validation-rule>
               </dx-validator>
             </dx-select-box>
+          </div>
+          <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
+            <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+              <label class="label_campos" fxFlex="106px">Celular:</label>
+              <dx-text-box [(value)]="dadosTela.celular" fxFlex="60">
+              </dx-text-box>
+            </div>
+          </div>
+          <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
+            <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+              <label class="label_campos" fxFlex="106px">Tel. Fixo:</label>
+              <dx-text-box [(value)]="dadosTela.telefoneFixo" fxFlex="60">
+              </dx-text-box>
+            </div>
           </div>
         </div>
       </dx-validation-group>
@@ -192,27 +211,27 @@
       </dx-validation-group>
     </div>
     <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100"
-         *ngIf="inscricao.Evento.TemOficinas || inscricao.Evento.CnfSalaEstudo != null || inscricao.Evento.TemDepartamentos || inscricao.Evento.TemSarau">
+         *ngIf="inscricao.Evento.TemOficinas || inscricao.Evento.ConfiguracaoSalaEstudo != null || inscricao.Evento.TemDepartamentalizacao || inscricao.Evento.TemSarau">
       <mat-card-title>Participação em Atividades</mat-card-title>
       <mat-divider></mat-divider>
       <mat-tab-group>
         <mat-tab label="Oficinas" *ngIf="inscricao.Evento.TemOficinas">
           <comp-oficinas [oficinas]="inscricao.Evento.Oficinas" [forma]="dadosTela.formaEscolha" [(escolhido)]="dadosTela.oficinasEscolhidas"></comp-oficinas>
         </mat-tab>
-        <mat-tab label="Estudo" *ngIf="inscricao.Evento.CnfSalaEstudo != null">
-          <comp-salas [salas]="inscricao.Evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="inscricao.Evento.CnfSalaEstudo" [(escolhido)]="dadosTela.salasEscolhidas"></comp-salas>
+        <mat-tab label="Estudo" *ngIf="inscricao.Evento.ConfiguracaoSalaEstudo != null">
+          <comp-salas [salas]="inscricao.Evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="inscricao.Evento.ConfiguracaoSalaEstudo.ModeloDivisao" [(escolhido)]="dadosTela.salasEscolhidas"></comp-salas>
         </mat-tab>
-        <mat-tab label="Departamentos" *ngIf="inscricao.Evento.TemDepartamentos">
+        <mat-tab label="Departamentos" *ngIf="inscricao.Evento.TemDepartamentalizacao">
           <comp-departamentos [departamentos]="inscricao.Evento.Departamentos" [forma]="dadosTela.formaEscolha" [(valor)]="dadosTela.departamentoEscolhido"></comp-departamentos>
         </mat-tab>
-        <mat-tab label="Sarau" *ngIf="inscricao.Evento.TemSarau" style="padding: 5px">
+        <mat-tab label="Sarau" *ngIf="inscricao.Evento.ConfiguracaoSarau != null" style="padding: 5px">
           <comp-sarau [(valor)]="dadosTela.sarais" [inscrito]="dadosTela.inscricaoSimples"></comp-sarau>
         </mat-tab>
       </mat-tab-group>
     </div>
     <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100"
-         *ngIf="inscricao.Evento.CnfEvangelizacao != null &&
-                (inscricao.Evento.CnfEvangelizacao == 0 ||(inscricao.Evento.CnfEvangelizacao == 1 && dadosTela.tipoInscricao == this.coordenacao.TiposInscricao[1]))">
+         *ngIf="inscricao.Evento.ConfiguracaoEvangelizacao != null &&
+                (inscricao.Evento.ConfiguracaoEvangelizacao.Publico == 0 ||(inscricao.Evento.ConfiguracaoEvangelizacao.Publico == 1 && dadosTela.tipoInscricao == this.coordenacao.TiposInscricao[1]))">
       <mat-card-title>Crianças que você será responsável</mat-card-title>
       <mat-divider></mat-divider>
       <comp-criancas [(valor)]="dadosTela.criancas" [inscrito]="inscricao"></comp-criancas>
@@ -224,7 +243,7 @@
         <mat-tab label="Pagamento" style="padding: 5px">
           <comp-pagamento [(valor)]="dadosTela.pagamento"
                           [valorInscricao]="inscricao.Evento.ValorInscricaoAdulto"
-                          [valorInscCrianca]="inscricao.Evento.ValorInscricaoAdulto"
+                          [valorInscCrianca]="inscricao.Evento.ValorInscricaoCrianca"
                           [totalCriancas]="contarCriancasPrimeiroResponsavel()"></comp-pagamento>
         </mat-tab>
         <mat-tab label="Observações" style="padding: 5px">

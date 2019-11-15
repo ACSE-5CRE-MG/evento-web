@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ViewChild, Inject, Injectable } from '@angular/core';
-import { DTOInscricaoSimplificada, DTOCrianca, EnumSexo, DTOInscricaoCompleta } from '../objetos';
+import { DTOInscricaoSimplificada, DTOCrianca, EnumSexo, DTOInscricaoCompleta, DTOSarau } from '../objetos';
 import { CoordenacaoCentral } from '../../componentes/central/coordenacao-central';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { DxValidationGroupComponent } from 'devextreme-angular';
@@ -217,6 +217,12 @@ class DadosTela {
     carnesNaoCome: string;
     alimentosAlergia: string;
     medicamentosUsa: string;
+    cidade: string;
+    uf: string;
+    email: string;
+    nomeCracha: string;
+    primeiroEncontro: string;
+    sarais: DTOSarau[];
 }
 
 @Injectable()

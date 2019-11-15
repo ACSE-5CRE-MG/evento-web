@@ -17,6 +17,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         private ConfiguracaoSarau m_ConfiguracaoSarau;
         private ConfiguracaoSalaEstudo m_ConfiguracaoSalaEstudo;
         private int m_IdadeMinimaInscricaoAdulto;
+        private decimal m_ValorInscricaoAdulto;
+        private decimal m_ValorInscricaoCrianca;
 
         protected Evento()
         {
@@ -104,6 +106,28 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 if (value <= 0)
                     throw new ExcecaoNegocioAtributo("Evento", "IdadeMinimaInscricaoAdulto", "IdadeMinimaInscricaoAdulto Deve ser maior que zero.");
                 m_IdadeMinimaInscricaoAdulto = value;
+            }
+        }
+
+        public virtual decimal ValorInscricaoAdulto 
+        {
+            get => m_ValorInscricaoAdulto;
+            set
+            {
+                if (value < 0)
+                    throw new ExcecaoNegocioAtributo("Evento", "ValorInscricaoAdulto", "Valor da inscrição Adulto deve ser maior ou igual a zero.");
+                m_ValorInscricaoAdulto = value;
+            }
+        }
+
+        public virtual decimal ValorInscricaoCrianca
+        {
+            get => m_ValorInscricaoCrianca;
+            set
+            {
+                if (value < 0)
+                    throw new ExcecaoNegocioAtributo("Evento", "ValorInscricaoCrianca", "Valor da inscrição Criança deve ser maior ou igual a zero.");
+                m_ValorInscricaoCrianca = value;
             }
         }
     }

@@ -46,7 +46,7 @@ export class TelaInscricao implements OnInit {
                                 if (dadosInscricao != null) {
                                     this.inscricao = dadosInscricao;
                                     this.dadosTela.nome = this.inscricao.DadosPessoais.Nome;
-                                    this.dadosTela.dataNascimento = this.inscricao.DadosPessoais.DataNascimento;
+                                    this.dadosTela.dataNascimento = new Date(this.inscricao.DadosPessoais.DataNascimento);
                                     this.dadosTela.email = this.inscricao.DadosPessoais.Email;
                                     this.dadosTela.descricaoEvento = this.inscricao.Evento.Nome;
                                     this.dadosTela.idadeMinima = this.inscricao.Evento.IdadeMinima;
@@ -67,6 +67,9 @@ export class TelaInscricao implements OnInit {
                                     this.dadosTela.telefoneResponsavelCentro = this.inscricao.TelefoneResponsavelCentro;
                                     this.dadosTela.nomeResponsavelLegal = this.inscricao.NomeResponsavelLegal;
                                     this.dadosTela.telefoneResponsavelLegal = this.inscricao.TelefoneResponsavelLegal;
+                                    this.dadosTela.telefoneFixo = this.inscricao.DadosPessoais.TelefoneFixo;
+                                    this.dadosTela.celular = this.inscricao.DadosPessoais.Celular;
+                                    this.dadosTela.nomeCracha = this.inscricao.NomeCracha;
 
                                     this.dadosTela.dataMinimaNascimento = new Date(this.inscricao.Evento.PeriodoRealizacao.DataInicial);
                                     this.dadosTela.dataMinimaNascimento.setFullYear(this.dadosTela.dataMinimaNascimento.getFullYear() - this.inscricao.Evento.IdadeMinima);
@@ -189,10 +192,13 @@ export class TelaInscricao implements OnInit {
             atualizacao.DadosPessoais.EhDiabetico = this.dadosTela.ehDiabetico;
             atualizacao.DadosPessoais.EhVegetariano = this.dadosTela.ehVegetariano;
             atualizacao.DadosPessoais.MedicamentosUsa = this.dadosTela.medicamentosUsa;
+            atualizacao.DadosPessoais.TelefoneFixo = this.dadosTela.telefoneFixo;
+            atualizacao.DadosPessoais.Celular = this.dadosTela.celular;
             atualizacao.PrimeiroEncontro = this.dadosTela.primeiroEncontro;
             atualizacao.TipoInscricao = (this.coordenacao.TiposInscricao[0] == this.dadosTela.tipoInscricao ? EnumTipoInscricao.Participante : EnumTipoInscricao.ParticipanteTrabalhador);
             atualizacao.DadosPessoais.Uf = this.dadosTela.uf;
             atualizacao.DadosPessoais.UsaAdocanteDiariamente = this.dadosTela.usaAdocanteDiariamente;
+            atualizacao.NomeCracha = this.dadosTela.nomeCracha;
 
             atualizacao.Sarais = this.dadosTela.sarais;
             atualizacao.Criancas = this.dadosTela.criancas;
@@ -239,6 +245,9 @@ class DadosTela {
     telefoneResponsavelLegal: string;
     dataInicioEvento: Date;
     observacoes: string;
+    celular: string;
+    telefoneFixo: string;
+    nomeCracha: string;
 
     formaEscolha: EnumApresentacaoAtividades;
     oficinasEscolhidas: DTOInscricaoOficina;

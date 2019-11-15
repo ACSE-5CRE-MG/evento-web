@@ -1,6 +1,6 @@
 import { DTOOficina, DTOEventoCompleto, DTOSalaEstudo, DTODepartamento } from '../principal/objetos';
 
-export enum EnumSexo { Feminino, Masculino }
+export enum EnumSexo { Masculino, Feminino }
 export enum EnumTipoInscricao { Participante, ParticipanteTrabalhador }
 export enum EnumApresentacaoAtividades {
     ApenasParticipante, PodeEscolher
@@ -45,7 +45,7 @@ export class DTOInscricaoDadosPessoais {
     Nome: string;
     DataNascimento: Date;
     Email: string;
-    Sexo: EnumSexo;    
+    Sexo: EnumSexo;
     Cidade: string;
     Uf: string;
     EhVegetariano: boolean;
@@ -53,7 +53,9 @@ export class DTOInscricaoDadosPessoais {
     EhDiabetico: boolean;
     CarnesNaoCome: string;
     AlimentosAlergia: string;
-    MedicamentosUsa: string;    
+    MedicamentosUsa: string;
+    Celular: string;
+    TelefoneFixo: string;
 }
 
 export class DTOInscricaoAtualizacao {
@@ -124,6 +126,12 @@ export class DTOCrianca {
     AlimentosAlergia: string;
     MedicamentosUsa: string;
     Responsaveis: DTOInscricaoSimplificada[];
+    Cidade: string;
+    Uf: string;
+    Email: string;
+    NomeCracha: string;
+    PrimeiroEncontro: string;
+    Sarais: DTOSarau[];
 }
 
 export enum EnumPagamento { Comprovante, ComprovanteOutraInscricao, Outro }

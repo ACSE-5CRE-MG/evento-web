@@ -120,6 +120,20 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                  m.NotNullable(true);
                  m.Column("IDADE_MINIMA_INSC_ADULTO");
              });
+
+            this.Property(x => x.ValorInscricaoAdulto, m =>
+            {
+                m.Access(Accessor.NoSetter);
+                m.NotNullable(true);
+                m.Column("VALOR_INSC_ADULTO");
+            });
+
+            this.Property(x => x.ValorInscricaoCrianca, m =>
+            {
+                m.Access(Accessor.NoSetter);
+                m.NotNullable(true);
+                m.Column("VALOR_INSC_CRIANCA");
+            });
         }
     }
 }

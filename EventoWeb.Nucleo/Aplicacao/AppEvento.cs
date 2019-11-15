@@ -38,7 +38,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         public DTOId Incluir(DTOEvento dto)
         {
             Evento evento = new Evento(dto.Nome, dto.PeriodoInscricao, dto.PeriodoRealizacao, 
-                dto.IdadeMinimaInscricaoAdulto)
+                dto.IdadeMinima)
             {
                 Logotipo = new ArquivoBinario(Convert.FromBase64String(dto.Logotipo), EnumTipoArquivoBinario.ImagemJPEG),
                 TemDepartamentalizacao = dto.TemDepartamentalizacao,

@@ -18,7 +18,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         public ConfiguracaoEvangelizacao ConfiguracaoEvangelizacao { get; set; }
         public ConfiguracaoSalaEstudo ConfiguracaoSalaEstudo { get; set; }
         public ConfiguracaoSarau ConfiguracaoSarau { get; set; }
-        public int IdadeMinimaInscricaoAdulto { get; set; }
+        public int IdadeMinima { get; set; }
     }
 
     public class DTOEventoCompleto : DTOEvento
@@ -26,6 +26,8 @@ namespace EventoWeb.Nucleo.Aplicacao
         public int Id { get; set; }
         public DateTime DataRegistro { get; set; }
         public Boolean PodeAlterar { get; set; }
+        public decimal ValorInscricaoAdulto { get; internal set; }
+        public decimal ValorInscricaoCrianca { get; internal set; }
     }
 
     public class DTOEventoMinimo
