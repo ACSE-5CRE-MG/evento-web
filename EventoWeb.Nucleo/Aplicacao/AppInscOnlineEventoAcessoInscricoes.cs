@@ -60,7 +60,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             {
                 try
                 {
-                    int idInscricao = new AppInscOnLineCodigoInscricao().ExtrarId(identificacao);
+                    int idInscricao = new AppInscOnLineIdentificacaoInscricao().ExtrarId(identificacao);
                     var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(idInscricao);
 
                     if (inscricao != null && inscricao is InscricaoParticipante)

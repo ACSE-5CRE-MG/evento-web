@@ -30,11 +30,11 @@ namespace EventoWeb.Nucleo.Aplicacao
                         Evento = inscricao.Evento.Nome,
                         NomePessoa = inscricao.Pessoa.Nome,
                         Cidade = inscricao.Pessoa.Endereco.Cidade,
+                        Identificacao = new AppInscOnLineIdentificacaoInscricao().GerarCodigo(inscricao.Id),
                         UF = inscricao.Pessoa.Endereco.UF
                     }
                 ),
-                Endereco = inscricao.Pessoa.Email,
-                EnderecoResposta = m_ServicoEmail.Configuracao.EnderecoEmail
+                Endereco = inscricao.Pessoa.Email
             });
         }
 
@@ -44,7 +44,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             m_ServicoEmail.Configuracao = ObterCnfEmail(inscricao.Evento.Id);
             m_ServicoEmail.Enviar(new Email
             {
-                Assunto = mensagem.MensagemInscricaoRegistrada.Assunto,
+                Assunto = mensagem.MensagemInscricaoCodigoAcessoAcompanhamento.Assunto,
                 Conteudo = m_GeradorMsgEmail.GerarMensagemModelo<EmailCodigoInscricao>(mensagem.MensagemInscricaoCodigoAcessoAcompanhamento.Mensagem,
                     new EmailCodigoInscricao
                     {
@@ -52,6 +52,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                         Evento = inscricao.Evento.Nome,
                         NomePessoa = inscricao.Pessoa.Nome,
                         Cidade = inscricao.Pessoa.Endereco.Cidade,
+                        Identificacao = new AppInscOnLineIdentificacaoInscricao().GerarCodigo(inscricao.Id),
                         UF = inscricao.Pessoa.Endereco.UF
                     }
                 ),
@@ -97,6 +98,7 @@ namespace EventoWeb.Nucleo.Aplicacao
     public class EmailCodigoInscricao
     {
         public string Evento { get; set; }
+        public string Identificacao { get; set; }
         public string NomePessoa { get; set; }
         public string Codigo { get; set; }
         public string Cidade { get; set; }

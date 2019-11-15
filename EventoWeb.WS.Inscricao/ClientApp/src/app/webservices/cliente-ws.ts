@@ -7,7 +7,7 @@ import { catchError, switchMap } from 'rxjs/operators';
 export class ClienteWs {
 
     public URLWs: string;
-    //public Autenticacao: DTWAutenticacao;
+    public TokenAutorizacao: string;
 
     constructor(public http: HttpClient) { }
 
@@ -69,8 +69,8 @@ export class ClienteWs {
         opRequisicao = opRequisicao.append('Content-Type', 'application/json');
         opRequisicao = opRequisicao.append('Accept', 'application/json');
 
-        //if (this.Autenticacao != null)
-        //  opRequisicao = opRequisicao.append('Authorization', 'Bearer ' + this.Autenticacao.TokenAutenticacao);
+        if (this.TokenAutorizacao != null && this.TokenAutorizacao.length > 0)
+            opRequisicao = opRequisicao.append('Authorization', 'Bearer ' + this.TokenAutorizacao);
 
         return opRequisicao;
     }

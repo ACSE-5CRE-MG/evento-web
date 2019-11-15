@@ -24,7 +24,7 @@ namespace EventoWeb.Nucleo.Persistencia.Comunicacao
                     IsBodyHtml = true,
                     Subject = email.Assunto,                    
                 };
-                mensagemEmail.ReplyToList.Add(new MailAddress(email.EnderecoResposta));
+                mensagemEmail.ReplyToList.Add(new MailAddress(Configuracao.EnderecoEmail));
 
                 clienteSmtp.Send(mensagemEmail);
             }

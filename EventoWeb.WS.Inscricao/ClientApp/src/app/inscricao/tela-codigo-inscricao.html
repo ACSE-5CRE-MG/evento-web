@@ -33,7 +33,7 @@
         <div>
           <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
             <label class="label_campos" fxFlex="106px">Código:</label>
-            <dx-text-box [(value)]="codigo" fxFlex="200px">
+            <dx-text-box [(value)]="dadosTela.codigo" fxFlex="200px">
               <dx-validator>
                 <dxi-validation-rule type="required" message="Você não informou o código."></dxi-validation-rule>
               </dx-validator>

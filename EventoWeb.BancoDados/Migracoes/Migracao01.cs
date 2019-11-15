@@ -110,12 +110,12 @@ namespace EventoWeb.BancoDados.Migracoes
                     .WithColumn("ID_CONFIGURACAO_EMAIL").AsInt32().PrimaryKey().Identity()
                     .WithColumn("ID_EVENTO").AsInt32().NotNullable()
                         .ForeignKey("FK_EVENTO_CNFEMAIL", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
-                    .WithColumn("ENDERECO_EMAIL").AsString(150).Nullable()
-                    .WithColumn("USUARIO_EMAIL").AsString(100).Nullable()
-                    .WithColumn("SENHA_EMAIL").AsString(100).Nullable()
-                    .WithColumn("SERVIDOR_EMAIL").AsString(50).Nullable()
-                    .WithColumn("PORTA_SERVIDOR").AsInt32().Nullable()
-                    .WithColumn("TIPO_SEGURANCA").AsInt16().Nullable();
+                    .WithColumn("ENDERECO_EMAIL").AsString(150).NotNullable()
+                    .WithColumn("USUARIO_EMAIL").AsString(100).NotNullable()
+                    .WithColumn("SENHA_EMAIL").AsString(100).NotNullable()
+                    .WithColumn("SERVIDOR_EMAIL").AsString(50).NotNullable()
+                    .WithColumn("PORTA_SERVIDOR").AsInt32().NotNullable()
+                    .WithColumn("TIPO_SEGURANCA").AsInt16().NotNullable();
         }
 
         private void CriarTabelaMensagemEmailPadrao()

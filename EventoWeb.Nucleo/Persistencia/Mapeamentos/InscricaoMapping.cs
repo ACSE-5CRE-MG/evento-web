@@ -123,7 +123,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                   m.Inverse(true);
                   m.Lazy(CollectionLazy.Lazy);
                   m.Access(Accessor.NoSetter);
-                  m.Key(k => k.Column("ID_ATIVIDADE"));
+                  m.Key(k => k.Column("ID_ATIVIDADE_INSCRICAO"));
               }, c => c.OneToMany(o => o.Class(typeof(AAtividadeInscricao))));
 
             Property(x => x.Tipo, m =>

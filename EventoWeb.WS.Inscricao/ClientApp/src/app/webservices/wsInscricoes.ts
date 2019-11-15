@@ -26,6 +26,6 @@ export class WsInscricoes {
 
     public validarAcessoInscricao(IdInscricao: number, codigo: string): Observable<DTOAcessoInscricao> {
         this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'inscricoes/validarCodigo/' + IdInscricao.toString();
-        return this.clienteWs.executarPut("", codigo);
+        return this.clienteWs.executarPut("", "'" + codigo + "'");
     }
 }

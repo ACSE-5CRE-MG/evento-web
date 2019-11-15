@@ -32,7 +32,7 @@ export class ComponenteSarau {
 
                         let dlg = this.coordenacao.Alertas.alertarProcessamento("Buscando sarau pelo código...");
 
-                        this.wsManInscricoes.obterSarau(this.inscrito.IdEvento, codigo)
+                        this.wsManInscricoes.obterSarau(this.inscrito.IdEvento, this.inscrito.Id, codigo)
                             .subscribe(
                                 (sarau) => {
                                     sarau.Participantes.push(this.inscrito);

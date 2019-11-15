@@ -31,7 +31,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                     dto.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(inscParticipante.Id)
                         .Select(x => x.Converter()).ToList();
 
-                    var inscInfantis = Contexto.RepositorioInscricoes.ListarInscricoesInfantisDoResponsavel(inscParticipante)
+                    dto.Criancas = Contexto.RepositorioInscricoes.ListarInscricoesInfantisDoResponsavel(inscParticipante)
                         .Select(x => x.Converter())
                         .ToList();
                 }
@@ -84,7 +84,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             DTOSarau dto = null;
             ExecutarSeguramente(() =>
             {
-                var idSarau = new AppInscOnLineCodigoSarau().ExtrarId(codigo);
+                var idSarau = new AppInscOnLineIdentificacaoSarau().ExtrarId(codigo);
                 var sarau = Contexto.RepositorioApresentacoesSarau.ObterPorId(idEvento, idSarau);
                 dto = sarau?.Converter();
             });
@@ -96,7 +96,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             DTOCrianca dto = null;
             ExecutarSeguramente(() =>
             {
-                var idInscricao = new AppInscOnLineCodigoInfantil().ExtrarId(codigo);
+                var idInscricao = new AppInscOnLineIdentificacaoInfantil().ExtrarId(codigo);
                 var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(idInscricao);
                 if (inscricao != null)
                 {

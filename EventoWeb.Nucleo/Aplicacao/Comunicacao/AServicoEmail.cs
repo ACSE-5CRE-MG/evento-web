@@ -9,7 +9,6 @@ namespace EventoWeb.Nucleo.Aplicacao.Comunicacao
     public class Email
     {
         public string Endereco { get; set; }
-        public string EnderecoResposta { get; set; }
         public string Assunto { get; set; }
         public string Conteudo { get; set; }
     }

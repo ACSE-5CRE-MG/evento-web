@@ -5,10 +5,10 @@ using System.Text;
 namespace EventoWeb.Nucleo.Aplicacao
 {
 
-    public abstract class AppInscOnlineCodigoIdentificacao
+    public abstract class AppInscOnlineIdentificacao
     {
 
-        public AppInscOnlineCodigoIdentificacao(string prefixo, int tamanhoId)
+        public AppInscOnlineIdentificacao(string prefixo, int tamanhoId)
         {
             Prefixo = prefixo;
             TamanhoPrefixo = prefixo.Length;
@@ -24,7 +24,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         {
             if (codigo.Length == TamanhoCodigo &&
                 codigo.Substring(0, TamanhoPrefixo) == Prefixo &&
-                int.TryParse(codigo.Substring(TamanhoPrefixo + 1, TamanhoId), out int idInscricao))
+                int.TryParse(codigo.Substring(TamanhoPrefixo, TamanhoId), out int idInscricao))
                 return idInscricao;
             else
                 throw new ExcecaoAplicacao("AppInscOnlineCodigoIdentificacao", "Código Inválido");
@@ -36,23 +36,23 @@ namespace EventoWeb.Nucleo.Aplicacao
         }
     }
 
-    public class AppInscOnLineCodigoInscricao : AppInscOnlineCodigoIdentificacao
+    public class AppInscOnLineIdentificacaoInscricao : AppInscOnlineIdentificacao
     {
-        public AppInscOnLineCodigoInscricao() : base("INSC", 6)
+        public AppInscOnLineIdentificacaoInscricao() : base("INSC", 6)
         {
         }
     }
 
-    public class AppInscOnLineCodigoSarau : AppInscOnlineCodigoIdentificacao
+    public class AppInscOnLineIdentificacaoSarau : AppInscOnlineIdentificacao
     {
-        public AppInscOnLineCodigoSarau() : base("APSA", 6)
+        public AppInscOnLineIdentificacaoSarau() : base("APSA", 6)
         {
         }
     }
 
-    public class AppInscOnLineCodigoInfantil : AppInscOnlineCodigoIdentificacao
+    public class AppInscOnLineIdentificacaoInfantil : AppInscOnlineIdentificacao
     {
-        public AppInscOnLineCodigoInfantil() : base("INSCINF", 6)
+        public AppInscOnLineIdentificacaoInfantil() : base("INSCINF", 6)
         {
         }
     }
