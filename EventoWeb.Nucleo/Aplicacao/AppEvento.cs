@@ -17,7 +17,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             ExecutarSeguramente(() =>
             {
                 var evento = Contexto.RepositorioEventos.ObterEventoPeloId(id);
-                dtoEvento = evento?.Converter();
+                dtoEvento = evento?.ConverterApenasEvento();
             });
 
             return dtoEvento;

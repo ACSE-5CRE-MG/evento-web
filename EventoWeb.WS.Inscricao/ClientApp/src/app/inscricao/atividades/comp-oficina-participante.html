@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayout.xs="column"  fxLayoutGap="5px">
   <div fxFlex="40" fxFlex.xs="100" class="borda_total">
     <dx-list [dataSource]="oficinasDisponiveis"
-             displayExpr="Descricao"
+             displayExpr="Nome"
              [height]="400"
              [selectionMode]="'all'"
              [selectAllMode]="allPages"
@@ -16,7 +16,7 @@
   </div>
   <div  fxFlex="40" fxFlex.xs="100" class="borda_total">
     <dx-list [dataSource]="oficinasEscolhidas"
-             displayExpr="Descricao"
+             displayExpr="Nome"
              [height]="400"
              [selectionMode]="'all'"
              [selectAllMode]="allPages"

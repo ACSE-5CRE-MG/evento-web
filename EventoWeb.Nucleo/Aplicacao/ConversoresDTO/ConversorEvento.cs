@@ -7,27 +7,41 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
 {
     public static class ConversorEvento
     {
-        public static DTOEventoCompleto Converter(this Evento evento)
+        public static DTOEventoCompleto ConverterApenasEvento(this Evento evento)
         {
-            return new DTOEventoCompleto
-            {
-                Id = evento.Id,
-                PeriodoInscricao = evento.PeriodoInscricaoOnLine,
-                PeriodoRealizacao = evento.PeriodoRealizacaoEvento,
-                DataRegistro = evento.DataRegistro,
-                Logotipo = evento.Logotipo != null ? Convert.ToBase64String(evento.Logotipo.Arquivo) : null,
-                Nome = evento.Nome,
-                TemDepartamentalizacao = evento.TemDepartamentalizacao,
-                TemDormitorios = evento.TemDormitorios,
-                TemOficinas = evento.TemOficinas,
-                ConfiguracaoSalaEstudo = evento.ConfiguracaoSalaEstudo,
-                ConfiguracaoEvangelizacao = evento.ConfiguracaoEvangelizacao,
-                ConfiguracaoSarau = evento.ConfiguracaoSarau,
-                IdadeMinima = evento.IdadeMinimaInscricaoAdulto,
-                PodeAlterar = true,
-                ValorInscricaoAdulto = evento.ValorInscricaoAdulto,
-                ValorInscricaoCrianca = evento.ValorInscricaoCrianca
-            };
+            var dto = new DTOEventoCompleto();
+            dto.Converter(evento);
+
+            return dto;
+        }
+
+        public static DTOEventoCompletoInscricao ConverterParaInsOnLine(this Evento evento)
+        {
+            var dto = new DTOEventoCompletoInscricao();
+            dto.Converter(evento);
+
+            return dto;
+        }
+
+        private static DTOEventoCompleto Converter(this DTOEventoCompleto dto, Evento evento)
+        {
+            dto.Id = evento.Id;
+            dto.PeriodoInscricao = evento.PeriodoInscricaoOnLine;
+            dto.PeriodoRealizacao = evento.PeriodoRealizacaoEvento;
+            dto.DataRegistro = evento.DataRegistro;
+            dto.Logotipo = evento.Logotipo != null ? Convert.ToBase64String(evento.Logotipo.Arquivo) : null;
+            dto.Nome = evento.Nome;
+            dto.TemDepartamentalizacao = evento.TemDepartamentalizacao;
+            dto.TemDormitorios = evento.TemDormitorios;
+            dto.TemOficinas = evento.TemOficinas;
+            dto.ConfiguracaoSalaEstudo = evento.ConfiguracaoSalaEstudo;
+            dto.ConfiguracaoEvangelizacao = evento.ConfiguracaoEvangelizacao;
+            dto.ConfiguracaoSarau = evento.ConfiguracaoSarau;
+            dto.IdadeMinima = evento.IdadeMinimaInscricaoAdulto;
+            dto.ValorInscricaoAdulto = evento.ValorInscricaoAdulto;
+            dto.ValorInscricaoCrianca = evento.ValorInscricaoCrianca;
+
+            return dto;
         }
 
         public static DTOEventoMinimo ConverterMinimo(this Evento evento)

@@ -89,7 +89,7 @@ namespace EventoWeb.Nucleo.Aplicacao
     public class DTOInscricaoCompleta: DTOInscricaoAtualizacao
     {
         public int Id { get; set; }
-        public DTOEventoCompleto Evento { get; set; }
+        public DTOEventoCompletoInscricao Evento { get; set; }
         public EnumSituacaoInscricao Situacao { get; set; }
     }
 

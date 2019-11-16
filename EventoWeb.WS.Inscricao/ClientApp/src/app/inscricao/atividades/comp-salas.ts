@@ -46,12 +46,14 @@ export class ComponenteSalas {
     }
 
     set opcaoEscolhida(valor: string) {
-        this._opcaoEscolhida = valor;
+        if (valor != this._opcaoEscolhida) {
+            this._opcaoEscolhida = valor;
 
-        if (valor == this.opcoes[0])
-            this.participante = null;
-        else
-            this.coordenador = null;
+            if (valor == this.opcoes[0])
+                this.participante = null;
+            else
+                this.coordenador = null;
+        }
     }
 
     get opcaoEscolhida(): string {

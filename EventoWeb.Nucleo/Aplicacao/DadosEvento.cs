@@ -25,9 +25,16 @@ namespace EventoWeb.Nucleo.Aplicacao
     {
         public int Id { get; set; }
         public DateTime DataRegistro { get; set; }
+        public decimal ValorInscricaoAdulto { get; set; }
+        public decimal ValorInscricaoCrianca { get; set; }
+    }
+
+    public class DTOEventoCompletoInscricao: DTOEventoCompleto
+    {
         public Boolean PodeAlterar { get; set; }
-        public decimal ValorInscricaoAdulto { get; internal set; }
-        public decimal ValorInscricaoCrianca { get; internal set; }
+        public IEnumerable<DTOSalaEstudo> SalasEstudo { get; set; }
+        public IEnumerable<DTODepartamento> Departamentos { get; set; }
+        public IEnumerable<DTOOficina> Oficinas { get; set; }
     }
 
     public class DTOEventoMinimo

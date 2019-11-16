@@ -30,7 +30,7 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
                     Celular = inscricao.Pessoa.Celular,
                     TelefoneFixo = inscricao.Pessoa.TelefoneFixo                    
                 },
-                Evento = inscricao.Evento.Converter(),
+                Evento = inscricao.Evento.ConverterParaInsOnLine(),
                 Id = inscricao.Id,
                 NomeCracha = inscricao.NomeCracha,
                 NomeResponsavelCentro = inscricao.NomeResponsavelCentro,

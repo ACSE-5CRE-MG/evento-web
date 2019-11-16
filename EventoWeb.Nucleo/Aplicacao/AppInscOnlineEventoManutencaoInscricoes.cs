@@ -28,6 +28,16 @@ namespace EventoWeb.Nucleo.Aplicacao
                     var inscParticipante = (InscricaoParticipante)inscricao;
                     dto = inscParticipante.Converter();
 
+                    dto.Evento.Departamentos = Contexto.RepositorioDepartamentos.ListarTodosPorEvento(inscParticipante.Evento.Id)
+                        .Select(x => x.Converter())
+                        .ToList();
+                    dto.Evento.Oficinas = Contexto.RepositorioOficinas.ListarTodasPorEvento(inscParticipante.Evento.Id)
+                        .Select(x => x.Converter())
+                        .ToList();
+                    dto.Evento.SalasEstudo = Contexto.RepositorioSalasEstudo.ListarTodasPorEvento(inscParticipante.Evento.Id)
+                        .Select(x => x.Converter())
+                        .ToList();
+
                     dto.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(inscParticipante.Id)
                         .Select(x => x.Converter()).ToList();
 
