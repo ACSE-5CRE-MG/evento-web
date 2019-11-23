@@ -25,5 +25,6 @@ namespace EventoWeb.Nucleo.Aplicacao
         AApresentacoesSarau RepositorioApresentacoesSarau { get; }
 
         IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro { get; }
+        AArquivosBinarios RepositorioArquivosBinarios { get; }
     }
 }

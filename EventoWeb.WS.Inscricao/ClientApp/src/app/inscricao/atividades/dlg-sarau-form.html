@@ -1,25 +1,31 @@
-<h1 mat-dialog-title>Sarau - {{tituloDlg}}</h1>
-<div mat-dialog-content>
-  <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
-    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-      <label class="label_campos" fxFlex="250">Tipo Apresentação:</label>
-      <dx-text-box [(value)]="sarau.Tipo" fxFlex="100">
-        <dx-validator>
-          <dxi-validation-rule type="required" message="Você não informou o Tipo de Apresentação que fará"></dxi-validation-rule>
-        </dx-validator>
-      </dx-text-box>
-    </div>
-    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-      <label class="label_campos" fxFlex="250">Duração Apresentação(min):</label>
-      <dx-text-box [(value)]="sarau.DuracaoMin" fxFlex="100">
-        <dx-validator>
-          <dxi-validation-rule type="required" message="Você não informou a Duração de Apresentação que fará"></dxi-validation-rule>
-        </dx-validator>
-      </dx-text-box>
-    </div>
-  </dx-validation-group>
-</div>
-<div mat-dialog-actions>
-  <button mat-raised-button (click)="clicarCancelar()">Cancelar</button>
-  <button mat-raised-button (click)="clicarOK()" cdkFocusInitial>Salvar</button>
-</div>
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div><h1>Sarau - {{tituloDlg}}</h1></div>
+    <span style="flex: 1 1 auto;"></span>
+  </mat-toolbar>
+  <div style="margin: 5px">
+    <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="250">Tipo Apresentação:</label>
+        <dx-text-box [(value)]="sarau.Tipo" fxFlex="100" [disabled]="desabilitar">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou o Tipo de Apresentação que fará"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="250">Duração Apresentação(min):</label>
+        <dx-number-box [min]="1" [(value)]="sarau.DuracaoMin" fxFlex="100" [disabled]="desabilitar">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou a Duração de Apresentação que fará"></dxi-validation-rule>
+          </dx-validator>
+        </dx-number-box>
+      </div>
+    </dx-validation-group>
+  </div>
+  <mat-divider></mat-divider>
+  <div style="margin: 5px; text-align: right">
+    <button mat-raised-button (click)="clicarCancelar()">Cancelar</button>
+    <button mat-raised-button (click)="clicarOK()" cdkFocusInitial style="margin-left:5px" [disabled]="desabilitar">Salvar</button>
+  </div>
+</layout-geral>

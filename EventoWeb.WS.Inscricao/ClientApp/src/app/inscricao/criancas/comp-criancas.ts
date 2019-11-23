@@ -21,6 +21,9 @@ export class ComponenteCriancas {
     @Input()
     inscrito: DTOInscricaoCompleta;
 
+    @Input()
+    desabilitar: boolean;
+
     constructor(private coordenacao: CoordenacaoCentral, private DlgsCrianca: DialogosCrianca, private wsManInscricoes: WsManutencaoInscricoes) { }
 
 
@@ -50,7 +53,7 @@ export class ComponenteCriancas {
     }
 
     clicarCriar(): void {
-        this.DlgsCrianca.apresentarDlgForm({ crianca: null, inscricao: this.inscrito })
+        this.DlgsCrianca.apresentarDlgForm({ crianca: null, inscricao: this.inscrito, desabilitar: this.desabilitar })
             .subscribe(
                 (criancaCriada) => {
                     if (criancaCriada != null) {
@@ -65,7 +68,7 @@ export class ComponenteCriancas {
     }
 
     editar(crianca: DTOCrianca): void {
-        this.DlgsCrianca.apresentarDlgForm({ crianca: crianca, inscricao: this.inscrito })
+        this.DlgsCrianca.apresentarDlgForm({ crianca: crianca, inscricao: this.inscrito, desabilitar: this.desabilitar })
             .subscribe(
                 (criancaAlterada) => {
                     if (criancaAlterada != null) {
@@ -91,7 +94,7 @@ export class ComponenteCriancas {
                 });
     }
 
-    gerarTextoParticipantes(crianca: DTOCrianca): string {
+    gerarTextoResponsaveis(crianca: DTOCrianca): string {
 
         let pessoas: string = "";
         for (let inscricao of crianca.Responsaveis) {
@@ -146,15 +149,23 @@ export class DlgCriancaFormulario {
 
     dadosTela: DadosTela;
     tituloDlg: string;
+    desabilitar: boolean;
 
     constructor(public coordenacao: CoordenacaoCentral,
         private dialogRef: MatDialogRef<DlgCriancaFormulario>,
         @Inject(MAT_DIALOG_DATA) public data: TransfDlgFormCrianca) {
 
+        this.dadosTela = new DadosTela();
         this.tituloDlg = "Nova Inscrição";
-        if (data == null || data.crianca == null) {
+        this.desabilitar = this.data.desabilitar;
+
+        if (data.crianca == null) {
             this.crianca = new DTOCrianca();
-            this.dadosTela = new DadosTela();
+            
+            this.dadosTela.ehDiabetico = false;
+            this.dadosTela.ehVegetariano = false;
+            this.dadosTela.primeiroEncontro = false;
+            this.dadosTela.usaAdocanteDiariamente = false;
         }
         else {
             this.crianca = data.crianca;
@@ -165,9 +176,15 @@ export class DlgCriancaFormulario {
             this.dadosTela.ehDiabetico = this.crianca.EhDiabetico;
             this.dadosTela.ehVegetariano = this.crianca.EhVegetariano;
             this.dadosTela.medicamentosUsa = this.crianca.MedicamentosUsa;
+            this.dadosTela.primeiroEncontro = this.crianca.PrimeiroEncontro;
             this.dadosTela.nome = this.crianca.Nome;
             this.dadosTela.sexoEscolhido = this.coordenacao.Sexos[this.crianca.Sexo];
             this.dadosTela.usaAdocanteDiariamente = this.crianca.UsaAdocanteDiariamente;
+            this.dadosTela.email = this.crianca.Email;
+            this.dadosTela.nomeCracha = this.crianca.NomeCracha;
+            this.dadosTela.cidade = this.crianca.Cidade;
+            this.dadosTela.uf = this.crianca.Uf;
+
 
             this.tituloDlg = "Alteração de Inscrição";
         }
@@ -187,9 +204,14 @@ export class DlgCriancaFormulario {
             this.crianca.EhDiabetico = this.dadosTela.ehDiabetico;
             this.crianca.EhVegetariano = this.dadosTela.ehVegetariano;
             this.crianca.MedicamentosUsa = this.dadosTela.medicamentosUsa;
+            this.crianca.PrimeiroEncontro = this.dadosTela.primeiroEncontro;
+            this.crianca.Cidade = this.dadosTela.cidade;
+            this.crianca.Uf = this.dadosTela.uf;
+            this.crianca.Email = this.dadosTela.email;
             this.crianca.Nome = this.dadosTela.nome;
-            this.crianca.Sexo = (this.dadosTela.sexoEscolhido[0] == this.dadosTela.sexoEscolhido ? EnumSexo.Feminino : EnumSexo.Masculino),
+            this.crianca.Sexo = (this.dadosTela.sexoEscolhido[0] == this.dadosTela.sexoEscolhido ? EnumSexo.Masculino : EnumSexo.Feminino);
             this.crianca.UsaAdocanteDiariamente = this.dadosTela.usaAdocanteDiariamente;
+            this.crianca.NomeCracha = this.dadosTela.nomeCracha;
 
             this.dialogRef.close(this.crianca);
         }
@@ -203,6 +225,7 @@ export class DlgCriancaFormulario {
 class TransfDlgFormCrianca {
     crianca: DTOCrianca;
     inscricao: DTOInscricaoCompleta;
+    desabilitar: boolean;
 }
 
 class DadosTela {
@@ -221,7 +244,7 @@ class DadosTela {
     uf: string;
     email: string;
     nomeCracha: string;
-    primeiroEncontro: string;
+    primeiroEncontro: boolean;
     sarais: DTOSarau[];
 }
 

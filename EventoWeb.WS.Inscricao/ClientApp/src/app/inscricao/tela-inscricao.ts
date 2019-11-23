@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
     DTOInscricaoCompleta, EnumApresentacaoAtividades, DTOSarau, DTOInscricaoSimplificada,
     DTOCrianca, DTOPagamento, DTOInscricaoAtualizacao, EnumSexo, DTOInscricaoDadosPessoais, EnumTipoInscricao,
-    DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOInscricaoDepartamento
+    DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOInscricaoDepartamento, EnumSituacaoInscricao
 } from './objetos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { WsManutencaoInscricoes } from '../webservices/wsManutencaoInscricoes';
@@ -26,6 +26,8 @@ export class TelaInscricao implements OnInit {
     grupoValidacaoEspirita: DxValidationGroupComponent;
 
     inscricao: DTOInscricaoCompleta;
+
+    NaoEhIncompleta: boolean = false;
 
     constructor(public coordenacao: CoordenacaoCentral, private rotaAtual: ActivatedRoute, private navegadorUrl: Router, private wsInscricoes: WsManutencaoInscricoes) { }
 
@@ -84,6 +86,8 @@ export class TelaInscricao implements OnInit {
                                     this.dadosTela.observacoes = this.inscricao.Observacoes;
 
                                     this.dadosTela.inscricaoSimples = { Id: this.inscricao.Id, IdEvento: this.inscricao.Evento.Id, Nome: this.inscricao.DadosPessoais.Nome };
+
+                                    this.NaoEhIncompleta = this.inscricao.Situacao != EnumSituacaoInscricao.Incompleta; 
                                 }
                                 else
                                     this.voltar(idInscricao);
@@ -107,39 +111,6 @@ export class TelaInscricao implements OnInit {
     }
 
     clicarAtualizar(): void {
-        let resultadoValidacaoEssencial = this.grupoValidacaoEssencial.instance.validate();
-        if (resultadoValidacaoEssencial.isValid) {
-            let mensagemAtencao = "";
-
-            let resultadoValidacaoEspirita = this.grupoValidacaoEspirita.instance.validate();
-            if (!resultadoValidacaoEspirita.isValid)
-                mensagemAtencao = mensagemAtencao + "Há informações sobre a casa espírita " + (this.dadosTela.idade < 18 ? " ou do seu representante legal" : "") +
-                    " que não foram informadas. Sem essas informações a secretaria do evento não poderá analisar e liberar a sua inscrição. Continuar mesmo assim?";
-
-            if (mensagemAtencao != "") {
-                this.coordenacao.Alertas.alertarConfirmacao("Precisamos da sua confirmação!!", mensagemAtencao)
-                    .subscribe((botao) => {
-                        if (botao.result == "sim")
-                            this.atualizar();
-                    });
-            }
-            else
-                this.atualizar();
-
-        }
-        else
-            this.coordenacao.Alertas.alertarAtencao("Nâo deu para continuar!!", "Ops, acho que alguns dados informados não estão legais!");
-    }
-
-    public contarCriancasPrimeiroResponsavel(): number {
-        if (this.dadosTela.criancas == null)
-            return 0;
-        else
-            return this.dadosTela.criancas.filter(x => x.Responsaveis[0] != null && x.Responsaveis[0].Id == this.inscricao.Id).length;        
-    }
-
-    private atualizar(): void {
-
         let dadosPessoaisValidos = this.grupoValidacaoEssencial.instance.validate().isValid;
         let dadosEspiritasValidos = this.grupoValidacaoEspirita.instance.validate().isValid;
 
@@ -199,15 +170,30 @@ export class TelaInscricao implements OnInit {
             atualizacao.DadosPessoais.Uf = this.dadosTela.uf;
             atualizacao.DadosPessoais.UsaAdocanteDiariamente = this.dadosTela.usaAdocanteDiariamente;
             atualizacao.NomeCracha = this.dadosTela.nomeCracha;
+            atualizacao.CentroEspirita = this.dadosTela.centroEspirita;
+            atualizacao.Departamento = this.dadosTela.departamentoEscolhido;
+            atualizacao.NomeResponsavelCentro = this.dadosTela.nomeResponsavelCentro;
+            atualizacao.NomeResponsavelLegal = this.dadosTela.nomeResponsavelLegal;
+            atualizacao.Oficina = this.dadosTela.oficinasEscolhidas;
+            atualizacao.SalasEstudo = this.dadosTela.salasEscolhidas;
+            atualizacao.TelefoneResponsavelCentro = this.dadosTela.telefoneResponsavelCentro;
+            atualizacao.TelefoneResponsavelLegal = this.dadosTela.telefoneResponsavelLegal;
+            atualizacao.TempoEspirita = this.dadosTela.tempoEspirita;
 
             atualizacao.Sarais = this.dadosTela.sarais;
             atualizacao.Criancas = this.dadosTela.criancas;
-            atualizacao.Pagamento = this.dadosTela.pagamento;
             atualizacao.Observacoes = this.dadosTela.observacoes;
+
+            atualizacao.Pagamento = new DTOPagamento();
+            atualizacao.Pagamento.Forma = this.dadosTela.pagamento.Forma;
+            atualizacao.Pagamento.Observacao = this.dadosTela.pagamento.Observacao;
+            if (this.dadosTela.pagamento.ComprovantesBase64 != null)
+                atualizacao.Pagamento.ComprovantesBase64 = this.dadosTela.pagamento.ComprovantesBase64.map(x => x.substring(x.indexOf(",") + 1));
 
             this.wsInscricoes.atualizar(this.inscricao.Id, atualizacao)
                 .subscribe(
                     (retorno) => {
+                        dlg.close();
                         this.voltar(this.inscricao.Id);
                     },
                     (erro) => {
@@ -216,6 +202,13 @@ export class TelaInscricao implements OnInit {
                     }
                 );
         }
+    }
+
+    public contarCriancasPrimeiroResponsavel(): number {
+        if (this.dadosTela.criancas == null)
+            return 0;
+        else
+            return this.dadosTela.criancas.filter(x => x.Responsaveis[0] != null && x.Responsaveis[0].Id == this.inscricao.Id).length;        
     }
 }
 

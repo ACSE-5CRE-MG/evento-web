@@ -13,6 +13,9 @@ export class ComponenteOficinas {
     _opcaoEscolhida: string;
 
     @Input()
+    desabilitar: boolean;
+
+    @Input()
     oficinas: DTOOficina[] = [];
 
     @Input()
@@ -22,11 +25,11 @@ export class ComponenteOficinas {
 
         if (param != null) {
             if (param.Coordenador != null) {
-                this.opcaoEscolhida = this.opcoes[1];
+                this._opcaoEscolhida = this.opcoes[1];
                 this.mCoordenador = param.Coordenador;
             }
             else {
-                this.opcaoEscolhida = this.opcoes[0];
+                this._opcaoEscolhida = this.opcoes[0];
                 this.mParticipante = param.EscolhidasParticipante;
             }
         }        
@@ -39,7 +42,6 @@ export class ComponenteOficinas {
     set forma(valor: EnumApresentacaoAtividades) {
 
         this.apresentacao = valor;
-
         if (valor == EnumApresentacaoAtividades.ApenasParticipante)
             this.opcaoEscolhida = this.opcoes[0];
     }
@@ -103,6 +105,9 @@ export class ComponenteOficinas {
 export class ComponenteOficinaParticipante {
 
     private oficinasRecebidas: DTOOficina[];
+
+    @Input()
+    desabilitar: boolean;
 
     @Input()
     set oficinas(valor: DTOOficina[]) {
@@ -223,6 +228,9 @@ enum EnumSituacaoSelecaoItens {
     templateUrl: './comp-oficina-coordenador.html'
 })
 export class ComponenteOficinaCoordenador {
+
+    @Input()
+    desabilitar: boolean;
 
     @Input()
     oficinas: DTOOficina[] = [];

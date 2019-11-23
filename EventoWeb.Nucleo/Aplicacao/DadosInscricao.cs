@@ -61,7 +61,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string CarnesNaoCome { get; set; }
         public string AlimentosAlergia { get; set; }
         public string MedicamentosUsa { get; set; }
-        public string Celular { get; internal set; }
+        public string Celular { get; set; }
         public string TelefoneFixo { get; set; }
     }
 
@@ -149,7 +149,7 @@ namespace EventoWeb.Nucleo.Aplicacao
 
     public class DTOPagamento
     {
-        public EnumPagamento Forma { get; set; }
+        public EnumPagamento? Forma { get; set; }
         public IList<string> ComprovantesBase64 { get; set; }
         public string Observacao { get; set; }
     }

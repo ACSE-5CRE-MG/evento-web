@@ -1,15 +1,21 @@
-<h1 mat-dialog-title>Sarau - Código da Apresentação</h1>
-<div mat-dialog-content>
-  <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-    <label class="label_campos">Código:</label>
-    <dx-text-box [(value)]="codigo" fxFlex="100">
-      <dx-validator>
-        <dxi-validation-rule type="required" message="Você não informou o Código do Sarau que quer participar."></dxi-validation-rule>
-      </dx-validator>
-    </dx-text-box>
-  </dx-validation-group>
-</div>
-<div mat-dialog-actions>
-  <button mat-raised-button (click)="clicarCancelar()">Cancelar</button>
-  <button mat-raised-button (click)="clicarOK()" cdkFocusInitial>OK</button>
-</div>
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div><h1>Sarau - Código da Apresentação</h1></div>
+    <span style="flex: 1 1 auto;"></span>
+  </mat-toolbar>
+  <div style="margin: 5px">
+    <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <label class="label_campos">Código:</label>
+      <dx-text-box [(value)]="codigo" fxFlex="100">
+        <dx-validator>
+          <dxi-validation-rule type="required" message="Você não informou o Código do Sarau que quer participar."></dxi-validation-rule>
+        </dx-validator>
+      </dx-text-box>
+    </dx-validation-group>
+  </div>
+  <mat-divider></mat-divider>
+  <div style="margin: 5px; text-align: right">
+    <button mat-raised-button (click)="clicarCancelar()">Cancelar</button>
+    <button mat-raised-button (click)="clicarOK()" cdkFocusInitial style="margin-left:5px">OK</button>
+  </div>
+</layout-geral>

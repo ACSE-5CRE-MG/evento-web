@@ -105,6 +105,11 @@ export class AutorizacoesInscricao {
         else
             return autorizacao.Autorizacao;
     }
+
+    public removerTudo(): void {
+        this.autorizacoes = [];
+        localStorage.setItem(this.NOME_STORANGE, JSON.stringify(this.autorizacoes));
+    }
 }
 
 class DadosAutorizacao {

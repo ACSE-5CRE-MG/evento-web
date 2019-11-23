@@ -60,7 +60,7 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
             {
                 dto.Pagamento = new DTOPagamento
                 {
-                    ComprovantesBase64 = inscricao.Pagamento.Comprovantes?.Select(x => Convert.ToBase64String(x.Arquivo)).ToList(),
+                    ComprovantesBase64 = inscricao.Pagamento.Comprovantes?.Select(x => Convert.ToBase64String(x.ArquivoComprovante.Arquivo)).ToList(),
                     Forma = inscricao.Pagamento.Forma,
                     Observacao = inscricao.Pagamento.Observacao
                 };
@@ -93,7 +93,12 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
                 Sexo = inscricao.Pessoa.Sexo,
                 UsaAdocanteDiariamente = inscricao.Pessoa.UsaAdocanteDiariamente,
                 Id = inscricao.Id,
-                Responsaveis = new List<DTOInscricaoSimplificada>() { inscricao.InscricaoResponsavel1.ConverterSimplificada() }
+                Responsaveis = new List<DTOInscricaoSimplificada>() { inscricao.InscricaoResponsavel1.ConverterSimplificada() },
+                Cidade = inscricao.Pessoa.Endereco.Cidade,
+                Email = inscricao.Pessoa.Email,
+                NomeCracha = inscricao.NomeCracha,
+                PrimeiroEncontro = inscricao.PrimeiroEncontro,
+                Uf = inscricao.Pessoa.Endereco.UF
             };
 
             if (inscricao.InscricaoResponsavel2 != null)

@@ -11,8 +11,8 @@
     </dx-list>
   </div>
   <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center">
-    <button mat-raised-button [disabled]="oficinasDisponiveisSelecionadas.length == 0" (click)="clicarIncluir()" style="width: 100%">Incluir</button>
-    <button mat-raised-button [disabled]="oficinasEscolhidasSelecionadas.length == 0" (click)="clicarRemover()" style="width: 100%">Remover</button>
+    <button mat-raised-button [disabled]="oficinasDisponiveisSelecionadas.length == 0 || desabilitar" (click)="clicarIncluir()" style="width: 100%">Incluir</button>
+    <button mat-raised-button [disabled]="oficinasEscolhidasSelecionadas.length == 0 || desabilitar" (click)="clicarRemover()" style="width: 100%">Remover</button>
   </div>
   <div  fxFlex="40" fxFlex.xs="100" class="borda_total">
     <dx-list [dataSource]="oficinasEscolhidas"
@@ -27,7 +27,7 @@
     </dx-list>
   </div>
   <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center">
-    <button mat-raised-button [disabled]="situacaoSelecaoOficinasEscolhidas != 1 && situacaoSelecaoOficinasEscolhidas != 2" (click)="clicarSubir()" style="width: 100%">Subir</button>
-    <button mat-raised-button [disabled]="situacaoSelecaoOficinasEscolhidas != 0 && situacaoSelecaoOficinasEscolhidas != 2" (click)="clicarDescer()" style="width: 100%">Descer</button>
+    <button mat-raised-button [disabled]="desabilitar || (situacaoSelecaoOficinasEscolhidas != 1 && situacaoSelecaoOficinasEscolhidas != 2)" (click)="clicarSubir()" style="width: 100%">Subir</button>
+    <button mat-raised-button [disabled]="desabilitar || (situacaoSelecaoOficinasEscolhidas != 0 && situacaoSelecaoOficinasEscolhidas != 2)" (click)="clicarDescer()" style="width: 100%">Descer</button>
   </div>
 </div>

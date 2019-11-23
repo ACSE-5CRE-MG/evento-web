@@ -5,6 +5,7 @@ export enum EnumTipoInscricao { Participante, ParticipanteTrabalhador }
 export enum EnumApresentacaoAtividades {
     ApenasParticipante, PodeEscolher
 }
+export enum EnumSituacaoInscricao { Incompleta, Pendente, Aceita, Rejeitada }
 
 export class DTODadosCriarInscricao {
     Nome: string;
@@ -84,6 +85,7 @@ export class DTOInscricaoAtualizacao {
 export class DTOInscricaoCompleta extends DTOInscricaoAtualizacao {
     Id: number;
     Evento: DTOEventoCompleto;
+    Situacao: EnumSituacaoInscricao;
 }
 
 export class DTOInscricaoOficina {
@@ -130,7 +132,7 @@ export class DTOCrianca {
     Uf: string;
     Email: string;
     NomeCracha: string;
-    PrimeiroEncontro: string;
+    PrimeiroEncontro: boolean;
     Sarais: DTOSarau[];
 }
 

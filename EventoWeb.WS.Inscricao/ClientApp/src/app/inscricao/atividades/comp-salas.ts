@@ -13,6 +13,9 @@ export class ComponenteSalas {
     _opcaoEscolhida: string;
 
     @Input()
+    desabilitar: boolean;
+
+    @Input()
     salas: DTOSalaEstudo[] = [];
 
     @Input()
@@ -25,11 +28,11 @@ export class ComponenteSalas {
 
         if (param != null) {
             if (param.Coordenador != null) {
-                this.opcaoEscolhida = this.opcoes[1];
+                this._opcaoEscolhida = this.opcoes[1];
                 this.mCoordenador = param.Coordenador;
             }
             else {
-                this.opcaoEscolhida = this.opcoes[0];
+                this._opcaoEscolhida = this.opcoes[0];
                 this.mParticipante = param.EscolhidasParticipante;
             }
         }
@@ -42,7 +45,8 @@ export class ComponenteSalas {
     set forma(valor: EnumApresentacaoAtividades) {
 
         this.apresentacao = valor;
-        this.opcaoEscolhida = this.opcoes[0];
+        if (valor == EnumApresentacaoAtividades.ApenasParticipante)
+            this.opcaoEscolhida = this.opcoes[0];
     }
 
     set opcaoEscolhida(valor: string) {
@@ -103,6 +107,9 @@ export class ComponenteSalas {
 export class ComponenteSalasParticipanteComEscolha {
 
     private salasRecebidas: DTOSalaEstudo[];
+
+    @Input()
+    desabilitar: boolean;
 
     @Input()
     set salas(valor: DTOSalaEstudo[]) {
@@ -232,20 +239,27 @@ export class ComponenteSalasParticipanteSemEscolha {
 export class ComponenteSalaCoordenador {
 
     @Input()
+    desabilitar: boolean;
+
+    @Input()
     salas: DTOSalaEstudo[] = [];
 
     @Input()
-    valor: DTOSalaEstudo;
+    set valor(sala: DTOSalaEstudo) {
+        this.mValor = this.salas.find(x => x.Id == sala.Id);
+    }
 
     @Output()
     valorChange: EventEmitter<DTOSalaEstudo> = new EventEmitter<DTOSalaEstudo>();
 
+    private mValor: DTOSalaEstudo;
+
     set salaCoordena(valor: DTOSalaEstudo) {
-        this.valor = valor;
-        this.valorChange.emit(this.valor);
+        this.mValor = valor;
+        this.valorChange.emit(this.mValor);
     }
 
     get salaCoordena(): DTOSalaEstudo {
-        return this.valor;
+        return this.mValor;
     }
 }

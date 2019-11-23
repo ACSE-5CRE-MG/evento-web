@@ -29,21 +29,6 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             AtribuirResponsaveis(inscricaoResponsavel, inscricaoResponsavel2);
         }
 
-        public override bool DormeEvento
-        {
-            get
-            {
-                return base.DormeEvento;
-            }
-            set
-            {
-                if (value)
-                    ValidarInscricaoParaQuartoFamilia(InscricaoResponsavel1, InscricaoResponsavel2);
-
-                base.DormeEvento = value;
-            }
-        }
-
         public virtual Inscricao InscricaoResponsavel1 
         { 
             get { return m_InscricaoResponsavel1; }
@@ -97,7 +82,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public override bool EhValidaIdade(int idade)
         {
-            return idade < 13;
+            return idade < Evento.IdadeMinimaInscricaoAdulto;
         }
 
         protected override void ValidarInscricaoParaSeTornarPendente()

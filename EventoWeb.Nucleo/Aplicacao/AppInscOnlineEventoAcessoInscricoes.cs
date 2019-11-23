@@ -1,6 +1,8 @@
 ﻿using EventoWeb.Nucleo.Aplicacao.Comunicacao;
 using EventoWeb.Nucleo.Negocio.Entidades;
 using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {

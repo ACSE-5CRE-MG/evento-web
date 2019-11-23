@@ -12,17 +12,28 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
     public class Pagamento
     {
-        private EnumPagamento m_Forma;
-        private IList<ArquivoBinario> m_Comprovantes;
-        private string m_Observacao;
+        private EnumPagamento? m_Forma;
+        private IList<ComprovantePagamento> m_Comprovantes;
+        private InscricaoParticipante m_Inscricao;
 
-        public Pagamento(EnumPagamento forma, IEnumerable<ArquivoBinario> comprovantes, string observacao)
+        public Pagamento(InscricaoParticipante inscricao)
         {
-            m_Comprovantes = new List<ArquivoBinario>();
+            m_Inscricao = inscricao ?? throw new ExcecaoNegocioAtributo("Pagamento", "Inscricao", "Inscrição é obrigatório");
+            m_Comprovantes = new List<ComprovantePagamento>();            
+        }
 
+        protected Pagamento() { }        
+
+        public virtual InscricaoParticipante Inscricao { get => m_Inscricao; }
+        public virtual EnumPagamento? Forma { get => m_Forma; }
+        public virtual IEnumerable<ComprovantePagamento> Comprovantes { get => m_Comprovantes; }
+        public virtual string Observacao { get; set; }
+
+        public virtual void AtribuirFormaPagamento(EnumPagamento forma, IEnumerable<ArquivoBinario> comprovantes)
+        {
             if (forma != EnumPagamento.Comprovante && comprovantes != null && comprovantes.Count() > 0)
                 throw new ExcecaoNegocioAtributo("Pagamento", "Forma", "Apenas a forma de pagamento por comprovante pode receber comprovantes");
-            
+
             if (forma == EnumPagamento.Comprovante && (comprovantes == null || comprovantes.Count() == 0))
                 throw new ExcecaoNegocioAtributo("Pagamento", "Forma", "A forma de pagamento por comprovante precisa de comprovantes");
 
@@ -30,28 +41,38 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (comprovantes != null)
             {
                 foreach (var item in comprovantes)
-                    m_Comprovantes.Add(item);
+                    m_Comprovantes.Add(new ComprovantePagamento(m_Inscricao, item));
             }
-
-            m_Observacao = observacao;
         }
+    }
 
-        protected Pagamento() { }
+    public class ComprovantePagamento : Entidade
+    {
+        private ArquivoBinario m_ArquivoComprovante;
+        private InscricaoParticipante m_Inscricao;
 
-        public virtual EnumPagamento Forma { get => m_Forma; }
-        public virtual IEnumerable<ArquivoBinario> Comprovantes { get => m_Comprovantes; }
-        public virtual string Observacao { get => m_Observacao; }
+        public ComprovantePagamento(InscricaoParticipante inscricao, ArquivoBinario arquivoComprovante)
+        {
+            m_Inscricao = inscricao ?? throw new ExcecaoNegocioAtributo("ComprovantePagamento", "Inscricao", "Inscrição é obrigatório");
+            m_ArquivoComprovante = arquivoComprovante ?? throw new ExcecaoNegocioAtributo("ComprovantePagamento", "ArquivoComprovante", "ArquivoComprovante é obrigatório");
+        }
+        protected ComprovantePagamento() { }
+
+        public virtual InscricaoParticipante Inscricao { get => m_Inscricao; }
+        public virtual ArquivoBinario ArquivoComprovante { get => m_ArquivoComprovante; }
     }
 
     public class InscricaoParticipante: Inscricao
     {
         private IList<AAtividadeInscricao> m_Atividades;
+        private Pagamento m_Pagamento;
 
         public InscricaoParticipante(Evento evento, Pessoa pessoa, DateTime dataRecebimento, EnumTipoParticipante tipo) :
             base(evento, pessoa, dataRecebimento)
         {
             m_Atividades = new List<AAtividadeInscricao>();
             Tipo = tipo;
+            m_Pagamento = new Pagamento(this);
         }
 
         protected InscricaoParticipante() { }
@@ -60,7 +81,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual EnumTipoParticipante Tipo { get; set; }
 
-        public virtual Pagamento Pagamento { get; set; }
+        public virtual Pagamento Pagamento { get => m_Pagamento; }
         public virtual String InstituicoesEspiritasFrequenta { get; set; }
         public virtual string TempoEspirita { get; set; }
         public virtual string NomeResponsavelCentro { get; set; }
@@ -93,12 +114,12 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public override bool EhValidaIdade(int idade)
         {
-            return idade >= 13;
+            return idade >= Evento.IdadeMinimaInscricaoAdulto;
         }
 
         protected override void ValidarInscricaoParaSeTornarPendente()
         {
-            throw new NotImplementedException();
+            // ToDo: Escrever código aqui
         }
     }
 }

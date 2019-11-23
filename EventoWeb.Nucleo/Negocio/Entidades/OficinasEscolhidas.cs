@@ -30,7 +30,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (totalAfracs == 0 && afracs.Count() > 0)
                 throw new ArgumentException("Não há nenhuma oficina neste evento.", "evento");
 
-            if (totalAfracs > 0 && afracs.Count() == totalAfracs)
+            if (totalAfracs > 0 && afracs.Count() != totalAfracs)
                 throw new ArgumentException("Todas as oficinas do evento devem ser escolhidas e ordenadas.", "evento");
 
             return afracs;

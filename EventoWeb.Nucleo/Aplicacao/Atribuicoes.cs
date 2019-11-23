@@ -22,12 +22,10 @@ namespace EventoWeb.Nucleo.Aplicacao
             inscParticipante.TempoEspirita = dtoInscricao.TempoEspirita;
             inscParticipante.Tipo = dtoInscricao.TipoInscricao;
 
-            inscParticipante.Pagamento = new Pagamento(
-                    dtoInscricao.Pagamento.Forma,
-                    dtoInscricao.Pagamento.ComprovantesBase64
-                        .Select(x => new ArquivoBinario(Convert.FromBase64String(x), EnumTipoArquivoBinario.ImagemJPEG))
-                        .ToList(),
-                    dtoInscricao.Pagamento.Observacao);
+            inscParticipante.Pagamento.AtribuirFormaPagamento(dtoInscricao.Pagamento.Forma.Value,
+                dtoInscricao.Pagamento.ComprovantesBase64
+                        .Select(x => new ArquivoBinario(Convert.FromBase64String(x), EnumTipoArquivoBinario.ImagemJPEG)));
+            inscParticipante.Pagamento.Observacao = dtoInscricao.Pagamento.Observacao;
 
             inscParticipante.Pessoa.AtribuirDados(dtoInscricao.DadosPessoais);
         }

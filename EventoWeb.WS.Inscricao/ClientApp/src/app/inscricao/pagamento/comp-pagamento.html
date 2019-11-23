@@ -1,8 +1,8 @@
 <div fxLayout="column" fxLayoutGap="5px">
   <div>
-    <p><strong>Valor Inscrição:</strong> &nbsp; {{valorInscricao}}</p>
-    <p *ngIf="totalCriancas > 0">Crianças: &nbsp; {{totalCriancas}} &nbsp; X &nbsp; {{valorInscCrianca}} = {{totalCriancas * valorInscCrianca}} </p>
-    <p><strong>Total: </strong> &nbsp; {{valorInscricao + (totalCriancas * valorInscCrianca) }}</p>
+    <p><strong>Valor Inscrição:</strong> &nbsp; {{valorInscricao| currency:'BRL'}}</p>
+    <p *ngIf="totalCriancas > 0"><strong>Crianças:</strong> &nbsp; {{totalCriancas}} &nbsp; X &nbsp; {{valorInscCrianca| currency:'BRL'}} = {{totalCriancas * valorInscCrianca| currency:'BRL'}} </p>
+    <p><strong>Total: </strong> &nbsp; {{valorInscricao + (totalCriancas * valorInscCrianca) | currency:'BRL'}}</p>
   </div>
   <mat-divider></mat-divider>
   <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
@@ -10,7 +10,8 @@
       <label class="label_campos" fxFlex.xs="106px">Como será o Pagamento:</label>
       <dx-radio-group [items]="opcoes"
                       [(value)]="opcaoEscolhida"
-                      layout="horizontal">
+                      layout="horizontal"
+                      [disabled]="desabilitar">
       </dx-radio-group>
     </div>
   </div>
@@ -21,7 +22,8 @@
                       labelText="Arraste o arquivo para cá"
                       selectButtonText="Selecione o arquivo"
                       [allowedFileExtensions]="['.jpg', '.jpeg']"
-                      [(value)]="comprovantes">
+                      [(value)]="comprovantes"
+                      [disabled]="desabilitar">
     </dx-file-uploader>
   </div>
   <div *ngIf="opcaoEscolhida != null">
@@ -38,6 +40,6 @@
   <dx-text-area *ngIf="opcaoEscolhida != null"
                 [height]="180"
                 [(value)]="observacoes"
-                [disabled]="opcaoEscolhida == opcoes[0] && comprovantes == 0">
+                [disabled]="(opcaoEscolhida == opcoes[0] && comprovantes == 0) || desabilitar">
   </dx-text-area>
 </div>

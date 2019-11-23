@@ -21,6 +21,9 @@ export class ComponenteSarau {
     @Input()
     inscrito: DTOInscricaoSimplificada;
 
+    @Input()
+    desabilitar: boolean;
+
     constructor(private coordenacao: CoordenacaoCentral, private DlgsSarau: DialogosSarau, private wsManInscricoes: WsManutencaoInscricoes) { }
 
 
@@ -65,7 +68,7 @@ export class ComponenteSarau {
     }
 
     editar(sarau: DTOSarau): void {
-        this.DlgsSarau.apresentarDlgForm(sarau)
+        this.DlgsSarau.apresentarDlgForm({ desabilitar: this.desabilitar, sarau: sarau })
             .subscribe(
                 (sarauAlterado) => {
                     if (sarauAlterado != null) {
@@ -144,15 +147,18 @@ export class DlgSarauFormulario {
 
     sarau: DTOSarau;
     tituloDlg: string;
+    desabilitar: boolean;
 
     constructor(private dialogRef: MatDialogRef<DlgSarauFormulario>,
-        @Inject(MAT_DIALOG_DATA) public data: DTOSarau) {
+        @Inject(MAT_DIALOG_DATA) public data: TransfDlgFormSarau) {
 
         this.tituloDlg = "Nova Apresentação";
-        if (data == null)
+        this.desabilitar = data.desabilitar;
+
+        if (data.sarau == null)
             this.sarau = new DTOSarau();
         else {
-            this.sarau = data;
+            this.sarau = data.sarau;
             this.tituloDlg = "Alteração de Apresentação";
         }
     }
@@ -168,6 +174,11 @@ export class DlgSarauFormulario {
     }
 }
 
+class TransfDlgFormSarau {
+    sarau: DTOSarau;
+    desabilitar: boolean;
+}
+
 @Injectable()
 export class DialogosSarau {
     constructor(private srvDialog: MatDialog) { }
@@ -177,8 +188,8 @@ export class DialogosSarau {
         return dlg.afterClosed();
     }
 
-    apresentarDlgForm(sarau: DTOSarau): Observable<DTOSarau> {
-        const dlg = this.srvDialog.open(DlgSarauFormulario, { data: sarau });
+    apresentarDlgForm(trans: TransfDlgFormSarau): Observable<DTOSarau> {
+        const dlg = this.srvDialog.open(DlgSarauFormulario, { data: trans });
         return dlg.afterClosed();
     }
 }

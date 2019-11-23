@@ -4,39 +4,41 @@ import { WsEventos } from '../webservices/wsEventos';
 import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 
 @Component({
-  selector: 'tela-principal',
-  templateUrl: './tela-principal.html',
-  styleUrls: ['./tela-principal.scss']
+    selector: 'tela-principal',
+    templateUrl: './tela-principal.html',
+    styleUrls: ['./tela-principal.scss']
 })
 export class TelaPrincipal implements OnInit {
 
-  eventos: DTOEventoListagem[];
+    eventos: DTOEventoListagem[];
 
-  constructor(private wsEventos: WsEventos, private coordenacao: CoordenacaoCentral) { }
+    constructor(private wsEventos: WsEventos, private coordenacao: CoordenacaoCentral) { }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
 
-    this.eventos = [];
+        this.coordenacao.AutorizacoesInscricao.removerTudo();
 
-    let dlg = this.coordenacao.Alertas.alertarProcessamento("Carregando eventos disponíveis...");
+        this.eventos = [];
 
-    this.wsEventos.listarEventosDisponiveisInscricao()
-      .subscribe(
-        (eventosRetornados) => {
-          this.eventos = eventosRetornados;
-          dlg.close();
-        },
-        (excecao) => {
-          dlg.close();
-          this.coordenacao.ProcessamentoErro.processar(excecao);
-        }
-      );
-  }
+        let dlg = this.coordenacao.Alertas.alertarProcessamento("Carregando eventos disponíveis...");
 
-  public obterImagem(evento: DTOEventoListagem): string {
-    if (evento.Logotipo == null || evento.Logotipo.trim().length == 0)
-      return 'assets/semimagem.jpg';
-    else
-      return evento.Logotipo;
-  }
+        this.wsEventos.listarEventosDisponiveisInscricao()
+            .subscribe(
+                (eventosRetornados) => {
+                    this.eventos = eventosRetornados;
+                    dlg.close();
+                },
+                (excecao) => {
+                    dlg.close();
+                    this.coordenacao.ProcessamentoErro.processar(excecao);
+                }
+            );
+    }
+
+    public obterImagem(evento: DTOEventoListagem): string {
+        if (evento.Logotipo == null || evento.Logotipo.trim().length == 0)
+            return 'assets/semimagem.jpg';
+        else
+            return evento.Logotipo;
+    }
 }

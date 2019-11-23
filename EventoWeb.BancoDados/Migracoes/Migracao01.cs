@@ -181,7 +181,7 @@ namespace EventoWeb.BancoDados.Migracoes
                     .WithColumn("SITUACAO").AsInt16().NotNullable()
                     .WithColumn("TELEFONE_RESP_CENTRO").AsString(15).Nullable()
                     .WithColumn("TELEFONE_RESP_LEGAL").AsString(15).Nullable()
-                    .WithColumn("TEMPO_ESPIRITA").AsInt32().Nullable()
+                    .WithColumn("TEMPO_ESPIRITA").AsString(20).Nullable()
                     .WithColumn("ID_INSC_RESPONSAVEL_1").AsInt32().Nullable()
                         .ForeignKey("FK_INSC_INF_1", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
                     .WithColumn("ID_INSC_RESPONSAVEL_2").AsInt32().Nullable()
@@ -192,9 +192,10 @@ namespace EventoWeb.BancoDados.Migracoes
 
             Create
                .Table("PAGAMENTO_INSCRICAO_COMPROVANTES")
-                   .WithColumn("ID_ARQUIVO").AsInt32().PrimaryKey()
+                   .WithColumn("ID_PAG_INSC_COMPROVANTES").AsInt32().PrimaryKey().Identity()
+                   .WithColumn("ID_ARQUIVO").AsInt32()
                       .ForeignKey("FK_PAGINSC_ARQ", "ARQUIVOS_BINARIOS", "ID_ARQUIVO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
-                   .WithColumn("ID_INSCRICAO").AsInt32().PrimaryKey()
+                   .WithColumn("ID_INSCRICAO").AsInt32()
                       .ForeignKey("FK_PAGINSC_INSC", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade);
         }
 

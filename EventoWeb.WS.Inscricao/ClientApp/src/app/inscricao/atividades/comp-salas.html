@@ -4,17 +4,18 @@
       <label class="label_campos" fxFlex.xs="106px">Você é:</label>
       <dx-radio-group [items]="opcoes"
                       [(value)]="opcaoEscolhida"
-                      layout="horizontal">
+                      layout="horizontal"
+                      [disabled]="desabilitar">
       </dx-radio-group>
     </div>
   </div>
 
-  <comp-sala-participante-com-escolha *ngIf="opcaoEscolhida == opcoes[0] && configuracaoSala == 1" [salas]="salas" [(valor)]="participante">
+  <comp-sala-participante-com-escolha *ngIf="opcaoEscolhida == opcoes[0] && configuracaoSala == 1" [salas]="salas" [(valor)]="participante" [desabilitar]="desabilitar">
   </comp-sala-participante-com-escolha>
 
   <comp-sala-participante-sem-escolha *ngIf="opcaoEscolhida == opcoes[0] && configuracaoSala == 0">
   </comp-sala-participante-sem-escolha>
 
-  <comp-sala-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [salas]="salas" [(valor)]="coordenador">
+  <comp-sala-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [salas]="salas" [(valor)]="coordenador" [desabilitar]="desabilitar">
   </comp-sala-coordenador>
 </div>

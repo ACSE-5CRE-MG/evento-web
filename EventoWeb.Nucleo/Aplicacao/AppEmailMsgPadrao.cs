@@ -70,9 +70,14 @@ namespace EventoWeb.Nucleo.Aplicacao
             dto.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(inscricao.Id)
                         .Select(x => x.Converter()).ToList();
 
-            var inscInfantis = Contexto.RepositorioInscricoes.ListarInscricoesInfantisDoResponsavel(inscricao)
+            dto.Criancas = Contexto.RepositorioInscricoes.ListarInscricoesInfantisDoResponsavel(inscricao)
                 .Select(x => x.Converter())
                 .ToList();
+            foreach(var dtoCrianca in dto.Criancas)
+            {
+                dtoCrianca.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(dtoCrianca.Id.Value)
+                        .Select(x => x.Converter()).ToList();
+            }
 
             m_ServicoEmail.Enviar(new Email
             {

@@ -68,7 +68,8 @@ namespace EventoWeb.Nucleo.Aplicacao
                 inscParticipante.AtribuirAtividadeSalaEstudo(dtoInscricao.SalasEstudo, Contexto.RepositorioSalasEstudo);
                 inscParticipante.AtribuirAtividadeDepartamento(dtoInscricao.Departamento, Contexto.RepositorioDepartamentos);
 
-                inscParticipante.TornarPendente();
+                inscParticipante.TornarPendente();                
+
                 repInscricoes.Atualizar(inscParticipante);
 
                 new AppInscricaoInfantil(Contexto)
@@ -85,7 +86,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                         .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(crianca, dtoCrianca.Sarais);
                 }
 
-                m_AppEmail.EnviarInscricaoRegistrada(inscParticipante.Evento.Id, inscParticipante);
+                //m_AppEmail.EnviarInscricaoRegistrada(inscParticipante.Evento.Id, inscParticipante);
             });
         }
 

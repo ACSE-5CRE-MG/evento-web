@@ -30,7 +30,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (totalSalas == 0 && salas.Count() > 0)
                 throw new ArgumentException("Não há nenhuma sala neste evento.", "evento");
 
-            if (totalSalas > 0 && salas.Count() == totalSalas)
+            if (totalSalas > 0 && salas.Count() != totalSalas)
                 throw new ArgumentException("Todas as salas do evento devem ser escolhidas e ordenadas.", "evento");
 
             return salas;

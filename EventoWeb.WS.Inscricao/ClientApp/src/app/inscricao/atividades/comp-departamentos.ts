@@ -15,6 +15,9 @@ export class ComponenteDepartamentos {
     private mDepartamentoEscolhido: DTODepartamento;
 
     @Input()
+    desabilitar: boolean;
+
+    @Input()
     departamentos: DTODepartamento[];
 
     @Input()

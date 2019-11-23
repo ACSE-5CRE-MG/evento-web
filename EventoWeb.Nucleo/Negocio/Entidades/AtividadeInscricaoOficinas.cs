@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 throw new ArgumentException("É preciso informar as escolhas feitas das oficinas", "oficinas");
 
             m_Oficinas = new List<Oficina>(gestaoEscolhaOficinas.GerarLista());
+           /* var lista = gestaoEscolhaOficinas.GerarLista();
+            for (var indice = 0; indice < lista.Count(); indice++)
+                m_Oficinas.Add(new OficinaEscolhida(this, lista.ElementAt(indice), indice));*/
         }
 
         public virtual IEnumerable<Oficina> Oficinas { get { return m_Oficinas; } }

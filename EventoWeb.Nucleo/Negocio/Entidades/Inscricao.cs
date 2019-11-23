@@ -24,15 +24,15 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (pessoa == null)
                 throw new ArgumentNullException("Pessoa");
 
-            if (!EhValidaIdade(pessoa.CalcularIdadeEmAnos(evento.PeriodoRealizacaoEvento.DataInicial)))
-                throw new ArgumentException("A idade da pessoa é inválida para este tipo de inscrição.");
-
             m_Pessoa = pessoa;
             m_Evento = evento;
             m_Situacao = EnumSituacaoInscricao.Incompleta;
             DataRecebimento = dataRecebimento;
             ConfirmadoNoEvento = false;
             DormeEvento = true;
+
+            if (!EhValidaIdade(pessoa.CalcularIdadeEmAnos(evento.PeriodoRealizacaoEvento.DataInicial)))
+                throw new ArgumentException("A idade da pessoa é inválida para este tipo de inscrição.");
 
             IsentarInscricao();
         }

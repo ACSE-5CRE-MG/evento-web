@@ -123,7 +123,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                   m.Inverse(true);
                   m.Lazy(CollectionLazy.Lazy);
                   m.Access(Accessor.NoSetter);
-                  m.Key(k => k.Column("ID_ATIVIDADE_INSCRICAO"));
+                  m.Key(k => k.Column("ID_INSCRICAO"));
               }, c => c.OneToMany(o => o.Class(typeof(AAtividadeInscricao))));
 
             Property(x => x.Tipo, m =>
@@ -182,15 +182,20 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
             });
             Component(x => x.Pagamento, m =>
             {
+                m.Access(Accessor.NoSetter);
+                m.Parent(x => x.Inscricao, n =>
+                {
+                    n.Access(Accessor.NoSetter);
+                });
+
                 m.Bag(y => y.Comprovantes, n =>
                 {
                     n.Cascade(Cascade.All | Cascade.DeleteOrphans);
                     n.Inverse(true);
                     n.Lazy(CollectionLazy.Lazy);
                     n.Access(Accessor.NoSetter);
-                    n.Table("PAGAMENTO_INSCRICAO_COMPROVANTES");
-                    n.Key(k => k.Column("ID_ARQUIVO"));
-                }, c => c.ManyToMany(o => o.Column("ID_INSCRICAO")));
+                    n.Key(k => k.Column("ID_INSCRICAO"));
+                }, c => c.OneToMany(o => o.Class(typeof(ComprovantePagamento))));
 
                 m.Property(y => y.Forma, n =>
                   {
@@ -202,12 +207,44 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Property(y => y.Observacao, n =>
                 {
                     n.Column("OBS_PAGAMENTO");
-                    n.Access(Accessor.NoSetter);
+                    n.Access(Accessor.Property);
                     n.NotNullable(false);
                     n.Type(NHibernateUtil.StringClob);
                 });
             });
 
+        }
+    }
+
+    public class ComprovantePagamentoMapping: ClassMapping<ComprovantePagamento>
+    {
+        public ComprovantePagamentoMapping()
+        {
+            Table("PAGAMENTO_INSCRICAO_COMPROVANTES");            
+
+            Id(x => x.Id, m =>
+            {
+                m.Access(Accessor.NoSetter);
+                m.Column("ID_PAG_INSC_COMPROVANTES");
+                m.Generator(Generators.Native, g =>
+                {
+                    g.Params(new { sequence = "GEN_PAG_INSC_COMPROVANTES" });
+                });
+            });
+
+            ManyToOne(x => x.ArquivoComprovante, m =>
+              {
+                  m.Column("ID_ARQUIVO");
+                  m.Access(Accessor.NoSetter);
+                  m.NotNullable(true);
+                  m.Cascade(Cascade.All | Cascade.DeleteOrphans);
+              });
+            ManyToOne(x => x.Inscricao, m =>
+            {
+                m.Column("ID_INSCRICAO");
+                m.Access(Accessor.NoSetter);
+                m.NotNullable(true);
+            });
         }
     }
 }

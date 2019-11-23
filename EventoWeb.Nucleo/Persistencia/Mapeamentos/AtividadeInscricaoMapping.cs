@@ -81,7 +81,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
             }, c => c.ManyToMany(a => a.Column("ID_OFICINA")));
         }
     }
-
+    
     public class AtividadeInscricaoOficinasCoordenacaoMapping : SubclassMapping<AtividadeInscricaoOficinasCoordenacao>
     {
         public AtividadeInscricaoOficinasCoordenacaoMapping()

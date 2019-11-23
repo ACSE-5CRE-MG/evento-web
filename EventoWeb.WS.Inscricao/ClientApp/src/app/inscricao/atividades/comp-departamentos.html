@@ -4,7 +4,8 @@
       <label class="label_campos" fxFlex.xs="106px">Você é:</label>
       <dx-radio-group [items]="opcoes"
                       [(value)]="opcaoEscolhida"
-                      layout="horizontal">
+                      layout="horizontal"
+                      [disabled]="desabilitar">
       </dx-radio-group>
     </div>
   </div>
@@ -18,6 +19,7 @@
                    [minSearchLength]="0"
                    [searchEnabled]="true"
                    [(value)]="departamentoEscolhido"
+                   [disabled]="desabilitar"
                    fxFlex="70">
     </dx-select-box>
   </div>

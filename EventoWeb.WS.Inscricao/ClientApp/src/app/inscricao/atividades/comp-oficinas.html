@@ -4,14 +4,15 @@
       <label class="label_campos" fxFlex.xs="106px">Você é:</label>
       <dx-radio-group [items]="opcoes"
                       [(value)]="opcaoEscolhida"
-                      layout="horizontal">
+                      layout="horizontal"
+                      [disabled]="desabilitar">
       </dx-radio-group>
     </div>
   </div>
 
-  <comp-oficina-participante *ngIf="opcaoEscolhida == opcoes[0]" [oficinas]="oficinas" [(valor)]="participante">
+  <comp-oficina-participante *ngIf="opcaoEscolhida == opcoes[0]" [oficinas]="oficinas" [(valor)]="participante" [desabilitar]="desabilitar">
   </comp-oficina-participante>
 
-  <comp-oficina-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [oficinas]="oficinas" [(valor)]="coordenador">
+  <comp-oficina-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [oficinas]="oficinas" [(valor)]="coordenador" [desabilitar]="desabilitar">
   </comp-oficina-coordenador>
 </div>
