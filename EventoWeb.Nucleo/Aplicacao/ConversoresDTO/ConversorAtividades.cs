@@ -40,13 +40,26 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
 
         public static DTOSarau Converter(this ApresentacaoSarau sarau)
         {
-            return new DTOSarau
-            {
-                DuracaoMin = sarau.DuracaoMin,
-                Id = sarau.Id,
-                Participantes = sarau.Inscritos.Select(y => y.ConverterSimplificada()).ToList(),
-                Tipo = sarau.Tipo
-            };
+            var dto = new DTOSarau();
+            dto.Converter(sarau);
+            return dto;
+        }
+
+        public static DTOSarauCodigo ConverterComCodigo(this ApresentacaoSarau sarau)
+        {
+            var dto = new DTOSarauCodigo();
+            dto.Converter(sarau);
+            return dto;
+        }
+
+        private static DTOSarau Converter(this DTOSarau dto, ApresentacaoSarau sarau)
+        {
+            dto.DuracaoMin = sarau.DuracaoMin;
+            dto.Id = sarau.Id;
+            dto.Participantes = sarau.Inscritos.Select(y => y.ConverterSimplificada()).ToList();
+            dto.Tipo = sarau.Tipo;
+
+            return dto;
         }
     }
 }

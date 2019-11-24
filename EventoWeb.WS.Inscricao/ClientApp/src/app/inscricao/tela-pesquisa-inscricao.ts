@@ -33,7 +33,7 @@ export class TelaPesquisaInscricao implements OnInit {
         else {
             let dlg = this.coordenacao.Alertas.alertarProcessamento("Pesquisando identificação...");
 
-            this.wsInscricoes.enviarCodigoAcesso(this.identificacao.toLocaleUpperCase())
+            this.wsInscricoes.enviarCodigoAcesso(this.identificacao.toUpperCase())
                 .subscribe(
                     (envio) => {
                         dlg.close();

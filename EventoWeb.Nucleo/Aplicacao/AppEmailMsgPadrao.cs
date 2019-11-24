@@ -60,30 +60,54 @@ namespace EventoWeb.Nucleo.Aplicacao
             });
         }
 
-        public void EnviarInscricaoRegistrada(int idEvento, InscricaoParticipante inscricao)
+        public void EnviarInscricaoRegistrada(InscricaoParticipante inscricao)
         {
-            var mensagem = ObterMensagem(idEvento);
-            m_ServicoEmail.Configuracao = ObterCnfEmail(idEvento);
+            var mensagem = ObterMensagem(inscricao.Evento.Id);
+            m_ServicoEmail.Configuracao = ObterCnfEmail(inscricao.Evento.Id);
 
 
-            var dto = inscricao.Converter();
+            var dto = inscricao.ConverterComCodigo();
+            dto.Codigo = new AppInscOnLineIdentificacaoInscricao().GerarCodigo(inscricao.Id);
+
+            var idSarau = new AppInscOnLineIdentificacaoSarau();
             dto.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(inscricao.Id)
-                        .Select(x => x.Converter()).ToList();
+                        .Select(x => 
+                        {
+                            var sarau = x.ConverterComCodigo();
+                            sarau.Codigo = idSarau.GerarCodigo(x.Id);
+                            return sarau;
+                        })
+                        .ToList();
 
+            var idCrianca = new AppInscOnLineIdentificacaoInfantil();
             dto.Criancas = Contexto.RepositorioInscricoes.ListarInscricoesInfantisDoResponsavel(inscricao)
-                .Select(x => x.Converter())
+                .Select(x => 
+                {
+                    var crianca = x.ConverterComCodigo();
+                    crianca.Codigo = idCrianca.GerarCodigo(x.Id);
+                    return crianca;
+                })
                 .ToList();
-            foreach(var dtoCrianca in dto.Criancas)
+           /* foreach(var dtoCrianca in dto.Criancas)
             {
                 dtoCrianca.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(dtoCrianca.Id.Value)
-                        .Select(x => x.Converter()).ToList();
-            }
+                        .Select(x => x.ConverterComCodigo()).ToList();
+            }*/
 
             m_ServicoEmail.Enviar(new Email
             {
                 Assunto = mensagem.MensagemInscricaoRegistrada.Assunto,
-                Conteudo = m_GeradorMsgEmail.GerarMensagemModelo<DTOInscricaoCompleta>(mensagem.MensagemInscricaoRegistrada.Mensagem, dto),
+                Conteudo = m_GeradorMsgEmail.GerarMensagemModelo<DTOInscricaoCompletaCodigo>(mensagem.MensagemInscricaoRegistrada.Mensagem, dto),
                 Endereco = inscricao.Pessoa.Email
+            });
+        }
+
+        public void Testar(int idInscricao)
+        {
+            ExecutarSeguramente(() =>
+            {
+                var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(idInscricao);
+                EnviarInscricaoRegistrada((InscricaoParticipante)inscricao);
             });
         }
 

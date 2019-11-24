@@ -65,7 +65,9 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string TelefoneFixo { get; set; }
     }
 
-    public class DTOInscricaoAtualizacao
+    public class ADTOInscricaoAtualizacao<TSarau, TCrianca> 
+        where TCrianca: DTOCrianca 
+        where TSarau: DTOSarau
     {
         public DTOInscricaoDadosPessoais DadosPessoais { get; set; }
         public EnumTipoParticipante TipoInscricao { get; set; }
@@ -81,16 +83,29 @@ namespace EventoWeb.Nucleo.Aplicacao
         public DTOInscricaoOficina Oficina { get; set; }
         public DTOInscricaoSalaEstudo SalasEstudo { get; set; }
         public DTOInscricaoDepartamento Departamento { get; set; }
-        public IList<DTOSarau> Sarais { get; set; }
-        public IList<DTOCrianca> Criancas { get; set; }
+        public IList<TSarau> Sarais { get; set; }
+        public IList<TCrianca> Criancas { get; set; }
         public DTOPagamento Pagamento { get; set; }
     }
 
-    public class DTOInscricaoCompleta: DTOInscricaoAtualizacao
+    public class DTOInscricaoAtualizacao: ADTOInscricaoAtualizacao<DTOSarau, DTOCrianca>
+    {       
+    }
+
+    public class ADTOInscricaoCompleta<TSarau, TCrianca> : ADTOInscricaoAtualizacao<TSarau, TCrianca>
+        where TCrianca : DTOCrianca
+        where TSarau : DTOSarau
     {
         public int Id { get; set; }
         public DTOEventoCompletoInscricao Evento { get; set; }
         public EnumSituacaoInscricao Situacao { get; set; }
+    }
+
+    public class DTOInscricaoCompleta : ADTOInscricaoCompleta<DTOSarau, DTOCrianca> { }
+
+    public class DTOInscricaoCompletaCodigo : ADTOInscricaoCompleta<DTOSarauCodigo, DTOCriancaCodigo>
+    {
+        public string Codigo { get; set; }
     }
 
     public class DTOInscricaoOficina
@@ -119,6 +134,11 @@ namespace EventoWeb.Nucleo.Aplicacao
         public IList<DTOInscricaoSimplificada> Participantes { get; set; }
     }
 
+    public class DTOSarauCodigo: DTOSarau
+    {
+        public string Codigo { get; set; }
+    }
+
     public class DTOInscricaoSimplificada
     {
         public int Id { get; set; }
@@ -145,6 +165,11 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string NomeCracha { get; set; }
         public bool PrimeiroEncontro { get; set; }
         public IList<DTOSarau> Sarais { get; set; }
+    }
+
+    public class DTOCriancaCodigo : DTOCrianca
+    {
+        public string Codigo { get; set; }
     }
 
     public class DTOPagamento

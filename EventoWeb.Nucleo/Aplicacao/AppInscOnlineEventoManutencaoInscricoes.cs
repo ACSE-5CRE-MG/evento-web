@@ -86,7 +86,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                         .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(crianca, dtoCrianca.Sarais);
                 }
 
-                //m_AppEmail.EnviarInscricaoRegistrada(inscParticipante.Evento.Id, inscParticipante);
+                m_AppEmail.EnviarInscricaoRegistrada(inscParticipante);
             });
         }
 

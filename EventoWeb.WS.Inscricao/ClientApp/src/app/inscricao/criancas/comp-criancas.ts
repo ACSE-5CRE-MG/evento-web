@@ -35,7 +35,7 @@ export class ComponenteCriancas {
 
                         let dlg = this.coordenacao.Alertas.alertarProcessamento("Buscando criança pelo código...");
 
-                        this.wsManInscricoes.obterCrianca(this.inscrito.Evento.Id, this.inscrito.Id, codigo)
+                        this.wsManInscricoes.obterCrianca(this.inscrito.Evento.Id, this.inscrito.Id, codigo.toUpperCase())
                             .subscribe(
                                 (crianca) => {
                                     crianca.Responsaveis.push({ Id: this.inscrito.Id, IdEvento: this.inscrito.Evento.Id, Nome: this.inscrito.DadosPessoais.Nome });
