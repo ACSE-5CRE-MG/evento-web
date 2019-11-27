@@ -73,14 +73,12 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Column("TEM_DEPARTAMENTALIZACAO");
             });
 
-            this.Component(x => x.ConfiguracaoSalaEstudo, c =>
+            this.Property(x => x.ConfiguracaoSalaEstudo, m =>
             {
-                c.Access(Accessor.NoSetter);
-                c.Property(o => o.ModeloDivisao, m => {
-                    m.Access(Accessor.NoSetter);
-                    m.NotNullable(false);
-                    m.Column("MODELO_DIV_SL_ESTUDO");
-                });
+                m.Access(Accessor.NoSetter);
+                m.Access(Accessor.NoSetter);
+                m.NotNullable(false);
+                m.Column("MODELO_DIV_SL_ESTUDO");
             });
 
             this.Property(x => x.TemOficinas, m => {
@@ -94,24 +92,18 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Column("TEM_DORMITORIOS");
             });
 
-            this.Component(x => x.ConfiguracaoEvangelizacao, c =>
+            this.Property(x => x.ConfiguracaoEvangelizacao, m =>
             {
-                c.Access(Accessor.NoSetter);
-                c.Property(o => o.Publico, m => {
-                    m.Access(Accessor.NoSetter);
-                    m.NotNullable(false);
-                    m.Column("PUBLICO_EVANGELIZACAO");
-                });
+                m.Access(Accessor.NoSetter);
+                m.NotNullable(false);
+                m.Column("PUBLICO_EVANGELIZACAO");
             });
 
-            this.Component(x => x.ConfiguracaoSarau, c =>
+            this.Property(x => x.ConfiguracaoTempoSarauMin, m =>
             {
-                c.Access(Accessor.NoSetter);
-                c.Property(o => o.TempoDuracaoMin, m => {
-                    m.Access(Accessor.NoSetter);
-                    m.NotNullable(false);
-                    m.Column("TEMPO_SARAU_MIN");
-                });
+                m.Access(Accessor.NoSetter);
+                m.NotNullable(false);
+                m.Column("TEMPO_SARAU_MIN");
             });
 
             this.Property(x => x.IdadeMinimaInscricaoAdulto, m =>

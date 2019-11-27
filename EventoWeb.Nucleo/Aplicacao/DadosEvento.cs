@@ -15,9 +15,9 @@ namespace EventoWeb.Nucleo.Aplicacao
         public Boolean TemDepartamentalizacao { get; set; }
         public Boolean TemOficinas { get; set; }
         public Boolean TemDormitorios { get; set; }
-        public ConfiguracaoEvangelizacao ConfiguracaoEvangelizacao { get; set; }
-        public ConfiguracaoSalaEstudo ConfiguracaoSalaEstudo { get; set; }
-        public ConfiguracaoSarau ConfiguracaoSarau { get; set; }
+        public EnumPublicoEvangelizacao? ConfiguracaoEvangelizacao { get; set; }
+        public EnumModeloDivisaoSalasEstudo? ConfiguracaoSalaEstudo { get; set; }
+        public int? ConfiguracaoTempoSarauMin { get; set; }
         public int IdadeMinima { get; set; }
     }
 

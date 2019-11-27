@@ -215,7 +215,7 @@
       </dx-validation-group>
     </div>
     <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100"
-         *ngIf="inscricao.Evento.TemOficinas || inscricao.Evento.ConfiguracaoSalaEstudo != null || inscricao.Evento.TemDepartamentalizacao || inscricao.Evento.TemSarau">
+         *ngIf="inscricao.Evento.TemOficinas || inscricao.Evento.ConfiguracaoSalaEstudo != null || inscricao.Evento.TemDepartamentalizacao || inscricao.Evento.ConfiguracaoTempoSarauMin != null">
       <mat-card-title>Participação em Atividades</mat-card-title>
       <mat-divider></mat-divider>
       <mat-tab-group>
@@ -223,19 +223,19 @@
           <comp-oficinas [desabilitar]="NaoEhIncompleta" [oficinas]="inscricao.Evento.Oficinas" [forma]="dadosTela.formaEscolha" [(escolhido)]="dadosTela.oficinasEscolhidas"></comp-oficinas>
         </mat-tab>
         <mat-tab label="Estudo" *ngIf="inscricao.Evento.ConfiguracaoSalaEstudo != null">
-          <comp-salas [desabilitar]="NaoEhIncompleta" [salas]="inscricao.Evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="inscricao.Evento.ConfiguracaoSalaEstudo.ModeloDivisao" [(escolhido)]="dadosTela.salasEscolhidas"></comp-salas>
+          <comp-salas [desabilitar]="NaoEhIncompleta" [salas]="inscricao.Evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="inscricao.Evento.ConfiguracaoSalaEstudo" [(escolhido)]="dadosTela.salasEscolhidas"></comp-salas>
         </mat-tab>
         <mat-tab label="Departamentos" *ngIf="inscricao.Evento.TemDepartamentalizacao">
           <comp-departamentos [desabilitar]="NaoEhIncompleta" [departamentos]="inscricao.Evento.Departamentos" [forma]="dadosTela.formaEscolha" [(valor)]="dadosTela.departamentoEscolhido"></comp-departamentos>
         </mat-tab>
-        <mat-tab label="Sarau" *ngIf="inscricao.Evento.ConfiguracaoSarau != null" style="padding: 5px">
+        <mat-tab label="Sarau" *ngIf="inscricao.Evento.ConfiguracaoTempoSarauMin != null" style="padding: 5px">
           <comp-sarau [desabilitar]="NaoEhIncompleta" [(valor)]="dadosTela.sarais" [inscrito]="dadosTela.inscricaoSimples"></comp-sarau>
         </mat-tab>
       </mat-tab-group>
     </div>
     <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100"
          *ngIf="inscricao.Evento.ConfiguracaoEvangelizacao != null &&
-                (inscricao.Evento.ConfiguracaoEvangelizacao.Publico == 0 ||(inscricao.Evento.ConfiguracaoEvangelizacao.Publico == 1 && dadosTela.tipoInscricao == this.coordenacao.TiposInscricao[1]))">
+                (inscricao.Evento.ConfiguracaoEvangelizacao == 0 ||(inscricao.Evento.ConfiguracaoEvangelizacao == 1 && dadosTela.tipoInscricao == this.coordenacao.TiposInscricao[1]))">
       <mat-card-title>Crianças que você será responsável</mat-card-title>
       <mat-divider></mat-divider>
       <comp-criancas [desabilitar]="NaoEhIncompleta" [(valor)]="dadosTela.criancas" [inscrito]="inscricao"></comp-criancas>

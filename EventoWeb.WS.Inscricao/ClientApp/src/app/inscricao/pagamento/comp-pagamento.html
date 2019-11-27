@@ -18,7 +18,7 @@
   <div *ngIf="opcaoEscolhida == opcoes[0]" fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
     <label class="label_campos" fxFlex.xs="106px">Comprovante (.jpg, .jpeg):</label>
     <dx-file-uploader [multiple]="true"
-                      [uploadMode]="useButtons"
+                      [uploadMode]="'useButtons'"
                       labelText="Arraste o arquivo para cá"
                       selectButtonText="Selecione o arquivo"
                       [allowedFileExtensions]="['.jpg', '.jpeg']"
@@ -40,6 +40,6 @@
   <dx-text-area *ngIf="opcaoEscolhida != null"
                 [height]="180"
                 [(value)]="observacoes"
-                [disabled]="(opcaoEscolhida == opcoes[0] && comprovantes == 0) || desabilitar">
+                [disabled]="desabilitar">
   </dx-text-area>
 </div>

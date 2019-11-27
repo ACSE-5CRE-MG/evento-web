@@ -31,7 +31,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 if (value == null)
                     throw new ArgumentNullException("Evento", "Evento não pode ser nulo.");
 
-                if (value.ConfiguracaoSarau == null)
+                if (value.ConfiguracaoTempoSarauMin == null)
                     throw new InvalidOperationException("Este evento não está configurado para ter Sarau.");
 
                 m_Evento = value;

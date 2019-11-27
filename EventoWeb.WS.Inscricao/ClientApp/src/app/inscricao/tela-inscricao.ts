@@ -125,15 +125,15 @@ export class TelaInscricao implements OnInit {
             this.dadosTela.oficinasEscolhidas.EscolhidasParticipante.length != this.inscricao.Evento.Oficinas.length)
             this.coordenacao.Alertas.alertarAtencao("Você não escolheu todas as oficinas.", "Sem essa informação não é possível enviar a inscrição.");
         else if (this.dadosTela.tipoInscricaoEscolhida == this.coordenacao.TiposInscricao[0] &&
-            this.inscricao.Evento.CnfSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao &&
+            this.inscricao.Evento.ConfiguracaoSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao &&
             this.dadosTela.salasEscolhidas == null)
             this.coordenacao.Alertas.alertarAtencao("Você não escolheu as salas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
         else if (this.dadosTela.tipoInscricaoEscolhida == this.coordenacao.TiposInscricao[0] &&
-            this.inscricao.Evento.CnfSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao &&
+            this.inscricao.Evento.ConfiguracaoSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao &&
             this.dadosTela.salasEscolhidas.EscolhidasParticipante.length != this.inscricao.Evento.SalasEstudo.length)
             this.coordenacao.Alertas.alertarAtencao("Você não escolheu todas as salas.", "Sem essa informação não é possível enviar a inscrição.");
         else if (this.dadosTela.tipoInscricaoEscolhida == this.coordenacao.TiposInscricao[0] &&
-            this.inscricao.Evento.TemDepartamentos &&
+            this.inscricao.Evento.TemDepartamentalizacao &&
             this.dadosTela.departamentoEscolhido == null)
             this.coordenacao.Alertas.alertarAtencao("Você não escolheu o departamento que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
         else if (this.dadosTela.tipoInscricaoEscolhida == this.coordenacao.TiposInscricao[1] &&
@@ -142,7 +142,7 @@ export class TelaInscricao implements OnInit {
             this.dadosTela.oficinasEscolhidas.EscolhidasParticipante.length != this.inscricao.Evento.Oficinas.length)
             this.coordenacao.Alertas.alertarAtencao("Você não escolheu todas as oficinas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
         else if (this.dadosTela.tipoInscricaoEscolhida == this.coordenacao.TiposInscricao[1] &&
-            this.inscricao.Evento.CnfSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao &&
+            this.inscricao.Evento.ConfiguracaoSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao &&
             this.dadosTela.salasEscolhidas.EscolhidasParticipante != null &&
             this.dadosTela.salasEscolhidas.EscolhidasParticipante.length != this.inscricao.Evento.SalasEstudo.length)
             this.coordenacao.Alertas.alertarAtencao("Você não escolheu todas as salas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");

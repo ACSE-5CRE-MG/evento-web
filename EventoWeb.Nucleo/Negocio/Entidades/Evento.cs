@@ -13,9 +13,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         private DateTime m_DataRegistro;
         private Periodo m_PeriodoInscricaoOnLine;
         private Periodo m_PeriodoRealizacaoEvento;
-        private ConfiguracaoEvangelizacao m_ConfiguracaoEvangelizacao;
-        private ConfiguracaoSarau m_ConfiguracaoSarau;
-        private ConfiguracaoSalaEstudo m_ConfiguracaoSalaEstudo;
+        private EnumPublicoEvangelizacao? m_ConfiguracaoEvangelizacao;
+        private int? m_ConfiguracaoTempoSarauMin;
+        private EnumModeloDivisaoSalasEstudo? m_ConfiguracaoSalaEstudo;
         private int m_IdadeMinimaInscricaoAdulto;
         private decimal m_ValorInscricaoAdulto;
         private decimal m_ValorInscricaoCrianca;
@@ -81,22 +81,28 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual Boolean TemDepartamentalizacao { get; set; }
 
-        public virtual ConfiguracaoSalaEstudo ConfiguracaoSalaEstudo
+        public virtual EnumModeloDivisaoSalasEstudo? ConfiguracaoSalaEstudo
         {
             get => m_ConfiguracaoSalaEstudo;
             set => m_ConfiguracaoSalaEstudo = value;
         }
 
-        public virtual ConfiguracaoEvangelizacao ConfiguracaoEvangelizacao
+        public virtual EnumPublicoEvangelizacao? ConfiguracaoEvangelizacao
         {
             get => m_ConfiguracaoEvangelizacao;
             set => m_ConfiguracaoEvangelizacao = value;
         }
 
-        public virtual ConfiguracaoSarau ConfiguracaoSarau
+        public virtual int? ConfiguracaoTempoSarauMin
         {
-            get => m_ConfiguracaoSarau;
-            set => m_ConfiguracaoSarau = value;
+            get => m_ConfiguracaoTempoSarauMin;
+            set
+            {
+                if (value != null && value <= 0)
+                    throw new ExcecaoNegocioAtributo("Evento", "ConfiguracaoTempoSarauMin", "Tempo de duração do Sarau deve ser maior que zero");
+
+                m_ConfiguracaoTempoSarauMin = value;
+            }
         }
         public virtual int IdadeMinimaInscricaoAdulto 
         {
@@ -130,50 +136,5 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 m_ValorInscricaoCrianca = value;
             }
         }
-    }
-
-    public class ConfiguracaoEvangelizacao
-    {
-        private EnumPublicoEvangelizacao m_Publico;
-
-        public ConfiguracaoEvangelizacao(EnumPublicoEvangelizacao publico)
-        {
-            m_Publico = publico;
-        }
-
-        protected ConfiguracaoEvangelizacao() { }
-
-        public virtual EnumPublicoEvangelizacao Publico { get => m_Publico; }
-    }
-
-    public class ConfiguracaoSarau
-    {
-        private int m_TempoDuracaoMin;
-
-        public ConfiguracaoSarau(int tempoDuracaoMin)
-        {
-            if (tempoDuracaoMin <= 0)
-                throw new ExcecaoNegocioAtributo("ConfiguracaoSarau", "tempoDuracaoMin", "Tempo de duração deve ser maior que zero");
-
-            m_TempoDuracaoMin = tempoDuracaoMin;
-        }
-
-        protected ConfiguracaoSarau() { }
-
-        public int TempoDuracaoMin { get => m_TempoDuracaoMin; }
-    }
-
-    public class ConfiguracaoSalaEstudo
-    {
-        private EnumModeloDivisaoSalasEstudo m_ModeloDivisao;
-
-        public ConfiguracaoSalaEstudo(EnumModeloDivisaoSalasEstudo modeloDivisao)
-        {
-            m_ModeloDivisao = modeloDivisao;
-        }
-
-        protected ConfiguracaoSalaEstudo() { }
-
-        public virtual EnumModeloDivisaoSalasEstudo ModeloDivisao { get => m_ModeloDivisao; }
     }
 }

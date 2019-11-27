@@ -46,7 +46,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                 TemOficinas = dto.TemOficinas,
                 ConfiguracaoEvangelizacao = dto.ConfiguracaoEvangelizacao,
                 ConfiguracaoSalaEstudo = dto.ConfiguracaoSalaEstudo,
-                ConfiguracaoSarau = dto.ConfiguracaoSarau
+                ConfiguracaoTempoSarauMin = dto.ConfiguracaoTempoSarauMin
             };
 
             ExecutarSeguramente(() =>
@@ -74,7 +74,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                 evento.TemOficinas = dto.TemOficinas;
                 evento.ConfiguracaoEvangelizacao = dto.ConfiguracaoEvangelizacao;
                 evento.ConfiguracaoSalaEstudo = dto.ConfiguracaoSalaEstudo;
-                evento.ConfiguracaoSarau = dto.ConfiguracaoSarau;
+                evento.ConfiguracaoTempoSarauMin = dto.ConfiguracaoTempoSarauMin;
 
                 if (evento.Logotipo == null)
                     evento.Logotipo = new ArquivoBinario(Convert.FromBase64String(dto.Logotipo), EnumTipoArquivoBinario.ImagemJPEG);

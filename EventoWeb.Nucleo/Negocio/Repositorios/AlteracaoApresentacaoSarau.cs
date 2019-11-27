@@ -18,7 +18,7 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
         public void Persistir(ApresentacaoSarau apresentacao)
         {
             if (mRepositorioApresentacoes.ObterTempoTotalApresentacoes(apresentacao.Evento, apresentacao) + apresentacao.DuracaoMin > 
-                  apresentacao.Evento.ConfiguracaoSarau.TempoDuracaoMin)
+                  apresentacao.Evento.ConfiguracaoTempoSarauMin.Value)
                 throw new ERepositorio("A soma do tempo de todas as apresentações, inclusive com esta, ultrapassa o tempo definido para o evento.");
 
             mRepositorioApresentacoes.Atualizar(apresentacao);

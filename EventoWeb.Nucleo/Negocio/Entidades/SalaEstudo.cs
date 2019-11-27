@@ -51,7 +51,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             get { return m_FaixaEtaria; }
             set
             {
-                if (m_Evento.ConfiguracaoSalaEstudo.ModeloDivisao == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao)
+                if (m_Evento.ConfiguracaoSalaEstudo.Value == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao)
                     throw new ArgumentException("O modelo de divisão da salas de estudo não permite o uso da faixa etária.", "FaixaEtaria");
 
                 m_FaixaEtaria = value;
@@ -69,7 +69,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             ValidarSeParticipanteEhNulo(participante);
             ValidarSeParticipanteEhMesmoEvento(participante);
 
-            if (m_Evento.ConfiguracaoSalaEstudo.ModeloDivisao == EnumModeloDivisaoSalasEstudo.PorIdadeCidade &&
+            if (m_Evento.ConfiguracaoSalaEstudo.Value == EnumModeloDivisaoSalasEstudo.PorIdadeCidade &&
                 m_FaixaEtaria != null &&
                 (participante.Pessoa.CalcularIdadeEmAnos(m_Evento.PeriodoRealizacaoEvento.DataInicial) < m_FaixaEtaria.IdadeMin ||
                 participante.Pessoa.CalcularIdadeEmAnos(m_Evento.PeriodoRealizacaoEvento.DataInicial) > m_FaixaEtaria.IdadeMax))

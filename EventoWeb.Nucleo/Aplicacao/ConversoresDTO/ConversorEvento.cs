@@ -36,7 +36,7 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
             dto.TemOficinas = evento.TemOficinas;
             dto.ConfiguracaoSalaEstudo = evento.ConfiguracaoSalaEstudo;
             dto.ConfiguracaoEvangelizacao = evento.ConfiguracaoEvangelizacao;
-            dto.ConfiguracaoSarau = evento.ConfiguracaoSarau;
+            dto.ConfiguracaoTempoSarauMin = evento.ConfiguracaoTempoSarauMin;
             dto.IdadeMinima = evento.IdadeMinimaInscricaoAdulto;
             dto.ValorInscricaoAdulto = evento.ValorInscricaoAdulto;
             dto.ValorInscricaoCrianca = evento.ValorInscricaoCrianca;

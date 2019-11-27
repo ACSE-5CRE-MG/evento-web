@@ -17,10 +17,10 @@ export class DTOEventoCompleto extends DTOEventoListagem {
     SalasEstudo: DTOSalaEstudo[];
     Departamentos: DTODepartamento[];
     TemOficinas: boolean;
-    TemDepartamentos: boolean;
-    TemSarau: boolean;
-    CnfSalaEstudo: EnumModeloDivisaoSalasEstudo; // Pode ser nulo
-    CnfEvangelizacao: EnumPublicoEvangelizacao; // Pode ser nulo
+    TemDepartamentalizacao: boolean;
+    ConfiguracaoTempoSarauMin: number; // Pode ser nulo
+    ConfiguracaoSalaEstudo: EnumModeloDivisaoSalasEstudo; // Pode ser nulo
+    ConfiguracaoEvangelizacao: EnumPublicoEvangelizacao; // Pode ser nulo
     ValorInscricaoAdulto: number;
     ValorInscricaoCrianca: number;
 }
