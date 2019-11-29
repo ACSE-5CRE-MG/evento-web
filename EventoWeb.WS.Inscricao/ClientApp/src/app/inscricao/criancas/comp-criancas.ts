@@ -38,9 +38,16 @@ export class ComponenteCriancas {
                         this.wsManInscricoes.obterCrianca(this.inscrito.Evento.Id, this.inscrito.Id, codigo.toUpperCase())
                             .subscribe(
                                 (crianca) => {
-                                    crianca.Responsaveis.push({ Id: this.inscrito.Id, IdEvento: this.inscrito.Evento.Id, Nome: this.inscrito.DadosPessoais.Nome });
-                                    this.valor.push(crianca);
-                                    this.valorChange.emit(this.valor);
+                                    dlg.close();
+
+                                    if (crianca != null) {
+                                        crianca.DataNascimento = new Date(crianca.DataNascimento);
+                                        crianca.Responsaveis.push({ Id: this.inscrito.Id, IdEvento: this.inscrito.Evento.Id, Nome: this.inscrito.DadosPessoais.Nome });
+                                        this.valor.push(crianca);
+                                        this.valorChange.emit(this.valor);
+                                    }
+                                    else
+                                        this.coordenacao.Alertas.alertarInformacao("Criança não encontrada com o código informado, ou ela já tem os dois responsáveis definidos", "");
                                 },
                                 (erro) => {
                                     dlg.close();
@@ -209,7 +216,7 @@ export class DlgCriancaFormulario {
             this.crianca.Uf = this.dadosTela.uf;
             this.crianca.Email = this.dadosTela.email;
             this.crianca.Nome = this.dadosTela.nome;
-            this.crianca.Sexo = (this.dadosTela.sexoEscolhido[0] == this.dadosTela.sexoEscolhido ? EnumSexo.Masculino : EnumSexo.Feminino);
+            this.crianca.Sexo = (this.dadosTela.sexoEscolhido == this.coordenacao.Sexos[0] ? EnumSexo.Masculino : EnumSexo.Feminino);
             this.crianca.UsaAdocanteDiariamente = this.dadosTela.usaAdocanteDiariamente;
             this.crianca.NomeCracha = this.dadosTela.nomeCracha;
 

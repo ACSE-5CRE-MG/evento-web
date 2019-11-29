@@ -210,7 +210,7 @@ namespace EventoWeb.BancoDados.Migracoes
                     .WithColumn("ID_DEPARTAMENTO").AsInt32().Nullable()
                         .ForeignKey("FK_ATIVIDADE_DEP", "DEPARTAMENTOS", "ID_DEPARTAMENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
                     .WithColumn("EH_COORD_DEP").AsBoolean().Nullable()
-                    .WithColumn("ID_OFICINA").AsInt32().NotNullable()
+                    .WithColumn("ID_OFICINA").AsInt32().Nullable()
                         .ForeignKey("FK_ATIVIDADE_OFICINA", "OFICINAS", "ID_OFICINA").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
                     .WithColumn("ID_SALA_ESTUDO").AsInt32().Nullable()
                         .ForeignKey("FK_ATIVIDADE_SALA", "SALAS_ESTUDO", "ID_SALA_ESTUDO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade);

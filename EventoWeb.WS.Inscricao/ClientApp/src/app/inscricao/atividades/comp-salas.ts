@@ -246,7 +246,8 @@ export class ComponenteSalaCoordenador {
 
     @Input()
     set valor(sala: DTOSalaEstudo) {
-        this.mValor = this.salas.find(x => x.Id == sala.Id);
+        if (sala != null)
+          this.mValor = this.salas.find(x => x.Id == sala.Id);
     }
 
     @Output()

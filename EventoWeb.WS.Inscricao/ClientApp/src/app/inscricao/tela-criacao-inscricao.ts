@@ -77,7 +77,7 @@ export class TelaCriacaoInscricao implements OnInit {
                 DataNascimento: this.dadosTela.dataNascimento,
                 Email: this.dadosTela.email,
                 Nome: this.dadosTela.nome,
-                Sexo: (this.dadosTela.sexoEscolhido[0] == this.dadosTela.sexoEscolhido ? EnumSexo.Feminino : EnumSexo.Masculino),
+                Sexo: (this.dadosTela.sexoEscolhido == this.coordenacao.Sexos[0] ? EnumSexo.Masculino : EnumSexo.Feminino),
                 TipoInscricao: (this.coordenacao.TiposInscricao[0] == this.dadosTela.tipoInscricao ? EnumTipoInscricao.Participante : EnumTipoInscricao.ParticipanteTrabalhador),
                 Cidade: this.dadosTela.cidade,
                 UF: this.dadosTela.uf

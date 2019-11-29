@@ -236,17 +236,22 @@ export class ComponenteOficinaCoordenador {
     oficinas: DTOOficina[] = [];
 
     @Input()
-    valor: DTOOficina;
+    set valor(oficina: DTOOficina) {
+        if (oficina != null)
+            this.mValor = this.oficinas.find(x => x.Id == oficina.Id);
+    }
 
     @Output()
     valorChange: EventEmitter<DTOOficina> = new EventEmitter<DTOOficina>();
 
+    private mValor: DTOOficina;
+
     set oficinaCoordena(valor: DTOOficina) {
-        this.valor = valor;
-        this.valorChange.emit(this.valor);
+        this.mValor = valor;
+        this.valorChange.emit(this.mValor);
     }
 
     get oficinaCoordena(): DTOOficina {
-        return this.valor;
+        return this.mValor;
     }
 }

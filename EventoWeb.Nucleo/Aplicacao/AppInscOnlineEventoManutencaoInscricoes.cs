@@ -115,7 +115,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                         throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "Inscrição informada não é de uma criança.");
                     else if (inscricao.Evento.Id != idEvento)
                         throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "Essa inscrição não é do evento escolhido.");
-                    else
+                    else if (((InscricaoInfantil)inscricao).InscricaoResponsavel2 == null)
                         dto = ((InscricaoInfantil)inscricao).Converter();
                 }
             });

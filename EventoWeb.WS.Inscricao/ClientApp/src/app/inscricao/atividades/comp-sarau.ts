@@ -38,9 +38,15 @@ export class ComponenteSarau {
                         this.wsManInscricoes.obterSarau(this.inscrito.IdEvento, this.inscrito.Id, codigo.toUpperCase())
                             .subscribe(
                                 (sarau) => {
-                                    sarau.Participantes.push(this.inscrito);
-                                    this.valor.push(sarau);
-                                    this.valorChange.emit(this.valor);
+                                    dlg.close();
+
+                                    if (sarau != null) {
+                                        sarau.Participantes.push(this.inscrito);
+                                        this.valor.push(sarau);
+                                        this.valorChange.emit(this.valor);
+                                    }
+                                    else
+                                        this.coordenacao.Alertas.alertarInformacao("Sarau não encontrado com o código informado", "");
                                 },
                                 (erro) => {
                                     dlg.close();
@@ -53,7 +59,7 @@ export class ComponenteSarau {
     }
 
     clicarCriar(): void {
-        this.DlgsSarau.apresentarDlgForm(null)
+        this.DlgsSarau.apresentarDlgForm({ desabilitar: this.desabilitar, sarau: null })
             .subscribe(
                 (sarauCriado) => {
                     if (sarauCriado != null) {

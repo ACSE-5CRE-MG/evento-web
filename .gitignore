@@ -13,3 +13,7 @@
 /EventoWeb.WS.Inscricao/bin/Debug/netcoreapp2.1
 /EventoWeb.WS.Inscricao/obj
 /Secretaria/web-iu/node_modules
+/EventoWeb.BancoDados/bin/Release/netcoreapp2.1
+/EventoWeb.Nucleo/bin/Release/netstandard2.0
+/EventoWeb.WS.Inscricao/bin/Release/netcoreapp2.1
+/EventoWeb.WS.Inscricao/Properties/PublishProfiles

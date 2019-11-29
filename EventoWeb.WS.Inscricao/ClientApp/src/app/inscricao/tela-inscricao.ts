@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
     DTOInscricaoCompleta, EnumApresentacaoAtividades, DTOSarau, DTOInscricaoSimplificada,
     DTOCrianca, DTOPagamento, DTOInscricaoAtualizacao, EnumSexo, DTOInscricaoDadosPessoais, EnumTipoInscricao,
-    DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOInscricaoDepartamento, EnumSituacaoInscricao
+    DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOInscricaoDepartamento, EnumSituacaoInscricao, EnumPagamento
 } from './objetos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { WsManutencaoInscricoes } from '../webservices/wsManutencaoInscricoes';
@@ -107,7 +107,7 @@ export class TelaInscricao implements OnInit {
 
     private voltar(idInscricao: number) {
         this.coordenacao.AutorizacoesInscricao.remover(idInscricao);
-        this.navegadorUrl.navigate(['pesquisar']);
+        this.navegadorUrl.navigate(['']);
     }
 
     clicarAtualizar(): void {
@@ -138,16 +138,21 @@ export class TelaInscricao implements OnInit {
             this.coordenacao.Alertas.alertarAtencao("Você não escolheu o departamento que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
         else if (this.dadosTela.tipoInscricaoEscolhida == this.coordenacao.TiposInscricao[1] &&
             this.inscricao.Evento.TemOficinas &&
+            this.dadosTela.oficinasEscolhidas != null &&
             this.dadosTela.oficinasEscolhidas.EscolhidasParticipante != null &&
             this.dadosTela.oficinasEscolhidas.EscolhidasParticipante.length != this.inscricao.Evento.Oficinas.length)
             this.coordenacao.Alertas.alertarAtencao("Você não escolheu todas as oficinas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
         else if (this.dadosTela.tipoInscricaoEscolhida == this.coordenacao.TiposInscricao[1] &&
             this.inscricao.Evento.ConfiguracaoSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao &&
+            this.dadosTela.salasEscolhidas != null &&
             this.dadosTela.salasEscolhidas.EscolhidasParticipante != null &&
             this.dadosTela.salasEscolhidas.EscolhidasParticipante.length != this.inscricao.Evento.SalasEstudo.length)
             this.coordenacao.Alertas.alertarAtencao("Você não escolheu todas as salas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
-        else if (this.dadosTela.pagamento == null)
+        else if (this.dadosTela.pagamento == null || this.dadosTela.pagamento.Forma == null)
             this.coordenacao.Alertas.alertarAtencao("Você precisa informar o Pagamento.", "Sem essa informação não é possível enviar a inscrição.");
+        else if (this.dadosTela.pagamento != null && this.dadosTela.pagamento.Forma == EnumPagamento.Comprovante &&
+            (this.dadosTela.pagamento.ComprovantesBase64 == null || this.dadosTela.pagamento.ComprovantesBase64.length == 0))
+            this.coordenacao.Alertas.alertarAtencao("Você precisa informar o(s) comprovante(s) de pagamento.", "Sem essa informação não é possível enviar a inscrição.");
         else {
             let dlg = this.coordenacao.Alertas.alertarProcessamento("Atualizando dados...");
 
@@ -156,7 +161,7 @@ export class TelaInscricao implements OnInit {
             atualizacao.DadosPessoais.DataNascimento = this.dadosTela.dataNascimento;
             atualizacao.DadosPessoais.Email = this.dadosTela.email;
             atualizacao.DadosPessoais.Nome = this.dadosTela.nome;
-            atualizacao.DadosPessoais.Sexo = (this.dadosTela.sexoEscolhido[0] == this.dadosTela.sexoEscolhido ? EnumSexo.Feminino : EnumSexo.Masculino);
+            atualizacao.DadosPessoais.Sexo = (this.dadosTela.sexoEscolhido == this.coordenacao.Sexos[0] ? EnumSexo.Masculino : EnumSexo.Feminino);
             atualizacao.DadosPessoais.AlimentosAlergia = this.dadosTela.alimentosAlergia;
             atualizacao.DadosPessoais.CarnesNaoCome = this.dadosTela.carnesNaoCome;
             atualizacao.DadosPessoais.Cidade = this.dadosTela.cidade;
