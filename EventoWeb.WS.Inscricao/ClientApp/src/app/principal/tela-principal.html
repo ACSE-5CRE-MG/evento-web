@@ -7,9 +7,13 @@
     <span style="flex: 1 1 auto;"></span>
     <a mat-raised-button [routerLink]="'/pesquisar'">Acompanhar Inscrição</a>
   </mat-toolbar>
-  <div *ngIf="eventos == null || eventos.length == 0" fxFill fxLayout="column" fxLayoutAlign="center center">
-    <i class="fas fa-bullhorn fa-7x"></i>
-    <span class="dx-overlay-wrapper">Não há eventos disponíveis hoje.</span>
+  <div *ngIf="eventos == null || eventos.length == 0" fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center">
+    <div fxLayout="column" class="margem-5px" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <i class="fas fa-bullhorn fa-7x"></i>
+      <div>
+        Não há eventos disponíveis hoje.
+      </div>
+    </div>
   </div>
   <div *ngIf="eventos.length > 0" fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="margem-5px" fxLayoutAlign="center center">
     <div fxFlex="20" fxFlex.lt-lg="30" fxFlex.xs="100" fxLayout="column" class="cartao" *ngFor="let evento of eventos" style="height: 390px">

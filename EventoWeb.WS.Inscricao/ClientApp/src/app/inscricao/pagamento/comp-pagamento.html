@@ -7,7 +7,7 @@
   <mat-divider></mat-divider>
   <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
-      <label class="label_campos" fxFlex.xs="106px">Como será o Pagamento:</label>
+      <label class="label_campos" fxFlex="106px">Como será o Pagamento:</label>
       <dx-radio-group [items]="opcoes"
                       [(value)]="opcaoEscolhida"
                       layout="horizontal"
@@ -15,10 +15,17 @@
       </dx-radio-group>
     </div>
   </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+    <div class="label_campos" fxFlex="106px"></div>
+    <div>
+      <strong>Enviar Comprovante</strong> refere-se a quando você realizou o pagamento da sua inscrição ou a sua e mais outras. Nesse último caso detalhe no campo mais abaixo quais as pessoas e cidades que estão incluidas no comprovante.<br />
+      <strong>Comprovante esta em outra inscrição</strong> se refere a situação em que a sua inscrição foi paga junto com outras e o comprovante será enviado em uma outra inscrição. Sendo assim nos informe o nome e a cidade da pessoa que enviará o comprovante no campo abaixo.<br />
+      <strong>Outros</strong> é para dizer a secretaria que você pagará mais tarde, fez ou precisa de isenção, ou qualquer outra situação que não se enquadre nas duas primeiras formas.
+    </div>
+  </div>
   <div *ngIf="opcaoEscolhida == opcoes[0]" fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-    <label class="label_campos" fxFlex.xs="106px">Comprovante (.jpg, .jpeg):</label>
+    <label class="label_campos" fxFlex="106px">Comprovante (.jpg, .jpeg):</label>
     <dx-file-uploader [multiple]="true"
-                      
                       labelText="Arraste o arquivo para cá"
                       selectButtonText="Selecione o arquivo"
                       [allowedFileExtensions]="['.jpg', '.jpeg']"

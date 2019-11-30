@@ -39,6 +39,6 @@ export class TelaPrincipal implements OnInit {
         if (evento.Logotipo == null || evento.Logotipo.trim().length == 0)
             return 'assets/semimagem.jpg';
         else
-            return evento.Logotipo;
+            return 'data:image/jpeg;base64,' + evento.Logotipo;
     }
 }

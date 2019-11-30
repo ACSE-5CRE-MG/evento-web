@@ -233,13 +233,13 @@
         </mat-tab>
       </mat-tab-group>
     </div>
-    <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100"
-         *ngIf="inscricao.Evento.ConfiguracaoEvangelizacao != null &&
-                (inscricao.Evento.ConfiguracaoEvangelizacao == 0 ||(inscricao.Evento.ConfiguracaoEvangelizacao == 1 && dadosTela.tipoInscricao == this.coordenacao.TiposInscricao[1]))">
-      <mat-card-title>Crianças que você será responsável</mat-card-title>
-      <mat-divider></mat-divider>
-      <comp-criancas [desabilitar]="NaoEhIncompleta" [(valor)]="dadosTela.criancas" [inscrito]="inscricao"></comp-criancas>
-    </div>
+    <!--<div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100"
+       *ngIf="inscricao.Evento.ConfiguracaoEvangelizacao != null &&
+              (inscricao.Evento.ConfiguracaoEvangelizacao == 0 ||(inscricao.Evento.ConfiguracaoEvangelizacao == 1 && dadosTela.tipoInscricao == this.coordenacao.TiposInscricao[1]))">
+    <mat-card-title>Crianças que você será responsável</mat-card-title>
+    <mat-divider></mat-divider>
+    <comp-criancas [desabilitar]="NaoEhIncompleta" [(valor)]="dadosTela.criancas" [inscrito]="inscricao"></comp-criancas>
+  </div>-->
     <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
       <mat-card-title>Informações sobre pagamentos</mat-card-title>
       <mat-divider></mat-divider>
