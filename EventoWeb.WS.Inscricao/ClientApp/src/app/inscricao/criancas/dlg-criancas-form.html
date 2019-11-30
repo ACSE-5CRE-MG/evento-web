@@ -3,7 +3,7 @@
     <div><h1>Criança - {{tituloDlg}}</h1></div>
     <span style="flex: 1 1 auto;"></span>
   </mat-toolbar>
-  <div style="margin: 5px">
+  <div style="margin: 5px; height:70vh">
     <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
         <label class="label_campos" fxFlex="106px">Nome:</label>
@@ -102,10 +102,10 @@
         </div>
       </div>
     </dx-validation-group>
-  </div>
-  <mat-divider></mat-divider>
-  <div style="margin: 5px; text-align: right">
+  </div>  
+  <div style="margin: 5px; text-align: right" layout-geral-rodape>
+    <mat-divider style="margin:5px"></mat-divider>
     <button mat-raised-button (click)="clicarCancelar()">Cancelar</button>
-    <button mat-raised-button (click)="clicarOK()" cdkFocusInitial [disabled]="desabilitar">Salvar</button>
+    <button mat-raised-button (click)="clicarOK()" cdkFocusInitial [disabled]="desabilitar" style="margin-left:5px">Salvar</button>
   </div>
 </layout-geral>

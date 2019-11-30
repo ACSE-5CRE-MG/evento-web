@@ -5,7 +5,7 @@
     </button>
     <div fxLayout="column" class="sistema">
       <span>Sua Inscrição</span>
-      <span class="versao">evento</span>
+      <span class="versao">{{inscricao.Evento.Nome}}</span>
     </div>
     <span style="flex: 1 1 auto;"></span>
     <button *ngIf="!NaoEhIncompleta" type="button" mat-raised-button (click)="clicarAtualizar()">
@@ -241,23 +241,23 @@
       <comp-criancas [desabilitar]="NaoEhIncompleta" [(valor)]="dadosTela.criancas" [inscrito]="inscricao"></comp-criancas>
     </div>
     <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
-      <mat-card-title>Pagamento e Observações</mat-card-title>
+      <mat-card-title>Informações sobre pagamentos</mat-card-title>
       <mat-divider></mat-divider>
-      <mat-tab-group>
-        <mat-tab label="Pagamento" style="padding: 5px">
-          <comp-pagamento [(valor)]="dadosTela.pagamento"
-                          [valorInscricao]="inscricao.Evento.ValorInscricaoAdulto"
-                          [valorInscCrianca]="inscricao.Evento.ValorInscricaoCrianca"
-                          [totalCriancas]="contarCriancasPrimeiroResponsavel()"
-                          [desabilitar]="NaoEhIncompleta"></comp-pagamento>
-        </mat-tab>
-        <mat-tab label="Observações" style="padding: 5px">
-          <dx-text-area [height]="180"
-                        [(value)]="dadosTela.observacoes"
-                        [disabled]="NaoEhIncompleta">
-          </dx-text-area>
-        </mat-tab>
-      </mat-tab-group>
+      <comp-pagamento [(valor)]="dadosTela.pagamento"
+                      [valorInscricao]="inscricao.Evento.ValorInscricaoAdulto"
+                      [valorInscCrianca]="inscricao.Evento.ValorInscricaoCrianca"
+                      [totalCriancas]="contarCriancasPrimeiroResponsavel()"
+                      [desabilitar]="NaoEhIncompleta"></comp-pagamento>
+    </div>
+    <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
+      <mat-card-title>Outras informações</mat-card-title>
+      <mat-divider></mat-divider>
+      <p>Você trará colchão de solteiro ou casal? Se for de casal dividirá com quem?</p>
+      <p>Ou nos fale de alguma outra informação que você ache pertinente e não encontrou lugar na inscrição. Este campo esta aberto para podermos te ouvir!</p>
+      <dx-text-area [height]="180"
+                    [(value)]="dadosTela.observacoes"
+                    [disabled]="NaoEhIncompleta">
+      </dx-text-area>
     </div>
   </div>
 </layout-geral>
