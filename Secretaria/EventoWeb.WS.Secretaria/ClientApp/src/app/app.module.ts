@@ -40,8 +40,6 @@ import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import { CookieModule } from 'ngx-cookie';
-
 import { TextMaskModule } from 'angular2-text-mask';
 
 import { CaixaMensagemDlg } from './componentes/alertas-dlg/caixa-mensagem-dlg';
@@ -109,7 +107,6 @@ registerLocaleData(localePt);
     FlexLayoutModule,
     TextMaskModule,
     AgGridModule.withComponents([]),
-    CookieModule.forRoot(),
     RouterModule.forRoot([
       { path: '', component: TelaListaEventos, canActivate: [PermissaoAcessoRota] },
       { path: 'login', component: TelaLogin },
