@@ -18,93 +18,128 @@
       <a mat-raised-button [routerLink]="''">Voltar</a>
     </div>
   </div>
-  <dx-validation-group *ngIf="dadosTela.eventoEncontrado" name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
-    <div class="cartao margem-5px" fxFlex="70" fxFlex.xs="95" fxLayout="column" fxLayoutGap="5px">
-      <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
-        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-          <label class="label_campos" fxFlex="106px">Tipo Inscrição:</label>
-          <dx-radio-group [items]="coordenacao.TiposInscricao"
-                          [(value)]="dadosTela.tipoInscricao"
-                          layout="horizontal">
-            <dx-validator>
-              <dxi-validation-rule type="required" message="Você não escolheu o tipo de inscrição."></dxi-validation-rule>
-            </dx-validator>
-          </dx-radio-group>
-        </div>
-        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-          <div class="label_campos" fxFlex="106px"></div>
-          <div>
-            O Tipo de inscrição <strong>Participante</strong> se refere a toda pessoa que irá apenas participar do evento. Ela não tem nenhuma atividade de coordenação de salas ou oficinas, e não atua nas diversas equipes do evento, como música, cozinha, etc.
-            <br />
-            Já o tipo de inscrição <strong>Participante/Trabalhador</strong> se refere a pessoa que pode ser coordenadora de sala, oficina e/ou coordenador ou participante de uma das equipes do evento como a música, cozinha, etc.
+
+  <div fxLayout="column">
+    <div fxFlex="70" fxFlex.xs="95" fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+      <div class="cartao margem-5px" fxFlex="33" fxFlex.xs="100" fxLayoutGap="5px">
+        <mat-card-title>Passo-a-passo da Inscrição</mat-card-title>
+        <mat-divider></mat-divider>
+        Nesta tela você informará os dados essencias para sua inscrição.<br /><br />
+
+        Um email será enviado para você com um código de acesso para que dê continuidade ao processo. Ao informar este código, você acessará a ficha completa de inscrição. Somente após informar todos os dados nessa nova tela, que sua inscrição estará disponível para análise da secretaria.<br /><br />
+
+        A secretaria validará a sua inscrição e se todos os dados necessários estiverem disponíveis, sua inscrição será aceita.<br /><br />
+
+        Não se preoucupe, você receberá emails informando o andamento da sua inscrição. Mas caso se sinta ansioso, pode nos mandar um email para emeje@5cre.com.br ou procurar a equipe de secretaria Clarissa (37) 9 9197-1994 ou Renato Godoi (31) 9 9321-3310.
+      </div>
+      <div class="cartao margem-5px" fxFlex="33" fxFlex.xs="100" fxLayoutGap="5px">
+        <mat-card-title>Regulamento</mat-card-title>
+        <mat-divider></mat-divider>
+      </div>
+      <div class="cartao margem-5px" fxFlex="33" fxFlex.xs="100" fxLayoutGap="5px">
+        <mat-card-title>Instruções de Pagamento</mat-card-title>
+        <mat-divider></mat-divider>
+        O valor da inscrição é de 60,00 reais e deve ser pago por transferência ou depósito bancário.<br /><br />
+        <strong>Conta para depósito</strong><br />
+        Caixa Econômica Federal<br />
+        Agência: 0113 Operação: 013 Conta: 316765-4<br />
+        Janini Pereira Neves<br /><br />
+        Se você for fazer transferência bancária e precisar do CPF, por favor, contate a equipe de secretaria: Clarissa (37) 9 9197-1994 ou Renato Godoi (31) 9 9321-3310.<br /><br />
+        O pagamento pode ser feito até o dia 20/12/2019.<br /><br />
+        Caso já tenha feito o pagamento antes ou durante a inscrição, anexe a inscrição. Caso contrário, marque o opção outros na parte de pagamento e nos informe que enviará o comprovante por email. O email para envio é <strong>emeje@5cre.com.br</strong>
+      </div>
+    </div>
+    <dx-validation-group *ngIf="dadosTela.eventoEncontrado" name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center start">
+      <div class="cartao margem-5px" fxFlex="70" fxFlex.xs="95" fxLayout="column" fxLayoutGap="5px">
+        <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Tipo Inscrição:</label>
+            <dx-radio-group [items]="coordenacao.TiposInscricao"
+                            [(value)]="dadosTela.tipoInscricao"
+                            layout="horizontal">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não escolheu o tipo de inscrição."></dxi-validation-rule>
+              </dx-validator>
+            </dx-radio-group>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <div class="label_campos" fxFlex="106px"></div>
+            <div>
+              O Tipo de inscrição <strong>Participante</strong> se refere a toda pessoa que irá apenas participar do evento. Ela não tem nenhuma atividade de coordenação de salas ou oficinas, e não atua nas diversas equipes do evento, como música, cozinha, etc.
+              <br />
+              Já o tipo de inscrição <strong>Participante/Trabalhador</strong> se refere a pessoa que pode ser coordenadora de sala, oficina e/ou coordenador ou participante de uma das equipes do evento como a música, cozinha, etc.
+            </div>
           </div>
         </div>
-      </div>
-      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-        <label class="label_campos" fxFlex="106px">Nome:</label>
-        <dx-text-box [(value)]="dadosTela.nome" fxFlex="100">
-          <dx-validator>
-            <dxi-validation-rule type="required" message="Você não informou o nome."></dxi-validation-rule>
-          </dx-validator>
-        </dx-text-box>
-      </div>
-      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
-          <label class="label_campos" fxFlex="106px">Nascimento:</label>
-          <dx-date-box [(value)]="dadosTela.dataNascimento" type="date">
-            <dx-validator>
-              <dxi-validation-rule type="required" message="Você não informou o nome a data de nascimento"></dxi-validation-rule>
-              <dxi-validation-rule type="range" [max]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no mínimo, de {{dadosTela.idadeMinima}} anos"></dxi-validation-rule>
-            </dx-validator>
-          </dx-date-box>
-        </div>
-        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
-          <label class="label_campos" fxFlex.xs="106px">Sexo:</label>
-          <dx-radio-group [items]="coordenacao.Sexos"
-                          [(value)]="this.dadosTela.sexoEscolhido"
-                          layout="horizontal">
-            <dx-validator>
-              <dxi-validation-rule type="required" message="Você não escolheu o sexo."></dxi-validation-rule>
-            </dx-validator>
-          </dx-radio-group>
-        </div>
-      </div>
-      <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-          <label class="label_campos" fxFlex="106px">E-mail:</label>
-          <dx-text-box [(value)]="dadosTela.email" fxFlex="60">
+          <label class="label_campos" fxFlex="106px">Nome:</label>
+          <dx-text-box [(value)]="dadosTela.nome" fxFlex="100">
             <dx-validator>
-              <dxi-validation-rule type="required" message="Você não informou o e-mail."></dxi-validation-rule>
-              <dxi-validation-rule type="email" message="Você informou um email que não é válido"></dxi-validation-rule>
+              <dxi-validation-rule type="required" message="Você não informou o nome."></dxi-validation-rule>
             </dx-validator>
           </dx-text-box>
         </div>
-        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-          <div class="label_campos" fxFlex="106px"></div>
-          <div>
-            Você precisa informar um e-mail válido, pois para ele será enviado informações sobre o evento, bem como o código para permitir acesso ao andamento e alterações na sua inscrição.
+        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <label class="label_campos" fxFlex="106px">Nascimento:</label>
+            <dx-date-box [(value)]="dadosTela.dataNascimento" type="date">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou o nome a data de nascimento"></dxi-validation-rule>
+                <dxi-validation-rule type="range" [max]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no mínimo, de {{dadosTela.idadeMinima}} anos"></dxi-validation-rule>
+              </dx-validator>
+            </dx-date-box>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+            <label class="label_campos" fxFlex.xs="106px">Sexo:</label>
+            <dx-radio-group [items]="coordenacao.Sexos"
+                            [(value)]="this.dadosTela.sexoEscolhido"
+                            layout="horizontal">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não escolheu o sexo."></dxi-validation-rule>
+              </dx-validator>
+            </dx-radio-group>
           </div>
         </div>
+        <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">E-mail:</label>
+            <dx-text-box [(value)]="dadosTela.email" fxFlex="60">
+              <dx-validator>
+                <dxi-validation-rule type="required" message="Você não informou o e-mail."></dxi-validation-rule>
+                <dxi-validation-rule type="email" message="Você informou um email que não é válido"></dxi-validation-rule>
+              </dx-validator>
+            </dx-text-box>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+            <div class="label_campos" fxFlex="106px"></div>
+            <div>
+              Você precisa informar um e-mail válido, pois para ele será enviado informações sobre o evento, bem como o código para permitir acesso ao andamento e alterações na sua inscrição.
+            </div>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <label class="label_campos" fxFlex="106px">Cidade/UF:</label>
+          <dx-text-box [(value)]="dadosTela.cidade" fxFlex="80">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="Você não informou a Cidade."></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+          <dx-select-box [dataSource]="coordenacao.EstadosFederacao"
+                         [searchMode]="'contains'"
+                         [searchTimeout]="200"
+                         [minSearchLength]="0"
+                         [searchEnabled]="true"
+                         [(value)]="dadosTela.uf"
+                         fxFlex="20">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="Você não informou a UF."></dxi-validation-rule>
+            </dx-validator>
+          </dx-select-box>
+        </div>
       </div>
-      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-        <label class="label_campos" fxFlex="106px">Cidade/UF:</label>
-        <dx-text-box [(value)]="dadosTela.cidade" fxFlex="80">
-          <dx-validator>
-            <dxi-validation-rule type="required" message="Você não informou a Cidade."></dxi-validation-rule>
-          </dx-validator>
-        </dx-text-box>
-        <dx-select-box [dataSource]="coordenacao.EstadosFederacao"
-                       [searchMode]="'contains'"
-                       [searchTimeout]="200"
-                       [minSearchLength]="0"
-                       [searchEnabled]="true"
-                       [(value)]="dadosTela.uf"
-                       fxFlex="20">
-          <dx-validator>
-            <dxi-validation-rule type="required" message="Você não informou a UF."></dxi-validation-rule>
-          </dx-validator>
-        </dx-select-box>
-      </div>
-    </div>
-  </dx-validation-group>
+    </dx-validation-group>
+  </div>
+
+
+  
 </layout-geral>
