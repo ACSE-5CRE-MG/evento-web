@@ -60,6 +60,8 @@ import {
     DxGalleryModule
 } from 'devextreme-angular';
 
+import { locale, loadMessages } from 'devextreme/localization';
+
 import { CaixaMensagemDlg } from './componentes/alertas-dlg/caixa-mensagem-dlg';
 import { DlgEmProcessamento, Alertas } from './componentes/alertas-dlg/alertas';
 import { LayoutGeral } from './componentes/layout-geral/layout-geral';
@@ -95,6 +97,10 @@ import { ComponentePagamento } from './inscricao/pagamento/comp-pagamento';
 declare function require(url: string);
 
 registerLocaleData(localePt);
+
+let ptMessages = require("devextreme/localization/messages/pt.json");
+loadMessages(ptMessages);
+locale('pt');
 
 @NgModule({
     declarations: [
@@ -170,7 +176,7 @@ registerLocaleData(localePt);
                 ]
             },
             { path: '** ', redirectTo: '' }
-        ], { enableTracing: true })
+        ], { enableTracing: false })
     ],
     entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
         TelaListaEventos, DlgFormEvento, TelaRoteamentoEvento,

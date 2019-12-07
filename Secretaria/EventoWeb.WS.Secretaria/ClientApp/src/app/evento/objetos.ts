@@ -29,7 +29,7 @@ export class DTOEvento {
     public TemDormitorios: Boolean;
     public ConfiguracaoEvangelizacao: EnumPublicoEvangelizacao;
     public ConfiguracaoSalaEstudo: EnumModeloDivisaoSalasEstudo;
-    public ConfiguracaoSarau: ConfiguracaoSarau;
+    public ConfiguracaoTempoSarauMin: number;
 }
 
 export class Periodo {
@@ -52,6 +52,8 @@ export class DTOEventoCompletoInscricao extends DTOEventoCompleto {
     Oficinas: DTOOficina[];
     SalasEstudo: DTOSalaEstudo[];
     Departamentos: DTODepartamento[];
+    ValorInscricaoAdulto: number;
+    ValorInscricaoCrianca: number;
 }
 
 export class DTOEventoMinimo {

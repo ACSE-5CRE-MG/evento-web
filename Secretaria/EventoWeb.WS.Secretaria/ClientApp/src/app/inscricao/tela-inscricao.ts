@@ -121,6 +121,67 @@ export class TelaInscricao implements OnInit {
     }
 
     clicarAceitar(): void {
+
+        if (this.validarDados()) {
+            let atualizacao = this.criarObjetoAtualizacao();
+            let dlg = this.mensageria.alertarProcessamento("Registrando aceitação...");
+
+            this.wsInscricoes.aceitar(this.inscricao.Evento.Id, this.inscricao.Id, atualizacao)
+                .subscribe(
+                    (retorno) => {
+                        dlg.close();
+                        this.clicarVoltar();
+                    },
+                    (erro) => {
+                        dlg.close();
+                        this.mensageria.alertarErro(erro);
+                    }
+                );
+        }
+    }
+
+    clicarAtualizar(): void {
+        if (this.validarDados()) {
+            let atualizacao = this.criarObjetoAtualizacao();
+            let dlg = this.mensageria.alertarProcessamento("Atualizando...");
+
+            this.wsInscricoes.atualizar(this.inscricao.Evento.Id, this.inscricao.Id, atualizacao)
+                .subscribe(
+                    (retorno) => {
+                        dlg.close();
+                        this.clicarVoltar();
+                    },
+                    (erro) => {
+                        dlg.close();
+                        this.mensageria.alertarErro(erro);
+                    }
+                );
+        }
+    }
+
+    clicarCompletarAceitar(): void {
+        if (this.validarDados()) {
+            let atualizacao = this.criarObjetoAtualizacao();
+            let dlg = this.mensageria.alertarProcessamento("Atualizando...");
+
+            this.wsInscricoes.completar(this.inscricao.Evento.Id, this.inscricao.Id, atualizacao)
+                .subscribe(
+                    (retorno) => {
+                        dlg.close();
+                        this.clicarVoltar();
+                    },
+                    (erro) => {
+                        dlg.close();
+                        this.mensageria.alertarErro(erro);
+                    }
+                );
+        }
+    }
+
+    private validarDados(): boolean {
+
+        let ehValido = false;
+
         let dadosPessoaisValidos = this.grupoValidacaoEssencial.instance.validate().isValid;
         let dadosEspiritasValidos = this.grupoValidacaoEspirita.instance.validate().isValid;
 
@@ -163,64 +224,54 @@ export class TelaInscricao implements OnInit {
         else if (this.dadosTela.pagamento != null && this.dadosTela.pagamento.Forma == EnumPagamento.Comprovante &&
             (this.dadosTela.pagamento.ComprovantesBase64 == null || this.dadosTela.pagamento.ComprovantesBase64.length == 0))
             this.mensageria.alertarAtencao("Você precisa informar o(s) comprovante(s) de pagamento.", "Sem essa informação não é possível enviar a inscrição.");
-        else {
-            let dlg = this.mensageria.alertarProcessamento("Registrando aceitação...");
+        else
+            ehValido = true;
 
-            let atualizacao = new DTOInscricaoAtualizacao();
-            atualizacao.DadosPessoais = new DTOInscricaoDadosPessoais();
-            atualizacao.DadosPessoais.DataNascimento = this.dadosTela.dataNascimento;
-            atualizacao.DadosPessoais.Email = this.dadosTela.email;
-            atualizacao.DadosPessoais.Nome = this.dadosTela.nome;
-            atualizacao.DadosPessoais.Sexo = (this.dadosTela.sexoEscolhido == this.dadosTela.Sexos[0] ? EnumSexo.Masculino : EnumSexo.Feminino);
-            atualizacao.DadosPessoais.AlimentosAlergia = this.dadosTela.alimentosAlergia;
-            atualizacao.DadosPessoais.CarnesNaoCome = this.dadosTela.carnesNaoCome;
-            atualizacao.DadosPessoais.Cidade = this.dadosTela.cidade;
-            atualizacao.DadosPessoais.EhDiabetico = this.dadosTela.ehDiabetico;
-            atualizacao.DadosPessoais.EhVegetariano = this.dadosTela.ehVegetariano;
-            atualizacao.DadosPessoais.MedicamentosUsa = this.dadosTela.medicamentosUsa;
-            atualizacao.DadosPessoais.TelefoneFixo = this.dadosTela.telefoneFixo;
-            atualizacao.DadosPessoais.Celular = this.dadosTela.celular;
-            atualizacao.PrimeiroEncontro = this.dadosTela.primeiroEncontro;
-            atualizacao.TipoInscricao = (this.dadosTela.TiposInscricao[0] == this.dadosTela.tipoInscricao ? EnumTipoInscricao.Participante : EnumTipoInscricao.ParticipanteTrabalhador);
-            atualizacao.DadosPessoais.Uf = this.dadosTela.uf;
-            atualizacao.DadosPessoais.UsaAdocanteDiariamente = this.dadosTela.usaAdocanteDiariamente;
-            atualizacao.NomeCracha = this.dadosTela.nomeCracha;
-            atualizacao.CentroEspirita = this.dadosTela.centroEspirita;
-            atualizacao.Departamento = this.dadosTela.departamentoEscolhido;
-            atualizacao.NomeResponsavelCentro = this.dadosTela.nomeResponsavelCentro;
-            atualizacao.NomeResponsavelLegal = this.dadosTela.nomeResponsavelLegal;
-            atualizacao.Oficina = this.dadosTela.oficinasEscolhidas;
-            atualizacao.SalasEstudo = this.dadosTela.salasEscolhidas;
-            atualizacao.TelefoneResponsavelCentro = this.dadosTela.telefoneResponsavelCentro;
-            atualizacao.TelefoneResponsavelLegal = this.dadosTela.telefoneResponsavelLegal;
-            atualizacao.TempoEspirita = this.dadosTela.tempoEspirita;
-
-            atualizacao.Sarais = this.dadosTela.sarais;
-            atualizacao.Criancas = this.dadosTela.criancas;
-            atualizacao.Observacoes = this.dadosTela.observacoes;
-
-            atualizacao.Pagamento = new DTOPagamento();
-            atualizacao.Pagamento.Forma = this.dadosTela.pagamento.Forma;
-            atualizacao.Pagamento.Observacao = this.dadosTela.pagamento.Observacao;
-            if (this.dadosTela.pagamento.ComprovantesBase64 != null)
-                atualizacao.Pagamento.ComprovantesBase64 = this.dadosTela.pagamento.ComprovantesBase64.map(x => x.substring(x.indexOf(",") + 1));
-
-            this.wsInscricoes.aceitar(this.inscricao.Evento.Id, this.inscricao.Id, atualizacao)
-                .subscribe(
-                    (retorno) => {
-                        dlg.close();
-                        this.clicarVoltar();
-                    },
-                    (erro) => {
-                        dlg.close();
-                        this.mensageria.alertarErro(erro);
-                    }
-                );
-        }
+        return ehValido;
     }
 
-    clicarAtualizar(): void {
+    private criarObjetoAtualizacao(): DTOInscricaoAtualizacao {
 
+        let atualizacao = new DTOInscricaoAtualizacao();
+        atualizacao.DadosPessoais = new DTOInscricaoDadosPessoais();
+        atualizacao.DadosPessoais.DataNascimento = this.dadosTela.dataNascimento;
+        atualizacao.DadosPessoais.Email = this.dadosTela.email;
+        atualizacao.DadosPessoais.Nome = this.dadosTela.nome;
+        atualizacao.DadosPessoais.Sexo = (this.dadosTela.sexoEscolhido == this.dadosTela.Sexos[0] ? EnumSexo.Masculino : EnumSexo.Feminino);
+        atualizacao.DadosPessoais.AlimentosAlergia = this.dadosTela.alimentosAlergia;
+        atualizacao.DadosPessoais.CarnesNaoCome = this.dadosTela.carnesNaoCome;
+        atualizacao.DadosPessoais.Cidade = this.dadosTela.cidade;
+        atualizacao.DadosPessoais.EhDiabetico = this.dadosTela.ehDiabetico;
+        atualizacao.DadosPessoais.EhVegetariano = this.dadosTela.ehVegetariano;
+        atualizacao.DadosPessoais.MedicamentosUsa = this.dadosTela.medicamentosUsa;
+        atualizacao.DadosPessoais.TelefoneFixo = this.dadosTela.telefoneFixo;
+        atualizacao.DadosPessoais.Celular = this.dadosTela.celular;
+        atualizacao.PrimeiroEncontro = this.dadosTela.primeiroEncontro;
+        atualizacao.TipoInscricao = (this.dadosTela.TiposInscricao[0] == this.dadosTela.tipoInscricao ? EnumTipoInscricao.Participante : EnumTipoInscricao.ParticipanteTrabalhador);
+        atualizacao.DadosPessoais.Uf = this.dadosTela.uf;
+        atualizacao.DadosPessoais.UsaAdocanteDiariamente = this.dadosTela.usaAdocanteDiariamente;
+        atualizacao.NomeCracha = this.dadosTela.nomeCracha;
+        atualizacao.CentroEspirita = this.dadosTela.centroEspirita;
+        atualizacao.Departamento = this.dadosTela.departamentoEscolhido;
+        atualizacao.NomeResponsavelCentro = this.dadosTela.nomeResponsavelCentro;
+        atualizacao.NomeResponsavelLegal = this.dadosTela.nomeResponsavelLegal;
+        atualizacao.Oficina = this.dadosTela.oficinasEscolhidas;
+        atualizacao.SalasEstudo = this.dadosTela.salasEscolhidas;
+        atualizacao.TelefoneResponsavelCentro = this.dadosTela.telefoneResponsavelCentro;
+        atualizacao.TelefoneResponsavelLegal = this.dadosTela.telefoneResponsavelLegal;
+        atualizacao.TempoEspirita = this.dadosTela.tempoEspirita;
+
+        atualizacao.Sarais = this.dadosTela.sarais;
+        atualizacao.Criancas = this.dadosTela.criancas;
+        atualizacao.Observacoes = this.dadosTela.observacoes;
+
+        atualizacao.Pagamento = new DTOPagamento();
+        atualizacao.Pagamento.Forma = this.dadosTela.pagamento.Forma;
+        atualizacao.Pagamento.Observacao = this.dadosTela.pagamento.Observacao;
+        if (this.dadosTela.pagamento.ComprovantesBase64 != null)
+            atualizacao.Pagamento.ComprovantesBase64 = this.dadosTela.pagamento.ComprovantesBase64.map(x => x.substring(x.indexOf(",") + 1));
+
+        return atualizacao;
     }
 
     public clicarRejeitar(): void {

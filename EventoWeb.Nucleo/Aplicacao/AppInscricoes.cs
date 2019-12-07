@@ -8,8 +8,12 @@ namespace EventoWeb.Nucleo.Aplicacao
 {
     public class AppInscricoes : AppBase
     {
-        public AppInscricoes(IContexto contexto) : base(contexto)
+        private readonly AppEmailMsgPadrao m_AppEmail;
+
+        public AppInscricoes(IContexto contexto, AppEmailMsgPadrao appEmail) : 
+            base(contexto)
         {
+            m_AppEmail = appEmail;
         }
 
         public IEnumerable<DTOBasicoInscricao> ListarTodas(int idEvento, EnumSituacaoInscricao situacao)
@@ -75,7 +79,8 @@ namespace EventoWeb.Nucleo.Aplicacao
                         throw new ExcecaoAplicacao("AppInscricoes", "A inscrição não pode ser infantil");
                     var participante = (InscricaoParticipante)inscricao;
                     participante.Rejeitar();
-                    // Enviar email
+
+                    m_AppEmail.EnviarInscricaoRejeitada((InscricaoParticipante)inscricao);
                 }
             });
         }
@@ -92,7 +97,42 @@ namespace EventoWeb.Nucleo.Aplicacao
                     var participante = (InscricaoParticipante)inscricao;
                     AtualizarInscricao(participante, atualizacao);
                     participante.Aceitar();
-                    // Enviar email
+
+                    m_AppEmail.EnviarInscricaoAceita((InscricaoParticipante)inscricao);
+                }
+            });
+        }
+
+        public void CompletarEAceitar(int idEvento, int idInscricao, DTOInscricaoAtualizacao atualizacao)
+        {
+            ExecutarSeguramente(() =>
+            {
+                var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);
+                if (inscricao != null)
+                {
+                    if (inscricao is InscricaoInfantil)
+                        throw new ExcecaoAplicacao("AppInscricoes", "A inscrição não pode ser infantil");
+                    var participante = (InscricaoParticipante)inscricao;
+                    AtualizarInscricao(participante, atualizacao);
+                    participante.TornarPendente();
+                    participante.Aceitar();
+
+                    m_AppEmail.EnviarInscricaoRegistrada(inscParticipante);
+                }
+            });
+        }
+
+        public void Atualizar(int idEvento, int idInscricao, DTOInscricaoAtualizacao atualizacao)
+        {
+            ExecutarSeguramente(() =>
+            {
+                var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);
+                if (inscricao != null)
+                {
+                    if (inscricao is InscricaoInfantil)
+                        throw new ExcecaoAplicacao("AppInscricoes", "A inscrição não pode ser infantil");
+                    var participante = (InscricaoParticipante)inscricao;
+                    AtualizarInscricao(participante, atualizacao);
                 }
             });
         }

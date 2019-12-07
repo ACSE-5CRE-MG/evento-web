@@ -7,14 +7,17 @@
       <span>Manutenção de Inscrição</span>
     </div>
     <span style="flex: 1 1 auto;"></span>
-    <button type="button" mat-raised-button (click)="clicarAceitar()">
+    <button type="button" mat-raised-button (click)="clicarAceitar()" *ngIf="inscricao.Situacao == 1">
       Aceitar
     </button>
-    <button type="button" mat-raised-button (click)="clicarRejeitar()" style="margin-left: 5px">
+    <button type="button" mat-raised-button (click)="clicarRejeitar()" style="margin-left: 5px" *ngIf="inscricao.Situacao == 1">
       Rejeitar
     </button>
-    <button type="button" mat-raised-button (click)="clicarAtualizar()" style="margin-left: 5px">
+    <button type="button" mat-raised-button (click)="clicarAtualizar()" style="margin-left: 5px" *ngIf="inscricao.Situacao == 2 || inscricao.Situacao == 3">
       Atualizar
+    </button>
+    <button type="button" mat-raised-button (click)="clicarCompletarAceitar()" style="margin-left: 5px" *ngIf="inscricao.Situacao == 0">
+      Completar e Aceitar
     </button>
   </mat-toolbar>
   <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutAlign="center start">

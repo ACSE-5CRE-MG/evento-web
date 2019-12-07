@@ -25,7 +25,7 @@ export class ComponentePagamento {
                 if (this.mValor.ComprovantesBase64 != null && this.mValor.ComprovantesBase64.length > 0) {
                     let indice = 1;
                     for (let arquivo64 of this.mValor.ComprovantesBase64) {
-                        this.mArquivosBin.push(new File([this.dataURItoBlob(arquivo64)], indice.toString() + ".jpeg", { type: 'image/jpeg' }));
+                        this.mArquivosBin.push(new File([this.dataURItoBlob(arquivo64.substring(arquivo64.indexOf(",") + 1))], indice.toString() + ".jpeg", { type: 'image/jpeg' }));
                         indice++;
                     }
                 }
@@ -71,6 +71,7 @@ export class ComponentePagamento {
                 this.mValor.Forma = EnumPagamento.Outro;
 
             this.mValor.ComprovantesBase64 = [];
+            this.mArquivosBin = [];
 
             this.valorChange.emit(this.mValor);
         }
@@ -92,13 +93,6 @@ export class ComponentePagamento {
                     this.mArquivosBin = arquivosValidos;
                     this.mValor.ComprovantesBase64 = [];
         
-                    /*let processando = false;
-                    let leitorArquivo = new FileReaderSync();
-                    leitorArquivo.addEventListener('load', (event: any) => {
-                        this.mValor.ComprovantesBase64.push(event.target.result);
-                        processando = false;
-                    });*/
-
                     let observadores: Observable<string>[] = [];
                     for (let arquivo of arquivosValidos) {
                         observadores.push(this.readFileAsDataURL(arquivo));
@@ -129,8 +123,6 @@ export class ComponentePagamento {
 
             fileReader.readAsDataURL(file);
         });
-
-        //console.log(result_base64); // aGV5IHRoZXJl...
 
         return result_base64;
     }

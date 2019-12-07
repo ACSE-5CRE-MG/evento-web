@@ -1,6 +1,7 @@
 ﻿using EventoWeb.Nucleo.Aplicacao.Comunicacao;
 using EventoWeb.Nucleo.Aplicacao.ConversoresDTO;
 using EventoWeb.Nucleo.Negocio.Entidades;
+using System;
 using System.Linq;
 
 namespace EventoWeb.Nucleo.Aplicacao
@@ -100,6 +101,16 @@ namespace EventoWeb.Nucleo.Aplicacao
                 Conteudo = m_GeradorMsgEmail.GerarMensagemModelo<DTOInscricaoCompletaCodigo>(mensagem.MensagemInscricaoRegistrada.Mensagem, dto),
                 Endereco = inscricao.Pessoa.Email
             });
+        }
+
+        public void EnviarInscricaoAceita(InscricaoParticipante inscricao)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EnviarInscricaoRejeitada(InscricaoParticipante inscricao)
+        {
+            throw new NotImplementedException();
         }
 
         public void Testar(int idInscricao)

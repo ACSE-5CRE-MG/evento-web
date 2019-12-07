@@ -17,7 +17,7 @@ export class WebServiceInscricoes extends WebServiceBase {
     };
 
     excluir(idEvento: number, idInscricao: number): Observable<any> {
-        return this.executarDelete('evento/' + idEvento.toString() + 'excluir/' + idInscricao.toString());
+        return this.executarDelete('evento/' + idEvento.toString() + '/excluir/' + idInscricao.toString());
     }
 
     obterInscricaoCompleta(idEvento: number, idInscricao: number): Observable<DTOInscricaoCompleta> {
@@ -30,5 +30,13 @@ export class WebServiceInscricoes extends WebServiceBase {
 
     rejeitar(idEvento: number, idInscricao: number): Observable<any> {
         return this.executarPut('evento/' + idEvento.toString() + '/rejeitar/' + idInscricao.toString(), null);
+    }
+
+    completar(idEvento: number, idInscricao: number, atualizacao: DTOInscricaoAtualizacao): Observable<any> {
+        return this.executarPut('evento/' + idEvento.toString() + '/completar/' + idInscricao.toString(), atualizacao);
+    }
+
+    atualizar(idEvento: number, idInscricao: number, atualizacao: DTOInscricaoAtualizacao): Observable<any> {
+        return this.executarPut('evento/' + idEvento.toString() + '/atualizar/' + idInscricao.toString(), atualizacao);
     }
 }

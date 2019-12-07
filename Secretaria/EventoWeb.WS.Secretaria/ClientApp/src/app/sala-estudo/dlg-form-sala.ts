@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from "@angular/core";
+/*import { Component, Inject, OnInit } from "@angular/core";
 import { WebServiceSala } from "../webservices/webservice-salas";
 import { DTOSalaEstudo } from "./objetos";
 
@@ -98,4 +98,4 @@ export class DlgFormSala implements OnInit {
         );
     }
   }
-}
+}*/

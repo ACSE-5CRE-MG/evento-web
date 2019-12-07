@@ -55,5 +55,19 @@ namespace EventoWeb.WS.Secretaria.Controllers
         {
             m_App.Rejeitar(idEvento, idInscricao);
         }
+
+        [Authorize("Bearer")]
+        [HttpPut("evento/{idEvento}/completar/{idInscricao}")]
+        public void CompletarEAceitar(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacao atualizacao)
+        {
+            m_App.CompletarEAceitar(idEvento, idInscricao, atualizacao);
+        }
+
+        [Authorize("Bearer")]
+        [HttpPut("evento/{idEvento}/atualizar/{idInscricao}")]
+        public void Atualizar(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacao atualizacao)
+        {
+            m_App.Atualizar(idEvento, idInscricao, atualizacao);
+        }
     }
 }
