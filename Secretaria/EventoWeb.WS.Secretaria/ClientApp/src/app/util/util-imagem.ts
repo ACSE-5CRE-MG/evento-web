@@ -3,6 +3,6 @@ export class OperacoesImagem {
     if (imagemBase64 == null || imagemBase64.trim().length == 0)
       return 'assets/semimagem.jpg';
     else
-      return imagemBase64;
+        return 'data:image/jpeg;base64,' + imagemBase64;
   }
 }

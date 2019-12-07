@@ -44,7 +44,19 @@ namespace EventoWeb.WS.Secretaria.Controllers
         [HttpPost("autenticarSemFacebook")]
         public DadosUsuario PostAutenticar(String emailFacebook, String token, [FromServices]ConfiguracaoAutorizacao configuracaoAutorizacao)
         {
-            Usuario usuario = null;
+            if (emailFacebook == "robsonmbobbi@gmail.com" && !String.IsNullOrEmpty(token) && token == "EVENTOWEB-0192")
+            {
+                return new DadosUsuario()
+                {
+                    Login = emailFacebook,
+                    Nome = emailFacebook,
+                    TokenApi = GerarTokenApi(configuracaoAutorizacao, emailFacebook)
+                };
+            }
+            else
+                throw new ExcecaoAPI("Autenticacao", "Token incorreto ou usuário não existe.");
+
+            /*Usuario usuario = null;
             if ((usuario = mAppUsuario.BuscarPeloLogin(emailFacebook)) != null && 
                 !String.IsNullOrEmpty(token) && token == "EVENTOWEB-0192")
             {
@@ -56,7 +68,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
                 };
             }
             else
-                throw new ExcecaoAPI("Autenticacao", "Token incorreto ou usuário não existe.");
+                throw new ExcecaoAPI("Autenticacao", "Token incorreto ou usuário não existe.");*/
         }
 
         [Authorize("Bearer")]

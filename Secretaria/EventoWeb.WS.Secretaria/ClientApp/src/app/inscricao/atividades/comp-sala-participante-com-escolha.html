@@ -1,0 +1,37 @@
+<div>
+  <p>Coloque as salas em ordem de preferência. A primeira é a que você mais quer e a última a que você menos deseja.</p>
+  <p>Cada sala terá um número limitado de participantes, então você será inscrito naquela vaga disponível de acordo com a data da inclusão de sua inscrição, ou seja, quanto mais cedo a mesma for enviada, mais chances você terá de participar da sala com a qual se identifica.</p>
+</div>
+<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+  <div fxFlex="40" fxFlex.xs="100" class="borda_total">
+    <dx-list [dataSource]="salasDisponiveis"
+             displayExpr="Nome"
+             [height]="400"
+             [selectionMode]="'all'"
+             [selectAllMode]="'allPages'"
+             [showSelectionControls]="true"
+             [(selectedItems)]="salasDisponiveisSelecionadas"
+             [width]="200">
+    </dx-list>
+  </div>
+  <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+    <button mat-raised-button [disabled]="salasDisponiveisSelecionadas.length == 0 || desabilitar" (click)="clicarIncluir()" style="width: 100%">Incluir</button>
+    <button mat-raised-button [disabled]="salasEscolhidasSelecionadas.length == 0 || desabilitar" (click)="clicarRemover()" style="width: 100%">Remover</button>
+  </div>
+  <div fxFlex="40" fxFlex.xs="100" class="borda_total">
+    <dx-list [dataSource]="salasEscolhidas"
+             displayExpr="Nome"
+             [height]="400"
+             [selectionMode]="'all'"
+             [selectAllMode]="'allPages'"
+             [showSelectionControls]="true"
+             [(selectedItems)]="salasEscolhidasSelecionadas"
+             (onSelectionChanged)="processarMudancasSelecaoSalasEscolhidas($event)"
+             [width]="200">
+    </dx-list>
+  </div>
+  <div fxLayout="column" fxLayoutGap="5px" fxLayoutAlign="center center">
+    <button mat-raised-button [disabled]="desabilitar || (situacaoSelecaoSalasEscolhidas != 1 && situacaoSelecaoSalasEscolhidas != 2)" (click)="clicarSubir()" style="width: 100%">Subir</button>
+    <button mat-raised-button [disabled]="desabilitar || (situacaoSelecaoSalasEscolhidas != 0 && situacaoSelecaoSalasEscolhidas != 2)" (click)="clicarDescer()" style="width: 100%">Descer</button>
+  </div>
+</div>

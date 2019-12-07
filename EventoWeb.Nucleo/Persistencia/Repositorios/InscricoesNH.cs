@@ -268,5 +268,14 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
                 .JoinQueryOver(x => x.Pessoa)
                 .List();
         }
+
+        public IList<Inscricao> ListarTodasPorEventoESituacao(int idEvento, EnumSituacaoInscricao situacao)
+        {
+            return mSessao
+                .QueryOver<Inscricao>()
+                .Where(x => x.Evento.Id == idEvento && x.Situacao == situacao)
+                .JoinQueryOver(x => x.Pessoa)
+                .List();
+        }
     }
 }

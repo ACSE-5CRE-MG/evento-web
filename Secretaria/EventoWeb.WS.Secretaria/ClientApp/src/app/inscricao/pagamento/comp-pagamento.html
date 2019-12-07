@@ -1,0 +1,63 @@
+<div fxLayout="column" fxLayoutGap="5px">
+  <div>
+    <p><strong>Valor Inscrição:</strong> &nbsp; {{valorInscricao| currency:'BRL'}}</p>
+    <p *ngIf="totalCriancas > 0"><strong>Crianças:</strong> &nbsp; {{totalCriancas}} &nbsp; X &nbsp; {{valorInscCrianca| currency:'BRL'}} = {{totalCriancas * valorInscCrianca| currency:'BRL'}} </p>
+    <p><strong>Total: </strong> &nbsp; {{valorInscricao + (totalCriancas * valorInscCrianca) | currency:'BRL'}}</p>
+  </div>
+  <mat-divider></mat-divider>
+  <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+      <label class="label_campos" fxFlex="106px">Como será o Pagamento:</label>
+      <dx-radio-group [items]="opcoes"
+                      [(value)]="opcaoEscolhida"
+                      layout="horizontal"
+                      [disabled]="desabilitar">
+      </dx-radio-group>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+    <div class="label_campos" fxFlex="106px"></div>
+    <div>
+      <strong>Enviar Comprovante</strong> refere-se a quando você realizou o pagamento da sua inscrição ou a sua e mais outras. Nesse último caso detalhe no campo mais abaixo quais as pessoas e cidades que estão incluidas no comprovante.<br />
+      <strong>Comprovante esta em outra inscrição</strong> se refere a situação em que a sua inscrição foi paga junto com outras e o comprovante será enviado em uma outra inscrição. Sendo assim nos informe o nome e a cidade da pessoa que enviará o comprovante no campo abaixo.<br />
+      <strong>Outros</strong> é para dizer a secretaria que você pagará mais tarde, fez ou precisa de isenção, ou qualquer outra situação que não se enquadre nas duas primeiras formas.
+    </div>
+  </div>
+  <div *ngIf="opcaoEscolhida == opcoes[0]" fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+    <label class="label_campos" fxFlex="106px">Comprovante (.jpg, .jpeg):</label>
+    <dx-file-uploader [multiple]="true"
+                      labelText="Arraste o arquivo para cá"
+                      selectButtonText="Selecione o arquivo"
+                      [showFileList]="false"
+                      [allowedFileExtensions]="['.jpg', '.jpeg']"
+                      [(value)]="comprovantes"
+                      [disabled]="desabilitar">
+    </dx-file-uploader>
+  </div>
+  <div *ngIf="opcaoEscolhida == opcoes[0]" fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="center center">
+    <dx-gallery [dataSource]="obterImgComprovantes()"
+                [height]="200"
+                [loop]="false"
+                [showNavButtons]="true"
+                [showIndicator]="true"
+                [stretchImages]="true"
+                [disabled]="desabilitar">
+    </dx-gallery>
+  </div>
+  <div *ngIf="opcaoEscolhida != null">
+    <p *ngIf="opcaoEscolhida == opcoes[0]">
+      Nos informe se os comprovantes se referem a outras incrições que foram ou serão feitas. Também nos justifique se o valor do comprovante for diferente do esperado.
+    </p>
+    <p *ngIf="opcaoEscolhida == opcoes[1]">
+      Nos informe o nome completo e a cidade da inscrição que terá o comprovante da sua inscrição.
+    </p>
+    <p *ngIf="opcaoEscolhida == opcoes[2]">
+      Nos informe o que você precisa em relação a pagamento: se é desconto, pedido de insenção ou outra situação. Nos dê detalhes para podermos ajudar!!
+    </p>
+  </div>
+  <dx-text-area *ngIf="opcaoEscolhida != null"
+                [height]="180"
+                [(value)]="observacoes"
+                [disabled]="desabilitar">
+  </dx-text-area>
+</div>

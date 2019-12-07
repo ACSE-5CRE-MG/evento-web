@@ -1,4 +1,5 @@
 ﻿using EventoWeb.Nucleo.Aplicacao.Comunicacao;
+using EventoWeb.Nucleo.Aplicacao.ConversoresDTO;
 using EventoWeb.Nucleo.Negocio.Entidades;
 using System;
 using System.Collections.Generic;
@@ -23,14 +24,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             {
                 var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(id);
                 if (inscricao != null && inscricao is InscricaoParticipante)
-                    dtoInscricao = new DTOBasicoInscricao()
-                    {
-                        Email = inscricao.Pessoa.Email,
-                        IdEvento = inscricao.Evento.Id,
-                        IdInscricao = inscricao.Id,
-                        NomeEvento = inscricao.Evento.Nome,
-                        NomeInscrito = inscricao.Pessoa.Nome
-                    };
+                    dtoInscricao = inscricao.ConverterBasico();
             });
 
             return dtoInscricao;

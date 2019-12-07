@@ -1,0 +1,47 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <a mat-raised-button matTooltip="Voltar para tela de gestão do evento" routerLink="../"><i class="fas fa-arrow-left"></i></a>
+    <span class="cursor-pointer sistema">Inscrições</span>
+    <span style="flex: 1 1 auto;"></span>
+    <dx-radio-group [items]="filtros"
+                    [(value)]="filtroEscolhido"
+                    layout="horizontal"
+                    ngClass="rd-filtro">
+    </dx-radio-group>
+  </mat-toolbar>
+  <div fxFill fxLayout="column" fxLayoutAlign="center center" *ngIf="inscricoes == null || inscricoes.length == 0">
+    <span class="fa fa-plus fa-5x"></span>
+    <h1>Não há nenhuma inscrição aqui para o filtro escolhido!!</h1>
+  </div>
+  <dx-data-grid *ngIf="inscricoes != null && inscricoes.length > 0"
+                fxFill
+                id="gridContainer"
+                [showBorders]="true"
+                [dataSource]="inscricoes"
+                [hoverStateEnabled]="true"
+                [columnResizingMode]="'nextColumn'"
+                [allowColumnResizing]="true">
+    <dxo-load-panel [enabled]="true"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <dxo-sorting mode="multiple"></dxo-sorting>
+
+    <dxi-column dataField="IdInscricao" caption="" cellTemplate="templateCelulaId" [width]="100" alignment="left" [allowSorting]="false"></dxi-column>
+    <dxi-column dataField="NomeInscrito" caption="Nome"></dxi-column>
+    <dxi-column dataField="DataNascimento" caption="Nascimento" [width]="120"></dxi-column>
+    <dxi-column dataField="Cidade" caption="Cidade/UF" cellTemplate="templateCidade" [width]="160"></dxi-column>
+    <dxi-column dataField="Situacao" caption="Situacao" cellTemplate="templateCelulaSituacao" alignment="left" [width]="100"></dxi-column>
+    <dxi-column dataField="Tipo" caption="Tipo" [width]="200"></dxi-column>
+
+    <div *dxTemplate="let data of 'templateCelulaId'">
+      <a mat-icon-button [routerLink]="'./' + data.data.IdInscricao + '/editar'" [disabled]="data.data.Situacao == 0" matTooltip="Edita a inscrição selecionada"><i class="fas fa-pencil-alt"></i></a>
+      <button mat-icon-button (click)="excluir(data.data)" matTooltip="Exclui a inscrição selecionada"><i class="fas fa-trash-alt"></i></button>
+    </div>
+    <div *dxTemplate="let data of 'templateCidade'">
+      {{data.data.Cidade + "/" + data.data.UF}}
+    </div>
+    <div *dxTemplate="let data of 'templateCelulaSituacao'">
+      {{obterTextoSituacao(data.data.Situacao)}}
+    </div>
+  </dx-data-grid>
+
+</layout-geral>

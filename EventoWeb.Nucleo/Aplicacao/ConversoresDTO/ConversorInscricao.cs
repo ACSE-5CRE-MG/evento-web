@@ -93,6 +93,23 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
             };
         }
 
+        public static DTOBasicoInscricao ConverterBasico(this Inscricao inscricao)
+        {
+            return new DTOBasicoInscricao()
+            {
+                Email = inscricao.Pessoa.Email,
+                IdEvento = inscricao.Evento.Id,
+                IdInscricao = inscricao.Id,
+                NomeEvento = inscricao.Evento.Nome,
+                NomeInscrito = inscricao.Pessoa.Nome,
+                Cidade = inscricao.Pessoa.Endereco.Cidade,
+                DataNascimento = inscricao.Pessoa.DataNascimento,
+                Situacao = inscricao.Situacao,
+                Tipo = (inscricao is InscricaoInfantil? "Infantil": "Participante/Trabalhador"),
+                UF = inscricao.Pessoa.Endereco.UF
+            };
+        }
+
         public static DTOCrianca Converter(this InscricaoInfantil inscricao)
         {
             var crianca = new DTOCrianca();

@@ -7,7 +7,12 @@ export class GestaoAutenticacao {
     public mAutenticacao: Usuario = null;
 
     constructor() {
-        this.mAutenticacao = <Usuario>localStorage.getObject(this.NOME_STORANGE);
+        let jsonString = localStorage.getItem(this.NOME_STORANGE);
+        if (jsonString != null && jsonString.trim().length > 0) {
+            this.mAutenticacao = JSON.parse(jsonString);
+        }
+        else
+            this.mAutenticacao = null;
     }
 
     autenticar(dados: Usuario): void {

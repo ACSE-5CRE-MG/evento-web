@@ -38,6 +38,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 throw new ExcecaoNegocioAtributo("Pagamento", "Forma", "A forma de pagamento por comprovante precisa de comprovantes");
 
             m_Forma = forma;
+            m_Comprovantes.Clear();
             if (comprovantes != null)
             {
                 foreach (var item in comprovantes)

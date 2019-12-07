@@ -2,7 +2,7 @@ import { Component, Injectable, OnInit } from "@angular/core";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import { DTOEventoCompleto, ConfiguracaoSalaEstudo, EnumModeloDivisaoSalasEstudo, ConfiguracaoEvangelizacao, EnumPublicoEvangelizacao, ConfiguracaoSarau, Periodo } from "./objetos";
+import { DTOEventoCompleto, EnumModeloDivisaoSalasEstudo, EnumPublicoEvangelizacao, ConfiguracaoSarau, Periodo } from "./objetos";
 import { Alertas } from "../componentes/alertas-dlg/alertas";
 import { WebServiceEventos } from "../webservices/webservice-eventos";
 import { OperacoesImagem } from "../util/util-imagem";
@@ -46,8 +46,7 @@ export class DlgFormEvento implements OnInit {
 
   public set temSalaEstudo(valor: boolean) {
     if (valor) {
-      this.evento.ConfiguracaoSalaEstudo = new ConfiguracaoSalaEstudo();
-      this.evento.ConfiguracaoSalaEstudo.ModeloDivisao = EnumModeloDivisaoSalasEstudo.PorIdadeCidade;
+      this.evento.ConfiguracaoSalaEstudo = EnumModeloDivisaoSalasEstudo.PorIdadeCidade;
     }
     else
       this.evento.ConfiguracaoSalaEstudo = null;            
@@ -59,17 +58,16 @@ export class DlgFormEvento implements OnInit {
 
   public set modeloDivisaoSalaEstudo(valor: EnumModeloDivisaoSalasEstudo) {
     if (this.evento.ConfiguracaoSalaEstudo != null)
-      this.evento.ConfiguracaoSalaEstudo.ModeloDivisao = valor;
+      this.evento.ConfiguracaoSalaEstudo = valor;
   }
 
   public get modeloDivisaoSalEstudo(): EnumModeloDivisaoSalasEstudo {
-    return (this.evento.ConfiguracaoSalaEstudo != null ? this.evento.ConfiguracaoSalaEstudo.ModeloDivisao : null);
+    return (this.evento.ConfiguracaoSalaEstudo != null ? this.evento.ConfiguracaoSalaEstudo : null);
   }
 
   public set temEvangelizacao(valor: boolean) {
     if (valor) {
-      this.evento.ConfiguracaoEvangelizacao = new ConfiguracaoEvangelizacao();
-      this.evento.ConfiguracaoEvangelizacao.Publico = EnumPublicoEvangelizacao.Todos;
+      this.evento.ConfiguracaoEvangelizacao = EnumPublicoEvangelizacao.Todos;
     }
     else
       this.evento.ConfiguracaoEvangelizacao = null;
@@ -81,11 +79,11 @@ export class DlgFormEvento implements OnInit {
 
   public set publicoEvangelizacao(valor: EnumPublicoEvangelizacao) {
     if (this.evento.ConfiguracaoEvangelizacao != null)
-      this.evento.ConfiguracaoEvangelizacao.Publico = valor;
+      this.evento.ConfiguracaoEvangelizacao = valor;
   }
 
   public get publicoEvangelizacao(): EnumPublicoEvangelizacao {
-    return (this.evento.ConfiguracaoEvangelizacao != null ? this.evento.ConfiguracaoEvangelizacao.Publico : null);
+    return (this.evento.ConfiguracaoEvangelizacao != null ? this.evento.ConfiguracaoEvangelizacao : null);
   }
 
   public set temSarau(valor: boolean) {
@@ -137,9 +135,9 @@ export class DlgFormEvento implements OnInit {
       this.alertas.alertarAtencao("Você não informou a data que inicia as inscrições", "");
     else if (this.evento.PeriodoInscricao.DataFinal == null)
       this.alertas.alertarAtencao("Você não informou a data que termina as inscrições", "");
-    else if (this.evento.ConfiguracaoEvangelizacao != null && this.evento.ConfiguracaoEvangelizacao.Publico == null)
+    else if (this.evento.ConfiguracaoEvangelizacao != null && this.evento.ConfiguracaoEvangelizacao == null)
       this.alertas.alertarAtencao("Você precisa dizer qual o público da evangelização", "");
-    else if (this.evento.ConfiguracaoSalaEstudo != null && this.evento.ConfiguracaoSalaEstudo.ModeloDivisao == null)
+    else if (this.evento.ConfiguracaoSalaEstudo != null && this.evento.ConfiguracaoSalaEstudo == null)
       this.alertas.alertarAtencao("Você precisa dizer qual o modelo de divisão da sala de estudo", "");
     else if (this.evento.ConfiguracaoSarau != null && (this.evento.ConfiguracaoSarau.TempoDuracaoMin == null || this.evento.ConfiguracaoSarau.TempoDuracaoMin <= 0))
       this.alertas.alertarAtencao("Você precisa dizer o tempo do duração. Esse tempo deve ser maior que zero", "");

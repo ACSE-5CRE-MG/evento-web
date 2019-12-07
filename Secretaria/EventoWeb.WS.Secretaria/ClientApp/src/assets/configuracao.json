@@ -1,4 +1,4 @@
 {
   "dominio": "",
-  "urlBaseWs": "https://localhost:44392/api/"
+  "urlBaseWs": "/api/"
 }

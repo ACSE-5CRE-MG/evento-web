@@ -1,0 +1,31 @@
+<div fxLayout="column" fxLayoutGap="5px">
+  <div fxLayout="row" fxLayoutGap="5px">
+    <button type="button" mat-raised-button (click)="clicarCriar()" [disabled]="desabilitar" matTooltip="Vou criar uma nova apresentação e posso passar o código da apresentação para outras pessoas que participarão comigo">
+      Vou criar uma apresentação
+    </button>
+  </div>
+  <dx-data-grid height="400" style="width:100%"
+                id="gridContainer"
+                [showBorders]="true"
+                [dataSource]="valor"
+                [hoverStateEnabled]="true"
+                [columnResizingMode]="'nextColumn'"
+                [allowColumnResizing]="true">
+    <dxo-load-panel [enabled]="true"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <dxo-sorting mode="multiple"></dxo-sorting>
+
+    <dxi-column dataField="Id" caption="" cellTemplate="templateCelulaDigitacao" [width]="140" alignment="left" [allowSorting]="false"></dxi-column>
+    <dxi-column dataField="Tipo" caption="Tipo Apresentação" [width]="180"></dxi-column>
+    <dxi-column dataField="DuracaoMin" caption="Duração (min)" [width]="50"></dxi-column>
+    <dxi-column dataField="Participantes" cellTemplate="templateCelulaParticipantes" caption="Participantes"></dxi-column>    
+
+    <div *dxTemplate="let data of 'templateCelulaDigitacao'">
+      <button mat-icon-button (click)="editar(data.data)" matTooltip="Edita o sarau selecionado"><i class="fas fa-pencil-alt"></i></button>
+      <button mat-icon-button (click)="excluir(data.data)" matTooltip="Exclui o sarau selecionado" [disabled]="desabilitar"><i class="fas fa-trash-alt"></i></button>
+    </div>
+    <div *dxTemplate="let data of 'templateCelulaParticipantes'">
+      {{gerarTextoParticipantes(data.data)}}
+    </div>
+  </dx-data-grid>
+</div>

@@ -118,7 +118,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual void Rejeitar()
         {
             if (m_Situacao != EnumSituacaoInscricao.Pendente)
-                throw new ExcecaoNegocio("Inscricao", "Só se pode tornar uma inscrição aceita se ela estiver na situação Pendente");
+                throw new ExcecaoNegocio("Inscricao", "Só se pode tornar uma inscrição rejeitada se ela estiver na situação Pendente");
 
             m_Situacao = EnumSituacaoInscricao.Rejeitada;
         }

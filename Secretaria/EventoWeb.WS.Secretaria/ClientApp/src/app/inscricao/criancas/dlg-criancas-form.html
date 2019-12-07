@@ -1,0 +1,111 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div><h1>Criança - {{tituloDlg}}</h1></div>
+    <span style="flex: 1 1 auto;"></span>
+  </mat-toolbar>
+  <div style="margin: 5px; height:70vh">
+    <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Nome:</label>
+        <dx-text-box [(value)]="dadosTela.nome" fxFlex="100" [disabled]="desabilitar">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou o nome."></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Nome Crachá:</label>
+        <dx-text-box [(value)]="dadosTela.nomeCracha" fxFlex="100" [disabled]="desabilitar">
+        </dx-text-box>
+      </div>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" fxLayoutAlign.xs="center start">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+          <label class="label_campos" fxFlex="106px">Nascimento:</label>
+          <dx-date-box [(value)]="dadosTela.dataNascimento" type="date" [disabled]="desabilitar">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="Você não informou a data de nascimento"></dxi-validation-rule>
+              <dxi-validation-rule type="range" [min]="dadosTela.dataMaximaNascimento" message="A idade deve ser, no máximo, de {{dadosTela.idadeMaxima}} anos"></dxi-validation-rule>
+            </dx-validator>
+          </dx-date-box>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+        <label class="label_campos" fxFlex="106px">Sexo:</label>
+        <dx-radio-group [items]="coordenacao.Sexos"
+                        [(value)]="this.dadosTela.sexoEscolhido"
+                        layout="horizontal"
+                        [disabled]="desabilitar">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não escolheu o sexo."></dxi-validation-rule>
+          </dx-validator>
+        </dx-radio-group>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">E-mail:</label>
+        <dx-text-box [(value)]="dadosTela.email" fxFlex="60" [disabled]="desabilitar">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou o e-mail."></dxi-validation-rule>
+            <dxi-validation-rule type="email" message="Você informou um email que não é válido"></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Cidade/UF:</label>
+        <dx-text-box [(value)]="dadosTela.cidade" fxFlex="80" [disabled]="desabilitar">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou a Cidade."></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+        <dx-select-box [dataSource]="coordenacao.EstadosFederacao"
+                       [searchMode]="'contains'"
+                       [searchTimeout]="200"
+                       [minSearchLength]="0"
+                       [searchEnabled]="true"
+                       [(value)]="dadosTela.uf"
+                       fxFlex="20"
+                       [disabled]="desabilitar">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou a UF."></dxi-validation-rule>
+          </dx-validator>
+        </dx-select-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px"></label>
+        <dx-check-box [(value)]="dadosTela.primeiroEncontro"
+                      [width]="80"
+                      fxFlex="40"
+                      text="Primeiro Encontro?"
+                      [disabled]="desabilitar"></dx-check-box>
+      </div>
+      <mat-divider></mat-divider>
+      <div class="margem-5px" fxFlex="100" fxLayout="column" fxLayoutGap="5px">
+        <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <div fxFlex="106px"></div>
+          <dx-check-box [(value)]="dadosTela.ehVegetariano" text="É Vegetariano(a)?" [disabled]="desabilitar"></dx-check-box>
+          <dx-check-box [(value)]="dadosTela.usaAdocanteDiariamente" text="Usa adoçante diariamente?" [disabled]="desabilitar"></dx-check-box>
+          <dx-check-box [(value)]="dadosTela.ehDiabetico" text="É diabético(a)?" [disabled]="desabilitar"></dx-check-box>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <label class="label_campos" fxFlex="106px">Carnes que não come:</label>
+          <dx-text-box [(value)]="dadosTela.carnesNaoCome" fxFlex="100" [disabled]="desabilitar">
+          </dx-text-box>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <label class="label_campos" fxFlex="106px">Alimentos que tem alergia:</label>
+          <dx-text-box [(value)]="dadosTela.alimentosAlergia" fxFlex="100" [disabled]="desabilitar">
+          </dx-text-box>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+          <label class="label_campos" fxFlex="106px">Medicamentos que usa:</label>
+          <dx-text-box [(value)]="dadosTela.medicamentosUsa" fxFlex="100" [disabled]="desabilitar">
+          </dx-text-box>
+        </div>
+      </div>
+    </dx-validation-group>
+  </div>  
+  <div style="margin: 5px; text-align: right" layout-geral-rodape>
+    <mat-divider style="margin:5px"></mat-divider>
+    <button mat-raised-button (click)="clicarCancelar()">Cancelar</button>
+    <button mat-raised-button (click)="clicarOK()" cdkFocusInitial [disabled]="desabilitar" style="margin-left:5px">Salvar</button>
+  </div>
+</layout-geral>

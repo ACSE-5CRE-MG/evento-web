@@ -32,7 +32,11 @@ namespace EventoWeb.Nucleo.Aplicacao
         public int IdEvento { get; set; }
         public string NomeEvento { get; set; }
         public string Email { get; set; }
+        public string Cidade { get; set; }
+        public string UF { get; set; }
         public EnumSituacaoInscricao Situacao { get; set; }
+        public DateTime DataNascimento { get; set; }
+        public string Tipo { get; set; }
     }
 
     public class DTOAcessoInscricao

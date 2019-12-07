@@ -1,0 +1,18 @@
+<div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+  <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" *ngIf="apresentacao == 1">
+    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
+      <label class="label_campos" fxFlex.xs="106px">Você é:</label>
+      <dx-radio-group [items]="opcoes"
+                      [(value)]="opcaoEscolhida"
+                      layout="horizontal"
+                      [disabled]="desabilitar">
+      </dx-radio-group>
+    </div>
+  </div>
+
+  <comp-oficina-participante *ngIf="opcaoEscolhida == opcoes[0]" [oficinas]="oficinas" [(valor)]="participante" [desabilitar]="desabilitar">
+  </comp-oficina-participante>
+
+  <comp-oficina-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [oficinas]="oficinas" [(valor)]="coordenador" [desabilitar]="desabilitar">
+  </comp-oficina-coordenador>
+</div>
