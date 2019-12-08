@@ -67,4 +67,6 @@
     </TypeScriptCompile>
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties clientapp_4angular_1json__JsonSchema="" clientapp_4tsconfig_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 </Project>

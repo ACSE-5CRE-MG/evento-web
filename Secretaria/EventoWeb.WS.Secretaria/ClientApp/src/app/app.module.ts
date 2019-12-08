@@ -1,13 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, LOCALE_ID, APP_INITIALIZER } from '@angular/core';
+import { NgModule, LOCALE_ID, APP_INITIALIZER, Injectable } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-
-import { AgGridModule } from 'ag-grid-angular';
 
 import {
     MatCardModule,
@@ -93,6 +91,7 @@ import { ComponenteDepartamentos } from './inscricao/atividades/comp-departament
 import { ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DialogosSarau } from './inscricao/atividades/comp-sarau';
 import { ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario, DialogosCrianca } from './inscricao/criancas/comp-criancas';
 import { ComponentePagamento } from './inscricao/pagamento/comp-pagamento';
+import { Observable } from 'rxjs';
 
 declare function require(url: string);
 
@@ -101,6 +100,33 @@ registerLocaleData(localePt);
 let ptMessages = require("devextreme/localization/messages/pt.json");
 loadMessages(ptMessages);
 locale('pt');
+
+@Injectable()
+export class AppLoadService {
+
+    constructor(private http: HttpClient) { }
+
+    initializeApp(): Promise<any> {
+
+        let controle = new Observable((observador) => {
+            this.http.get<Configuracao>('assets/configuracao.json')
+                .subscribe(
+                    (cnf) => {
+                        ConfiguracaoSistemaService.configuracao = cnf;
+                        observador.complete();
+                    },
+                    (erro) => observador.error(erro)
+                );
+        })
+            .toPromise();
+
+        return controle;
+    }
+}
+
+export function init_app(appLoadService: AppLoadService) {
+    return () => appLoadService.initializeApp();
+}
 
 @NgModule({
     declarations: [
@@ -146,7 +172,6 @@ locale('pt');
         MatDatetimepickerModule,
         FlexLayoutModule,
         TextMaskModule,
-        AgGridModule.withComponents([]),
         DxDataGridModule,
         DxTextBoxModule,
         DxNumberBoxModule,
@@ -182,21 +207,15 @@ locale('pt');
         TelaListaEventos, DlgFormEvento, TelaRoteamentoEvento,
         TelaListagemSalas,
         DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario],
-    providers: [{ provide: LOCALE_ID, useValue: 'pt' }, { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+    providers: [
+        AppLoadService,
+        { provide: LOCALE_ID, useValue: 'pt' },
+        { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
+        { provide: APP_INITIALIZER, useFactory: init_app, deps: [AppLoadService], multi: true },
         Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
         WebServiceAutenticacao, WebServiceEventos, WebServiceSala, WebServiceInscricoes,
         DialogosSarau, DialogosCrianca],
     bootstrap: [TelaPrincipal]
 })
 export class AppModule {
-    constructor(public matIconRegistry: MatIconRegistry, public alertas: Alertas) {
-
-        this.matIconRegistry.registerFontClassAlias('fontawesome', 'fa');
-        let configuracao = require('../assets/configuracao.json');
-        if (configuracao != null) {
-            ConfiguracaoSistemaService.configuracao = configuracao;
-        }
-        else
-            this.alertas.alertarErro("Não há dados de configuração");
-    }
 }
