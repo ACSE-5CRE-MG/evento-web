@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EventoWeb.Nucleo.Aplicacao;
 using EventoWeb.Nucleo.Negocio.Entidades;
+using EventoWeb.Nucleo.Persistencia.Comunicacao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -18,7 +19,8 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
         public InscricoesController(IContexto contexto)
         {
-            m_App = new AppInscricoes(contexto);
+            m_App = new AppInscricoes(contexto,
+                new AppEmailMsgPadrao(contexto, new ServicoEmail(), new GeracaoMensagemEmailRazor()));
         }
 
         [Authorize("Bearer")]

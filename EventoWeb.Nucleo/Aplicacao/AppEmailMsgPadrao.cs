@@ -105,12 +105,25 @@ namespace EventoWeb.Nucleo.Aplicacao
 
         public void EnviarInscricaoAceita(InscricaoParticipante inscricao)
         {
-            throw new NotImplementedException();
+            var mensagem = ObterMensagem(inscricao.Evento.Id);
+            m_ServicoEmail.Configuracao = ObterCnfEmail(inscricao.Evento.Id);
+            m_ServicoEmail.Enviar(new Email
+            {
+                Assunto = mensagem.MensagemInscricaoConfirmada.Assunto,
+                Conteudo = m_GeradorMsgEmail.GerarMensagemModelo<EmailConfirmacaoInscricao>(mensagem.MensagemInscricaoConfirmada.Mensagem,
+                    new EmailConfirmacaoInscricao
+                    {
+                        Evento = inscricao.Evento.Nome,
+                        NomePessoa = inscricao.Pessoa.Nome,
+                    }
+                ),
+                Endereco = inscricao.Pessoa.Email
+            });
         }
 
         public void EnviarInscricaoRejeitada(InscricaoParticipante inscricao)
         {
-            throw new NotImplementedException();
+            
         }
 
         public void Testar(int idInscricao)
@@ -143,5 +156,11 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string Codigo { get; set; }
         public string Cidade { get; set; }
         public string UF { get; set; }
+    }
+
+    public class EmailConfirmacaoInscricao
+    {
+        public string NomePessoa { get; set; }
+        public string Evento { get; set; }
     }
 }

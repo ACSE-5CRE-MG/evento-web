@@ -117,7 +117,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                     participante.TornarPendente();
                     participante.Aceitar();
 
-                    m_AppEmail.EnviarInscricaoRegistrada(inscParticipante);
+                    m_AppEmail.EnviarInscricaoAceita((InscricaoParticipante)inscricao);
                 }
             });
         }
