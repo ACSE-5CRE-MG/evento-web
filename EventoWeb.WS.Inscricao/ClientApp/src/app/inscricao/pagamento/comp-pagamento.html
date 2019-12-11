@@ -28,10 +28,23 @@
     <dx-file-uploader [multiple]="true"
                       labelText="Arraste o arquivo para cá"
                       selectButtonText="Selecione o arquivo"
+                      uploadFailedMessage=""
+                      uploadedMessage=""
                       [allowedFileExtensions]="['.jpg', '.jpeg']"
                       [(value)]="comprovantes"
                       [disabled]="desabilitar">
     </dx-file-uploader>
+  </div>
+  <div *ngIf="opcaoEscolhida == opcoes[0]" fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="center center">
+    <dx-gallery [dataSource]="obterImgComprovantes()"
+                [height]="200"
+                [width]="300"
+                [loop]="false"
+                [showNavButtons]="true"
+                [showIndicator]="true"
+                [stretchImages]="true"
+                [disabled]="desabilitar">
+    </dx-gallery>
   </div>
   <div *ngIf="opcaoEscolhida != null">
     <p *ngIf="opcaoEscolhida == opcoes[0]">

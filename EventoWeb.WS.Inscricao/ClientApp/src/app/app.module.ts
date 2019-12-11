@@ -9,30 +9,31 @@ import localePt from '@angular/common/locales/pt';
 import { FlexLayoutModule } from "@angular/flex-layout";
 
 import {
-    MatSidenavModule,
-    MatDialogModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatDividerModule,
-    MatCardModule,
-    MatTabsModule
+  MatSidenavModule,
+  MatDialogModule,
+  MatToolbarModule,
+  MatButtonModule,
+  MatDividerModule,
+  MatCardModule,
+  MatTabsModule
 } from '@angular/material';
 
 import {
-    DxDataGridModule,
-    DxTextBoxModule,
-    DxNumberBoxModule,
-    DxDateBoxModule,
-    DxDropDownBoxModule,
-    DxListModule,
-    DxRadioGroupModule,
-    DxCheckBoxModule,
-    DxPopoverModule,
-    DxTextAreaModule,
-    DxValidatorModule,
-    DxValidationGroupModule,
-    DxSelectBoxModule,
-    DxFileUploaderModule
+  DxDataGridModule,
+  DxTextBoxModule,
+  DxNumberBoxModule,
+  DxDateBoxModule,
+  DxDropDownBoxModule,
+  DxListModule,
+  DxRadioGroupModule,
+  DxCheckBoxModule,
+  DxPopoverModule,
+  DxTextAreaModule,
+  DxValidatorModule,
+  DxValidationGroupModule,
+  DxSelectBoxModule,
+  DxFileUploaderModule,
+  DxGalleryModule
 } from 'devextreme-angular';
 
 import { locale, loadMessages } from 'devextreme/localization';
@@ -73,82 +74,83 @@ locale('pt');
 @Injectable()
 export class AppLoadService {
 
-    constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-    initializeApp(): Promise<any> {
+  initializeApp(): Promise<any> {
 
-        let controle = new Observable((observador) => {
-            this.http.get<Configuracao>('assets/configuracao.json')
-                .subscribe(
-                    (cnf) => {
-                        ConfiguracaoSistemaService.configuracao = cnf;
-                        observador.complete();
-                    },
-                    (erro) => observador.error(erro)
-                );
-        })
-        .toPromise();
+    let controle = new Observable((observador) => {
+      this.http.get<Configuracao>('assets/configuracao.json')
+        .subscribe(
+          (cnf) => {
+            ConfiguracaoSistemaService.configuracao = cnf;
+            observador.complete();
+          },
+          (erro) => observador.error(erro)
+        );
+    })
+      .toPromise();
 
-        return controle;
-    }
+    return controle;
+  }
 }
 
 export function init_app(appLoadService: AppLoadService) {
-    return () => appLoadService.initializeApp();
+  return () => appLoadService.initializeApp();
 }
 
 @NgModule({
-    declarations: [
-        TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao, TelaCodigoInscricao, TelaInscricao,
-        CaixaMensagemDlg, DlgEmProcessamento, LayoutGeral,
-        ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
-        ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
-        ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
-        ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario,
-        ComponentePagamento
-    ],
-    imports: [
-        BrowserModule,
-        FlexLayoutModule,
-        MatSidenavModule,
-        MatDialogModule,
-        MatToolbarModule,
-        MatButtonModule,
-        MatDividerModule,
-        MatCardModule,
-        MatTabsModule,
-        DxDataGridModule,
-        DxTextBoxModule,
-        DxNumberBoxModule,
-        DxDateBoxModule,
-        DxDropDownBoxModule,
-        DxListModule,
-        DxRadioGroupModule,
-        DxCheckBoxModule,
-        DxPopoverModule,
-        DxTextAreaModule,
-        DxValidatorModule,
-        DxValidationGroupModule,
-        DxSelectBoxModule,
-        DxFileUploaderModule,
-        HttpClientModule,
-        RouterModule.forRoot([
-            { path: '', component: TelaPrincipal },
-            { path: 'comecar/:idevento', component: TelaCriacaoInscricao },
-            { path: 'pesquisar', component: TelaPesquisaInscricao },
-            { path: 'validar/:idinscricao', component: TelaCodigoInscricao },
-            { path: 'inscricao/:idinscricao', component: TelaInscricao, canActivate: [PermissaoAcessoInscricao], },
-            { path: '**', redirectTo: '' }
-        ]),
-        BrowserAnimationsModule
-    ],
-    entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario],
-    providers: [
-        AppLoadService,
-        { provide: LOCALE_ID, useValue: 'pt' },
-        { provide: APP_INITIALIZER, useFactory: init_app, deps: [AppLoadService], multi: true },
-        CoordenacaoCentral, WsEventos, ClienteWs, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau, DialogosCrianca
-    ],
-    bootstrap: [TelaBase]
+  declarations: [
+    TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao, TelaCodigoInscricao, TelaInscricao,
+    CaixaMensagemDlg, DlgEmProcessamento, LayoutGeral,
+    ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
+    ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
+    ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
+    ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario,
+    ComponentePagamento
+  ],
+  imports: [
+    BrowserModule,
+    FlexLayoutModule,
+    MatSidenavModule,
+    MatDialogModule,
+    MatToolbarModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatCardModule,
+    MatTabsModule,
+    DxDataGridModule,
+    DxTextBoxModule,
+    DxNumberBoxModule,
+    DxDateBoxModule,
+    DxDropDownBoxModule,
+    DxListModule,
+    DxRadioGroupModule,
+    DxCheckBoxModule,
+    DxPopoverModule,
+    DxTextAreaModule,
+    DxValidatorModule,
+    DxValidationGroupModule,
+    DxSelectBoxModule,
+    DxFileUploaderModule,
+    DxGalleryModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      { path: '', component: TelaPrincipal },
+      { path: 'comecar/:idevento', component: TelaCriacaoInscricao },
+      { path: 'pesquisar', component: TelaPesquisaInscricao },
+      { path: 'validar/:idinscricao', component: TelaCodigoInscricao },
+      { path: 'inscricao/:idinscricao', component: TelaInscricao, canActivate: [PermissaoAcessoInscricao], },
+      { path: '**', redirectTo: '' }
+    ]),
+    BrowserAnimationsModule
+  ],
+  entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario],
+  providers: [
+    AppLoadService,
+    { provide: LOCALE_ID, useValue: 'pt' },
+    { provide: APP_INITIALIZER, useFactory: init_app, deps: [AppLoadService], multi: true },
+    CoordenacaoCentral, WsEventos, ClienteWs, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau, DialogosCrianca
+  ],
+  bootstrap: [TelaBase]
 })
 export class AppModule { }
