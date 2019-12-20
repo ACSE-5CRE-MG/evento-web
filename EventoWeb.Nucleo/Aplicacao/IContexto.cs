@@ -23,8 +23,12 @@ namespace EventoWeb.Nucleo.Aplicacao
         AMensagensEmailPadrao RepositorioMensagensEmailPadrao { get; }
         ACodigosAcessoInscricao RepositorioCodigosAcessoInscricao { get; }
         AApresentacoesSarau RepositorioApresentacoesSarau { get; }
-
         IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro { get; }
         AArquivosBinarios RepositorioArquivosBinarios { get; }
+
+        ATitulos RepositorioTitulosFinanceiros { get; }
+        ATransacoes RepositorioTransacoesFinanceiras { get; }
+        AContas RepositorioContasBancarias { get; }
+        AFaturamentos RepositorioFaturamentos { get; }
     }
 }

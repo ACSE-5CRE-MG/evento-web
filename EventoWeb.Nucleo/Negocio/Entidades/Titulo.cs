@@ -1,146 +1,56 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using System;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
-    public enum TipoSituacaoTitulo { Liquidado, ParcialmenteLiquidado, Aberto }
-    public class DadosParcelamento 
+    public class Titulo : EntidadeFinanceira
     {
-        public DateTime Data { get; set; }
-        public Decimal Valor { get; set; }
-    }
+        private Decimal m_Valor;
 
-    public class Titulo : EntidadeFinan
-    {
-        private IList<ParcelaTitulo> m_Parcelas;
-        private PessoaComum m_Quem;
-        private Categoria m_QualCategoria;
-        private Evento m_QualEvento;
-
-        public Titulo(Evento evento, TipoTransacao tipo, PessoaComum quem, Categoria categoria, Decimal valor, IEnumerable<DadosParcelamento> parcelas)
+        public Titulo(Evento evento, EnumTipoTransacao tipo, Decimal valor, DateTime dataVencimento, Faturamento origem)
+            :base(evento, tipo)
         {
-            QualEvento = evento;
-            Tipo = tipo;
-            QualCategoria = categoria;
-            Quem = quem;
+            if (origem == null)
+                throw new ExcecaoNegocioAtributo("Transacao", "origem", "A origem precisa ser informada.");
 
-            m_Parcelas = new List<ParcelaTitulo>();
+            if (origem.Evento != evento)
+                throw new ExcecaoNegocioAtributo("Transacao", "origem", "A origem deve ser do mesmo evento do titulo.");
 
-            AlterarValor(valor, parcelas);
+            if (origem.Tipo != tipo)
+                throw new ExcecaoNegocioAtributo("Transacao", "origem", "A origem deve ser do mesmo tipo do titulo.");
 
+            Origem = origem;
             DataCriado = DateTime.Now;
-            Situacao = TipoSituacaoTitulo.Aberto;
+            Liquidado = false;
+            DataVencimento = dataVencimento;
+            Valor = valor;
         }
 
         protected Titulo() { }
 
-        public virtual Evento QualEvento
+        public virtual decimal Valor 
         {
-            get { return m_QualEvento; }
-            protected set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("Evento");
-
-                m_QualEvento = value;
-            }
-        }
-
-        public virtual TipoTransacao Tipo { get; protected set; }
-
-        public virtual Categoria QualCategoria
-        {
-            get { return m_QualCategoria; }
+            get => m_Valor;
             set
             {
-                if (value == null)
-                    throw new ArgumentNullException("QualCategoria");
+                if (Liquidado)
+                    throw new ExcecaoNegocio("Titulo", "Não é possível alterar o valor de um titulo liquidado");
 
-                if (value.QualTransacao != this.Tipo)
-                    throw new InvalidOperationException("A categoria deve ser do mesmo tipo do Titulo.");
+                if (value <= 0)
+                    throw new ExcecaoNegocioAtributo("Titulo", "Valor", "O valor deve ser maior que zero");
 
-                m_QualCategoria = value;
+                m_Valor = value;
             }
         }
 
-        public virtual decimal Valor { get; protected set; }
-
-        public virtual TipoSituacaoTitulo Situacao { get; protected set; }
+        public virtual bool Liquidado { get; set; }
 
         public virtual DateTime DataCriado { get; protected set; }
 
         public virtual string Descricao { get; set; }
 
-        public virtual PessoaComum Quem 
-        {
-            get { return m_Quem; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("Quem");
-                m_Quem = value;
-            }
-        }
+        public virtual DateTime DataVencimento { get; set; }
 
-        public virtual IEnumerable<ParcelaTitulo> Parcelas { get { return m_Parcelas; } }
-
-        public virtual void AlterarValor(Decimal novoValor, IEnumerable<DadosParcelamento> parcelas)
-        {
-            if (novoValor <= 0)
-                throw new ArgumentException("O valor deve ser maior que zero.", "novoValor");
-
-            var valorAtual = Valor;
-            Valor = novoValor;
-
-            try
-            {
-                Parcelar(parcelas);
-            }
-            catch (Exception ex)
-            {
-                Valor = valorAtual;
-                throw ex;
-            }
-        }
-
-        public virtual void Parcelar(IEnumerable<DadosParcelamento> parcelas)
-        {
-            if (parcelas == null || parcelas.Count() == 0)
-                throw new ArgumentNullException("parcelas");
-
-            if (parcelas.Sum(x => x.Valor) != Valor)
-                throw new ArgumentException("O valor das parcelas deve ser igual ao do titulo.");
-
-            if (!PodeModificarParcelamento())
-                throw new ArgumentException("Já existem parcelas transacionadas, por isso é impossível mudar o parcelamento do titulo.");
-
-            m_Parcelas.Clear();
-
-            foreach (var dado in parcelas)
-            {
-                var parcelaTitulo = new ParcelaTitulo(this, dado.Data, dado.Valor);
-                m_Parcelas.Add(parcelaTitulo);
-            }
-        }
-
-        public virtual bool PodeModificarParcelamento()
-        {
-            return Parcelas == null || (Parcelas != null && Parcelas.Count(x => x.Registrado) == 0);
-        }
-
-        public virtual void AtualizarSituacao()
-        {
-            int numeroParcelas = Parcelas.Count();
-            int numeroParcelasLiquidadas = Parcelas.Count(x => x.Registrado);
-
-            if (numeroParcelas == numeroParcelasLiquidadas)
-                Situacao = TipoSituacaoTitulo.Liquidado;
-            else if (numeroParcelasLiquidadas == 0)
-                Situacao = TipoSituacaoTitulo.Aberto;
-            else
-                Situacao = TipoSituacaoTitulo.ParcialmenteLiquidado;
-        }
+        public virtual Faturamento Origem { get; protected set; }
     }
 }

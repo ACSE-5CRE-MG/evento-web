@@ -4,7 +4,6 @@ using EventoWeb.Nucleo.Persistencia.Infra;
 using EventoWeb.Nucleo.Persistencia.Repositorios;
 using NHibernate;
 using NHibernate.Cfg;
-using NHibernate.Context;
 using NHibernate.Mapping.ByCode;
 using System.Reflection;
 
@@ -76,7 +75,14 @@ namespace EventoWeb.Nucleo.Persistencia
         public IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro => new ServicoGeradorCodigoSeguro(RepositorioCodigosAcessoInscricao);
         public AMensagensEmailPadrao RepositorioMensagensEmailPadrao => new RepositorioMensagensEmailPadrao(m_Sessao);
         public AApresentacoesSarau RepositorioApresentacoesSarau => new RepositorioApresentacoesSarauNH(m_Sessao);
-
         public AArquivosBinarios RepositorioArquivosBinarios => new RepositorioArquivosBinariosNH(m_Sessao);
+
+        public ATitulos RepositorioTitulosFinanceiros => new RepositorioTitulosFinanceirosNH(m_Sessao);
+
+        public ATransacoes RepositorioTransacoesFinanceiras => new RepositorioTransacoesFinanceirasNH(m_Sessao);
+
+        public AContas RepositorioContasBancarias => new RepositorioContasBancariasNH(m_Sessao);
+
+        public AFaturamentos RepositorioFaturamentos => new RepositorioFaturamentosNH(m_Sessao);
     }
 }

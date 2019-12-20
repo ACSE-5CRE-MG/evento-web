@@ -19,7 +19,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public String Quem { get; set; }
         public DateTime DataRegistrar { get; set; }
         public Decimal Valor { get; set; }
-        public TipoTransacao TipoTransacao { get; set; }
+        public EnumTipoTransacao TipoTransacao { get; set; }
     }
 
     public class VisaoGeralFinanceiro

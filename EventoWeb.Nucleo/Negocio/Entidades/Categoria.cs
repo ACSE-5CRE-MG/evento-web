@@ -5,13 +5,13 @@ using System.Text;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
-    public class Categoria : EntidadeFinan
+    public class Categoria : Entidade
     {
         private string m_Descricao;
         private Categoria m_CategoriaPai;
         private Evento m_QualEvento;
 
-        public Categoria(Evento evento, TipoTransacao qualTransacao, String descricao)
+        public Categoria(Evento evento, EnumTipoTransacao qualTransacao, String descricao)
         {
             QualEvento = evento;
             QualTransacao = qualTransacao;
@@ -32,7 +32,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             }
         }
 
-        public virtual TipoTransacao QualTransacao { get; protected set; }
+        public virtual EnumTipoTransacao QualTransacao { get; protected set; }
 
         public virtual String Descricao 
         {

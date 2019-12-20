@@ -1,63 +1,44 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using System;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
-    public enum TipoTransacao { Receita, Despesa }
+    public enum EnumTipoTransacao { Receita, Despesa }
 
-    public class Transacao : EntidadeFinan 
+    public class Transacao : Entidade 
     {
         private string m_OQue;
-        private Conta m_QualConta;
         private decimal m_Valor;
-        private Categoria m_QualCategoria;
-        private Evento m_QualEvento;
 
-        public Transacao(Evento evento, Conta conta, Categoria categoria, DateTime dataHora, String oQue, decimal valor,
-            TipoTransacao tipo)
+        public Transacao(Evento evento, Conta conta, EntidadeFinanceira origem, DateTime dataHora, String oQue, decimal valor,
+            EnumTipoTransacao tipo)
         {
-            QualEvento = evento;
-            QualConta = conta;
+            QualEvento = evento ?? throw new ExcecaoNegocioAtributo("Transacao", "evento", "O evento precisa ser informado.");
+            QualConta = conta ?? throw new ExcecaoNegocioAtributo("Transacao", "conta", "A conta precisa ser informada.");
+            Origem = origem ?? throw new ExcecaoNegocioAtributo("Transacao", "origem", "A origem precisa ser informada.");
+
+            if (QualConta.QualEvento != QualEvento)
+                throw new ExcecaoNegocioAtributo("Transacao", "conta", "A conta deve ser do mesmo evento da transação.");
+
+            if (Origem.Evento != QualEvento)
+                throw new ExcecaoNegocioAtributo("Transacao", "origem", "A origem deve ser do mesmo evento da transação.");
+
+            if (origem.Tipo != tipo)
+                throw new ExcecaoNegocioAtributo("Transacao", "origem", "A origem deve ser do mesmo tipo da transação.");
+
             DataHora = dataHora;
             OQue = oQue;
             Valor = valor;
             Tipo = tipo;
-            QualCategoria = categoria;
         }
 
         protected Transacao() { }
 
-        public virtual Evento QualEvento
-        {
-            get { return m_QualEvento; }
-            protected set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("Evento");
+        public virtual Evento QualEvento { get; protected set; }
 
-                m_QualEvento = value;
-            }
-        }
+        public virtual Conta QualConta { get; protected set; }
 
-        public virtual PessoaComum Quem
-        {
-            get;
-            set;
-        }
-
-        public virtual Conta QualConta
-        {
-            get { return m_QualConta; }
-            protected set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("QualConta");
-
-                m_QualConta = value;
-            }
-        }
+        public virtual EntidadeFinanceira Origem { get; protected set; }
 
         public virtual DateTime DataHora { get; protected set; }
 
@@ -67,7 +48,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             set
             {
                 if (String.IsNullOrWhiteSpace(value))
-                    throw new ArgumentNullException("OQue");
+                    throw new ExcecaoNegocioAtributo("Transacao", "OQue", "O que é esta transação precisa ser informado.");
 
                 m_OQue = value;
             }
@@ -76,30 +57,15 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual Decimal Valor
         {
             get { return m_Valor; }
-            protected set
+            set
             {
                 if (value <= 0)
-                    throw new ArgumentException("O valor deve ser maior que zero.", "Valor");
+                    throw new ExcecaoNegocioAtributo("Transacao", "Valor", "O valor deve ser maior que zero.");
 
                 m_Valor = value;
             }
         }
 
-        public virtual TipoTransacao Tipo { get; protected set; }
-
-        public virtual Categoria QualCategoria
-        {
-            get { return m_QualCategoria; }
-            set
-            {
-                if (value == null)
-                    throw new ArgumentNullException("QualCategoria");
-
-                if (value.QualTransacao != this.Tipo)
-                    throw new InvalidOperationException("A categoria deve ser do mesmo tipo do Titulo.");
-
-                m_QualCategoria = value;
-            }
-        }
+        public virtual EnumTipoTransacao Tipo { get; protected set; }
     }
 }
