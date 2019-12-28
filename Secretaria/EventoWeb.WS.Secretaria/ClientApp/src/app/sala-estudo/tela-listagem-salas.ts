@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { DTOEventoCompleto } from "../evento/objetos";
-import { WebServiceEventos } from "../webservices/webservice-eventos";
 import { Alertas } from "../componentes/alertas-dlg/alertas";
 import { ActivatedRoute } from "@angular/router";
 import { WebServiceSala } from "../webservices/webservice-salas";
 import { DTOSalaEstudo } from "./objetos";
+import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';
+import { DialogosSala } from './dlg-form-sala';
 
 
 @Component({
@@ -14,26 +14,20 @@ import { DTOSalaEstudo } from "./objetos";
 })
 export class TelaListagemSalas implements OnInit {
 
-  evento: DTOEventoCompleto = new DTOEventoCompleto();
   salaSelecionada: DTOSalaEstudo = null;
   salas: DTOSalaEstudo[] = [];
 
-  agGridSala: any;
+  private idEvento: number = 0;
 
-  definicaoColunas = [
-    { headerName: 'Id', field: 'Id', filter: true },
-    { headerName: 'Nome', field: 'Nome', filter: true },
-    { headerName: 'Total Par?', field: 'DeveSerParNumeroTotalParticipantes', filter: true },
-    { headerName: 'Faixa Etária', field: 'IdadeMinima', filter: true }
-  ];    
-
-  constructor(public wsSalas: WebServiceSala, public mensageria: Alertas, public roteador: ActivatedRoute) { }
+  constructor(private wsSalas: WebServiceSala, private mensageria: Alertas, private roteador: ActivatedRoute, private dlgsSala: DialogosSala) { }
 
   ngOnInit(): void {
     this.roteador.parent.params.subscribe(parametros => {
       let dlg = this.mensageria.alertarProcessamento("Buscando salas...");
 
-      this.wsSalas.obterTodas(+parametros["id"])
+      this.idEvento = parametros["id"];
+
+      this.wsSalas.obterTodas(this.idEvento)
         .subscribe(salas => {
           this.salas = salas;
           dlg.close();
@@ -46,25 +40,47 @@ export class TelaListagemSalas implements OnInit {
   }
 
   clicarIncluir(): void {
-
+    this.dlgsSala.apresentarDlgFormDialogoInclusao(this.idEvento, false)
+      .subscribe(
+        (novaSala) => {
+          if (novaSala != null)
+            this.salas.push(novaSala);
+        }
+      );
   }
 
-  clicarEditar(): void {
-
+  clicarEditar(sala: DTOSalaEstudo): void {
+    this.dlgsSala.apresentarDlgFormDialogoEdicao(this.idEvento, sala.Id, false)
+      .subscribe(
+        (salaAlterada) => {
+          if (salaAlterada != null) {
+            let indice = this.salas.findIndex(x => x.Id == salaAlterada.Id);
+            if (indice != -1) {
+              this.salas[indice] = salaAlterada;
+            }
+          }            
+        }
+      );
   }
 
-  clicarExcluir(): void {
-
-  }
-
-  realizarQdoSelecaoAgGridMudar(): void {
-    var registrosSelecionado = this.agGridSala.getSelectedRows();
-    if (registrosSelecionado != null && registrosSelecionado.length > 0)
-      this.salaSelecionada = registrosSelecionado[0];
-  }
-
-  realizarQdoAgGridPronto(evento: any): void {
-    this.agGridSala = evento.api;
-    evento.api.sizeColumnsToFit();
+  clicarExcluir(sala: DTOSalaEstudo): void {
+    this.mensageria.alertarConfirmacao("Você quer excluir esta sala mesmo?", "")
+      .subscribe(
+        (resposta) => {
+          if (resposta == CaixaMensagemResposta.Sim) {
+            let dlg = this.mensageria.alertarProcessamento("Processando exclusão de sala...");
+            this.wsSalas.excluir(this.idEvento, sala.Id)
+              .subscribe(
+                exclusao => {
+                  this.salas = this.salas.filter(x => x.Id != sala.Id);
+                  dlg.close();
+                },
+                erro => {
+                  dlg.close();
+                  this.mensageria.alertarErro(erro);
+                });
+          }
+        }
+      );
   }
 }

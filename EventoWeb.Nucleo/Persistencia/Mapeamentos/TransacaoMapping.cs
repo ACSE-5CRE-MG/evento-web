@@ -4,7 +4,7 @@ using NHibernate.Mapping.ByCode.Conformist;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
-    public class TransacaoMapping : ClassMapping<Transacao>
+    class TransacaoMapping : ClassMapping<Transacao>
     {
         public TransacaoMapping()
         {
@@ -38,7 +38,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
             {
                 m.Column("ID_CONTA");
                 m.NotNullable(true);
-                m.Access(Accessor.NoSetter);
+                m.Access(Accessor.Property);
                 m.Class(typeof(Conta));
             });
 

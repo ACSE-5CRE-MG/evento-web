@@ -4,7 +4,7 @@ using NHibernate.Mapping.ByCode.Conformist;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
-    public class FaturamentoMapping: ClassMapping<Faturamento>
+    class FaturamentoMapping: ClassMapping<Faturamento>
     {
         public FaturamentoMapping()
         {
@@ -56,7 +56,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Column("MOTIVO_DESCONTO");
                 m.NotNullable(false);
                 m.Length(500);
-                m.Access(Accessor.NoSetter);
+                m.Access(Accessor.Property);
             });
 
             this.Property(x => x.Tipo, m =>
@@ -78,7 +78,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
             {
                 m.Column("VALOR_DESCONTO");
                 m.NotNullable(true);
-                m.Access(Accessor.NoSetter);
+                m.Access(Accessor.Property);
             });
 
             this.Property(x => x.Data, m =>
@@ -90,7 +90,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
         }
     }
 
-    public class FaturamentoInscricaoMapping: SubclassMapping<FaturamentoInscricao>
+    class FaturamentoInscricaoMapping: SubclassMapping<FaturamentoInscricao>
     {
         public FaturamentoInscricaoMapping()
         {
@@ -108,7 +108,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
         }
     }
 
-    public class FaturamentoCompraMapping : SubclassMapping<FaturamentoCompra>
+    class FaturamentoCompraMapping : SubclassMapping<FaturamentoCompra>
     {
         public FaturamentoCompraMapping()
         {
@@ -116,7 +116,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
         }
     }
 
-    public class FaturamentoDoacaoMapping : SubclassMapping<FaturamentoDoacao>
+    class FaturamentoDoacaoMapping : SubclassMapping<FaturamentoDoacao>
     {
         public FaturamentoDoacaoMapping()
         {

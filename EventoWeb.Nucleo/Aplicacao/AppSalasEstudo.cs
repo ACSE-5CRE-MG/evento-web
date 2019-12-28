@@ -24,12 +24,12 @@ namespace EventoWeb.Nucleo.Aplicacao
             return lista;
         }
 
-        public DTOSalaEstudo ObterPorId(int id)
+        public DTOSalaEstudo ObterPorId(int idEvento, int id)
         {
             DTOSalaEstudo dto = null;
             ExecutarSeguramente(() =>
             {
-                var sala = Contexto.RepositorioSalasEstudo.ObterPorId(id);
+                var sala = Contexto.RepositorioSalasEstudo.ObterPorId(idEvento, id);
 
                 if (sala != null)
                     dto = sala.Converter();
@@ -60,11 +60,11 @@ namespace EventoWeb.Nucleo.Aplicacao
             return retorno;
         }
 
-        public void Atualizar(int id, DTOSalaEstudo dto)
+        public void Atualizar(int idEvento, int id, DTOSalaEstudo dto)
         {
             ExecutarSeguramente(() =>
             {
-                var sala = ObterSalaOuExcecaoSeNaoEncontrar(id);
+                var sala = ObterSalaOuExcecaoSeNaoEncontrar(idEvento, id);
                 sala.Nome = dto.Nome;
                 sala.DeveSerParNumeroTotalParticipantes = dto.DeveSerParNumeroTotalParticipantes;
 
@@ -77,19 +77,19 @@ namespace EventoWeb.Nucleo.Aplicacao
             });
         }
 
-        public void Excluir(int id)
+        public void Excluir(int idEvento, int id)
         {
             ExecutarSeguramente(() =>
             {
-                var sala = ObterSalaOuExcecaoSeNaoEncontrar(id);
+                var sala = ObterSalaOuExcecaoSeNaoEncontrar(idEvento, id);
 
                 Contexto.RepositorioSalasEstudo.Excluir(sala);
             });
         }
 
-        private SalaEstudo ObterSalaOuExcecaoSeNaoEncontrar(int id)
+        private SalaEstudo ObterSalaOuExcecaoSeNaoEncontrar(int idEvento, int id)
         {
-            var sala = Contexto.RepositorioSalasEstudo.ObterPorId(id);
+            var sala = Contexto.RepositorioSalasEstudo.ObterPorId(idEvento, id);
 
             if (sala != null)
                 return sala;

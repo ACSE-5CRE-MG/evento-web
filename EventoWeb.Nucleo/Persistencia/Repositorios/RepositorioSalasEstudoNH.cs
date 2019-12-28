@@ -59,10 +59,10 @@ namespace EventoWeb.Nucleo.Persistencia
                 .SingleOrDefault() != null;
         }
 
-        public SalaEstudo ObterPorId(int id)
+        public SalaEstudo ObterPorId(int idEvento, int id)
         {
             return mSessao.QueryOver<SalaEstudo>()
-                .Where(x => x.Id == id)
+                .Where(x => x.Id == id && x.Evento.Id == idEvento)
                 .SingleOrDefault();
         }
 

@@ -10,7 +10,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
     [ApiController]
     public class SalaController : ControllerBase
     {
-        private AppSalasEstudo mAppSalasEstudo;
+        private readonly AppSalasEstudo mAppSalasEstudo;
 
         public SalaController(IContexto contexto)
         {
@@ -18,15 +18,15 @@ namespace EventoWeb.WS.Secretaria.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet("obter")]
-        public DTOSalaEstudo GetObter(int id)
+        [HttpGet("evento/{idEvento}/obter/{idSala}")]
+        public DTOSalaEstudo GetObter(int idEvento, int idSala)
         {
-            var sala = mAppSalasEstudo.ObterPorId(id);
+            var sala = mAppSalasEstudo.ObterPorId(idEvento, idSala);
             return sala;
         }
 
         [Authorize("Bearer")]
-        [HttpGet("listarTodas")]
+        [HttpGet("evento/{idEvento}/listarTodas")]
         public IEnumerable<DTOSalaEstudo> ListarTudo(int idEvento)
         {
             var lista = mAppSalasEstudo.ObterTodos(idEvento);
@@ -35,7 +35,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
         // POST api/afrac/?idEvento=5
         [Authorize("Bearer")]
-        [HttpPost("criar")]
+        [HttpPost("evento/{idEvento}/criar")]
         public DTOId IncluirSala(int idEvento, [FromBody] DTOSalaEstudo dtoSala)
         {
             var id = mAppSalasEstudo.Incluir(idEvento, dtoSala);
@@ -43,17 +43,17 @@ namespace EventoWeb.WS.Secretaria.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpPut("atualizar")]
-        public void AlterarSala(int id, [FromBody] DTOSalaEstudo dtoSala)
+        [HttpPut("evento/{idEvento}/atualizar/{idSala}")]
+        public void AlterarSala(int idEvento, int idSala, [FromBody] DTOSalaEstudo dtoSala)
         {
-            mAppSalasEstudo.Atualizar(id, dtoSala);
+            mAppSalasEstudo.Atualizar(idEvento, idSala, dtoSala);
         }
 
         [Authorize("Bearer")]
-        [HttpDelete("excluir")]
-        public void ExcluirSala(int id)
+        [HttpDelete("evento/{idEvento}/excluir/{idSala}")]
+        public void ExcluirSala(int idEvento, int idSala)
         {
-            mAppSalasEstudo.Excluir(id);
+            mAppSalasEstudo.Excluir(idEvento, idSala);
         }
 
         /*

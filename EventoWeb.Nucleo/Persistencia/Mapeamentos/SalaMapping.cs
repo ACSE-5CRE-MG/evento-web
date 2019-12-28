@@ -59,14 +59,15 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                   m.Length(250);
               });
 
-            /* this.Bag(x => x.Participantes, m =>
+             this.Bag(x => x.Participantes, m =>
               {
-                  m.Cascade(Cascade.All | Cascade.DeleteOrphans);
-                  m.Inverse(true);
+                  m.Cascade(Cascade.None);
+                  m.Inverse(false);
                   m.Lazy(CollectionLazy.Lazy);
                   m.Access(Accessor.NoSetter);
-                  m.Key(k => k.Column("ID_INSCRICAO"));
-              }, c=> c.OneToMany(o=> o.Class(typeof(InscricaoParticipante))));*/
+                  m.Key(k => k.Column("ID_SALA_ESTUDO"));
+                  m.Table("SALAS_ESTUDO_ESCOLHIDAS");
+              }, c=> c.ManyToMany(o=> o.Column("ID_INSCRICAO")));
         }
 
     }

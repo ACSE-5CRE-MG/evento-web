@@ -8,7 +8,7 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
 { 
     public interface ASalasEstudo: IPersistencia<SalaEstudo>
     {
-        SalaEstudo ObterPorId(int id);
+        SalaEstudo ObterPorId(int idEvento, int id);
         IList<SalaEstudo> ListarTodasPorEvento(int idEvento);
         IList<SalaEstudo> ListarTodasSalasEstudoComParticipantesDoEvento(Evento evento);
         Boolean EhCoordenadorDeSalaNoEvento(Evento evento, InscricaoParticipante participante);

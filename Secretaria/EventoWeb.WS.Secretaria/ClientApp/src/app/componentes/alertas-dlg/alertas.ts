@@ -1,6 +1,6 @@
 import { Injectable, Component, ViewContainerRef, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { CaixaMensagem, CaixaMensagemBotoes, CaixaMensagemEstilos } from './caixa-mensagem-dlg';
+import { CaixaMensagem, CaixaMensagemBotoes, CaixaMensagemEstilos, CaixaMensagemResposta } from './caixa-mensagem-dlg';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -28,8 +28,8 @@ export class Alertas {
   alertarInformacao(mensagem: string, detalhes: string): void {
     this.alertar('Informação', mensagem, detalhes, CaixaMensagemBotoes.Ok, CaixaMensagemEstilos.Completo);
   }
-    
-  alertarConfirmacao(mensagem: string, detalhes: string): Observable<any> {
+
+  alertarConfirmacao(mensagem: string, detalhes: string): Observable<CaixaMensagemResposta> {
     return this.alertar('Confirmação', mensagem, detalhes, CaixaMensagemBotoes.SimNao, CaixaMensagemEstilos.Completo);
   }
 

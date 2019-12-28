@@ -30,27 +30,27 @@ export class CaixaMensagemDlg {
   }
 
   onOk() {
-    this.dialogRef.close({ result: "ok" });
+    this.dialogRef.close(CaixaMensagemResposta.OK);
   }
 
   onCancel() {
-    this.dialogRef.close({ result: "cancelar" });
+    this.dialogRef.close(CaixaMensagemResposta.Cancelar);
   }
 
   onYes() {
-    this.dialogRef.close({ result: "sim" });
+    this.dialogRef.close(CaixaMensagemResposta.Sim);
   }
 
   onNo() {
-    this.dialogRef.close({ result: "nao" });
+    this.dialogRef.close(CaixaMensagemResposta.Nao);
   }
 
   onAccept() {
-    this.dialogRef.close({ result: "aceito" });
+    this.dialogRef.close(CaixaMensagemResposta.Aceito);
   }
 
   onReject() {
-    this.dialogRef.close({ result: "rejeitado" });
+    this.dialogRef.close(CaixaMensagemResposta.Rejeitado);
   }
 }
 
@@ -84,3 +84,12 @@ export enum CaixaMensagemEstilos {
   Simples = 0,
   Completo = 1
 };
+
+export enum CaixaMensagemResposta {
+  OK,
+  Cancelar,
+  Sim,
+  Nao,
+  Aceito,
+  Rejeitado,
+}

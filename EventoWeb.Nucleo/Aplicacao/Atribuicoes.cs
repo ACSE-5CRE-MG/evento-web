@@ -91,7 +91,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                     inscParticipante.AdicionarAtividade(
                         new AtividadeInscricaoSalaEstudoCoordenacao(
                             inscParticipante,
-                            repSalas.ObterPorId(dto.Coordenador.Id)));
+                            repSalas.ObterPorId(inscParticipante.Evento.Id, dto.Coordenador.Id)));
                 else if (dto.EscolhidasParticipante != null)
                 {
                     var salas = repSalas.ListarTodasPorEvento(inscParticipante.Evento.Id);

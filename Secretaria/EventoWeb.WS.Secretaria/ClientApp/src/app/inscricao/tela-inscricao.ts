@@ -9,6 +9,7 @@ import { DxValidationGroupComponent } from 'devextreme-angular';
 import { EnumModeloDivisaoSalasEstudo, DTOEventoCompletoInscricao } from '../evento/objetos';
 import { WebServiceInscricoes } from '../webservices/webservice-inscricoes';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
+import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';
 
 
 @Component({
@@ -279,7 +280,7 @@ export class TelaInscricao implements OnInit {
     this.mensageria.alertarConfirmacao("Deseja rejeitar esta Inscrição?", "")
       .subscribe(
         (botaoPressionado) => {
-          if (botaoPressionado.result == "sim") {
+          if (botaoPressionado == CaixaMensagemResposta.Sim) {
             let dlg = this.mensageria.alertarProcessamento("Registrando rejeição...");
             this.wsInscricoes.rejeitar(this.inscricao.Evento.Id, this.inscricao.Id)
               .subscribe(

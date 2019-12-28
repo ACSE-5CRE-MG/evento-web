@@ -1,33 +1,45 @@
 <layout-geral>
   <mat-toolbar layout-geral-cabecalho color="primary">
-    <button mat-button style="margin-right:20px">
+    <a mat-icon-button style="margin-right:5px" matTooltip="Volta para a gestão do evento" routerLink="../">
       <span class="fas fa-arrow-left"></span>
-    </button>
+    </a>
     <span class="fas fa-chalkboard" style="margin-right:10px"></span>
     <span class="cursor-pointer">Salas de Estudo</span>
     <span style="flex: 1 1 auto;"></span>
-    <button mat-button (click)="clicarIncluir()">
+    <button mat-button (click)="clicarIncluir()" matTooltip="Cria uma nova sala de estudo">
       <span class="fa fa-plus"></span>
       Nova
     </button>
-    <button mat-button (click)="clicarEditar()" [disabled]="salaSelecionada == null">
-      <span class="fas fa-pencil-alt"></span>
-      Editar
-    </button>
-    <button mat-button (click)="clicarExcluir()" [disabled]="salaSelecionada == null">
-      <span class="far fa-trash-alt"></span>
-      Excluir
-    </button>
   </mat-toolbar>
-  <!--<ag-grid-angular style="width: 100%; height: 100%;"
-                   class="ag-theme-material"
-                   [rowData]="salas"
-                   [columnDefs]="definicaoColunas"
-                   [rowSelection]="'single'"
-                   [enableSorting]="true"
-                   [enableColResize]="true"
-                   (selectionChanged)="realizarQdoSelecaoAgGridMudar()"
-                   (gridReady)="realizarQdoAgGridPronto($event)"
-                   overlayNoRowsTemplate="<div><span class='fas fa-chalkboard fa-7x''></span><div><h3>Nenhuma sala de estudo ainda.</h3></div></div>">
-  </ag-grid-angular>-->
+  <dx-data-grid id="gridContainer" fxFill
+                [showBorders]="true"
+                [dataSource]="salas"
+                [hoverStateEnabled]="true"
+                [columnResizingMode]="'nextColumn'"
+                [allowColumnResizing]="true">
+    <dxo-load-panel [enabled]="true"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <dxo-sorting mode="multiple"></dxo-sorting>
+
+    <dxi-column dataField="Id" caption="Digitação" cellTemplate="templateCelulaDigitacao" [width]="100" alignment="left" [allowSorting]="false"></dxi-column>
+    <dxi-column dataField="Id" caption="Id" [width]="50"></dxi-column>
+    <dxi-column dataField="Nome" caption="Nome"></dxi-column>
+    <dxi-column dataField="DeveSerParNumeroTotalParticipantes" caption="Total Par?" [width]="90"></dxi-column>
+    <dxi-column dataField="IdadeMinima" caption="Faixa Etária" [width]="100" cellTemplate="templateCelulaFaixaEtaria" alignment="left"></dxi-column>
+
+    <div *dxTemplate="let data of 'templateCelulaFaixaEtaria'">
+      {{data.data.IdadeMinima != null ? 'De ' + data.data.IdadeMinima + ' até ' + data.data.IdadeMaxima + ' anos': 'Livre'}}
+    </div>
+    <div *dxTemplate="let data of 'templateCelulaDigitacao'">
+      <button mat-icon-button (click)="clicarEditar(data.data)" matTooltip="Edita os dados dessa sala de estudo"><i class="fas fa-pencil-alt"></i></button>
+      <button mat-icon-button (click)="clicarExcluir(data.data)" matTooltip="Exclui essa sala de estudo"><i class="fas fa-trash-alt"></i></button>
+    </div>
+
+    <dxo-summary>
+      <dxi-total-item column="Id"
+                      summaryType="count"
+                      displayFormat="{0} Salas">
+      </dxi-total-item>
+    </dxo-summary>
+  </dx-data-grid>
 </layout-geral>

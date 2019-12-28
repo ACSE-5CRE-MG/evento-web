@@ -4,7 +4,7 @@ using NHibernate.Mapping.ByCode.Conformist;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
-    public class TituloMapping: ClassMapping<Titulo>
+    class TituloMapping: ClassMapping<Titulo>
     {
         public TituloMapping()
         {

@@ -1,14 +1,15 @@
-/*import { Component, Inject, OnInit } from "@angular/core";
+import { Component, Inject, OnInit, Injectable } from "@angular/core";
 import { WebServiceSala } from "../webservices/webservice-salas";
 import { DTOSalaEstudo } from "./objetos";
 
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
-import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from "@angular/material";
 import { Alertas } from "../componentes/alertas-dlg/alertas";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'dlg-form-sala',
-  //styleUrls: ['./dlg-form-sala.scss'],
+  styleUrls: ['./dlg-form-sala.scss'],
   templateUrl: './dlg-form-sala.html'
 })
 export class DlgFormSala implements OnInit {    
@@ -20,25 +21,15 @@ export class DlgFormSala implements OnInit {
   podeUsarFaixaEtaria: boolean;
   titulo: string;
 
-  mascaraNumero = {
-    mask: createNumberMask({
-      prefix: '',
-      suffix: '',
-      thousandsSeparatorSymbol: '.',
-      allowDecimal: false,
-      allowNegative: false
-    })
-  };
-
-  constructor(public dialogRef: MatDialogRef<DlgFormSala>, public alertas: Alertas,
-    public wsSalas: WebServiceSala, @Inject(MAT_DIALOG_DATA) public data: any) {
+  constructor(public dialogRef: MatDialogRef<DlgFormSala>, private alertas: Alertas,
+    private wsSalas: WebServiceSala, @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.podeUsarFaixaEtaria = false;
     this.idSala = null;
     this.idEvento = null;
 
     if (data != null) {
-      this.idSala = data.Id || null;
+      this.idSala = data.idSala || null;
       this.podeUsarFaixaEtaria = data.podeUsarFaixaEtaria || false;
       this.idEvento = data.idEvento || 0;
     }
@@ -48,12 +39,14 @@ export class DlgFormSala implements OnInit {
     this.usaFaixaEtaria = false;
     this.titulo = "Inclusão de Sala de Estudo";
 
-    if (this.idSala == null)
+    if (this.idSala == null) {
       this.sala = new DTOSalaEstudo();
+      this.sala.DeveSerParNumeroTotalParticipantes = false;
+    }      
     else {
       this.titulo = "Atualização de Sala de Estudo";
       let dlg = this.alertas.alertarProcessamento("Buscando dados da Sala...");
-      this.wsSalas.obterId(this.idSala)
+      this.wsSalas.obterId(this.idEvento, this.idSala)
         .subscribe(
           sala => {
             this.sala = sala;
@@ -83,13 +76,17 @@ export class DlgFormSala implements OnInit {
       if (this.idSala == null)
         servico = this.wsSalas.incluir(this.idEvento, this.sala);
       else
-        servico = this.wsSalas.atualizar(this.idSala, this.sala);
+        servico = this.wsSalas.atualizar(this.idEvento, this.idSala, this.sala);
 
       servico
         .subscribe(
           retorno => {            
             dlg.close();
-            this.dialogRef.close(retorno.Id || null);
+
+            if (this.idSala == null)
+              this.sala.Id = retorno.Id;
+
+            this.dialogRef.close(this.sala || null);
           },
           erro => {
             dlg.close();
@@ -98,4 +95,24 @@ export class DlgFormSala implements OnInit {
         );
     }
   }
-}*/
+
+  clicarCancelar() {
+    this.dialogRef.close(null);
+  }
+}
+
+@Injectable()
+export class DialogosSala {
+
+  constructor(private srvDialog: MatDialog) { }
+
+  apresentarDlgFormDialogoInclusao(idEvento: number, podeUsarFaixaEtaria: boolean): Observable<DTOSalaEstudo> {
+    const dlg = this.srvDialog.open(DlgFormSala, { data: { idEvento: idEvento, idSala: null, podeUsarFaixaEtaria: podeUsarFaixaEtaria } });
+    return dlg.afterClosed();
+  }
+
+  apresentarDlgFormDialogoEdicao(idEvento: number, idSala: number, podeUsarFaixaEtaria: boolean): Observable<DTOSalaEstudo> {
+    const dlg = this.srvDialog.open(DlgFormSala, { data: { idEvento: idEvento, idSala: idSala, podeUsarFaixaEtaria: podeUsarFaixaEtaria } });
+    return dlg.afterClosed();
+  }
+}

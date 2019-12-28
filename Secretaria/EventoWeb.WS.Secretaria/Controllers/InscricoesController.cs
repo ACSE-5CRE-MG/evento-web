@@ -15,7 +15,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
     [ApiController]
     public class InscricoesController : ControllerBase
     {
-        private AppInscricoes m_App;
+        private readonly AppInscricoes m_App;
 
         public InscricoesController(IContexto contexto)
         {

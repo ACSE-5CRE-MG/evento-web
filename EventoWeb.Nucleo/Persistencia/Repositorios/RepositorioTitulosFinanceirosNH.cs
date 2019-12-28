@@ -19,19 +19,10 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
 
         public override IList<Titulo> ListarTodos(int idEvento, DateTime dataInicial, DateTime dataFinal, String descricao, EnumTipoTransacao tipo)
         {
-            dataInicial = dataInicial
-                .AddHours(-1 * dataInicial.Hour)
-                .AddMinutes(-1 * dataInicial.Minute)
-                .AddSeconds(-1 * dataInicial.Second);
-            dataFinal = dataFinal
-                .AddHours(23 - dataFinal.Hour)
-                .AddMinutes(59 - dataFinal.Minute)
-                .AddSeconds(59 - dataFinal.Second);
-
             return mSessao
                 .QueryOver<Titulo>()
                 .Where(x => x.Evento.Id == idEvento
-                           && x.DataCriado.IsBetween(dataInicial).And(dataFinal)
+                           && x.DataVencimento.IsBetween(dataInicial).And(dataFinal)
                            && x.Tipo == tipo
                            && x.Descricao.Upper().IsLike(descricao.ToUpper(), MatchMode.Anywhere))
                 .List();

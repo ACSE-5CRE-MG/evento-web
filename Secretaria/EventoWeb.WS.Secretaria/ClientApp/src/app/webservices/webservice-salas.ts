@@ -14,22 +14,22 @@ export class WebServiceSala extends WebServiceBase {
   }
 
   obterTodas(idEvento: number): Observable<DTOSalaEstudo[]> {
-    return this.executarGet<DTOSalaEstudo[]>('listarTodas?idEvento=' + idEvento);
+    return this.executarGet<DTOSalaEstudo[]>('evento/' + idEvento.toString() + '/listarTodas');
   };
 
-  obterId(id: number): Observable<DTOSalaEstudo> {
-    return this.executarGet<DTOSalaEstudo>('obter/' + id);
+  obterId(idEvento: number, id: number): Observable<DTOSalaEstudo> {
+    return this.executarGet<DTOSalaEstudo>('evento/' + idEvento.toString() + '/obter/' + id);
   };
 
   incluir(idEvento: number, sala: DTOSalaEstudo): Observable<DTOId> {
-    return this.executarPost('criar/' + idEvento, sala);
+    return this.executarPost('evento/' + idEvento.toString() + '/criar/', sala);
   }
 
-  atualizar(id: number, sala: DTOSalaEstudo): Observable<any> {
-    return this.executarPut('atualizar/' + id, sala);
+  atualizar(idEvento: number, id: number, sala: DTOSalaEstudo): Observable<any> {
+    return this.executarPut('evento/' + idEvento.toString() + '/atualizar/' + id, sala);
   }
 
-  excluir(id: number): Observable<any> {
-    return this.executarDelete('excluir/' + id);
+  excluir(idEvento: number, id: number): Observable<any> {
+    return this.executarDelete('evento/' + idEvento.toString() + '/excluir/' + id);
   }
 }

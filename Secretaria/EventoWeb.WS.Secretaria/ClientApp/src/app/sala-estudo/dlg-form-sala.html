@@ -3,27 +3,20 @@
     <div><h1>{{titulo}}</h1></div>
     <span style="flex: 1 1 auto;"></span>
     <button mat-icon-button cdkFocusInitial (click)="clicarSalvar()" matTooltip="Permite salvar esta sala de estudo"><i class="fa fa-save"></i></button>
-    <button mat-icon-button mat-dialog-close matTooltip="Permite fechar esta tela"><i class="fa fa-times"></i></button>
+    <button mat-icon-button (click)="clicarCancelar()" matTooltip="Permite fechar esta tela"><i class="fa fa-times"></i></button>
   </mat-toolbar>
-  <div fxLayout="column" fxLayout.lt-md="column" class="formulario">
-    <div>
-      <mat-form-field style="width:100%">
-        <input matInput placeholder="Nome" [(ngModel)]="sala.Nome">
-      </mat-form-field>
+  <div fxLayout="column" class="formulario" fxLayoutGap="5px">
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Nome:</label>
+      <dx-text-box [(value)]="sala.Nome" fxFlex="80"></dx-text-box>
     </div>
-    <div>
-      <div fxLayout="row" fxLayout.lt-md="column">
-        <mat-checkbox class="margem-direita" [(ngModel)]="usaFaixaEtaria"  [disabled]="!podeUsarFaixaEtaria">Tem Faixa Etária definida?</mat-checkbox>
-        <mat-form-field>
-          <input matInput placeholder="Min." [textMask]="mascaraNumero" [(ngModel)]="sala.IdadeMinima" [disabled]="!usaFaixaEtaria || !podeUsarFaixaEtaria">
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Máx." [textMask]="mascaraNumero" [(ngModel)]="sala.IdadeMaxima" [disabled]="!usaFaixaEtaria || !podeUsarFaixaEtaria">
-        </mat-form-field>
-      </div>
+    <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutAlign="start center">
+      <dx-check-box [(value)]="usaFaixaEtaria" [disabled]="!podeUsarFaixaEtaria" text="Tem Faixa Etária definida?"></dx-check-box>
+      <label class="label_campos">Idade Min:</label>
+      <dx-number-box [(value)]="sala.IdadeMinima" [min]="0" [disabled]="!usaFaixaEtaria || !podeUsarFaixaEtaria"></dx-number-box>
+      <label class="label_campos">Idade Max:</label>
+      <dx-number-box [(value)]="sala.IdadeMaxima" [min]="0" [disabled]="!usaFaixaEtaria || !podeUsarFaixaEtaria"></dx-number-box>
     </div>
-    <div>
-      <mat-checkbox [(ngModel)]="sala.DeveSerParNumeroTotalParticipantes">Número de participantes deve ser par?</mat-checkbox>
-    </div>
+    <dx-check-box [(value)]="sala.DeveSerParNumeroTotalParticipantes" text="Número de participantes deve ser par?"></dx-check-box>
   </div>
 </layout-geral>
