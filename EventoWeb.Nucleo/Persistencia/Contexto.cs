@@ -29,7 +29,7 @@ namespace EventoWeb.Nucleo.Persistencia
 
     public class Contexto: IContexto
     {
-        private ISession m_Sessao;
+        private readonly ISession m_Sessao;
 
         public Contexto(ISession sessao)
         {
@@ -84,5 +84,7 @@ namespace EventoWeb.Nucleo.Persistencia
         public AContas RepositorioContasBancarias => new RepositorioContasBancariasNH(m_Sessao);
 
         public AFaturamentos RepositorioFaturamentos => new RepositorioFaturamentosNH(m_Sessao);
+
+        public IRelatorioDivisaoSalasEstudo RelatorioDivisaoSalasEstudo => throw new System.NotImplementedException();
     }
 }

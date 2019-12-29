@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Injectable } from '@angular/core';
 import { WebServiceEventos } from '../webservices/webservice-eventos';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
 import { ActivatedRoute } from '@angular/router';
@@ -14,7 +14,8 @@ export class TelaRoteamentoEvento implements OnInit, OnDestroy {
   evento: DTOEventoCompleto = new DTOEventoCompleto();
   parametrosPag: Subscription;
 
-  constructor(public wsEventos: WebServiceEventos, public mensageria: Alertas, public roteador: ActivatedRoute) { }
+  constructor(private wsEventos: WebServiceEventos, private mensageria: Alertas,
+    private roteador: ActivatedRoute, private srvEventoSelecionado: ServicoEventoSelecionado) { }
 
   ngOnInit(): void {
     this.parametrosPag = this.roteador.params.subscribe(parametros => {
@@ -23,6 +24,7 @@ export class TelaRoteamentoEvento implements OnInit, OnDestroy {
       this.wsEventos.obterId(+parametros["id"])
         .subscribe(evento => {
           this.evento = evento;
+          this.srvEventoSelecionado.EventoSelecionado = this.evento;
           dlg.close();
         },
         erro => {
@@ -35,8 +37,17 @@ export class TelaRoteamentoEvento implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.parametrosPag.unsubscribe();
   }
+}
 
-  clicarEditar(): void {
+@Injectable()
+export class ServicoEventoSelecionado {
+  private m_Evento: DTOEventoCompleto = null
 
+  get EventoSelecionado(): DTOEventoCompleto {
+    return this.m_Evento;
+  }
+
+  set EventoSelecionado(valor: DTOEventoCompleto) {
+    this.m_Evento = valor;
   }
 }

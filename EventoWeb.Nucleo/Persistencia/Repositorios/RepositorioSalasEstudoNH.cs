@@ -8,24 +8,24 @@ using System.Linq;
 
 namespace EventoWeb.Nucleo.Persistencia
 {
-    public class RepositorioSalasEstudoNH: PersistenciaNH<SalaEstudo>, ASalasEstudo
+    public class RepositorioSalasEstudoNH: ASalasEstudo
     {
-        private ISession mSessao;
+        private readonly ISession mSessao;
 
         public RepositorioSalasEstudoNH(ISession sessao)
-            : base(sessao)
+            : base(new PersistenciaNH<SalaEstudo>(sessao))
         {
             mSessao = sessao;
         }
 
-        public IList<SalaEstudo> ListarTodasPorEvento(int idEvento)
+        public override IList<SalaEstudo> ListarTodasPorEvento(int idEvento)
         {
             return mSessao.QueryOver<SalaEstudo>()
                             .Where(x => x.Evento.Id == idEvento)
                             .List();
         }
 
-        public bool HaSalasSemCoordenadorDefinidoDoEvento(Evento evento)
+        public override bool HaSalasSemCoordenadorDefinidoDoEvento(Evento evento)
         {
             SalaEstudo aliasSala = null;
 
@@ -40,7 +40,7 @@ namespace EventoWeb.Nucleo.Persistencia
                 .RowCount() > 0;
         }
 
-        public bool EhCoordenadorDeSalaNoEvento(Evento evento, InscricaoParticipante participante)
+        public override bool EhCoordenadorDeSalaNoEvento(Evento evento, InscricaoParticipante participante)
         {
             return mSessao.QueryOver<AtividadeInscricaoSalaEstudoCoordenacao>()
                 .Where(x => x.Inscrito.Id == participante.Id)
@@ -50,7 +50,7 @@ namespace EventoWeb.Nucleo.Persistencia
                 .RowCount() > 0;
         }
 
-        public bool EhParticipanteDeSalaNoEvento(Evento evento, InscricaoParticipante participante)
+        public override bool EhParticipanteDeSalaNoEvento(Evento evento, InscricaoParticipante participante)
         {
             return mSessao.QueryOver<SalaEstudo>()
                 .Where(x => x.Evento == evento)
@@ -59,14 +59,14 @@ namespace EventoWeb.Nucleo.Persistencia
                 .SingleOrDefault() != null;
         }
 
-        public SalaEstudo ObterPorId(int idEvento, int id)
+        public override SalaEstudo ObterPorId(int idEvento, int id)
         {
             return mSessao.QueryOver<SalaEstudo>()
                 .Where(x => x.Id == id && x.Evento.Id == idEvento)
                 .SingleOrDefault();
         }
 
-        public IList<InscricaoParticipante> ListarParticipantesSemSalaEstudoNoEvento(Evento evento)
+        public override IList<InscricaoParticipante> ListarParticipantesSemSalaEstudoNoEvento(Evento evento)
         {
             InscricaoParticipante aliasParticipante = null;
             AtividadeInscricaoSalaEstudo aliasAtividade = null;
@@ -89,7 +89,7 @@ namespace EventoWeb.Nucleo.Persistencia
                 .List<InscricaoParticipante>();
         }
 
-        public IList<SalaEstudo> ListarTodasSalasEstudoComParticipantesDoEvento(Evento evento)
+        public override IList<SalaEstudo> ListarTodasSalasEstudoComParticipantesDoEvento(Evento evento)
         {
             var ConsSalas = mSessao.QueryOver<SalaEstudo>()
                             .Where(x => x.Evento == evento)
@@ -103,7 +103,7 @@ namespace EventoWeb.Nucleo.Persistencia
             return ConsSalas.ToList();
         }
 
-        public bool HaParticipatesEmOutraSala(SalaEstudo sala)
+        protected override bool HaParticipatesEmOutraSala(SalaEstudo sala)
         {
             InscricaoParticipante aliasParticipante = null;
 
@@ -116,7 +116,7 @@ namespace EventoWeb.Nucleo.Persistencia
             return queryParticipantes.Where(x => sala.Participantes.Select(i => i.Id).Contains(x)).Count() > 0;
         }
 
-        public SalaEstudo BuscarSalaDoInscrito(int idEvento, int idInscricao)
+        public override SalaEstudo BuscarSalaDoInscrito(int idEvento, int idInscricao)
         {
             SalaEstudo aliasSala = null;
 
@@ -144,17 +144,27 @@ namespace EventoWeb.Nucleo.Persistencia
                 .SingleOrDefault();
         }
 
-        public int ContarTotalSalas(Evento evento)
+        public override int ContarTotalSalas(Evento evento)
         {
             return mSessao.QueryOver<SalaEstudo>().RowCount();
         }
 
-        public bool HaSalaComFaixaEtariaDefinida(SalaEstudo sala)
+        protected override bool HaSalaComFaixaEtariaDefinida(SalaEstudo sala)
         {
             return mSessao
                     .QueryOver<SalaEstudo>()
                     .Where(x => x.FaixaEtaria != null && x.Id != sala.Id && x.Evento.Id == sala.Evento.Id)
                     .RowCount() > 0;
+        }
+
+        protected override bool FoiEscolhidaInscricao(SalaEstudo sala)
+        {
+            return mSessao
+                .QueryOver<AtividadeInscricaoSalaEstudoOrdemEscolha>()
+                .JoinQueryOver(x => x.Salas)
+                .Where(x => x.Id == sala.Id)
+                .Take(1)
+                .RowCount() > 0;
         }
     }
 }

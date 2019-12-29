@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using EventoWeb.Nucleo.Negocio.Entidades;
+﻿using EventoWeb.Nucleo.Negocio.Entidades;
 using EventoWeb.Nucleo.Negocio.Repositorios;
 using NHibernate;
 

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
-    public interface IContexto : IDisposable
+    public interface IContexto : IDisposable, IRelatorios
     {
         void IniciarTransacao();
 

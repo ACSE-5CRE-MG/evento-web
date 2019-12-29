@@ -80,7 +80,7 @@ import { TelaGestaoEvento } from './evento/tela-gestao-evento';
 
 import { ConfiguracaoSistemaService, Configuracao } from './configuracao-sistema-service';
 import { TelaListagemSalas } from './sala-estudo/tela-listagem-salas';
-import { TelaRoteamentoEvento } from './evento/tela-roteamento-evento';
+import { TelaRoteamentoEvento, ServicoEventoSelecionado } from './evento/tela-roteamento-evento';
 import { WebServiceSala } from './webservices/webservice-salas';
 import { TelaListagemInscricoes } from './inscricao/tela-lista-inscricoes';
 import { WebServiceInscricoes } from './webservices/webservice-inscricoes';
@@ -198,7 +198,6 @@ export function init_app(appLoadService: AppLoadService) {
           { path: 'salas', component: TelaListagemSalas, canActivate: [PermissaoAcessoRota] },
           { path: 'inscricoes', component: TelaListagemInscricoes, canActivate: [PermissaoAcessoRota] },
           { path: 'inscricoes/:idInscricao/editar', component: TelaInscricao, canActivate: [PermissaoAcessoRota] },
-          /*{ path: 'inscricoes/:idInscricao/efetivacao', component: TelaEfetivacaoInscricoes, canActivate: [PermissaoAcessoRota] }*/
         ]
       },
       { path: '** ', redirectTo: '' }
@@ -214,7 +213,7 @@ export function init_app(appLoadService: AppLoadService) {
     { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [AppLoadService], multi: true },
     Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
-    WebServiceAutenticacao, WebServiceEventos, WebServiceSala, WebServiceInscricoes,
+    WebServiceAutenticacao, WebServiceEventos, WebServiceSala, WebServiceInscricoes, ServicoEventoSelecionado,
     DialogosSarau, DialogosCrianca, DialogosSala],
   bootstrap: [TelaPrincipal]
 })

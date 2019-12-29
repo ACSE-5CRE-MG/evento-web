@@ -5,6 +5,8 @@ import { WebServiceSala } from "../webservices/webservice-salas";
 import { DTOSalaEstudo } from "./objetos";
 import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';
 import { DialogosSala } from './dlg-form-sala';
+import { ServicoEventoSelecionado } from '../evento/tela-roteamento-evento';
+import { DTOEventoCompleto, EnumModeloDivisaoSalasEstudo } from '../evento/objetos';
 
 
 @Component({
@@ -17,30 +19,30 @@ export class TelaListagemSalas implements OnInit {
   salaSelecionada: DTOSalaEstudo = null;
   salas: DTOSalaEstudo[] = [];
 
-  private idEvento: number = 0;
+  private m_Evento: DTOEventoCompleto;
 
-  constructor(private wsSalas: WebServiceSala, private mensageria: Alertas, private roteador: ActivatedRoute, private dlgsSala: DialogosSala) { }
+  constructor(private wsSalas: WebServiceSala, private mensageria: Alertas, private roteador: ActivatedRoute,
+    private dlgsSala: DialogosSala, private srvEventoSelecionado: ServicoEventoSelecionado) { }
 
   ngOnInit(): void {
-    this.roteador.parent.params.subscribe(parametros => {
-      let dlg = this.mensageria.alertarProcessamento("Buscando salas...");
+    let dlg = this.mensageria.alertarProcessamento("Buscando salas...");
 
-      this.idEvento = parametros["id"];
+    this.m_Evento = this.srvEventoSelecionado.EventoSelecionado;
 
-      this.wsSalas.obterTodas(this.idEvento)
-        .subscribe(salas => {
+    this.wsSalas.obterTodas(this.m_Evento.Id)
+      .subscribe(
+        salas => {
           this.salas = salas;
           dlg.close();
         },
-          erro => {
-            dlg.close();
-            this.mensageria.alertarErro(erro);
-          });
-    });
+        erro => {
+          dlg.close();
+          this.mensageria.alertarErro(erro);
+        });
   }
 
   clicarIncluir(): void {
-    this.dlgsSala.apresentarDlgFormDialogoInclusao(this.idEvento, false)
+    this.dlgsSala.apresentarDlgFormDialogoInclusao(this.m_Evento.Id, this.PodeUsarFaixaEtaria())
       .subscribe(
         (novaSala) => {
           if (novaSala != null)
@@ -50,7 +52,7 @@ export class TelaListagemSalas implements OnInit {
   }
 
   clicarEditar(sala: DTOSalaEstudo): void {
-    this.dlgsSala.apresentarDlgFormDialogoEdicao(this.idEvento, sala.Id, false)
+    this.dlgsSala.apresentarDlgFormDialogoEdicao(this.m_Evento.Id, sala.Id, this.PodeUsarFaixaEtaria())
       .subscribe(
         (salaAlterada) => {
           if (salaAlterada != null) {
@@ -63,13 +65,17 @@ export class TelaListagemSalas implements OnInit {
       );
   }
 
+  private PodeUsarFaixaEtaria(): boolean {
+    return this.m_Evento.ConfiguracaoSalaEstudo == EnumModeloDivisaoSalasEstudo.PorIdadeCidade;
+  }
+
   clicarExcluir(sala: DTOSalaEstudo): void {
     this.mensageria.alertarConfirmacao("Você quer excluir esta sala mesmo?", "")
       .subscribe(
         (resposta) => {
           if (resposta == CaixaMensagemResposta.Sim) {
             let dlg = this.mensageria.alertarProcessamento("Processando exclusão de sala...");
-            this.wsSalas.excluir(this.idEvento, sala.Id)
+            this.wsSalas.excluir(this.m_Evento.Id, sala.Id)
               .subscribe(
                 exclusao => {
                   this.salas = this.salas.filter(x => x.Id != sala.Id);
