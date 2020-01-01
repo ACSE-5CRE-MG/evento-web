@@ -16,7 +16,8 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
         public abstract Boolean EhCoordenadorDeSalaNoEvento(Evento evento, InscricaoParticipante participante);
         public abstract bool HaSalasSemCoordenadorDefinidoDoEvento(Evento evento);
         public abstract bool EhParticipanteDeSalaNoEvento(Evento evento, InscricaoParticipante participante);
-        public abstract IList<InscricaoParticipante> ListarParticipantesSemSalaEstudoNoEvento(Evento evento);
+        public abstract IList<InscricaoParticipante> ListarParticipantesSemSalaEstudoNormal(Evento evento);
+        public abstract IList<InscricaoParticipante> ListarParticipantesSemSalaEstudoPorOrdem(Evento evento);
         public abstract int ContarTotalSalas(Evento evento);
         public abstract SalaEstudo BuscarSalaDoInscrito(int idEvento, int idInscricao);
 

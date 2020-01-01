@@ -157,10 +157,17 @@ namespace EventoWeb.Nucleo.Aplicacao
 
         private IList<DTODivisaoSalaEstudo> ObterDivisaoSalas(Evento evento)
         {
+            Dictionary<EnumModeloDivisaoSalasEstudo, Func<Evento, IList<InscricaoParticipante>>> pesquisasParticipantesSemSala =
+                new Dictionary<EnumModeloDivisaoSalasEstudo, Func<Evento, IList<InscricaoParticipante>>>()
+                {
+                    {EnumModeloDivisaoSalasEstudo.PorIdadeCidade,  m_RepSalas.ListarParticipantesSemSalaEstudoNormal},
+                    {EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao,  m_RepSalas.ListarParticipantesSemSalaEstudoPorOrdem},
+                };
+
             List<DTODivisaoSalaEstudo> salasDTO = new List<DTODivisaoSalaEstudo>();
 
             IList<SalaEstudo> salas = m_RepSalas.ListarTodasSalasEstudoComParticipantesDoEvento(evento);
-            IList<InscricaoParticipante> participantesSemSala = m_RepSalas.ListarParticipantesSemSalaEstudoNoEvento(evento);
+            IList<InscricaoParticipante> participantesSemSala = pesquisasParticipantesSemSala[evento.ConfiguracaoSalaEstudo.Value](evento);
             IList<AtividadeInscricaoSalaEstudoCoordenacao> coordenadores =
                  m_RepInscricoes.ListarTodasInscricoesPorAtividade<AtividadeInscricaoSalaEstudoCoordenacao>(evento);
 

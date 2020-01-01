@@ -1,0 +1,109 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <a mat-icon-button style="margin-right:5px" matTooltip="Volta para a gestão do evento" routerLink="../">
+      <span class="fas fa-arrow-left"></span>
+    </a>
+    <span class="fas fa-chalkboard" style="margin-right:10px"></span>
+    <span class="cursor-pointer">Divisão de Salas de Estudo</span>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-button (click)="clicarAtualizar()" matTooltip="Atualiza as informações de divisão da tela">
+      <i class="fas fa-sync"></i>
+      Atualizar
+    </button>
+    <button mat-button (click)="clicarDividir()" matTooltip="Realiza a divisão automática das salas de estudo">
+      <i class="fas fa-divide"></i>
+      Dividir
+    </button>
+    <button mat-button (click)="clicarRemover()" matTooltip="Remove todas as divisões realizadas">
+      <span class="fa fa-trash-alt"></span>
+      Remover
+    </button>
+    <button mat-button (click)="clicarImprimir()" matTooltip="Gera um relatório com as divisões atuais">
+      <i class="fas fa-print"></i>
+      Imprimir
+    </button>
+  </mat-toolbar>
+  <div fxLayout="row" fxLayoutGap="5px" fxFill>
+    <div fxFlex="35" class="cartao">
+      <layout-geral>
+        <div layout-geral-cabecalho>
+          <h2>Inscrições sem sala de estudo</h2>
+          <mat-divider></mat-divider>
+        </div>
+        <div *ngIf="inscricoesNaoDistribuidas?.Participantes?.length == 0"
+             fxFill
+             fxLayout="column" fxLayoutAlign="center center">
+          <i class="fas fa-check-double fa-5x"></i>
+          <h1>Não há inscrições aqui!!</h1>
+        </div>
+        <dx-list *ngIf="inscricoesNaoDistribuidas?.Participantes?.length > 0"
+                 class="padding-padrao"
+                 fxFill
+                 [dataSource]="inscricoesNaoDistribuidas.Participantes"
+                 noDataText="Não encontrei ninguém!!"
+                 [searchEnabled]="true"
+                 searchExpr="NomeInscrito"
+                 searchMode="contains">
+          <div *dxTemplate="let data of 'item'">
+            <div>{{data.NomeInscrito + ' - ' + calcularIdade(data) + ' ano(s)'}}</div>
+            <div>{{data.Cidade + '/' + data.UF}}</div>
+          </div>
+        </dx-list>
+      </layout-geral>
+    </div>
+    <mat-divider [vertical]="true"></mat-divider>
+    <layout-geral fxFlex="65" class="cartao"> 
+      <div layout-geral-cabecalho class="borda-arredondada margem-total-2px padding-padrao" fxLayout="row">
+        <div fxLayout="column">
+          <div><strong>{{divisaoSelecionada?.Nome || 'Nenhuma sala foi selecionada'}}</strong></div>
+          <div>Participantes: {{divisaoSelecionada == null ? ' -' : ' ' + divisaoSelecionada?.Participantes?.length}}</div>
+        </div>
+        <span style="flex: 1 1 auto;"></span>
+        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Permite selecionar uma sala de estudo para visualizar e editar a divisão realizada">
+          <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item *ngFor="let divisao of divisoesSalas" (click)="clicarSelecionarSala(divisao)">
+            <strong>{{divisao.Nome}}</strong>{{' - Participantes: ' + divisao.Participantes.length}}
+          </button>
+        </mat-menu>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxFill>
+        <div fxFlex="50" class="borda-arredondada">
+          <layout-geral>
+            <div layout-geral-cabecalho>
+              <h2>Participantes {{divisaoSelecionada?.Participantes?.length}}</h2>
+              <mat-divider></mat-divider>
+            </div>
+            <dx-list class="padding-padrao"
+                     fxFill
+                     [dataSource]="divisaoSelecionada?.Participantes"
+                     noDataText="Não há ninguém aqui!!">
+              <div *dxTemplate="let data of 'item'">
+                <div>{{data.NomeInscrito + ' - ' + calcularIdade(data) + ' ano(s)'}}</div>
+                <div>{{data.Cidade + '/' + data.UF}}</div>
+              </div>
+            </dx-list>
+          </layout-geral>
+        </div>
+        <div fxFlex="50" class="borda-arredondada" style="flex: 1">
+          <layout-geral>
+            <div layout-geral-cabecalho>
+              <h2>Coordenadores {{ divisaoSelecionada?.Coordenadores?.length}}</h2>
+              <mat-divider></mat-divider>
+            </div>
+            <dx-list class="padding-padrao"
+                     fxFill
+                     [dataSource]="divisaoSelecionada?.Coordenadores"
+                     noDataText="Não há ninguém aqui!!">
+              <div *dxTemplate="let data of 'item'">
+                <div>{{data.NomeInscrito + ' - ' + calcularIdade(data) + ' ano(s)'}}</div>
+                <div>{{data.Cidade + '/' + data.UF}}</div>
+              </div>
+            </dx-list>
+          </layout-geral>
+        </div>
+      </div>
+    </layout-geral>
+  </div>
+</layout-geral>

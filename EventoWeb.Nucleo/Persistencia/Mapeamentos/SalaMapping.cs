@@ -66,7 +66,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                   m.Lazy(CollectionLazy.Lazy);
                   m.Access(Accessor.NoSetter);
                   m.Key(k => k.Column("ID_SALA_ESTUDO"));
-                  m.Table("SALAS_ESTUDO_ESCOLHIDAS");
+                  m.Table("SALAS_ESTUDO_PARTICIPANTES");
               }, c=> c.ManyToMany(o=> o.Column("ID_INSCRICAO")));
         }
 

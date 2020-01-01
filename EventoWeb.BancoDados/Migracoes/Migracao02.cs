@@ -15,10 +15,10 @@ namespace EventoWeb.BancoDados.Migracoes
 
         public override void Up()
         {
-            CriarConta();
+            /*CriarConta();
             CriarFaturamento();
             CriarTitulo();
-            CriarTransacao();
+            CriarTransacao();*/
             CriarSalasEstudoParticipantes();
         }        
 
@@ -120,11 +120,11 @@ namespace EventoWeb.BancoDados.Migracoes
         private void CriarSalasEstudoParticipantes()
         {
             Create
-                .Table("SALAS_ESTUDO_ESCOLHIDAS")
+                .Table("SALAS_ESTUDO_PARTICIPANTES")
                 .WithColumn("ID_SALA_ESTUDO").AsInt32().PrimaryKey().NotNullable()
-                    .ForeignKey("FK_SEE_SALA", "SALAS_ESTUDO", "ID_SALA_ESTUDO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
+                    .ForeignKey("FK_SEP_SALA", "SALAS_ESTUDO", "ID_SALA_ESTUDO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
                 .WithColumn("ID_INSCRICAO").AsInt32().PrimaryKey().NotNullable()
-                    .ForeignKey("FK_SEE_INSC", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.None).OnUpdate(Rule.Cascade);
+                    .ForeignKey("FK_SEP_INSC", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.None).OnUpdate(Rule.Cascade);
         }
     }
 }

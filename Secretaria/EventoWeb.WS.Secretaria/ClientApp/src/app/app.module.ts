@@ -93,6 +93,8 @@ import { ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario, DialogosCri
 import { ComponentePagamento } from './inscricao/pagamento/comp-pagamento';
 import { Observable } from 'rxjs';
 import { DialogosSala, DlgFormSala } from './sala-estudo/dlg-form-sala';
+import { WebServiceDivisaoSala } from './webservices/webservice-divisao-salas';
+import { TelaDivisaoSala } from './divisao-salas-estudo/tela-divisao-sala';
 
 declare function require(url: string);
 
@@ -142,7 +144,8 @@ export function init_app(appLoadService: AppLoadService) {
     ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
     ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
     ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario,
-    ComponentePagamento
+    ComponentePagamento,
+    TelaDivisaoSala
   ],
   imports: [
     BrowserModule,
@@ -198,6 +201,7 @@ export function init_app(appLoadService: AppLoadService) {
           { path: 'salas', component: TelaListagemSalas, canActivate: [PermissaoAcessoRota] },
           { path: 'inscricoes', component: TelaListagemInscricoes, canActivate: [PermissaoAcessoRota] },
           { path: 'inscricoes/:idInscricao/editar', component: TelaInscricao, canActivate: [PermissaoAcessoRota] },
+          { path: 'divisao-salas', component: TelaDivisaoSala, canActivate: [PermissaoAcessoRota] }
         ]
       },
       { path: '** ', redirectTo: '' }
@@ -214,6 +218,7 @@ export function init_app(appLoadService: AppLoadService) {
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [AppLoadService], multi: true },
     Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
     WebServiceAutenticacao, WebServiceEventos, WebServiceSala, WebServiceInscricoes, ServicoEventoSelecionado,
+    WebServiceDivisaoSala,
     DialogosSarau, DialogosCrianca, DialogosSala],
   bootstrap: [TelaPrincipal]
 })

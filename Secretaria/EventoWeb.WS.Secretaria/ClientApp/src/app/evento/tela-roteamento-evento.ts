@@ -30,7 +30,7 @@ export class TelaRoteamentoEvento implements OnInit, OnDestroy {
         erro => {
           dlg.close();
           this.mensageria.alertarErro(erro);
-        });
+          })
     });
   }
 

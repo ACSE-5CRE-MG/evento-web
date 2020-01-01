@@ -34,7 +34,7 @@ export abstract class WebServiceBase {
       .catch(this.ProcessarErro);
   }   
 
-  protected executarPut(parametros: string, dados: any, retornoEhBinario: boolean = false) {
+  protected executarPut(parametros: string, dados: any, retornoEhBinario: boolean = false): any {
     let opRequisicao = this.gerarCabecalho();
 
     return this.http
@@ -43,7 +43,7 @@ export abstract class WebServiceBase {
       .catch(this.ProcessarErro);
   }
 
-  protected executarDelete(parametros: string) {
+  protected executarDelete(parametros: string): any {
     let opRequisicao = this.gerarCabecalho();
 
     return this.http
