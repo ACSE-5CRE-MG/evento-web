@@ -45,17 +45,33 @@
                  searchExpr="NomeInscrito"
                  searchMode="contains">
           <div *dxTemplate="let data of 'item'">
-            <div>{{data.NomeInscrito + ' - ' + calcularIdade(data) + ' ano(s)'}}</div>
-            <div>{{data.Cidade + '/' + data.UF}}</div>
+            <div fxLayout="row">
+              <div fxLayout="column">
+                <div>{{data.NomeInscrito + ' - ' + calcularIdade(data) + ' ano(s)'}}</div>
+                <div>{{data.Cidade + '/' + data.UF}}</div>
+              </div>
+              <span style="flex: 1 1 auto;"></span>
+              <button mat-icon-button [matMenuTriggerFor]="menuInclusaoSala" matTooltip="Você pode incluir este participante em uma das salas do evento"
+                      [matMenuTriggerData]="{inscricao: data}">
+                <i class="fa fa-plus"></i>
+              </button>
+            </div>
           </div>
         </dx-list>
+        <mat-menu #menuInclusaoSala="matMenu">
+          <ng-template matMenuContent let-inscricao="inscricao">
+            <button mat-menu-item *ngFor="let divisao of divisoesSalas" (click)="clicarIncluirNaSala({ inscricao: inscricao, sala: divisao })">
+              <strong>{{divisao.Nome}}</strong>{{' - Participantes: ' + divisao.Participantes.length}}
+            </button>
+          </ng-template>
+        </mat-menu>
       </layout-geral>
     </div>
     <mat-divider [vertical]="true"></mat-divider>
     <layout-geral fxFlex="65" class="cartao"> 
       <div layout-geral-cabecalho class="borda-arredondada margem-total-2px padding-padrao" fxLayout="row">
         <div fxLayout="column">
-          <div><strong>{{divisaoSelecionada?.Nome || 'Nenhuma sala foi selecionada'}}</strong></div>
+          <h2><strong>Sala:&nbsp;{{divisaoSelecionada?.Nome || 'Nenhuma sala foi selecionada'}}</strong></h2>
           <div>Participantes: {{divisaoSelecionada == null ? ' -' : ' ' + divisaoSelecionada?.Participantes?.length}}</div>
         </div>
         <span style="flex: 1 1 auto;"></span>
@@ -80,10 +96,29 @@
                      [dataSource]="divisaoSelecionada?.Participantes"
                      noDataText="Não há ninguém aqui!!">
               <div *dxTemplate="let data of 'item'">
-                <div>{{data.NomeInscrito + ' - ' + calcularIdade(data) + ' ano(s)'}}</div>
-                <div>{{data.Cidade + '/' + data.UF}}</div>
+                <div fxLayout="row">
+                  <div fxLayout="column">
+                    <div>{{data.NomeInscrito + ' - ' + calcularIdade(data) + ' ano(s)'}}</div>
+                    <div>{{data.Cidade + '/' + data.UF}}</div>
+                  </div>
+                  <span style="flex: 1 1 auto;"></span>
+                  <button mat-icon-button matTooltip="Você pode remover este participante desta sala" (click)="clicarRemoverDaSala(data)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                  <button mat-icon-button [matMenuTriggerFor]="menuMovimentacaoSala" matTooltip="Você pode mover este participante para outra sala"
+                          [matMenuTriggerData]="{inscricao: data}">
+                    <i class="fas fa-exchange-alt"></i>
+                  </button>
+                </div>
               </div>
             </dx-list>
+            <mat-menu #menuMovimentacaoSala="matMenu">
+              <ng-template matMenuContent let-inscricao="inscricao">
+                <button mat-menu-item *ngFor="let divisao of divisoesSalas" (click)="clicarMoverParaSala({ inscricao: inscricao, sala: divisao })" [fxHide]="divisao.Id == divisaoSelecionada?.Id">
+                  <strong>{{divisao.Nome}}</strong>{{' - Participantes: ' + divisao.Participantes.length}}
+                </button>
+              </ng-template>
+            </mat-menu>
           </layout-geral>
         </div>
         <div fxFlex="50" class="borda-arredondada" style="flex: 1">

@@ -7,6 +7,7 @@ import { DTOEventoCompleto } from '../evento/objetos';
 import { DTODivisaoSalaEstudo } from './objetos';
 import { DTOBasicoInscricao } from '../inscricao/objetos';
 import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';
+import { WebServiceRelatorios } from '../webservices/webservice-relatorios';
 
 @Component({
   selector: 'tela-divisao-sala',
@@ -20,10 +21,9 @@ export class TelaDivisaoSala implements OnInit {
   inscricoesNaoDistribuidas: DTODivisaoSalaEstudo = null;
 
   divisaoSelecionada: DTODivisaoSalaEstudo = null;
-  
-  constructor(public wsDivisao: WebServiceDivisaoSala, public mensageria: Alertas,
-    public roteador: ActivatedRoute, private srvEventoSelecionado: ServicoEventoSelecionado)
-  {
+
+  constructor(private wsDivisao: WebServiceDivisaoSala, private mensageria: Alertas,
+    private srvEventoSelecionado: ServicoEventoSelecionado, private wsRelatorios: WebServiceRelatorios) {
     this.inscricoesNaoDistribuidas = {
       Id: 0,
       Nome: "",
@@ -46,6 +46,7 @@ export class TelaDivisaoSala implements OnInit {
       .subscribe(
         divisoes => {
           this.processarRetornoDivisao(divisoes);
+          this.selecionarPrimeiraDivisao();
           dlg.close();
         },
         erro => {
@@ -65,6 +66,7 @@ export class TelaDivisaoSala implements OnInit {
               .subscribe(
                 divisoes => {
                   this.processarRetornoDivisao(divisoes);
+                  this.selecionarPrimeiraDivisao();
                   dlg.close();
                 },
                 erro => {
@@ -87,6 +89,7 @@ export class TelaDivisaoSala implements OnInit {
               .subscribe(
                 divisoes => {
                   this.processarRetornoDivisao(divisoes);
+                  this.selecionarPrimeiraDivisao();
                   dlg.close();
                 },
                 erro => {
@@ -96,14 +99,16 @@ export class TelaDivisaoSala implements OnInit {
           }
         }
       );
-  }
+  }  
 
   private processarRetornoDivisao(divisoes: DTODivisaoSalaEstudo[]) {
 
     this.inscricoesNaoDistribuidas = divisoes.find(x => x.Id == 0);
 
-    this.divisoesSalas = divisoes.filter(x => x.Id != 0);
+    this.divisoesSalas = divisoes.filter(x => x.Id != 0);   
+  }
 
+  private selecionarPrimeiraDivisao(): void {
     if (this.divisoesSalas.length > 0)
       this.divisaoSelecionada = this.divisoesSalas[0];
     else
@@ -111,6 +116,19 @@ export class TelaDivisaoSala implements OnInit {
   }
 
   clicarImprimir(): void {
+    let dlg = this.mensageria.alertarProcessamento("Gerando relatório da divisão...");
+
+    this.wsRelatorios.obterDivisaoSalas(this.evento.Id)
+      .subscribe(
+        relatorioGerado => {
+          dlg.close();
+          window.open(URL.createObjectURL(relatorioGerado), '_blank');
+        },
+        erro => {
+          dlg.close();
+          this.mensageria.alertarErro(erro);
+        }
+      );
   }
 
   clicarSelecionarSala(divisao: DTODivisaoSalaEstudo): void {
@@ -128,5 +146,72 @@ export class TelaDivisaoSala implements OnInit {
           (dataAtual.getDate() >= dataNascimento.getDate()))) ? 1 : 0);
 
     return idade;
+  }
+
+  clicarMoverParaSala(ev: any): void {
+    
+    this.mensageria.alertarConfirmacao("Você está certo de mudar a sala de estudo deste participante?", "")
+      .subscribe(
+        (botaoEscolhido) => {
+          if (botaoEscolhido == CaixaMensagemResposta.Sim) {
+            let dlg = this.mensageria.alertarProcessamento("Movendo participante...");
+
+            this.wsDivisao.moverInscricaoSalas(this.evento.Id, this.divisaoSelecionada.Id, ev.sala.Id, ev.inscricao.IdInscricao)
+              .subscribe(
+                divisoes => {
+                  this.processarRetornoDivisao(divisoes);
+                  dlg.close();
+                },
+                erro => {
+                  dlg.close();
+                  this.mensageria.alertarErro(erro);
+                });
+          }
+        }
+      );
+  }
+
+  clicarIncluirNaSala(ev: any): void {
+    this.mensageria.alertarConfirmacao("Você está certo de incluir este participante na sala " + ev.sala.Nome + "?", "")
+      .subscribe(
+        (botaoEscolhido) => {
+          if (botaoEscolhido == CaixaMensagemResposta.Sim) {
+            let dlg = this.mensageria.alertarProcessamento("Incluindo participante...");
+
+            this.wsDivisao.incluirInscricaoSala(this.evento.Id, ev.sala.Id, ev.inscricao.IdInscricao)
+              .subscribe(
+                divisoes => {
+                  this.processarRetornoDivisao(divisoes);
+                  dlg.close();
+                },
+                erro => {
+                  dlg.close();
+                  this.mensageria.alertarErro(erro);
+                });
+          }
+        }
+      );
+  }
+
+  clicarRemoverDaSala(inscricao: DTOBasicoInscricao): void {
+    this.mensageria.alertarConfirmacao("Você está certo de remover este participante da sala de estudo?", "Essa inscrição será listada nas inscrições sem sala de estudo")
+      .subscribe(
+        (botaoEscolhido) => {
+          if (botaoEscolhido == CaixaMensagemResposta.Sim) {
+            let dlg = this.mensageria.alertarProcessamento("Removendo participante...");
+
+            this.wsDivisao.removerInscricaoSala(this.evento.Id, this.divisaoSelecionada.Id, inscricao.IdInscricao)
+              .subscribe(
+                divisoes => {
+                  this.processarRetornoDivisao(divisoes);
+                  dlg.close();
+                },
+                erro => {
+                  dlg.close();
+                  this.mensageria.alertarErro(erro);
+                });
+          }
+        }
+      );
   }
 }

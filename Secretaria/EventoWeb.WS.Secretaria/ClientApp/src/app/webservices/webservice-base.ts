@@ -43,6 +43,16 @@ export abstract class WebServiceBase {
       .catch(this.ProcessarErro);
   }
 
+  protected executarPutBlob(parametros: string, dados: any): any {
+    let opRequisicao = this.gerarCabecalho();
+
+    return this.http
+      .put(this.webserviceURL + this.nomeWebService + this.gerarParametros(parametros),
+        dados,
+        { headers: opRequisicao, responseType: 'blob' })
+      .catch(this.ProcessarErro);
+  }
+
   protected executarDelete(parametros: string): any {
     let opRequisicao = this.gerarCabecalho();
 
@@ -75,27 +85,24 @@ export abstract class WebServiceBase {
   public ProcessarErro(erro: HttpErrorResponse) {
 
     if (erro.error instanceof Blob && erro.error.type === "application/json") {
-      let fileAsTextObservable = new Observable<string>(observer => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
+      let blobComoTextoNotificacao = new Observable<string>(notificador => {
+        const leitorArquivo = new FileReader();
+        leitorArquivo.onload = (e) => {
           let responseText = (<any>e.target).result;
 
-          observer.next(responseText);
-          observer.complete();
+          notificador.next(responseText);
+          notificador.complete();
         }
-        const errMsg = reader.readAsText(erro.error, 'utf-8');
+        const errMsg = leitorArquivo.readAsText(erro.error, 'utf-8');
       });
 
-      return fileAsTextObservable
-        .switchMap(errMsgJsonAsText => {
-          return Observable.throw(JSON.parse(errMsgJsonAsText));
+      return blobComoTextoNotificacao
+        .switchMap(errMsgJsonComoTexto => {
+          return Observable.throw(JSON.parse(errMsgJsonComoTexto));
         });
     }
     else if (erro.error != null && !(erro.error instanceof Blob)) {
-      if (erro.error.type === "application/json")
-        return Observable.throw(erro.error);
-      else (erro.error.type === "error")
-        return Observable.throw(JSON.parse(erro.error.target.response));
+      return Observable.throw(erro.error);
     }
     else
       return Observable.throw(erro.message || "Erro no Servidor");

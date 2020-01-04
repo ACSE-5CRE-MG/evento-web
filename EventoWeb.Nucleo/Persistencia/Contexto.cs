@@ -1,6 +1,7 @@
 ﻿using EventoWeb.Nucleo.Aplicacao;
 using EventoWeb.Nucleo.Negocio.Repositorios;
 using EventoWeb.Nucleo.Persistencia.Infra;
+using EventoWeb.Nucleo.Persistencia.Relatorios;
 using EventoWeb.Nucleo.Persistencia.Repositorios;
 using NHibernate;
 using NHibernate.Cfg;
@@ -85,6 +86,6 @@ namespace EventoWeb.Nucleo.Persistencia
 
         public AFaturamentos RepositorioFaturamentos => new RepositorioFaturamentosNH(m_Sessao);
 
-        public IRelatorioDivisaoSalasEstudo RelatorioDivisaoSalasEstudo => throw new System.NotImplementedException();
+        public IRelatorioDivisaoSalasEstudo RelatorioDivisaoSalasEstudo => new RelatorioDivisaoSalasEstudo();
     }
 }

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using EventoWeb.Nucleo.Aplicacao;
+﻿using EventoWeb.Nucleo.Aplicacao;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EventoWeb.WS.Secretaria.Controllers
@@ -22,7 +17,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpDelete("evento/{idEvento}/divisao-salas")]
+        [HttpPut("evento/{idEvento}/divisao-salas")]
         public IActionResult GerarRelatorioDivisaoSalas(int idEvento)
         {
             var appRelDivisaoSalas = new AppRelatorioDivisaoSalas(m_Contexto, 

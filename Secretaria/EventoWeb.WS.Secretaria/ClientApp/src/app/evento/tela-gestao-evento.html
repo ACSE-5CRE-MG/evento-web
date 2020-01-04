@@ -1,26 +1,38 @@
 <layout-geral>
-  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
-    <button mat-button>
-      <span class="fas fa-pencil-alt fa-7x"></span>
-      <br />
-      <span>Dados Evento</span>
-    </button>
-    <a mat-button [routerLink]="'./salas'">
-      <span class="fas fa-chalkboard fa-7x"></span>
-      <br />
-      <span>Salas de Estudo</span>
-    </a>
-    <a mat-button [routerLink]="'./inscricoes'">
-      <span class="fas fa-search-dollar fa-7x"></span>
-      <br />
-      <span>Inscrições</span>
-    </a>
+  <div fxLayout="column" fxLayoutGap="5px" class="padding-padrao">
+    <div>
+      <span class="secao">Cadastros</span>
+      <mat-divider></mat-divider>
+    </div>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
+      <button mat-stroked-button>
+        <span class="fas fa-pencil-alt fa-4x"></span>
+        <br />
+        <span>Dados Evento</span>
+      </button>
+      <a mat-stroked-button [routerLink]="'./salas'">
+        <span class="fas fa-chalkboard fa-4x"></span>
+        <br />
+        <span>Salas de Estudo</span>
+      </a>
+      <a mat-stroked-button [routerLink]="'./inscricoes'">
+        <span class="fas fas fa-users fa-4x"></span>
+        <br />
+        <span>Inscrições</span>
+      </a>
+    </div>
   </div>
-  <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
-    <a mat-button [routerLink]="'./divisao-salas'">
-      <span class="fas fa-chalkboard fa-7x"></span>
-      <br />
-      <span>Divisão de Salas de Estudo</span>
-    </a>
-  </div>
+  <div fxLayout="column" fxLayoutGap="5px" class="padding-padrao">
+    <div>
+      <span class="secao">Organização</span>
+      <mat-divider></mat-divider>
+    </div>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
+      <a mat-stroked-button [routerLink]="'./divisao-salas'">
+        <span class="fas fa-chalkboard fa-4x"></span>
+        <br />
+        <span>Divisão de Salas de Estudo</span>
+      </a>
+    </div>
+  </div>  
 </layout-geral>

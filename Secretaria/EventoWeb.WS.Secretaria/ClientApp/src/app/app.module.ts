@@ -95,6 +95,7 @@ import { Observable } from 'rxjs';
 import { DialogosSala, DlgFormSala } from './sala-estudo/dlg-form-sala';
 import { WebServiceDivisaoSala } from './webservices/webservice-divisao-salas';
 import { TelaDivisaoSala } from './divisao-salas-estudo/tela-divisao-sala';
+import { WebServiceRelatorios } from './webservices/webservice-relatorios';
 
 declare function require(url: string);
 
@@ -218,7 +219,7 @@ export function init_app(appLoadService: AppLoadService) {
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [AppLoadService], multi: true },
     Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
     WebServiceAutenticacao, WebServiceEventos, WebServiceSala, WebServiceInscricoes, ServicoEventoSelecionado,
-    WebServiceDivisaoSala,
+    WebServiceDivisaoSala, WebServiceRelatorios,
     DialogosSarau, DialogosCrianca, DialogosSala],
   bootstrap: [TelaPrincipal]
 })
