@@ -20,11 +20,33 @@ namespace EventoWeb.WS.Secretaria.Controllers
         [HttpPut("evento/{idEvento}/divisao-salas")]
         public IActionResult GerarRelatorioDivisaoSalas(int idEvento)
         {
-            var appRelDivisaoSalas = new AppRelatorioDivisaoSalas(m_Contexto, 
+            var appRelDivisao = new AppRelatorioDivisaoSalas(m_Contexto, 
                 m_Contexto.RepositorioEventos, m_Contexto.RepositorioSalasEstudo, m_Contexto.RepositorioInscricoes,
                 m_Contexto.RelatorioDivisaoSalasEstudo);
 
-            return File(appRelDivisaoSalas.GerarImpressoPDF(idEvento), TIPO_CONTEUDO_PDF);
+            return File(appRelDivisao.GerarImpressoPDF(idEvento), TIPO_CONTEUDO_PDF);
         }
+
+        [Authorize("Bearer")]
+        [HttpPut("evento/{idEvento}/divisao-oficinas")]
+        public IActionResult GerarRelatorioDivisaoOficinas(int idEvento)
+        {
+            var appRelDivisao = new AppRelatorioDivisaoOficinas(m_Contexto,
+                m_Contexto.RepositorioEventos, m_Contexto.RepositorioOficinas, m_Contexto.RepositorioInscricoes,
+                m_Contexto.RelatorioDivisaoOficinas);
+
+            return File(appRelDivisao.GerarImpressoPDF(idEvento), TIPO_CONTEUDO_PDF);
+        }
+
+        [Authorize("Bearer")]
+        [HttpPut("evento/{idEvento}/divisao-quartos")]
+        public IActionResult GerarRelatorioDivisaoQuartos(int idEvento)
+        {
+            var appRelDivisao = new AppRelatorioDivisaoQuartos(m_Contexto,
+                m_Contexto.RepositorioQuartos, m_Contexto.RelatorioDivisaoQuartos);
+
+            return File(appRelDivisao.GerarImpressoPDF(idEvento), TIPO_CONTEUDO_PDF);
+        }
+
     }
 }

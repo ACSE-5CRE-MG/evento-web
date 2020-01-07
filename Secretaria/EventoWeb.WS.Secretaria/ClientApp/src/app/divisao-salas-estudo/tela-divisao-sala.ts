@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
 import { ActivatedRoute } from '@angular/router';
-import { WebServiceDivisaoSala } from '../webservices/webservice-divisao-salas';
+import { WebServiceDivisaoSalas } from '../webservices/webservice-divisao-salas';
 import { ServicoEventoSelecionado } from '../evento/tela-roteamento-evento';
 import { DTOEventoCompleto } from '../evento/objetos';
 import { DTODivisaoSalaEstudo } from './objetos';
@@ -22,7 +22,7 @@ export class TelaDivisaoSala implements OnInit {
 
   divisaoSelecionada: DTODivisaoSalaEstudo = null;
 
-  constructor(private wsDivisao: WebServiceDivisaoSala, private mensageria: Alertas,
+  constructor(private wsDivisao: WebServiceDivisaoSalas, private mensageria: Alertas,
     private srvEventoSelecionado: ServicoEventoSelecionado, private wsRelatorios: WebServiceRelatorios) {
     this.inscricoesNaoDistribuidas = {
       Id: 0,

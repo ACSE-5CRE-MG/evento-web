@@ -7,16 +7,16 @@ using System.Collections.Generic;
 
 namespace EventoWeb.Nucleo.Persistencia.Repositorios
 {
-    public class RepositorioApresentacoesSarauNH : PersistenciaNH<ApresentacaoSarau>, AApresentacoesSarau
+    public class RepositorioApresentacoesSarauNH : AApresentacoesSarau
     {
         private readonly ISession mSessao;
 
-        public RepositorioApresentacoesSarauNH(ISession sessao) : base(sessao)        
+        public RepositorioApresentacoesSarauNH(ISession sessao) : base(new PersistenciaNH<ApresentacaoSarau>(sessao))        
         {
             mSessao = sessao;
         }
 
-        public IList<ApresentacaoSarau> ListarPorInscricao(int idInscricao)
+        public override IList<ApresentacaoSarau> ListarPorInscricao(int idInscricao)
         {
             ApresentacaoSarau apresentacaoAlias = null;
 
@@ -34,7 +34,7 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
                 .List();
         }
 
-        public IList<ApresentacaoSarau> ListarTodas(int idEvento)
+        public override IList<ApresentacaoSarau> ListarTodas(int idEvento)
         {
             var consulta = mSessao
                 .QueryOver<ApresentacaoSarau>()
@@ -49,7 +49,7 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
                 .List();
         }
 
-        public ApresentacaoSarau ObterPorId(int idEvento, int id)
+        public override ApresentacaoSarau ObterPorId(int idEvento, int id)
         {
             var consulta = mSessao
                 .QueryOver<ApresentacaoSarau>()
@@ -64,7 +64,7 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
                 .SingleOrDefault();
         }
 
-        public int ObterTempoTotalApresentacoes(Evento evento, ApresentacaoSarau apresentacaoNaoConsiderar = null)
+        protected override int ObterTempoTotalApresentacoes(Evento evento, ApresentacaoSarau apresentacaoNaoConsiderar = null)
         {
             var consulta = mSessao.QueryOver<ApresentacaoSarau>()
                 .Where(apresentacao => apresentacao.Evento.Id == evento.Id);

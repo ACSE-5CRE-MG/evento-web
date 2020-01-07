@@ -20,7 +20,55 @@ namespace EventoWeb.BancoDados.Migracoes
             CriarTitulo();
             CriarTransacao();*/
             CriarSalasEstudoParticipantes();
-        }        
+            CriarOficinasParticipantes();
+            CriarQuartos();
+            CriarQuartosInscrito();
+        }
+
+        private void CriarSalasEstudoParticipantes()
+        {
+            Create
+                .Table("SALAS_ESTUDO_PARTICIPANTES")
+                .WithColumn("ID_SALA_ESTUDO").AsInt32().PrimaryKey().NotNullable()
+                    .ForeignKey("FK_SEP_SALA", "SALAS_ESTUDO", "ID_SALA_ESTUDO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
+                .WithColumn("ID_INSCRICAO").AsInt32().PrimaryKey().NotNullable()
+                    .ForeignKey("FK_SEP_INSC", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.None).OnUpdate(Rule.Cascade);
+        }
+
+        private void CriarOficinasParticipantes()
+        {
+            Create
+                .Table("OFICINAS_PARTICIPANTES")
+                .WithColumn("ID_OFICINA").AsInt32().PrimaryKey().NotNullable()
+                    .ForeignKey("FK_OP_OFICINA", "OFICINAS", "ID_OFICINA").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
+                .WithColumn("ID_INSCRICAO").AsInt32().PrimaryKey().NotNullable()
+                    .ForeignKey("FK_OP_INSC", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.None).OnUpdate(Rule.Cascade);
+        }
+
+        private void CriarQuartos()
+        {
+            Create
+                .Table("QUARTOS")
+                .WithColumn("ID_QUARTO").AsInt32().PrimaryKey().NotNullable().Identity()
+                .WithColumn("CAPACIDADE").AsInt32().Nullable()
+                .WithColumn("EH_FAMILIA").AsBoolean().NotNullable()
+                .WithColumn("ID_EVENTO").AsInt32().NotNullable()
+                    .ForeignKey("FK_QUARTO_EVENTO", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
+                .WithColumn("NOME").AsString(100).NotNullable()
+                .WithColumn("SEXO").AsInt16().NotNullable();
+        }
+
+        private void CriarQuartosInscrito()
+        {
+            Create
+                .Table("QUARTOS_INSCRITOS")
+                .WithColumn("ID_QUARTO_INSCRITO").AsInt32().PrimaryKey().NotNullable().Identity()
+                .WithColumn("EH_COORDENADOR").AsInt32().Nullable()
+                .WithColumn("ID_INSCRICAO").AsBoolean().NotNullable()
+                    .ForeignKey("FK_QI_INSCRICAO", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.None).OnUpdate(Rule.Cascade)
+                .WithColumn("ID_QUARTO").AsInt32().NotNullable()
+                    .ForeignKey("FK_QI_QUARTO", "QUARTOS", "ID_QUARTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade);
+        }
 
         private void CriarConta()
         {
@@ -115,16 +163,6 @@ namespace EventoWeb.BancoDados.Migracoes
                 .OnTable("TRANSACOES_FINANCEIRAS")
                 .OnColumn("ID_CONTA").Ascending()
                 .OnColumn("DATA_HORA").Ascending();
-        }
-
-        private void CriarSalasEstudoParticipantes()
-        {
-            Create
-                .Table("SALAS_ESTUDO_PARTICIPANTES")
-                .WithColumn("ID_SALA_ESTUDO").AsInt32().PrimaryKey().NotNullable()
-                    .ForeignKey("FK_SEP_SALA", "SALAS_ESTUDO", "ID_SALA_ESTUDO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
-                .WithColumn("ID_INSCRICAO").AsInt32().PrimaryKey().NotNullable()
-                    .ForeignKey("FK_SEP_INSC", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.None).OnUpdate(Rule.Cascade);
-        }
+        }        
     }
 }

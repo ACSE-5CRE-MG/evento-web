@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, Injectable } from "@angular/core";
-import { WebServiceSala } from "../webservices/webservice-salas";
+import { WebServiceSalas } from "../webservices/webservice-salas";
 import { DTOSalaEstudo } from "./objetos";
 
 import createNumberMask from 'text-mask-addons/dist/createNumberMask';
@@ -22,7 +22,7 @@ export class DlgFormSala implements OnInit {
   titulo: string;
 
   constructor(public dialogRef: MatDialogRef<DlgFormSala>, private alertas: Alertas,
-    private wsSalas: WebServiceSala, @Inject(MAT_DIALOG_DATA) public data: any) {
+    private wsSalas: WebServiceSalas, @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.podeUsarFaixaEtaria = false;
     this.idSala = null;

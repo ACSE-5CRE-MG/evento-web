@@ -72,20 +72,21 @@ namespace EventoWeb.Nucleo.Persistencia
         public AOficinas RepositorioOficinas => new RepositorioOficinasNH(m_Sessao);
         public AConfiguracoesEmail RepositorioConfiguracoesEmail => new RepositorioConfiguracoesEmailNH(m_Sessao);
         public AInscricoes RepositorioInscricoes => new InscricoesNH(m_Sessao);
-        public ACodigosAcessoInscricao RepositorioCodigosAcessoInscricao => new RepositorioCodigosAcessoInscricaoNH(m_Sessao);
-        public IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro => new ServicoGeradorCodigoSeguro(RepositorioCodigosAcessoInscricao);
+        public ACodigosAcessoInscricao RepositorioCodigosAcessoInscricao => new RepositorioCodigosAcessoInscricaoNH(m_Sessao);        
         public AMensagensEmailPadrao RepositorioMensagensEmailPadrao => new RepositorioMensagensEmailPadrao(m_Sessao);
         public AApresentacoesSarau RepositorioApresentacoesSarau => new RepositorioApresentacoesSarauNH(m_Sessao);
         public AArquivosBinarios RepositorioArquivosBinarios => new RepositorioArquivosBinariosNH(m_Sessao);
+        public AQuartos RepositorioQuartos => new RepositorioQuartosNH(m_Sessao);
+
+        public IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro => new ServicoGeradorCodigoSeguro(RepositorioCodigosAcessoInscricao);
 
         public ATitulos RepositorioTitulosFinanceiros => new RepositorioTitulosFinanceirosNH(m_Sessao);
-
         public ATransacoes RepositorioTransacoesFinanceiras => new RepositorioTransacoesFinanceirasNH(m_Sessao);
-
         public AContas RepositorioContasBancarias => new RepositorioContasBancariasNH(m_Sessao);
-
         public AFaturamentos RepositorioFaturamentos => new RepositorioFaturamentosNH(m_Sessao);
-
+        
         public IRelatorioDivisaoSalasEstudo RelatorioDivisaoSalasEstudo => new RelatorioDivisaoSalasEstudo();
+        public IRelatorioDivisaoOficinas RelatorioDivisaoOficinas => new RelatorioDivisaoOficinas();
+        public IRelatorioDivisaoQuartos RelatorioDivisaoQuartos => throw new System.NotImplementedException();
     }
 }

@@ -1,0 +1,19 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div><h1>{{titulo}}</h1></div>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-icon-button cdkFocusInitial (click)="clicarSalvar()" matTooltip="Permite salvar esta oficina"><i class="fa fa-save"></i></button>
+    <button mat-icon-button (click)="clicarCancelar()" matTooltip="Permite fechar esta tela"><i class="fa fa-times"></i></button>
+  </mat-toolbar>
+  <div fxLayout="column" class="formulario" fxLayoutGap="5px">
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Nome:</label>
+      <dx-text-box [(value)]="oficina.Nome" fxFlex="300px"></dx-text-box>
+    </div>
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Máximo de participantes:</label>
+      <dx-number-box [(value)]="oficina.NumeroTotalParticipantes" fxFlex="80" [min]="0"></dx-number-box>
+    </div>
+    <dx-check-box [(value)]="oficina.DeveSerParNumeroTotalParticipantes" text="Número de participantes deve ser par?"></dx-check-box>
+  </div>
+</layout-geral>

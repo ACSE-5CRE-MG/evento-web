@@ -96,7 +96,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             ValidarSeParticipanteEhNulo(participante);
 
             if (!EstaNaListaDeParticipantes(participante))
-                throw new ArgumentException("Participante não existe na lista de participantes desta afrac.", "participante");
+                throw new ArgumentException("Participante não existe na lista de participantes desta oficina.", "participante");
 
             m_Participantes.Remove(participante);
         }
@@ -120,7 +120,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         private void ValidarSeParticipanteEhMesmoEvento(InscricaoParticipante participante)
         {
             if (participante.Evento != m_Evento)
-                throw new ArgumentException("participante", "Participante deve ser do mesmo evento da afrac .");
+                throw new ArgumentException("participante", "Participante deve ser do mesmo evento da oficina.");
         }
     }
 }

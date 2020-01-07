@@ -31,7 +31,7 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
         IList<InscricaoInfantil> ListarInscricoesInfantisDoResponsavel(Inscricao inscrito);
         IList<InscricaoParticipante> ListarTodasInscricoesParticipantesComPessoasDoEvento(Evento evento);
         IList<TAtividade> ListarTodasInscricoesPorAtividade<TAtividade>(Evento evento) where TAtividade : AAtividadeInscricao;
-        IList<Inscricao> ListarTodasInscricoesComPessoasDormemEvento(Evento evento);
+        IList<Inscricao> ListarTodasInscricoesComPessoasDormemEvento(int idEvento);
         bool HaInscricaoVinculadaTransacao(int idTransacao);
         bool HaInscricaoVinculadaTitulo(int idTitulo);
 

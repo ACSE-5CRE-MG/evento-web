@@ -35,7 +35,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             var familiasMisto = inscritos
                 .Where(x => x.Criancas.Count(y => y.Pessoa.Sexo != x.Responsavel.Pessoa.Sexo) > 0);
 
-            if (familiasMisto.Count() > 0 && quartos.Count(x => x.Sexo == SexoQuarto.Misto) == 0)
+            if (familiasMisto.Count() > 0 && quartos.Count(x => x.Sexo == EnumSexoQuarto.Misto) == 0)
             {
                 var mensagem = "";
                 foreach(var familia in familiasMisto)
@@ -53,13 +53,13 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             if (inscritos
                 .Count(x=>x.Responsavel.Pessoa.Sexo == SexoPessoa.Masculino
                           && x.Criancas.Count(y=>y.Pessoa.Sexo != x.Responsavel.Pessoa.Sexo) == 0) > 0 &&
-                quartos.Count(x => x.Sexo == SexoQuarto.Misto || x.Sexo == SexoQuarto.Masculino) == 0)
+                quartos.Count(x => x.Sexo == EnumSexoQuarto.Misto || x.Sexo == EnumSexoQuarto.Masculino) == 0)
                 throw new InvalidOperationException("Não há quartos família cadastrados para o sexo Masculino");
 
             if (inscritos
                 .Count(x => x.Responsavel.Pessoa.Sexo == SexoPessoa.Feminino
                           && x.Criancas.Count(y => y.Pessoa.Sexo != x.Responsavel.Pessoa.Sexo) == 0) > 0 &&
-                quartos.Count(x => x.Sexo == SexoQuarto.Misto || x.Sexo == SexoQuarto.Feminino) == 0)
+                quartos.Count(x => x.Sexo == EnumSexoQuarto.Misto || x.Sexo == EnumSexoQuarto.Feminino) == 0)
                 throw new InvalidOperationException("Não há quartos família cadastrados para o sexo Feminino");           
         }
     }
@@ -86,7 +86,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
         public IList<Quarto> Dividir()
         {
             var quartos = mRepQuartos.ListarTodosQuartosPorEvento(mEvento.Id);
-            var listaInscricoes = mRepInscricoes.ListarTodasInscricoesComPessoasDormemEvento(mEvento);
+            var listaInscricoes = mRepInscricoes.ListarTodasInscricoesComPessoasDormemEvento(mEvento.Id);
 
             var criancas = listaInscricoes
                 .Where(x => x is InscricaoInfantil && x.Pessoa.CalcularIdadeEmAnos(mEvento.PeriodoRealizacaoEvento.DataInicial) <= 6)
@@ -216,7 +216,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
                 }
             }
 
-            var quartosMisto = quartosFamilia.Where(x => x.Sexo == SexoQuarto.Misto).ToList();
+            var quartosMisto = quartosFamilia.Where(x => x.Sexo == EnumSexoQuarto.Misto).ToList();
             foreach(var familia in listaInscritos)
             {
                 var indice = 0;

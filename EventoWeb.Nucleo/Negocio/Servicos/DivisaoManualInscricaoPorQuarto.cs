@@ -32,7 +32,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             /*if (inscrito is InscricaoInfantil)
                 throw new ArgumentException("Não se pode incluir uma inscrição de criança.", "inscrito");*/
 
-            if (inscrito is InscricaoParticipante && mQuarto.Sexo != SexoQuarto.Misto && (int)inscrito.Pessoa.Sexo != (int)mQuarto.Sexo)
+            if (inscrito is InscricaoParticipante && mQuarto.Sexo != EnumSexoQuarto.Misto && (int)inscrito.Pessoa.Sexo != (int)mQuarto.Sexo)
                 throw new ArgumentException("Esta inscrição é de sexo diferente do definido no quarto.", "inscrito");
 
             var inscritosQuarto = mQuartos.SelectMany(x => x.Inscritos);

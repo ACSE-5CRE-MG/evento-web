@@ -1,106 +1,101 @@
-﻿using System;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using System;
 using System.Collections.Generic;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
-    public enum SexoQuarto { Masculino, Feminino, Misto }
+    public enum EnumSexoQuarto { Masculino, Feminino, Misto }
 
     public class QuartoInscrito: Entidade
     {
-        private Inscricao mInscricao;
-        private Quarto mQuarto;
+        private Inscricao m_Inscricao;
+        private Quarto m_Quarto;
 
         public QuartoInscrito(Quarto quarto, Inscricao inscrito, Boolean ehCoordenador)
         {
-            if (quarto == null)
-                throw new ArgumentNullException("quarto");
-            
-            if (inscrito == null)
-                throw new ArgumentNullException("inscrito");
-
-            mQuarto = quarto;
-            mInscricao = inscrito;
+            m_Quarto = quarto ?? throw new ExcecaoNegocioAtributo("QuartoInscrito", "quarto", "Quarto não pode ser nulo");
+            m_Inscricao = inscrito ?? throw new ExcecaoNegocioAtributo("QuartoInscrito", "inscrito", "Inscrito não pode ser nulo");
             EhCoordenador = ehCoordenador;
         }
 
         protected QuartoInscrito() { }
 
-        public virtual Quarto Quarto { get { return mQuarto; } }
-        public virtual Inscricao Inscricao { get { return mInscricao; } }
+        public virtual Quarto Quarto { get { return m_Quarto; } }
+        public virtual Inscricao Inscricao { get { return m_Inscricao; } }
         public virtual Boolean EhCoordenador { get; set; }
     }
 
     public class Quarto: Entidade
     {
-        private String mNome;
-        private Evento mEvento;
-        private int? mCapacidade;
-        private IList<QuartoInscrito> mInscritos;
+        private String m_Nome;
+        private Evento m_Evento;
+        private int? m_Capacidade;
+        private IList<QuartoInscrito> m_Inscritos;
 
-        public Quarto(Evento evento, string nome, Boolean ehFamilia, SexoQuarto sexo)
+        public Quarto(Evento evento, string nome, Boolean ehFamilia, EnumSexoQuarto sexo)
         {
             Nome = nome;
             Evento = evento;
             Sexo = sexo;
             AtribuirSexoEEhFamilia(ehFamilia, sexo);
-            mInscritos = new List<QuartoInscrito>();
+            m_Inscritos = new List<QuartoInscrito>();
         }
 
         protected Quarto() { }
 
         public virtual Evento Evento
         {
-            get { return mEvento; }
+            get { return m_Evento; }
             protected set
             {
                 if (value == null)
-                    throw new ArgumentNullException("Evento", "Evento não pode ser nulo");
+                    throw new ExcecaoNegocioAtributo("Quarto", "Evento", "Evento não pode ser nulo");
 
                 if (!value.TemDormitorios)
-                    throw new InvalidOperationException("Este evento não está configurado para ter Quartos.");
+                    throw new ExcecaoNegocioAtributo("Quarto", "Evento", "Este evento não está configurado para ter Quartos.");
 
-                mEvento = value;
+                m_Evento = value;
             }
         }
 
         public virtual string Nome 
         {
-            get { return mNome; }
+            get { return m_Nome; }
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("Nome", "Nome não pode ser nulo.");
+                    throw new ExcecaoNegocioAtributo("Quarto", "Nome", "Nome não pode ser nulo.");
 
                 if (value == "")
-                    throw new ArgumentException("Nome", "Nome não pode ser vazio.");
+                    throw new ExcecaoNegocioAtributo("Quarto", "Nome", "Nome não pode ser vazio.");
 
-                mNome = value;
+                m_Nome = value;
             }
         }
 
         public virtual int? Capacidade
         {
-            get { return mCapacidade; }
+            get { return m_Capacidade; }
             set
             {
                 if (value != null && value <= 0)
-                    throw new ArgumentException("Capacidade", "A capacidade informada deve ser maior que zero.");
+                    throw new ExcecaoNegocioAtributo("Quarto", "Capacidade", "A capacidade informada deve ser maior que zero.");
 
-                mCapacidade = value;
+                m_Capacidade = value;
             }
         }
 
         public virtual Boolean EhFamilia { get; protected set; }
 
-        public virtual SexoQuarto Sexo { get; protected set; }
+        public virtual EnumSexoQuarto Sexo { get; protected set; }
 
 
-        public virtual IEnumerable<QuartoInscrito> Inscritos { get { return mInscritos; } }
+        public virtual IEnumerable<QuartoInscrito> Inscritos { get { return m_Inscritos; } }
 
-        public virtual void AtribuirSexoEEhFamilia(bool ehFamilia, SexoQuarto sexo)
+        public virtual void AtribuirSexoEEhFamilia(bool ehFamilia, EnumSexoQuarto sexo)
         {
-            if (!ehFamilia && sexo == SexoQuarto.Misto)
-                throw new InvalidOperationException("Somente quarto família pode ter o sexo misto.");
+            if (!ehFamilia && sexo == EnumSexoQuarto.Misto)
+                throw new ExcecaoNegocio("Quarto", "Somente quarto família pode ter o sexo misto.");
 
             EhFamilia = ehFamilia;
             Sexo = sexo;
@@ -109,27 +104,27 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual void AdicionarInscrito(Inscricao inscrito, Boolean ehCoordenador = false)
         {
             if (inscrito.Evento != Evento)
-                throw new ArgumentException("A inscrição não é do mesmo evento do quarto.");
+                throw new ExcecaoNegocio("Quarto", "A inscrição não é do mesmo evento do quarto.");
 
-            if (inscrito is InscricaoParticipante && this.Sexo != SexoQuarto.Misto && (int)inscrito.Pessoa.Sexo != (int)this.Sexo)
-                throw new ArgumentException("O inscrito não é do mesmo sexo definido para o quarto.");
+            if (inscrito is InscricaoParticipante && this.Sexo != EnumSexoQuarto.Misto && (int)inscrito.Pessoa.Sexo != (int)this.Sexo)
+                throw new ExcecaoNegocio("Quarto", "O inscrito não é do mesmo sexo definido para o quarto.");
 
-            if (Capacidade != null && mInscritos.Count == Capacidade.Value)
-                throw new ArgumentException("Nâo é possível incluir mais participantes neste quarto.");
+            if (Capacidade != null && m_Inscritos.Count == Capacidade.Value)
+                throw new ExcecaoNegocio("Quarto", "Nâo é possível incluir mais participantes neste quarto.");
 
 
-            mInscritos.Add(new QuartoInscrito(this, inscrito, ehCoordenador));
+            m_Inscritos.Add(new QuartoInscrito(this, inscrito, ehCoordenador));
         }
 
         public virtual void RemoverInscrito(QuartoInscrito inscrito)
         {
-            if (!mInscritos.Remove(inscrito))
-                throw new ArgumentException("Nâo existe este inscrito no quarto.");
+            if (!m_Inscritos.Remove(inscrito))
+                throw new ExcecaoNegocio("Quarto", "Nâo existe este inscrito no quarto.");
         }
 
         public virtual void RemoverTodosInscritos()
         {
-            mInscritos.Clear();
+            m_Inscritos.Clear();
         }
     }
 }

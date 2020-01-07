@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { Alertas } from "../componentes/alertas-dlg/alertas";
 import { ActivatedRoute } from "@angular/router";
-import { WebServiceSala } from "../webservices/webservice-salas";
+import { WebServiceSalas } from "../webservices/webservice-salas";
 import { DTOSalaEstudo } from "./objetos";
 import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';
 import { DialogosSala } from './dlg-form-sala';
@@ -21,7 +21,7 @@ export class TelaListagemSalas implements OnInit {
 
   private m_Evento: DTOEventoCompleto;
 
-  constructor(private wsSalas: WebServiceSala, private mensageria: Alertas, private roteador: ActivatedRoute,
+  constructor(private wsSalas: WebServiceSalas, private mensageria: Alertas, private roteador: ActivatedRoute,
     private dlgsSala: DialogosSala, private srvEventoSelecionado: ServicoEventoSelecionado) { }
 
   ngOnInit(): void {

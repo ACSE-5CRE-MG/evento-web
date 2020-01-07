@@ -7,10 +7,10 @@ import { DTOSalaEstudo } from "../sala-estudo/objetos";
 import { DTOId } from "../evento/objetos";
 
 @Injectable()
-export class WebServiceSala extends WebServiceBase {
+export class WebServiceSalas extends WebServiceBase {
 
   constructor(http: HttpClient, public gestorAutenticacao: GestaoAutenticacao) {
-    super(http, gestorAutenticacao, "sala/");
+    super(http, gestorAutenticacao, "salas/");
   }
 
   obterTodas(idEvento: number): Observable<DTOSalaEstudo[]> {

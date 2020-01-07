@@ -16,20 +16,20 @@ namespace EventoWeb.Nucleo.Aplicacao
             var lista = new List<DTOOficina>();
             ExecutarSeguramente(() =>
             {
-                var afracs = Contexto.RepositorioOficinas.ListarTodasPorEvento(idEvento);
-                if (afracs.Count > 0)
-                    lista.AddRange(afracs.Select(x => x.Converter()));
+                var oficinas = Contexto.RepositorioOficinas.ListarTodasPorEvento(idEvento);
+                if (oficinas.Count > 0)
+                    lista.AddRange(oficinas.Select(x => x.Converter()));
             });
 
             return lista;
         }
 
-        public DTOOficina ObterPorId(int id)
+        public DTOOficina ObterPorId(int idEvento, int idOficina)
         {
             DTOOficina dto = null;
             ExecutarSeguramente(() =>
             {
-                var oficina = Contexto.RepositorioOficinas.ObterPorId(id);
+                var oficina = Contexto.RepositorioOficinas.ObterPorId(idEvento, idOficina);
 
                 if (oficina != null)
                     dto = oficina.Converter();
@@ -45,24 +45,24 @@ namespace EventoWeb.Nucleo.Aplicacao
             ExecutarSeguramente(() =>
             {
                 var evento = Contexto.RepositorioEventos.ObterEventoPeloId(idEvento);
-                var afrac = new Oficina(evento, dto.Nome)
+                var oficina = new Oficina(evento, dto.Nome)
                 {
                     DeveSerParNumeroTotalParticipantes = dto.DeveSerParNumeroTotalParticipantes,
                     NumeroTotalParticipantes = dto.NumeroTotalParticipantes
                 };
 
-                Contexto.RepositorioOficinas.Incluir(afrac);
-                retorno.Id = afrac.Id;
+                Contexto.RepositorioOficinas.Incluir(oficina);
+                retorno.Id = oficina.Id;
             });
 
             return retorno;
         }
 
-        public void Atualizar(int id, DTOOficina dto)
+        public void Atualizar(int idEvento, int idOficina, DTOOficina dto)
         {
             ExecutarSeguramente(() =>
             {
-                var oficina = ObterOficinaOuExcecaoSeNaoEncontrar(id);
+                var oficina = ObterOficinaOuExcecaoSeNaoEncontrar(idEvento, idOficina);
                 oficina.Nome = dto.Nome;
                 oficina.DeveSerParNumeroTotalParticipantes = dto.DeveSerParNumeroTotalParticipantes;
                 oficina.NumeroTotalParticipantes = dto.NumeroTotalParticipantes;
@@ -71,24 +71,24 @@ namespace EventoWeb.Nucleo.Aplicacao
             });
         }
 
-        public void Excluir(int id)
+        public void Excluir(int idEvento, int idOficina)
         {
             ExecutarSeguramente(() =>
             {
-                var oficina = ObterOficinaOuExcecaoSeNaoEncontrar(id);
+                var oficina = ObterOficinaOuExcecaoSeNaoEncontrar(idEvento, idOficina);
 
                 Contexto.RepositorioOficinas.Excluir(oficina);
             });
         }
 
-        private Oficina ObterOficinaOuExcecaoSeNaoEncontrar(int id)
+        private Oficina ObterOficinaOuExcecaoSeNaoEncontrar(int idEvento, int idOficina)
         {
-            var oficina = Contexto.RepositorioOficinas.ObterPorId(id);
+            var oficina = Contexto.RepositorioOficinas.ObterPorId(idEvento, idOficina);
 
             if (oficina != null)
                 return oficina;
             else
-                throw new ExcecaoAplicacao("AppAfracs", "Não foi encontrado nenhuma afrac com o id informado.");
+                throw new ExcecaoAplicacao("AppOficinas", "Não foi encontrada nenhuma oficina com o id informado.");
         }
     }
 }

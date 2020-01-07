@@ -110,10 +110,10 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
         }
 
 
-        public IList<Inscricao> ListarTodasInscricoesComPessoasDormemEvento(Evento evento)
+        public IList<Inscricao> ListarTodasInscricoesComPessoasDormemEvento(int idEvento)
         {
             return mSessao.QueryOver<Inscricao>()
-                .Where(x => x.Evento == evento && x.DormeEvento)
+                .Where(x => x.Evento.Id == idEvento && x.DormeEvento)
                 .JoinQueryOver(x => x.Pessoa)
                 .List();
         }

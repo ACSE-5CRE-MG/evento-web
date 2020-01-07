@@ -25,15 +25,15 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual IEnumerable<Oficina> GerarLista()
         {
-            var totalAfracs = mRepositorioOficinas.ContarTotalOficinas(mEscolhas.Evento);
-            var afracs = mEscolhas.Oficinas;
-            if (totalAfracs == 0 && afracs.Count() > 0)
+            var totalOficinas = mRepositorioOficinas.ContarTotalOficinas(mEscolhas.Evento);
+            var oficinas = mEscolhas.Oficinas;
+            if (totalOficinas == 0 && oficinas.Count() > 0)
                 throw new ArgumentException("Não há nenhuma oficina neste evento.", "evento");
 
-            if (totalAfracs > 0 && afracs.Count() != totalAfracs)
+            if (totalOficinas > 0 && oficinas.Count() != totalOficinas)
                 throw new ArgumentException("Todas as oficinas do evento devem ser escolhidas e ordenadas.", "evento");
 
-            return afracs;
+            return oficinas;
         }
     }
 
@@ -54,9 +54,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         
         public virtual void DefinirPrimeiraPosicao(Oficina oficina)
         {
-            ValidarAfracNula(oficina);
-            ValidarAfracExisteEvento(oficina);
-            ValidarAfracEstaLista(oficina);
+            ValidarOficinaNula(oficina);
+            ValidarOficinaExisteEvento(oficina);
+            ValidarOficinaEstaLista(oficina);
 
             mOficinas.Clear();
             mOficinas.Add(oficina);
@@ -64,9 +64,9 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual void DefinirProximaPosicao(Oficina oficina)
         {
-            ValidarAfracNula(oficina);
-            ValidarAfracExisteEvento(oficina);
-            ValidarAfracEstaLista(oficina);
+            ValidarOficinaNula(oficina);
+            ValidarOficinaExisteEvento(oficina);
+            ValidarOficinaEstaLista(oficina);
 
             if (mOficinas.Count == 0)
                 throw new IndexOutOfRangeException("Deve-se definir a primeira posição.");
@@ -74,19 +74,19 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             mOficinas.Add(oficina);
         }
 
-        private void ValidarAfracNula(Oficina oficina)
+        private void ValidarOficinaNula(Oficina oficina)
         {
             if (oficina == null)
                 throw new ArgumentNullException("item", "Oficina não pode ser nula");
         }
 
-        private void ValidarAfracExisteEvento(Oficina oficina)
+        private void ValidarOficinaExisteEvento(Oficina oficina)
         {
             if (mEvento != oficina.Evento)
                 throw new ExcecaoOficinaInvalida("A oficina informada não existe no evento.");
         }
 
-        private void ValidarAfracEstaLista(Oficina oficina)
+        private void ValidarOficinaEstaLista(Oficina oficina)
         {
             if (mOficinas.Count(x=> x == oficina) > 0)
                 throw new ExcecaoOficinaInvalida("A oficina informada já esta na lista.");

@@ -48,14 +48,15 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Column("NUM_MAX_PARTICIPANTES");
             });
 
-            /* this.Bag(x => x.Participantes, m =>
-              {
-                  m.Cascade(Cascade.All | Cascade.DeleteOrphans);
-                  m.Inverse(true);
-                  m.Lazy(CollectionLazy.Lazy);
-                  m.Access(Accessor.NoSetter);
-                  m.Key(k => k.Column("ID_INSCRICAO"));
-              }, c=> c.OneToMany(o=> o.Class(typeof(InscricaoParticipante))));*/
+            this.Bag(x => x.Participantes, m =>
+            {
+                m.Cascade(Cascade.None);
+                m.Inverse(false);
+                m.Lazy(CollectionLazy.Lazy);
+                m.Access(Accessor.NoSetter);
+                m.Key(k => k.Column("ID_OFICINA"));
+                m.Table("OFICINAS_PARTICIPANTES");
+            }, c => c.ManyToMany(o => o.Column("ID_INSCRICAO")));
         }
     }
 }

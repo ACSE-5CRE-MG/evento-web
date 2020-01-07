@@ -7,10 +7,22 @@ namespace EventoWeb.Nucleo.Aplicacao
     public interface IRelatorios
     {
         IRelatorioDivisaoSalasEstudo RelatorioDivisaoSalasEstudo { get; }
+        IRelatorioDivisaoOficinas RelatorioDivisaoOficinas { get; }
+        IRelatorioDivisaoQuartos RelatorioDivisaoQuartos { get; }
     }
 
     public interface IRelatorioDivisaoSalasEstudo
     {
         Stream Gerar(IEnumerable<SalaEstudo> salas, IList<AtividadeInscricaoSalaEstudoCoordenacao> coordenadores);
+    }
+
+    public interface IRelatorioDivisaoOficinas
+    {
+        Stream Gerar(IEnumerable<Oficina> oficinas, IList<AtividadeInscricaoOficinasCoordenacao> coordenadores);
+    }
+
+    public interface IRelatorioDivisaoQuartos
+    {
+        Stream Gerar(IEnumerable<Quarto> quartos);
     }
 }

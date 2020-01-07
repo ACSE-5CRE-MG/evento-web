@@ -7,41 +7,41 @@ using System.Text;
 
 namespace EventoWeb.Nucleo.Negocio.Servicos
 {
-    public class DivisaoAutomaticaInscricoesParticipantesPorAfrac
+    public class DivisaoAutomaticaInscricoesParticipantesPorOficina
     {
         private class OrdenaDivisao
         {
             public InscricaoParticipante Inscrito { get; set; }
-            public Oficina Afrac { get; set; }
-            public int PosicaoAfrac { get; set; }
+            public Oficina Oficina { get; set; }
+            public int PosicaoOficina { get; set; }
         }
 
         private Evento mEvento;
         private AInscricoes mRepositorioInscricoes;
-        private AOficinas mRepositorioAfracs;
+        private AOficinas mRepositorioOficinas;
 
-        public DivisaoAutomaticaInscricoesParticipantesPorAfrac(Evento evento, AInscricoes inscricoes, AOficinas afracs)
+        public DivisaoAutomaticaInscricoesParticipantesPorOficina(Evento evento, AInscricoes inscricoes, AOficinas oficinas)
         {
             if (inscricoes == null)
                 throw new ArgumentNullException("inscricoes", "Repositorio de inscrições não informado.");
 
-            if (afracs == null)
-                throw new ArgumentNullException("afracs", "Repositorio de afracs não informado.");
+            if (oficinas == null)
+                throw new ArgumentNullException("oficinas", "Repositorio de oficinas não informado.");
 
             if (evento == null)
                 throw new ArgumentNullException("Evento", "Evento não pode ser nulo.");
 
             mRepositorioInscricoes = inscricoes;
             mEvento = evento;
-            mRepositorioAfracs = afracs;
+            mRepositorioOficinas = oficinas;
         }
 
         public virtual IList<Oficina> Dividir()
         {
-            var afracs = mRepositorioAfracs.ListarTodasComParticipantesPorEvento(mEvento);
+            var oficinas = mRepositorioOficinas.ListarTodasComParticipantesPorEvento(mEvento);
 
-            if (afracs.Count() == 0)
-                throw new InvalidOperationException("Não há afracs para realizar a divisão.");
+            if (oficinas.Count() == 0)
+                throw new InvalidOperationException("Não há oficinas para realizar a divisão.");
 
             var listaOrdenada = new List<OrdenaDivisao>();
 
@@ -49,52 +49,52 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
                 .ListarTodasInscricoesPorAtividade<AtividadeInscricaoOficinas>(mEvento)
                 .ToList();
 
-            foreach (var afrac in afracs)
-                afrac.RemoverTodosParticipantes();
+            foreach (var oficina in oficinas)
+                oficina.RemoverTodosParticipantes();
 
             foreach (var inscricao in participantesDividir)
             {
                 int posicao = 1;
-                foreach (var afrac in inscricao.Oficinas)
+                foreach (var oficina in inscricao.Oficinas)
                 {
                     listaOrdenada.Add(new OrdenaDivisao()
                     {
-                        Afrac = afrac,
+                        Oficina = oficina,
                         Inscrito = inscricao.Inscrito,
-                        PosicaoAfrac = posicao
+                        PosicaoOficina = posicao
                     });
 
                     posicao++;
                 }
             }
 
-            for (var posicao = 1; posicao <= afracs.Count; posicao++)
+            for (var posicao = 1; posicao <= oficinas.Count; posicao++)
             {
                 var inscricoesSelecionadas = listaOrdenada
-                                            .Where(i => i.PosicaoAfrac == posicao)
-                                            .OrderBy(i => i.Afrac.Id)
+                                            .Where(i => i.PosicaoOficina == posicao)
+                                            .OrderBy(i => i.Oficina.Id)
                                             .ThenBy(i => i.Inscrito.DataRecebimento)
-                                            .GroupBy(x=>x.Afrac);
+                                            .GroupBy(x=>x.Oficina);
 
                 foreach (var grupo in inscricoesSelecionadas)
                 {
-                    var afrac = afracs.First(a => a == grupo.Key);
+                    var oficina = oficinas.First(a => a == grupo.Key);
 
-                    if (afrac.NumeroTotalParticipantes == null ||
-                        (afrac.NumeroTotalParticipantes != null && afrac.Participantes.Count() < afrac.NumeroTotalParticipantes))
+                    if (oficina.NumeroTotalParticipantes == null ||
+                        (oficina.NumeroTotalParticipantes != null && oficina.Participantes.Count() < oficina.NumeroTotalParticipantes))
                     {
                         var quantosInscritosIncluir = grupo.Count();
 
-                        if (afrac.NumeroTotalParticipantes != null && 
-                            afrac.Participantes.Count() + quantosInscritosIncluir >= afrac.NumeroTotalParticipantes)
-                            quantosInscritosIncluir = afrac.NumeroTotalParticipantes.Value - afrac.Participantes.Count();
+                        if (oficina.NumeroTotalParticipantes != null && 
+                            oficina.Participantes.Count() + quantosInscritosIncluir >= oficina.NumeroTotalParticipantes)
+                            quantosInscritosIncluir = oficina.NumeroTotalParticipantes.Value - oficina.Participantes.Count();
 
-                        if (afrac.DeveSerParNumeroTotalParticipantes && quantosInscritosIncluir % 2 != 0)
+                        if (oficina.DeveSerParNumeroTotalParticipantes && quantosInscritosIncluir % 2 != 0)
                             quantosInscritosIncluir = quantosInscritosIncluir - 1;
 
                         for (var indice = 0; indice < quantosInscritosIncluir; indice++)
                         {
-                            afrac.AdicionarParticipante(grupo.ElementAt(indice).Inscrito);
+                            oficina.AdicionarParticipante(grupo.ElementAt(indice).Inscrito);
                             listaOrdenada.RemoveAll(l => l.Inscrito.Id == grupo.ElementAt(indice).Inscrito.Id);
                         }
                     }
@@ -104,7 +104,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
                     listaOrdenada.Remove(item);
             }
 
-            return afracs;
+            return oficinas;
         }        
     }
 }

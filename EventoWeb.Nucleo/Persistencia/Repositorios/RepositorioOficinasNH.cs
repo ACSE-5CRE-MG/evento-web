@@ -8,31 +8,31 @@ using System.Linq;
 
 namespace EventoWeb.Nucleo.Persistencia
 {
-    public class RepositorioOficinasNH: PersistenciaNH<Oficina>, AOficinas
+    public class RepositorioOficinasNH: AOficinas
     {
         private ISession mSessao;
 
         public RepositorioOficinasNH(ISession sessao)
-            : base(sessao)
+            : base(new PersistenciaNH<Oficina>(sessao))
         {
             mSessao = sessao;
         }
 
-        public IList<Oficina> ListarTodasPorEvento(int idEvento)
+        public override IList<Oficina> ListarTodasPorEvento(int idEvento)
         {
             return mSessao.QueryOver<Oficina>()
                 .Where(afrac => afrac.Evento.Id == idEvento)
                 .List();
         }
 
-        public Oficina ObterPorId(int id)
+        public override Oficina ObterPorId(int idEvento, int idOficina)
         {
             return mSessao.QueryOver<Oficina>()
-                .Where(afrac => afrac.Id == id)
+                .Where(afrac => afrac.Id == idOficina && afrac.Evento.Id == idEvento)
                 .SingleOrDefault();
         }
 
-        public bool InscritoEhResponsavelPorOficina(Evento evento, InscricaoParticipante inscParticipante)
+        public override bool InscritoEhResponsavelPorOficina(Evento evento, InscricaoParticipante inscParticipante)
         {
             return mSessao.QueryOver<AtividadeInscricaoOficinasCoordenacao>()
                 .Where(x => x.Inscrito.Id == inscParticipante.Id)
@@ -42,7 +42,7 @@ namespace EventoWeb.Nucleo.Persistencia
                 .RowCount() > 0;
         }
 
-        public IList<Oficina> ListarTodasComParticipantesPorEvento(Evento evento)
+        public override IList<Oficina> ListarTodasComParticipantesPorEvento(Evento evento)
         {
             var consulta = mSessao.QueryOver<Oficina>()
                 .Where(afrac => afrac.Evento == evento)
@@ -57,7 +57,7 @@ namespace EventoWeb.Nucleo.Persistencia
             return consulta.ToList();
         }
 
-        public IList<InscricaoParticipante> ListarParticipantesSemOficinaNoEvento(Evento evento)
+        public override IList<InscricaoParticipante> ListarParticipantesSemOficinaNoEvento(Evento evento)
         {
             InscricaoParticipante aliasParticipante = null;
             AtividadeInscricaoOficinas aliasAtividade = null;
@@ -80,7 +80,7 @@ namespace EventoWeb.Nucleo.Persistencia
                 .List<InscricaoParticipante>();
         }
 
-        public bool HaAOficinasSemResponsavelDefinidoDoEvento(Evento evento)
+        public override bool HaAOficinasSemResponsavelDefinidoDoEvento(Evento evento)
         {
             Oficina aliasAfrac = null;
 
@@ -95,7 +95,7 @@ namespace EventoWeb.Nucleo.Persistencia
                 .RowCount() > 0;
         }
 
-        public bool EhParticipanteDeOficinaNoEvento(Evento evento, InscricaoParticipante participante)
+        public override bool EhParticipanteDeOficinaNoEvento(Evento evento, InscricaoParticipante participante)
         {
             return mSessao.QueryOver<Oficina>()
                 .Where(x => x.Evento == evento)
@@ -104,7 +104,7 @@ namespace EventoWeb.Nucleo.Persistencia
                 .RowCount() > 0;
         }
 
-        public bool HaParticipatesOuResponsaveisEmOutraOficina(Oficina afrac)
+        protected override bool HaParticipatesOuResponsaveisEmOutraOficina(Oficina afrac)
         {
             InscricaoParticipante aliasParticipante = null;
 
@@ -117,7 +117,7 @@ namespace EventoWeb.Nucleo.Persistencia
             return queryParticipantes.Where(x => afrac.Participantes.Select(i => i.Id).Contains(x)).Count() > 0;
         }
 
-        public Oficina BuscarOficinaDoInscrito(int idEvento, int idInscricao)
+        public override Oficina BuscarOficinaDoInscrito(int idEvento, int idInscricao)
         {
             Oficina aliasAfrac = null;
 
@@ -145,7 +145,7 @@ namespace EventoWeb.Nucleo.Persistencia
                 .SingleOrDefault();
         }
 
-        public int ContarTotalOficinas(Evento mEvento)
+        public override int ContarTotalOficinas(Evento mEvento)
         {
             return mSessao.QueryOver<Oficina>().RowCount();
         }

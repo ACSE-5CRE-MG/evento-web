@@ -56,7 +56,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                     inscParticipante.AdicionarAtividade(
                         new AtividadeInscricaoOficinasCoordenacao(
                             inscParticipante,
-                            repOficinas.ObterPorId(dto.Coordenador.Id)));
+                            repOficinas.ObterPorId(inscParticipante.Evento.Id, dto.Coordenador.Id)));
                 else if (dto.EscolhidasParticipante != null)
                 {
                     var oficinas = repOficinas.ListarTodasPorEvento(inscParticipante.Evento.Id);

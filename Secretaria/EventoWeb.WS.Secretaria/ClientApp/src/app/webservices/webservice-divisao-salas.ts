@@ -6,7 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { DTODivisaoSalaEstudo } from '../divisao-salas-estudo/objetos';
 
 @Injectable()
-export class WebServiceDivisaoSala extends WebServiceBase {
+export class WebServiceDivisaoSalas extends WebServiceBase {
 
   constructor(http: HttpClient, public gestorAutenticacao: GestaoAutenticacao) {
     super(http, gestorAutenticacao, "divisaosalas/");

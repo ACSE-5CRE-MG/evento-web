@@ -1,4 +1,5 @@
 ﻿using EventoWeb.Nucleo.Negocio.Entidades;
+using EventoWeb.Nucleo.Negocio.Excecoes;
 using System;
 using System.Collections.Generic;
 
@@ -43,7 +44,7 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
         {
             if (objeto.Evento.ConfiguracaoSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao &&
                 FoiEscolhidaInscricao(objeto))
-                throw new ERepositorio("Não é possível escolher uma sala que já foi escolhida nas inscrições");
+                throw new ExcecaoNegocioRepositorio("ASalasEstudo", "Não é possível escolher uma sala que já foi escolhida nas inscrições");
 
             base.Excluir(objeto);
         }
@@ -51,13 +52,13 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
         private void ValidarFaixaEtaria(SalaEstudo sala)
         {
             if (sala.FaixaEtaria != null && HaSalaComFaixaEtariaDefinida(sala))
-                throw new ERepositorio("Já existe outra sala de estudo com faixa etária definida. O sistema somente aceita uma sala com faixa etária.");
+                throw new ExcecaoNegocioRepositorio("ASalasEstudo", "Já existe outra sala de estudo com faixa etária definida. O sistema somente aceita uma sala com faixa etária.");
         }
 
         private void ValidarSeHaParticipantesEmOutraSala(SalaEstudo sala)
         {
             if (HaParticipatesEmOutraSala(sala))
-                throw new ERepositorio("Existem participantes nesta sala, como coordenadores ou participantes, que estão em outra sala.");
+                throw new ExcecaoNegocioRepositorio("ASalasEstudo", "Existem participantes nesta sala, como coordenadores ou participantes, que estão em outra sala.");
         }
     }
 }
