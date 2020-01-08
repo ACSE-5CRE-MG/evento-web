@@ -51,7 +51,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpDelete("evento/{idEvento}/excluir/{idSala}")]
+        [HttpDelete("evento/{idEvento}/excluir/{idOficina}")]
         public void ExcluirOficina(int idEvento, int idOficina)
         {
             mAppOficinas.Excluir(idEvento, idOficina);

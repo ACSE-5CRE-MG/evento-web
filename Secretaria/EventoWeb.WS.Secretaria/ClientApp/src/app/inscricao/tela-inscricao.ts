@@ -99,7 +99,14 @@ export class TelaInscricao implements OnInit {
                         if (this.dadosTela.pagamento.ComprovantesBase64 != null)
                           this.dadosTela.pagamento.ComprovantesBase64 = this.dadosTela.pagamento.ComprovantesBase64.map(x => 'data:image/jpeg;base64,' + x);
 
-                        this.dadosTela.inscricaoSimples = { Id: this.inscricao.Id, IdEvento: this.inscricao.Evento.Id, Nome: this.inscricao.DadosPessoais.Nome };
+                        this.dadosTela.inscricaoSimples =
+                        {
+                          Id: this.inscricao.Id,
+                          IdEvento: this.inscricao.Evento.Id,
+                          Nome: this.inscricao.DadosPessoais.Nome,
+                          Cidade: this.inscricao.DadosPessoais.Cidade,
+                          UF: this.inscricao.DadosPessoais.Uf
+                        };
 
                         this.NaoEhIncompleta = this.inscricao.Situacao != EnumSituacaoInscricao.Incompleta;
                       }

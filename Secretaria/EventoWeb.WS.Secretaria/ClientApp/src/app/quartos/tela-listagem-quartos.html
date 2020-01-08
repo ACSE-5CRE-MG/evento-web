@@ -3,17 +3,17 @@
     <a mat-icon-button style="margin-right:5px" matTooltip="Volta para a gestão do evento" routerLink="../">
       <span class="fas fa-arrow-left"></span>
     </a>
-    <span class="fas fa-palette" style="margin-right:10px"></span>
-    <span class="cursor-pointer">Oficinas</span>
+    <span class="fas fa-bed" style="margin-right:10px"></span>
+    <span class="cursor-pointer">Quartos</span>
     <span style="flex: 1 1 auto;"></span>
-    <button mat-button (click)="clicarIncluir()" matTooltip="Cria uma nova oficina">
+    <button mat-button (click)="clicarIncluir()" matTooltip="Cria uma novo quarto">
       <span class="fa fa-plus"></span>
       Nova
     </button>
   </mat-toolbar>
   <dx-data-grid id="gridContainer" fxFill
                 [showBorders]="true"
-                [dataSource]="oficinas"
+                [dataSource]="quartos"
                 [hoverStateEnabled]="true"
                 [columnResizingMode]="'nextColumn'"
                 [allowColumnResizing]="true">
@@ -24,18 +24,22 @@
     <dxi-column dataField="Id" caption="Digitação" cellTemplate="templateCelulaDigitacao" [width]="100" alignment="left" [allowSorting]="false"></dxi-column>
     <dxi-column dataField="Id" caption="Id" [width]="50"></dxi-column>
     <dxi-column dataField="Nome" caption="Nome"></dxi-column>
-    <dxi-column dataField="DeveSerParNumeroTotalParticipantes" caption="Total Par?" [width]="90"></dxi-column>
-    <dxi-column dataField="NumeroTotalParticipantes" caption="Nº Participantes" [width]="100"></dxi-column>
+    <dxi-column dataField="EhFamilia" caption="É Família?" [width]="90"></dxi-column>
+    <dxi-column dataField="Capacidade" caption="Capacidade" [width]="100"></dxi-column>
+    <dxi-column dataField="Sexo" caption="Sexo" [width]="100" cellTemplate="templateCelulaSexo" alignment="left"></dxi-column>
 
     <div *dxTemplate="let data of 'templateCelulaDigitacao'">
-      <button mat-icon-button (click)="clicarEditar(data.data)" matTooltip="Edita os dados dessa oficina"><i class="fas fa-pencil-alt"></i></button>
-      <button mat-icon-button (click)="clicarExcluir(data.data)" matTooltip="Exclui essa oficina"><i class="fas fa-trash-alt"></i></button>
+      <button mat-icon-button (click)="clicarEditar(data.data)" matTooltip="Edita os dados desse quarto"><i class="fas fa-pencil-alt"></i></button>
+      <button mat-icon-button (click)="clicarExcluir(data.data)" matTooltip="Exclui esse quarto"><i class="fas fa-trash-alt"></i></button>
+    </div>
+    <div *dxTemplate="let data of 'templateCelulaSexo'">
+      {{sexos[data.data.Sexo]}}
     </div>
 
     <dxo-summary>
       <dxi-total-item column="Id"
                       summaryType="count"
-                      displayFormat="{0} Oficinas">
+                      displayFormat="{0} Quartos">
       </dxi-total-item>
     </dxo-summary>
   </dx-data-grid>

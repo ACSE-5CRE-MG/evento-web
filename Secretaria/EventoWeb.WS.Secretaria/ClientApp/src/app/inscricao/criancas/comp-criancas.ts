@@ -37,7 +37,7 @@ export class ComponenteCriancas {
         (criancaCriada) => {
           if (criancaCriada != null) {
             criancaCriada.Responsaveis = [];
-            criancaCriada.Responsaveis.push({ Id: this.inscrito.Id, IdEvento: this.inscrito.Evento.Id, Nome: this.inscrito.DadosPessoais.Nome });
+            criancaCriada.Responsaveis.push({ Id: this.inscrito.Id, IdEvento: this.inscrito.Evento.Id, Nome: this.inscrito.DadosPessoais.Nome, Cidade: this.inscrito.DadosPessoais.Cidade, UF: this.inscrito.DadosPessoais.Uf });
 
             this.valor.push(criancaCriada);
             this.valorChange.emit(this.valor);

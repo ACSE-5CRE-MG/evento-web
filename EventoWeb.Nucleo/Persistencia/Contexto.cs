@@ -87,6 +87,6 @@ namespace EventoWeb.Nucleo.Persistencia
         
         public IRelatorioDivisaoSalasEstudo RelatorioDivisaoSalasEstudo => new RelatorioDivisaoSalasEstudo();
         public IRelatorioDivisaoOficinas RelatorioDivisaoOficinas => new RelatorioDivisaoOficinas();
-        public IRelatorioDivisaoQuartos RelatorioDivisaoQuartos => throw new System.NotImplementedException();
+        public IRelatorioDivisaoQuartos RelatorioDivisaoQuartos => new RelatorioDivisaoQuartos();
     }
 }

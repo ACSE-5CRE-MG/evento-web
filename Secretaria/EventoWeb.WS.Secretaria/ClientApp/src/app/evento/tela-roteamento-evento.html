@@ -1,5 +1,8 @@
 <layout-geral>
   <mat-toolbar layout-geral-cabecalho color="accent">
+    <a mat-icon-button style="margin-right:5px" matTooltip="Volta para a lista de eventos" routerLink="/">
+      <span class="fas fa-arrow-left"></span>
+    </a>
     <span class="cursor-pointer">{{evento.Nome}}</span>
     <span style="flex: 1 1 auto;"></span>
     <menu-usuario></menu-usuario>

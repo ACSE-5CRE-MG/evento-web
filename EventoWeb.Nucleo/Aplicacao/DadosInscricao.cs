@@ -39,6 +39,11 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string Tipo { get; set; }
     }
 
+    public class DTOBasicoInscricaoResp: DTOBasicoInscricao
+    {
+        public IList<DTOInscricaoSimplificada> Responsaveis { get; set; }
+    }
+
     public class DTOAcessoInscricao
     {
         public int IdInscricao { get; set; }
@@ -148,6 +153,8 @@ namespace EventoWeb.Nucleo.Aplicacao
         public int Id { get; set; }
         public int IdEvento { get; set; }
         public string Nome { get; set; }
+        public string Cidade { get; set; }
+        public string UF { get; set; }
     }
 
     public class DTOCrianca

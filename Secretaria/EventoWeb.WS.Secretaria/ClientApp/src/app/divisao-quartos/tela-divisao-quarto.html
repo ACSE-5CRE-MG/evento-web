@@ -3,14 +3,14 @@
     <a mat-icon-button style="margin-right:5px" matTooltip="Volta para a gestão do evento" routerLink="../">
       <span class="fas fa-arrow-left"></span>
     </a>
-    <span class="fas fa-chalkboard" style="margin-right:10px"></span>
-    <span class="cursor-pointer">Divisão de Salas de Estudo</span>
+    <span class="fas fa-bed" style="margin-right:10px"></span>
+    <span class="cursor-pointer">Divisão de Quartos</span>
     <span style="flex: 1 1 auto;"></span>
     <button mat-button (click)="clicarAtualizar()" matTooltip="Atualiza as informações de divisão da tela">
       <i class="fas fa-sync"></i>
       Atualizar
     </button>
-    <button mat-button (click)="clicarDividir()" matTooltip="Realiza a divisão automática das salas de estudo">
+    <button mat-button (click)="clicarDividir()" matTooltip="Realiza a divisão automática dos quartos">
       <i class="fas fa-divide"></i>
       Dividir
     </button>
@@ -27,7 +27,7 @@
     <div fxFlex="35" class="cartao">
       <layout-geral>
         <div layout-geral-cabecalho>
-          <h2>Inscrições sem sala de estudo</h2>
+          <h2>Inscrições sem Quarto</h2>
           <mat-divider></mat-divider>
         </div>
         <div *ngIf="inscricoesNaoDistribuidas == null || inscricoesNaoDistribuidas.Participantes?.length == 0"
@@ -47,21 +47,26 @@
           <div *dxTemplate="let data of 'item'">
             <div fxLayout="row">
               <div fxLayout="column">
+                <div *ngIf="data.Tipo=='Infantil'" style="background-color:blueviolet; color:white">Infantil</div>
                 <div>{{data.NomeInscrito + ' - ' + calcularIdade(data) + ' ano(s)'}}</div>
                 <div>{{data.Cidade + '/' + data.UF}}</div>
+                <div *ngIf="data.Tipo=='Infantil'">
+                  <strong>Responsáveis:</strong>
+                  {{gerarTextoResponsaveis(data)}}
+                </div>
               </div>
               <span style="flex: 1 1 auto;"></span>
-              <button mat-icon-button [matMenuTriggerFor]="menuInclusaoSala" matTooltip="Você pode incluir este participante em uma das salas do evento"
+              <button mat-icon-button [matMenuTriggerFor]="menuInclusaoQuarto" matTooltip="Você pode incluir este participante em uma dos quartos do evento"
                       [matMenuTriggerData]="{inscricao: data}">
                 <i class="fa fa-plus"></i>
               </button>
             </div>
           </div>
         </dx-list>
-        <mat-menu #menuInclusaoSala="matMenu">
+        <mat-menu #menuInclusaoQuarto="matMenu">
           <ng-template matMenuContent let-inscricao="inscricao">
-            <button mat-menu-item *ngFor="let divisao of divisoesSalas" (click)="clicarIncluirNaSala({ inscricao: inscricao, sala: divisao })">
-              <strong>{{divisao.Nome}}</strong>{{' - Participantes: ' + divisao.Participantes.length}}
+            <button mat-menu-item *ngFor="let divisao of divisoesQuartos" (click)="clicarIncluirNoQuarto({ inscricao: inscricao, quarto: divisao })">
+              <strong>{{divisao.Nome}}</strong>{{' - Pessoas: ' + (divisao.Participantes.length + divisao.Coordenadores.length)}}
             </button>
           </ng-template>
         </mat-menu>
@@ -71,16 +76,18 @@
     <layout-geral fxFlex="65" class="cartao"> 
       <div layout-geral-cabecalho class="borda-arredondada margem-total-2px padding-padrao" fxLayout="row">
         <div fxLayout="column">
-          <h2><strong>Sala:&nbsp;{{divisaoSelecionada?.Nome || 'Nenhuma sala foi selecionada'}}</strong></h2>
-          <div>Participantes: {{divisaoSelecionada == null ? ' -' : ' ' + divisaoSelecionada?.Participantes?.length}}</div>
+          <h2><strong>Quarto:&nbsp;{{divisaoSelecionada?.Nome || 'Nenhum Quarto foi selecionado'}}</strong></h2>
+          <div>Pessoas: {{divisaoSelecionada == null ? ' -' : ' ' + (divisaoSelecionada?.Participantes?.length + divisaoSelecionada?.Coordenadores?.length)}}</div>
+          <div>Capacidade: {{divisaoSelecionada == null ? ' -' : ' ' + divisaoSelecionada?.Capacidade}}</div>
+          <div>Sexo: {{divisaoSelecionada == null ? ' -' : ' ' + sexos[divisaoSelecionada?.Sexo]}}</div>
         </div>
         <span style="flex: 1 1 auto;"></span>
-        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Permite selecionar uma sala de estudo para visualizar e editar a divisão realizada">
+        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Permite selecionar um quarto para visualizar e editar a divisão realizada">
           <i class="fas fa-ellipsis-v"></i>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item *ngFor="let divisao of divisoesSalas" (click)="clicarSelecionarSala(divisao)">
-            <strong>{{divisao.Nome}}</strong>{{' - Participantes: ' + divisao.Participantes.length}}
+          <button mat-menu-item *ngFor="let divisao of divisoesQuartos" (click)="clicarSelecionarQuarto(divisao)">
+            <strong>{{divisao.Nome}}</strong>{{' - Pessoas: ' + (divisao.Participantes.length + divisao.Coordenadores.length)}}
           </button>
         </mat-menu>
       </div>
@@ -101,24 +108,31 @@
               <div *dxTemplate="let data of 'item'">
                 <div fxLayout="row">
                   <div fxLayout="column">
+                    <div *ngIf="data.Tipo=='Infantil'" style="background-color:blueviolet; color:white">Infantil</div>
                     <div>{{data.NomeInscrito + ' - ' + calcularIdade(data) + ' ano(s)'}}</div>
                     <div>{{data.Cidade + '/' + data.UF}}</div>
+                    <div *ngIf="data.Tipo=='Infantil'"><strong>Responsáveis:</strong>
+                      {{gerarTextoResponsaveis(data)}}
+                    </div>
                   </div>
                   <span style="flex: 1 1 auto;"></span>
-                  <button mat-icon-button matTooltip="Você pode remover este participante desta sala" (click)="clicarRemoverDaSala(data)">
+                  <button mat-icon-button matTooltip="Você pode remover este participante deste quarto" (click)="clicarRemoverDoQuarto(data)">
                     <i class="fas fa-trash-alt"></i>
                   </button>
-                  <button mat-icon-button [matMenuTriggerFor]="menuMovimentacaoSala" matTooltip="Você pode mover este participante para outra sala"
+                  <button mat-icon-button matTooltip="Você pode torná-lo coordenador do quarto" (click)="clicarTornarCoordenador(data)">
+                    <i class="fas fa-thumbtack"></i>
+                  </button>
+                  <button mat-icon-button [matMenuTriggerFor]="menuMovimentacaoQuarto" matTooltip="Você pode mover este participante para outra quarto"
                           [matMenuTriggerData]="{inscricao: data}">
                     <i class="fas fa-exchange-alt"></i>
                   </button>
                 </div>
               </div>
             </dx-list>
-            <mat-menu #menuMovimentacaoSala="matMenu">
+            <mat-menu #menuMovimentacaoQuarto="matMenu">
               <ng-template matMenuContent let-inscricao="inscricao">
-                <button mat-menu-item *ngFor="let divisao of divisoesSalas" (click)="clicarMoverParaSala({ inscricao: inscricao, sala: divisao })" [fxHide]="divisao.Id == divisaoSelecionada?.Id">
-                  <strong>{{divisao.Nome}}</strong>{{' - Participantes: ' + divisao.Participantes.length}}
+                <button mat-menu-item *ngFor="let divisao of divisoesQuartos" (click)="clicarMoverParaQuarto({ inscricao: inscricao, quarto: divisao })" [fxHide]="divisao.Id == divisaoSelecionada?.Id">
+                  <strong>{{divisao.Nome}}</strong>{{' - Pessoas: ' + (divisao.Participantes.length + divisao.Coordenadores.length)}}
                 </button>
               </ng-template>
             </mat-menu>
@@ -138,8 +152,24 @@
                      searchExpr="NomeInscrito"
                      searchMode="contains">
               <div *dxTemplate="let data of 'item'">
-                <div>{{data.NomeInscrito + ' - ' + calcularIdade(data) + ' ano(s)'}}</div>
-                <div>{{data.Cidade + '/' + data.UF}}</div>
+                <div fxLayout="row">
+                  <div fxLayout="column">
+                    <div *ngIf="data.Tipo=='Infantil'" style="background-color:blueviolet; color:white">Infantil</div>
+                    <div>{{data.NomeInscrito + ' - ' + calcularIdade(data) + ' ano(s)'}}</div>
+                    <div>{{data.Cidade + '/' + data.UF}}</div>
+                    <div *ngIf="data.Tipo=='Infantil'">
+                      <strong>Responsáveis:</strong>
+                      {{gerarTextoResponsaveis(data)}}
+                    </div>
+                  </div>
+                  <span style="flex: 1 1 auto;"></span>
+                  <button mat-icon-button matTooltip="Você pode remover este participante deste quarto" (click)="clicarRemoverDoQuarto(data)">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                  <button mat-icon-button matTooltip="Você pode tirá-lo da coordenação do quarto" (click)="clicarTirarCoordenador(data)">
+                    <i class="fas fa-globe"></i>
+                  </button>
+                </div>
               </div>
             </dx-list>
           </layout-geral>

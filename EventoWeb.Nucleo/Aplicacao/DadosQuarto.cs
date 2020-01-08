@@ -20,7 +20,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         public bool EhFamilia { get; set; }
         public EnumSexoQuarto Sexo { get; set; }
         public int? Capacidade { get; set; }
-        public IEnumerable<DTOBasicoInscricao> Coordenadores { get; set; }
-        public IEnumerable<DTOBasicoInscricao> Participantes { get; set; }
+        public IEnumerable<DTOBasicoInscricaoResp> Coordenadores { get; set; }
+        public IEnumerable<DTOBasicoInscricaoResp> Participantes { get; set; }
     }
 }

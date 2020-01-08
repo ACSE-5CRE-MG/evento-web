@@ -3,14 +3,14 @@
     <a mat-icon-button style="margin-right:5px" matTooltip="Volta para a gestão do evento" routerLink="../">
       <span class="fas fa-arrow-left"></span>
     </a>
-    <span class="fas fa-chalkboard" style="margin-right:10px"></span>
-    <span class="cursor-pointer">Divisão de Salas de Estudo</span>
+    <span class="fas fa-palette" style="margin-right:10px"></span>
+    <span class="cursor-pointer">Divisão de Oficinas</span>
     <span style="flex: 1 1 auto;"></span>
     <button mat-button (click)="clicarAtualizar()" matTooltip="Atualiza as informações de divisão da tela">
       <i class="fas fa-sync"></i>
       Atualizar
     </button>
-    <button mat-button (click)="clicarDividir()" matTooltip="Realiza a divisão automática das salas de estudo">
+    <button mat-button (click)="clicarDividir()" matTooltip="Realiza a divisão automática das oficinas">
       <i class="fas fa-divide"></i>
       Dividir
     </button>
@@ -27,7 +27,7 @@
     <div fxFlex="35" class="cartao">
       <layout-geral>
         <div layout-geral-cabecalho>
-          <h2>Inscrições sem sala de estudo</h2>
+          <h2>Inscrições sem oficina</h2>
           <mat-divider></mat-divider>
         </div>
         <div *ngIf="inscricoesNaoDistribuidas == null || inscricoesNaoDistribuidas.Participantes?.length == 0"
@@ -51,16 +51,16 @@
                 <div>{{data.Cidade + '/' + data.UF}}</div>
               </div>
               <span style="flex: 1 1 auto;"></span>
-              <button mat-icon-button [matMenuTriggerFor]="menuInclusaoSala" matTooltip="Você pode incluir este participante em uma das salas do evento"
+              <button mat-icon-button [matMenuTriggerFor]="menuInclusaoOficina" matTooltip="Você pode incluir este participante em uma das oficinas do evento"
                       [matMenuTriggerData]="{inscricao: data}">
                 <i class="fa fa-plus"></i>
               </button>
             </div>
           </div>
         </dx-list>
-        <mat-menu #menuInclusaoSala="matMenu">
+        <mat-menu #menuInclusaoOficina="matMenu">
           <ng-template matMenuContent let-inscricao="inscricao">
-            <button mat-menu-item *ngFor="let divisao of divisoesSalas" (click)="clicarIncluirNaSala({ inscricao: inscricao, sala: divisao })">
+            <button mat-menu-item *ngFor="let divisao of divisoesOficinas" (click)="clicarIncluirNaOficina({ inscricao: inscricao, oficina: divisao })">
               <strong>{{divisao.Nome}}</strong>{{' - Participantes: ' + divisao.Participantes.length}}
             </button>
           </ng-template>
@@ -71,15 +71,15 @@
     <layout-geral fxFlex="65" class="cartao"> 
       <div layout-geral-cabecalho class="borda-arredondada margem-total-2px padding-padrao" fxLayout="row">
         <div fxLayout="column">
-          <h2><strong>Sala:&nbsp;{{divisaoSelecionada?.Nome || 'Nenhuma sala foi selecionada'}}</strong></h2>
+          <h2><strong>Oficina:&nbsp;{{divisaoSelecionada?.Nome || 'Nenhuma oficina foi selecionada'}}</strong></h2>
           <div>Participantes: {{divisaoSelecionada == null ? ' -' : ' ' + divisaoSelecionada?.Participantes?.length}}</div>
         </div>
         <span style="flex: 1 1 auto;"></span>
-        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Permite selecionar uma sala de estudo para visualizar e editar a divisão realizada">
+        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Permite selecionar uma oficina para visualizar e editar a divisão realizada">
           <i class="fas fa-ellipsis-v"></i>
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item *ngFor="let divisao of divisoesSalas" (click)="clicarSelecionarSala(divisao)">
+          <button mat-menu-item *ngFor="let divisao of divisoesOficinas" (click)="clicarSelecionarOficina(divisao)">
             <strong>{{divisao.Nome}}</strong>{{' - Participantes: ' + divisao.Participantes.length}}
           </button>
         </mat-menu>
@@ -105,19 +105,19 @@
                     <div>{{data.Cidade + '/' + data.UF}}</div>
                   </div>
                   <span style="flex: 1 1 auto;"></span>
-                  <button mat-icon-button matTooltip="Você pode remover este participante desta sala" (click)="clicarRemoverDaSala(data)">
+                  <button mat-icon-button matTooltip="Você pode remover este participante desta oficina" (click)="clicarRemoverDaOficina(data)">
                     <i class="fas fa-trash-alt"></i>
                   </button>
-                  <button mat-icon-button [matMenuTriggerFor]="menuMovimentacaoSala" matTooltip="Você pode mover este participante para outra sala"
+                  <button mat-icon-button [matMenuTriggerFor]="menuMovimentacaoOficina" matTooltip="Você pode mover este participante para outra oficina"
                           [matMenuTriggerData]="{inscricao: data}">
                     <i class="fas fa-exchange-alt"></i>
                   </button>
                 </div>
               </div>
             </dx-list>
-            <mat-menu #menuMovimentacaoSala="matMenu">
+            <mat-menu #menuMovimentacaoOficina="matMenu">
               <ng-template matMenuContent let-inscricao="inscricao">
-                <button mat-menu-item *ngFor="let divisao of divisoesSalas" (click)="clicarMoverParaSala({ inscricao: inscricao, sala: divisao })" [fxHide]="divisao.Id == divisaoSelecionada?.Id">
+                <button mat-menu-item *ngFor="let divisao of divisoesOficinas" (click)="clicarMoverParaOficina({ inscricao: inscricao, oficina: divisao })" [fxHide]="divisao.Id == divisaoSelecionada?.Id">
                   <strong>{{divisao.Nome}}</strong>{{' - Participantes: ' + divisao.Participantes.length}}
                 </button>
               </ng-template>

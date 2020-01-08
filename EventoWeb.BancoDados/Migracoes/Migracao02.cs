@@ -63,8 +63,8 @@ namespace EventoWeb.BancoDados.Migracoes
             Create
                 .Table("QUARTOS_INSCRITOS")
                 .WithColumn("ID_QUARTO_INSCRITO").AsInt32().PrimaryKey().NotNullable().Identity()
-                .WithColumn("EH_COORDENADOR").AsInt32().Nullable()
-                .WithColumn("ID_INSCRICAO").AsBoolean().NotNullable()
+                .WithColumn("EH_COORDENADOR").AsBoolean().Nullable()
+                .WithColumn("ID_INSCRICAO").AsInt32().NotNullable()
                     .ForeignKey("FK_QI_INSCRICAO", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.None).OnUpdate(Rule.Cascade)
                 .WithColumn("ID_QUARTO").AsInt32().NotNullable()
                     .ForeignKey("FK_QI_QUARTO", "QUARTOS", "ID_QUARTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade);

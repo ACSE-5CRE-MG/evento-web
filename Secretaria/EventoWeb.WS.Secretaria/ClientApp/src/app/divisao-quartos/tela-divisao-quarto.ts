@@ -1,32 +1,36 @@
 import { Component, OnInit } from '@angular/core';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
-import { ActivatedRoute } from '@angular/router';
-import { WebServiceDivisaoSalas } from '../webservices/webservice-divisao-salas';
 import { ServicoEventoSelecionado } from '../evento/tela-roteamento-evento';
 import { DTOEventoCompleto } from '../evento/objetos';
-import { DTODivisaoSalaEstudo } from './objetos';
-import { DTOBasicoInscricao } from '../inscricao/objetos';
+import { DTODivisaoQuarto } from './objetos';
+import { DTOBasicoInscricaoResp } from '../inscricao/objetos';
 import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';
 import { WebServiceRelatorios } from '../webservices/webservice-relatorios';
+import { WebServiceDivisaoQuartos } from '../webservices/webservice-divisao-quartos';
+import { EnumSexoQuarto } from '../quartos/objetos';
 
 @Component({
-  selector: 'tela-divisao-sala',
-  styleUrls: ['./tela-divisao-sala.scss'],
-  templateUrl: './tela-divisao-sala.html'
+  selector: 'tela-divisao-quarto',
+  styleUrls: ['./tela-divisao-quarto.scss'],
+  templateUrl: './tela-divisao-quarto.html'
 })
-export class TelaDivisaoSala implements OnInit {
+export class TelaDivisaoQuarto implements OnInit {
 
   private evento: DTOEventoCompleto = null;
-  divisoesSalas: DTODivisaoSalaEstudo[] = [];
-  inscricoesNaoDistribuidas: DTODivisaoSalaEstudo = null;
+  divisoesQuartos: DTODivisaoQuarto[] = [];
+  inscricoesNaoDistribuidas: DTODivisaoQuarto = null;
+  sexos: string[] = ["Masculino", "Feminino", "Misto"];
 
-  divisaoSelecionada: DTODivisaoSalaEstudo = null;
+  divisaoSelecionada: DTODivisaoQuarto = null;
 
-  constructor(private wsDivisao: WebServiceDivisaoSalas, private mensageria: Alertas,
+  constructor(private wsDivisao: WebServiceDivisaoQuartos, private mensageria: Alertas,
     private srvEventoSelecionado: ServicoEventoSelecionado, private wsRelatorios: WebServiceRelatorios) {
     this.inscricoesNaoDistribuidas = {
       Id: 0,
       Nome: "",
+      Capacidade: null,
+      EhFamilia: false,
+      Sexo: EnumSexoQuarto.Misto,
       Coordenadores: [],
       Participantes: []
     };
@@ -40,7 +44,7 @@ export class TelaDivisaoSala implements OnInit {
 
   clicarAtualizar(): void {
 
-    let dlg = this.mensageria.alertarProcessamento("Buscando as divisões de salas existentes...");
+    let dlg = this.mensageria.alertarProcessamento("Buscando as divisões de quartos existentes...");
 
     this.wsDivisao.obterTodas(this.evento.Id)
       .subscribe(
@@ -79,7 +83,7 @@ export class TelaDivisaoSala implements OnInit {
   }
 
   clicarRemover(): void {
-    this.mensageria.alertarConfirmacao("Deseja excluir a divisão atual?", "Ao realizar isso, nenhuma sala terá participantes!!")
+    this.mensageria.alertarConfirmacao("Deseja excluir a divisão atual?", "Ao realizar isso, nenhum quarto terá participantes!!")
       .subscribe(
         (botaoEscolhido) => {
           if (botaoEscolhido == CaixaMensagemResposta.Sim) {
@@ -101,24 +105,24 @@ export class TelaDivisaoSala implements OnInit {
       );
   }  
 
-  private processarRetornoDivisao(divisoes: DTODivisaoSalaEstudo[]) {
+  private processarRetornoDivisao(divisoes: DTODivisaoQuarto[]) {
 
     this.inscricoesNaoDistribuidas = divisoes.find(x => x.Id == 0);
 
-    this.divisoesSalas = divisoes.filter(x => x.Id != 0);   
+    this.divisoesQuartos = divisoes.filter(x => x.Id != 0);   
   }
 
   private selecionarPrimeiraDivisao(): void {
     this.divisaoSelecionada = null;
 
-    if (this.divisoesSalas.length > 0)
-      this.divisaoSelecionada = this.divisoesSalas[0];
+    if (this.divisoesQuartos.length > 0)
+      this.divisaoSelecionada = this.divisoesQuartos[0];
   }
 
   clicarImprimir(): void {
     let dlg = this.mensageria.alertarProcessamento("Gerando relatório da divisão...");
 
-    this.wsRelatorios.obterDivisaoSalas(this.evento.Id)
+    this.wsRelatorios.obterDivisaoQuartos(this.evento.Id)
       .subscribe(
         relatorioGerado => {
           dlg.close();
@@ -131,11 +135,11 @@ export class TelaDivisaoSala implements OnInit {
       );
   }
 
-  clicarSelecionarSala(divisao: DTODivisaoSalaEstudo): void {
+  clicarSelecionarQuarto(divisao: DTODivisaoQuarto): void {
     this.divisaoSelecionada = divisao;
   }
 
-  calcularIdade(inscricao: DTOBasicoInscricao): number {
+  calcularIdade(inscricao: DTOBasicoInscricaoResp): number {
 
     let dataAtual = new Date(this.evento.PeriodoRealizacao.DataInicial);
     let dataNascimento = new Date(inscricao.DataNascimento);
@@ -148,15 +152,15 @@ export class TelaDivisaoSala implements OnInit {
     return idade;
   }
 
-  clicarMoverParaSala(ev: any): void {
+  clicarMoverParaQuarto(ev: any): void {
     
-    this.mensageria.alertarConfirmacao("Você está certo de mudar a sala de estudo deste participante?", "")
+    this.mensageria.alertarConfirmacao("Você está certo de mudar a quarto deste participante?", "")
       .subscribe(
         (botaoEscolhido) => {
           if (botaoEscolhido == CaixaMensagemResposta.Sim) {
             let dlg = this.mensageria.alertarProcessamento("Movendo participante...");
 
-            this.wsDivisao.moverInscricaoSalas(this.evento.Id, this.divisaoSelecionada.Id, ev.sala.Id, ev.inscricao.IdInscricao)
+            this.wsDivisao.moverInscricaoQuarto(this.evento.Id, this.divisaoSelecionada.Id, ev.quarto.Id, ev.inscricao.IdInscricao)
               .subscribe(
                 divisoes => {
                   this.processarRetornoDivisao(divisoes);
@@ -172,14 +176,14 @@ export class TelaDivisaoSala implements OnInit {
       );
   }
 
-  clicarIncluirNaSala(ev: any): void {
-    this.mensageria.alertarConfirmacao("Você está certo de incluir este participante na sala " + ev.sala.Nome + "?", "")
+  clicarIncluirNoQuarto(ev: any): void {
+    this.mensageria.alertarConfirmacao("Você está certo de incluir este participante no quarto " + ev.quarto.Nome + "?", "")
       .subscribe(
         (botaoEscolhido) => {
           if (botaoEscolhido == CaixaMensagemResposta.Sim) {
             let dlg = this.mensageria.alertarProcessamento("Incluindo participante...");
 
-            this.wsDivisao.incluirInscricaoSala(this.evento.Id, ev.sala.Id, ev.inscricao.IdInscricao)
+            this.wsDivisao.incluirInscricaoQuarto(this.evento.Id, ev.quarto.Id, ev.inscricao.IdInscricao)
               .subscribe(
                 divisoes => {
                   this.processarRetornoDivisao(divisoes);
@@ -195,14 +199,60 @@ export class TelaDivisaoSala implements OnInit {
       );
   }
 
-  clicarRemoverDaSala(inscricao: DTOBasicoInscricao): void {
-    this.mensageria.alertarConfirmacao("Você está certo de remover este participante da sala de estudo?", "Essa inscrição será listada nas inscrições sem sala de estudo")
+  clicarRemoverDoQuarto(inscricao: DTOBasicoInscricaoResp): void {
+    this.mensageria.alertarConfirmacao("Você está certo de remover este participante do quarto?", "Essa inscrição será listada nas inscrições sem quarto")
       .subscribe(
         (botaoEscolhido) => {
           if (botaoEscolhido == CaixaMensagemResposta.Sim) {
             let dlg = this.mensageria.alertarProcessamento("Removendo participante...");
 
-            this.wsDivisao.removerInscricaoSala(this.evento.Id, this.divisaoSelecionada.Id, inscricao.IdInscricao)
+            this.wsDivisao.removerInscricaoQuarto(this.evento.Id, this.divisaoSelecionada.Id, inscricao.IdInscricao)
+              .subscribe(
+                divisoes => {
+                  this.processarRetornoDivisao(divisoes);
+                  this.atualizarDivisaoSelecionada();
+                  dlg.close();
+                },
+                erro => {
+                  dlg.close();
+                  this.mensageria.alertarErro(erro);
+                });
+          }
+        }
+      );
+  }
+
+  clicarTornarCoordenador(inscricao: DTOBasicoInscricaoResp): void {
+    this.mensageria.alertarConfirmacao("Você está certo de torná-lo coordenador do quarto?", "")
+      .subscribe(
+        (botaoEscolhido) => {
+          if (botaoEscolhido == CaixaMensagemResposta.Sim) {
+            let dlg = this.mensageria.alertarProcessamento("Alterando participante...");
+
+            this.wsDivisao.definirSeEhCoordenador(this.evento.Id, this.divisaoSelecionada.Id, inscricao.IdInscricao, true)
+              .subscribe(
+                divisoes => {
+                  this.processarRetornoDivisao(divisoes);
+                  this.atualizarDivisaoSelecionada();
+                  dlg.close();
+                },
+                erro => {
+                  dlg.close();
+                  this.mensageria.alertarErro(erro);
+                });
+          }
+        }
+      );
+  }
+
+  clicarTirarCoordenador(inscricao: DTOBasicoInscricaoResp): void {
+    this.mensageria.alertarConfirmacao("Você está certo de tirá-lo da coordenação do quarto?", "")
+      .subscribe(
+        (botaoEscolhido) => {
+          if (botaoEscolhido == CaixaMensagemResposta.Sim) {
+            let dlg = this.mensageria.alertarProcessamento("Alterando participante...");
+
+            this.wsDivisao.definirSeEhCoordenador(this.evento.Id, this.divisaoSelecionada.Id, inscricao.IdInscricao, false)
               .subscribe(
                 divisoes => {
                   this.processarRetornoDivisao(divisoes);
@@ -222,10 +272,22 @@ export class TelaDivisaoSala implements OnInit {
     if (this.divisaoSelecionada != null) {
       let id = this.divisaoSelecionada.Id;
       this.divisaoSelecionada = null;
-      this.divisaoSelecionada = this.divisoesSalas.find(x => x.Id == id);
+      this.divisaoSelecionada = this.divisoesQuartos.find(x => x.Id == id);
 
       if (this.divisaoSelecionada == null)
         this.selecionarPrimeiraDivisao();
     }
+  }
+
+  gerarTextoResponsaveis(inscricao: DTOBasicoInscricaoResp): string {
+
+    let responsaveis = "";
+    for (let indice = 0; indice < inscricao.Responsaveis.length; indice++) {
+      if (indice > 0)
+        responsaveis += ", ";
+
+      responsaveis += inscricao.Responsaveis[indice].Nome + " - " + inscricao.Responsaveis[indice].Cidade + '/' + inscricao.Responsaveis[indice].UF;
+    }
+    return responsaveis;
   }
 }

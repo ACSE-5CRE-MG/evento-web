@@ -66,6 +66,7 @@ namespace EventoWeb.Nucleo.Persistencia.Relatorios
                     var separador = new Paragraph();
                     separador.Add(new LineSeparator(linha));
                     separador.Add("\n");
+                    canvasPag.Add(separador);
 
                     var fonteListaNormal = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);  
                     var fonteListaNegrito = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
@@ -86,7 +87,7 @@ namespace EventoWeb.Nucleo.Persistencia.Relatorios
                         //    participante.Inscricao.Pessoa.CalcularIdadeEmAnos(participante.Inscricao.Evento.DataInicioEvento).ToString() +
                         //    " Ano(s) idade";
                         var paragrafoListagem = new Paragraph();
-                        paragrafoListagem.SetFontSize(10);
+                        paragrafoListagem.SetFontSize(14);
                         paragrafoListagem.SetFont(fonte);
                         paragrafoListagem.SetTextAlignment(TextAlignment.CENTER);
                         paragrafoListagem.Add(nome);

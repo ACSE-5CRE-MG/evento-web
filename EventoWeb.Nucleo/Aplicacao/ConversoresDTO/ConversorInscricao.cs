@@ -89,25 +89,53 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
             {
                 Id = inscricao.Id,
                 IdEvento = inscricao.Evento.Id,
-                Nome = inscricao.Pessoa.Nome
+                Nome = inscricao.Pessoa.Nome,
+                Cidade = inscricao.Pessoa.Endereco.Cidade,
+                UF = inscricao.Pessoa.Endereco.UF
             };
         }
 
         public static DTOBasicoInscricao ConverterBasico(this Inscricao inscricao)
         {
-            return new DTOBasicoInscricao()
+            var dto = new DTOBasicoInscricao();
+            dto.ConverterBasico(inscricao);
+            return dto;
+        }
+
+        public static DTOBasicoInscricaoResp ConverterBasicoResp(this Inscricao inscricao)
+        {
+            var dto = new DTOBasicoInscricaoResp();
+            dto.ConverterBasico(inscricao);
+
+            dto.Responsaveis = null;
+
+            if (inscricao is InscricaoInfantil insInfantil)
             {
-                Email = inscricao.Pessoa.Email,
-                IdEvento = inscricao.Evento.Id,
-                IdInscricao = inscricao.Id,
-                NomeEvento = inscricao.Evento.Nome,
-                NomeInscrito = inscricao.Pessoa.Nome,
-                Cidade = inscricao.Pessoa.Endereco.Cidade,
-                DataNascimento = inscricao.Pessoa.DataNascimento,
-                Situacao = inscricao.Situacao,
-                Tipo = (inscricao is InscricaoInfantil? "Infantil": "Participante/Trabalhador"),
-                UF = inscricao.Pessoa.Endereco.UF
-            };
+                dto.Responsaveis = new List<DTOInscricaoSimplificada>
+                {
+                    insInfantil.InscricaoResponsavel1.ConverterSimplificada()
+                };
+
+                if (insInfantil.InscricaoResponsavel2 != null)
+                    dto.Responsaveis.Add(insInfantil.InscricaoResponsavel2.ConverterSimplificada());
+            }
+
+            return dto;
+
+        }
+
+        private static void ConverterBasico(this DTOBasicoInscricao dto, Inscricao inscricao)
+        {
+            dto.Email = inscricao.Pessoa.Email;
+            dto.IdEvento = inscricao.Evento.Id;
+            dto.IdInscricao = inscricao.Id;
+            dto.NomeEvento = inscricao.Evento.Nome;
+            dto.NomeInscrito = inscricao.Pessoa.Nome;
+            dto.Cidade = inscricao.Pessoa.Endereco.Cidade;
+            dto.DataNascimento = inscricao.Pessoa.DataNascimento;
+            dto.Situacao = inscricao.Situacao;
+            dto.Tipo = (inscricao is InscricaoInfantil ? "Infantil" : "Participante/Trabalhador");
+            dto.UF = inscricao.Pessoa.Endereco.UF;
         }
 
         public static DTOCrianca Converter(this InscricaoInfantil inscricao)

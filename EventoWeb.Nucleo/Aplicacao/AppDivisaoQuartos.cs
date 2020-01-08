@@ -18,7 +18,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         {
             m_RepEventos = repEventos ?? throw new ExcecaoAplicacao("AppDivisaoQuartos", "repEventos não pode ser nulo");
             m_RepInscricoes = repInscricoes ?? throw new ExcecaoAplicacao("AppDivisaoQuartos", "repInscricoes não pode ser nulo"); 
-            m_RepQuartos = repQuartos ?? throw new ExcecaoAplicacao("AppDivisaoQuartos", "repOficinas não pode ser nulo");
+            m_RepQuartos = repQuartos ?? throw new ExcecaoAplicacao("AppDivisaoQuartos", "repQuartos não pode ser nulo");
         }
 
         public IEnumerable<DTODivisaoQuarto> ObterDivisao(int idEvento)
@@ -26,7 +26,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             IList<DTODivisaoQuarto> quartosDTO = new List<DTODivisaoQuarto>();
             ExecutarSeguramente(() =>
             {
-                quartosDTO = ObterDivisaoOficinas(idEvento);
+                quartosDTO = ObterDivisaoQuartos(idEvento);
             });
 
             return quartosDTO;
@@ -46,20 +46,20 @@ namespace EventoWeb.Nucleo.Aplicacao
                 foreach (var quarto in quartos)
                     m_RepQuartos.Atualizar(quarto);
 
-                quartosDTO = ObterDivisaoOficinas(idEvento);
+                quartosDTO = ObterDivisaoQuartos(idEvento);
             });
 
             return quartosDTO;
         }
 
-        public IEnumerable<DTODivisaoQuarto> MoverParticipante(int idEvento, int idInscricao, int daIdOficina, int paraIdOficina, bool ehCoordenador)
+        public IEnumerable<DTODivisaoQuarto> MoverParticipante(int idEvento, int idInscricao, int daIdQuarto, int paraIdQuarto, bool ehCoordenador)
         {
             IList<DTODivisaoQuarto> quartosDTO = new List<DTODivisaoQuarto>();
             ExecutarSeguramente(() =>
             {
                 Evento evento = m_RepEventos.ObterEventoPeloId(idEvento);
-                Quarto quartoOrigem = m_RepQuartos.ObterQuartoPorIdEventoEQuarto(idEvento, daIdOficina);
-                Quarto quartoDestino = m_RepQuartos.ObterQuartoPorIdEventoEQuarto(idEvento, paraIdOficina);
+                Quarto quartoOrigem = m_RepQuartos.ObterQuartoPorIdEventoEQuarto(idEvento, daIdQuarto);
+                Quarto quartoDestino = m_RepQuartos.ObterQuartoPorIdEventoEQuarto(idEvento, paraIdQuarto);
 
                 InscricaoParticipante participante = (InscricaoParticipante)
                         m_RepInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);
@@ -72,29 +72,29 @@ namespace EventoWeb.Nucleo.Aplicacao
                 m_RepQuartos.Atualizar(quartoOrigem);
                 m_RepQuartos.Atualizar(quartoDestino);
 
-                quartosDTO = ObterDivisaoOficinas(idEvento);
+                quartosDTO = ObterDivisaoQuartos(idEvento);
             });
 
             return quartosDTO;
         }
 
-        public IEnumerable<DTODivisaoQuarto> RemoverParticipante(int idEvento, int idInscricao, int idOficina)
+        public IEnumerable<DTODivisaoQuarto> RemoverParticipante(int idEvento, int idInscricao, int idQuarto)
         {
             IList<DTODivisaoQuarto> quartosDTO = new List<DTODivisaoQuarto>();
             ExecutarSeguramente(() =>
             {
                 var evento = m_RepEventos.ObterEventoPeloId(idEvento);
-                var oficina = m_RepQuartos.ObterQuartoPorIdEventoEQuarto(idEvento, idOficina);
+                var quarto = m_RepQuartos.ObterQuartoPorIdEventoEQuarto(idEvento, idQuarto);
                 var participante = (InscricaoParticipante)m_RepInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);
 
                 var divisor = new DivisaoManualInscricaoPorQuarto(
                     evento, m_RepQuartos);
 
-                divisor.Quarto(oficina).RemoverInscrito(participante);
+                divisor.Quarto(quarto).RemoverInscrito(participante);
 
-                m_RepQuartos.Atualizar(oficina);
+                m_RepQuartos.Atualizar(quarto);
 
-                quartosDTO = ObterDivisaoOficinas(idEvento);
+                quartosDTO = ObterDivisaoQuartos(idEvento);
             });
 
             return quartosDTO;
@@ -117,7 +117,7 @@ namespace EventoWeb.Nucleo.Aplicacao
 
                 m_RepQuartos.Atualizar(quarto);
 
-                quartosDTO = ObterDivisaoOficinas(idEvento);
+                quartosDTO = ObterDivisaoQuartos(idEvento);
             });
 
             return quartosDTO;
@@ -136,7 +136,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                     m_RepQuartos.Atualizar(quarto);
                 }
 
-                quartosDTO = ObterDivisaoOficinas(idEvento);
+                quartosDTO = ObterDivisaoQuartos(idEvento);
             });
 
             return quartosDTO;
@@ -159,13 +159,13 @@ namespace EventoWeb.Nucleo.Aplicacao
 
                 m_RepQuartos.Atualizar(quarto);
 
-                quartosDTO = ObterDivisaoOficinas(idEvento);
+                quartosDTO = ObterDivisaoQuartos(idEvento);
             });
 
             return quartosDTO;
         }
 
-        private IList<DTODivisaoQuarto> ObterDivisaoOficinas(int idEvento)
+        private IList<DTODivisaoQuarto> ObterDivisaoQuartos(int idEvento)
         {
             List<DTODivisaoQuarto> quartosDTO = new List<DTODivisaoQuarto>();
 
@@ -182,8 +182,8 @@ namespace EventoWeb.Nucleo.Aplicacao
                 Capacidade = x.Capacidade,
                 EhFamilia = x.EhFamilia,
                 Sexo = x.Sexo,
-                Coordenadores = x.Inscritos.Where(y => y.EhCoordenador).Select(y => y.Inscricao.ConverterBasico()).ToList(),
-                Participantes = x.Inscritos.Where(y => !y.EhCoordenador).Select(y => y.Inscricao.ConverterBasico()).ToList()
+                Coordenadores = x.Inscritos.Where(y => y.EhCoordenador).Select(y => y.Inscricao.ConverterBasicoResp()).ToList(),
+                Participantes = x.Inscritos.Where(y => !y.EhCoordenador).Select(y => y.Inscricao.ConverterBasicoResp()).ToList()
             }));
 
             if (inscritosSemQuartos.Count() > 0)
@@ -195,9 +195,9 @@ namespace EventoWeb.Nucleo.Aplicacao
                     Capacidade = null,
                     EhFamilia = false,
                     Sexo = EnumSexoQuarto.Misto,
-                    Coordenadores = new List<DTOBasicoInscricao>(),
-                    Participantes = new List<DTOBasicoInscricao>(
-                            inscritosSemQuartos.Select(x => x.ConverterBasico()).ToList())
+                    Coordenadores = new List<DTOBasicoInscricaoResp>(),
+                    Participantes = new List<DTOBasicoInscricaoResp>(
+                            inscritosSemQuartos.Select(x => x.ConverterBasicoResp()).ToList())
                 });
             }
 

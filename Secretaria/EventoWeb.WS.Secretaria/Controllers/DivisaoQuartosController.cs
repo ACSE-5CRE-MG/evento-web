@@ -63,7 +63,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         [HttpPut("evento/{idEvento}/inscricao/{idInscricao}/quarto/{idQuarto}/coordenador/{ehCoordenador}")]
         public IEnumerable<DTODivisaoQuarto> DefinirSeEhCoordenador(int idEvento, int idInscricao, int idQuarto, bool ehCoordenador)
         {
-            return mAppDivisaoQuartos.DefinirSeEhCoordenador(idEvento, idInscricao, idQuarto, ehCoordenador);
+            return mAppDivisaoQuartos.DefinirSeEhCoordenador(idEvento, idQuarto, idInscricao, ehCoordenador);
         }
     }
 }

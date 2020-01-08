@@ -1,28 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
-import { ActivatedRoute } from '@angular/router';
-import { WebServiceDivisaoSalas } from '../webservices/webservice-divisao-salas';
 import { ServicoEventoSelecionado } from '../evento/tela-roteamento-evento';
 import { DTOEventoCompleto } from '../evento/objetos';
-import { DTODivisaoSalaEstudo } from './objetos';
 import { DTOBasicoInscricao } from '../inscricao/objetos';
 import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';
 import { WebServiceRelatorios } from '../webservices/webservice-relatorios';
+import { DTODivisaoOficina } from './objetos';
+import { WebServiceDivisaoOficinas } from '../webservices/webservice-divisao-oficinas';
 
 @Component({
-  selector: 'tela-divisao-sala',
-  styleUrls: ['./tela-divisao-sala.scss'],
-  templateUrl: './tela-divisao-sala.html'
+  selector: 'tela-divisao-oficina',
+  styleUrls: ['./tela-divisao-oficina.scss'],
+  templateUrl: './tela-divisao-oficina.html'
 })
-export class TelaDivisaoSala implements OnInit {
+export class TelaDivisaoOficina implements OnInit {
 
   private evento: DTOEventoCompleto = null;
-  divisoesSalas: DTODivisaoSalaEstudo[] = [];
-  inscricoesNaoDistribuidas: DTODivisaoSalaEstudo = null;
+  divisoesOficinas: DTODivisaoOficina[] = [];
+  inscricoesNaoDistribuidas: DTODivisaoOficina = null;
 
-  divisaoSelecionada: DTODivisaoSalaEstudo = null;
+  divisaoSelecionada: DTODivisaoOficina = null;
 
-  constructor(private wsDivisao: WebServiceDivisaoSalas, private mensageria: Alertas,
+  constructor(private wsDivisao: WebServiceDivisaoOficinas, private mensageria: Alertas,
     private srvEventoSelecionado: ServicoEventoSelecionado, private wsRelatorios: WebServiceRelatorios) {
     this.inscricoesNaoDistribuidas = {
       Id: 0,
@@ -40,7 +39,7 @@ export class TelaDivisaoSala implements OnInit {
 
   clicarAtualizar(): void {
 
-    let dlg = this.mensageria.alertarProcessamento("Buscando as divisões de salas existentes...");
+    let dlg = this.mensageria.alertarProcessamento("Buscando as divisões de oficinas existentes...");
 
     this.wsDivisao.obterTodas(this.evento.Id)
       .subscribe(
@@ -79,7 +78,7 @@ export class TelaDivisaoSala implements OnInit {
   }
 
   clicarRemover(): void {
-    this.mensageria.alertarConfirmacao("Deseja excluir a divisão atual?", "Ao realizar isso, nenhuma sala terá participantes!!")
+    this.mensageria.alertarConfirmacao("Deseja excluir a divisão atual?", "Ao realizar isso, nenhuma oficina terá participantes!!")
       .subscribe(
         (botaoEscolhido) => {
           if (botaoEscolhido == CaixaMensagemResposta.Sim) {
@@ -101,24 +100,24 @@ export class TelaDivisaoSala implements OnInit {
       );
   }  
 
-  private processarRetornoDivisao(divisoes: DTODivisaoSalaEstudo[]) {
+  private processarRetornoDivisao(divisoes: DTODivisaoOficina[]) {
 
     this.inscricoesNaoDistribuidas = divisoes.find(x => x.Id == 0);
 
-    this.divisoesSalas = divisoes.filter(x => x.Id != 0);   
+    this.divisoesOficinas = divisoes.filter(x => x.Id != 0);   
   }
 
   private selecionarPrimeiraDivisao(): void {
-    this.divisaoSelecionada = null;
-
-    if (this.divisoesSalas.length > 0)
-      this.divisaoSelecionada = this.divisoesSalas[0];
+    if (this.divisoesOficinas.length > 0)
+      this.divisaoSelecionada = this.divisoesOficinas[0];
+    else
+      this.divisaoSelecionada = null;
   }
 
   clicarImprimir(): void {
     let dlg = this.mensageria.alertarProcessamento("Gerando relatório da divisão...");
 
-    this.wsRelatorios.obterDivisaoSalas(this.evento.Id)
+    this.wsRelatorios.obterDivisaoOficinas(this.evento.Id)
       .subscribe(
         relatorioGerado => {
           dlg.close();
@@ -131,7 +130,7 @@ export class TelaDivisaoSala implements OnInit {
       );
   }
 
-  clicarSelecionarSala(divisao: DTODivisaoSalaEstudo): void {
+  clicarSelecionarOficina(divisao: DTODivisaoOficina): void {
     this.divisaoSelecionada = divisao;
   }
 
@@ -148,15 +147,15 @@ export class TelaDivisaoSala implements OnInit {
     return idade;
   }
 
-  clicarMoverParaSala(ev: any): void {
+  clicarMoverParaOficina(ev: any): void {
     
-    this.mensageria.alertarConfirmacao("Você está certo de mudar a sala de estudo deste participante?", "")
+    this.mensageria.alertarConfirmacao("Você está certo de mudar a oficina deste participante?", "")
       .subscribe(
         (botaoEscolhido) => {
           if (botaoEscolhido == CaixaMensagemResposta.Sim) {
             let dlg = this.mensageria.alertarProcessamento("Movendo participante...");
 
-            this.wsDivisao.moverInscricaoSalas(this.evento.Id, this.divisaoSelecionada.Id, ev.sala.Id, ev.inscricao.IdInscricao)
+            this.wsDivisao.moverInscricaoOficinas(this.evento.Id, this.divisaoSelecionada.Id, ev.oficina.Id, ev.inscricao.IdInscricao)
               .subscribe(
                 divisoes => {
                   this.processarRetornoDivisao(divisoes);
@@ -172,14 +171,14 @@ export class TelaDivisaoSala implements OnInit {
       );
   }
 
-  clicarIncluirNaSala(ev: any): void {
-    this.mensageria.alertarConfirmacao("Você está certo de incluir este participante na sala " + ev.sala.Nome + "?", "")
+  clicarIncluirNaOficina(ev: any): void {
+    this.mensageria.alertarConfirmacao("Você está certo de incluir este participante na oficina " + ev.oficina.Nome + "?", "")
       .subscribe(
         (botaoEscolhido) => {
           if (botaoEscolhido == CaixaMensagemResposta.Sim) {
             let dlg = this.mensageria.alertarProcessamento("Incluindo participante...");
 
-            this.wsDivisao.incluirInscricaoSala(this.evento.Id, ev.sala.Id, ev.inscricao.IdInscricao)
+            this.wsDivisao.incluirInscricaoOficina(this.evento.Id, ev.oficina.Id, ev.inscricao.IdInscricao)
               .subscribe(
                 divisoes => {
                   this.processarRetornoDivisao(divisoes);
@@ -195,14 +194,14 @@ export class TelaDivisaoSala implements OnInit {
       );
   }
 
-  clicarRemoverDaSala(inscricao: DTOBasicoInscricao): void {
-    this.mensageria.alertarConfirmacao("Você está certo de remover este participante da sala de estudo?", "Essa inscrição será listada nas inscrições sem sala de estudo")
+  clicarRemoverDaOficina(inscricao: DTOBasicoInscricao): void {
+    this.mensageria.alertarConfirmacao("Você está certo de remover este participante da oficina?", "Essa inscrição será listada nas inscrições sem oficina")
       .subscribe(
         (botaoEscolhido) => {
           if (botaoEscolhido == CaixaMensagemResposta.Sim) {
             let dlg = this.mensageria.alertarProcessamento("Removendo participante...");
 
-            this.wsDivisao.removerInscricaoSala(this.evento.Id, this.divisaoSelecionada.Id, inscricao.IdInscricao)
+            this.wsDivisao.removerInscricaoOficina(this.evento.Id, this.divisaoSelecionada.Id, inscricao.IdInscricao)
               .subscribe(
                 divisoes => {
                   this.processarRetornoDivisao(divisoes);
@@ -222,7 +221,7 @@ export class TelaDivisaoSala implements OnInit {
     if (this.divisaoSelecionada != null) {
       let id = this.divisaoSelecionada.Id;
       this.divisaoSelecionada = null;
-      this.divisaoSelecionada = this.divisoesSalas.find(x => x.Id == id);
+      this.divisaoSelecionada = this.divisoesOficinas.find(x => x.Id == id);
 
       if (this.divisaoSelecionada == null)
         this.selecionarPrimeiraDivisao();

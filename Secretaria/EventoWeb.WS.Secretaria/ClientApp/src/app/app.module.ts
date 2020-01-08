@@ -101,6 +101,10 @@ import { WebServiceDivisaoOficinas } from './webservices/webservice-divisao-ofic
 import { WebServiceDivisaoQuartos } from './webservices/webservice-divisao-quartos';
 import { TelaListagemOficinas } from './oficinas/tela-listagem-oficinas';
 import { DlgFormOficina, DialogosOficina } from './oficinas/dlg-form-oficina';
+import { TelaListagemQuartos } from './quartos/tela-listagem-quartos';
+import { DlgFormQuarto, DialogosQuarto } from './quartos/dlg-form-quarto';
+import { TelaDivisaoOficina } from './divisao-oficinas/tela-divisao-oficina';
+import { TelaDivisaoQuarto } from './divisao-quartos/tela-divisao-quarto';
 
 declare function require(url: string);
 
@@ -151,8 +155,9 @@ export function init_app(appLoadService: AppLoadService) {
     ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
     ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario,
     ComponentePagamento,
-    TelaDivisaoSala,
-    TelaListagemOficinas, DlgFormOficina
+    TelaDivisaoSala, TelaDivisaoOficina, TelaDivisaoQuarto,
+    TelaListagemOficinas, DlgFormOficina,
+    TelaListagemQuartos, DlgFormQuarto
   ],
   imports: [
     BrowserModule,
@@ -210,6 +215,9 @@ export function init_app(appLoadService: AppLoadService) {
           { path: 'salas', component: TelaListagemSalas, canActivate: [PermissaoAcessoRota] },
           { path: 'divisao-salas', component: TelaDivisaoSala, canActivate: [PermissaoAcessoRota] },
           { path: 'oficinas', component: TelaListagemOficinas, canActivate: [PermissaoAcessoRota] },
+          { path: 'divisao-oficinas', component: TelaDivisaoOficina, canActivate: [PermissaoAcessoRota] },
+          { path: 'quartos', component: TelaListagemQuartos, canActivate: [PermissaoAcessoRota] },
+          { path: 'divisao-quartos', component: TelaDivisaoQuarto, canActivate: [PermissaoAcessoRota] },
         ]
       },
       { path: '** ', redirectTo: '' }
@@ -217,7 +225,7 @@ export function init_app(appLoadService: AppLoadService) {
   ],
   entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
     TelaListaEventos, DlgFormEvento, TelaRoteamentoEvento,
-    TelaListagemSalas, DlgFormSala, DlgFormOficina,
+    TelaListagemSalas, DlgFormSala, DlgFormOficina, DlgFormQuarto,
     DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario],
   providers: [
     AppLoadService,
@@ -227,7 +235,7 @@ export function init_app(appLoadService: AppLoadService) {
     Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
     WebServiceAutenticacao, WebServiceEventos, WebServiceSalas, WebServiceInscricoes, ServicoEventoSelecionado,
     WebServiceDivisaoSalas, WebServiceRelatorios, WebServiceOficinas, WebServiceQuartos, WebServiceDivisaoOficinas, WebServiceDivisaoQuartos,
-    DialogosSarau, DialogosCrianca, DialogosSala, DialogosOficina],
+    DialogosSarau, DialogosCrianca, DialogosSala, DialogosOficina, DialogosQuarto],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule {
