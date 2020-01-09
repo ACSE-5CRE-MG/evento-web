@@ -2,6 +2,7 @@
 using EventoWeb.Nucleo.Negocio.Entidades;
 using iText.IO.Font.Constants;
 using iText.Kernel.Colors;
+using iText.Kernel.Events;
 using iText.Kernel.Font;
 using iText.Kernel.Geom;
 using iText.Kernel.Pdf;
@@ -19,6 +20,63 @@ namespace EventoWeb.Nucleo.Persistencia.Relatorios
 {
     public class RelatorioDivisaoQuartos : IRelatorioDivisaoQuartos
     {
+        private class CabecalhoPagina : IEventHandler
+        {
+            private Dictionary<bool, string> m_DescricaoQuartos;
+            private PdfFont m_FonteTitulo;
+            private PdfFont m_FonteDescricao;
+            private IDictionary<PdfPage, Quarto> m_QuartosPagina;
+
+            public CabecalhoPagina()
+            {
+                m_DescricaoQuartos = new Dictionary<Boolean, String>() { { true, "Quarto Família" }, { false, "Quarto Geral" } };
+                m_FonteTitulo = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+                m_FonteDescricao = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_OBLIQUE);
+
+                m_QuartosPagina = new Dictionary<PdfPage, Quarto>();
+            }
+
+            public void AdicionarQuarto(PdfPage pagina, Quarto quarto)
+            {
+                if (!m_QuartosPagina.ContainsKey(pagina))
+                    m_QuartosPagina.Add(pagina, quarto);
+            }
+
+            public void HandleEvent(Event @event)
+            {
+                PdfDocumentEvent docEvent = (PdfDocumentEvent) @event;
+                PdfPage page = docEvent.GetPage();
+                Canvas canvas = new Canvas(page, page.GetPageSize());
+
+                Quarto quartoAtual = m_QuartosPagina[page];
+
+                var cabecalho = new Paragraph();
+                cabecalho.SetFontSize(18);
+                cabecalho.SetFont(m_FonteTitulo);
+                cabecalho.SetTextAlignment(TextAlignment.CENTER);
+                cabecalho.Add("Quarto: " + quartoAtual.Nome);
+                canvas.Add(cabecalho);
+
+                var cabecalhoDescricao = new Paragraph();
+                cabecalhoDescricao.SetFontSize(12);
+                cabecalhoDescricao.SetFont(m_FonteDescricao);
+                cabecalhoDescricao.SetTextAlignment(TextAlignment.CENTER);
+                cabecalhoDescricao.Add(m_DescricaoQuartos[quartoAtual.EhFamilia] + " - " + quartoAtual.Sexo.ToString());
+                canvas.Add(cabecalhoDescricao);
+
+                var cabecalhoTotais = new Paragraph();
+                cabecalhoTotais.SetFontSize(12);
+                cabecalhoTotais.SetFont(m_FonteDescricao);
+                cabecalhoTotais.SetTextAlignment(TextAlignment.CENTER);
+                cabecalhoTotais.Add("Participantes: " + quartoAtual.Inscritos.Count().ToString());
+                canvas.Add(cabecalhoTotais);
+
+                var linha = new SolidLine(1f);
+                linha.SetColor(ColorConstants.BLACK);
+                canvas.Add(new LineSeparator(linha));
+            }
+        }
+
         public Stream Gerar(IEnumerable<Quarto> quartos)
         {
             var descricaoQuartos = new Dictionary<Boolean, String>() { { true, "Quarto Família" }, { false, "Quarto Geral" } };
@@ -28,48 +86,20 @@ namespace EventoWeb.Nucleo.Persistencia.Relatorios
             using (var pdfDocumento = new PdfDocument(escritorPDF))
             using (var documento = new Document(pdfDocumento, PageSize.A4))
             {
-                documento.SetMargins(10, 10, 10, 10);
+                var cabecalhoPagina = new CabecalhoPagina();
+                pdfDocumento.AddEventHandler(PdfDocumentEvent.END_PAGE, cabecalhoPagina);
 
-                foreach (var quarto in quartos)
+                documento.SetMargins(100, 10, 10, 10);
+
+                var fonteTitulo = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+                var fonteDescricao = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_OBLIQUE);
+
+                var fonteListaNormal = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);
+                var fonteListaNegrito = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+
+                for (var indice = 0; indice < quartos.Where(x=>x.Inscritos.Count() > 0).Count(); indice++)
                 {
-                    var pagina = pdfDocumento.AddNewPage();
-                    var pdfCanvasPag = new PdfCanvas(pagina);
-                    var canvasPag = new Canvas(pagina, documento.GetPageEffectiveArea(new PageSize(pagina.GetPageSize())));
-
-                    var fonteTitulo = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
-                    var cabecalho = new Paragraph();
-                    cabecalho.SetFontSize(18);
-                    cabecalho.SetFont(fonteTitulo);
-                    cabecalho.SetTextAlignment(TextAlignment.CENTER);
-                    cabecalho.Add("Quarto: " + quarto.Nome);
-                    canvasPag.Add(cabecalho);
-
-                    var fonteDescricao = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_OBLIQUE);
-
-                    var cabecalhoDescricao = new Paragraph();
-                    cabecalhoDescricao.SetFontSize(12);
-                    cabecalhoDescricao.SetFont(fonteDescricao);
-                    cabecalhoDescricao.SetTextAlignment(TextAlignment.CENTER);
-                    cabecalhoDescricao.Add(descricaoQuartos[quarto.EhFamilia] + " - " + quarto.Sexo.ToString());
-                    canvasPag.Add(cabecalhoDescricao);
-
-                    var cabecalhoTotais = new Paragraph();
-                    cabecalhoTotais.SetFontSize(12);
-                    cabecalhoTotais.SetFont(fonteDescricao);
-                    cabecalhoTotais.SetTextAlignment(TextAlignment.CENTER);
-                    cabecalhoTotais.Add("Participantes: " + quarto.Inscritos.Count().ToString());
-                    canvasPag.Add(cabecalhoTotais);
-
-                    var linha = new SolidLine(1f);
-                    linha.SetColor(ColorConstants.BLACK);
-
-                    var separador = new Paragraph();
-                    separador.Add(new LineSeparator(linha));
-                    separador.Add("\n");
-                    canvasPag.Add(separador);
-
-                    var fonteListaNormal = PdfFontFactory.CreateFont(StandardFonts.HELVETICA);  
-                    var fonteListaNegrito = PdfFontFactory.CreateFont(StandardFonts.HELVETICA_BOLD);
+                    var quarto = quartos.ElementAt(indice);                    
 
                     foreach (var participante in quarto.Inscritos.OrderBy(x => x.Inscricao.Pessoa.Nome))
                     {
@@ -82,7 +112,7 @@ namespace EventoWeb.Nucleo.Persistencia.Relatorios
                         }
                         else
                             fonte = fonteListaNormal;
-                        
+
                         //nome = nome + " - " +
                         //    participante.Inscricao.Pessoa.CalcularIdadeEmAnos(participante.Inscricao.Evento.DataInicioEvento).ToString() +
                         //    " Ano(s) idade";
@@ -91,13 +121,28 @@ namespace EventoWeb.Nucleo.Persistencia.Relatorios
                         paragrafoListagem.SetFont(fonte);
                         paragrafoListagem.SetTextAlignment(TextAlignment.CENTER);
                         paragrafoListagem.Add(nome);
-                        canvasPag.Add(paragrafoListagem);
+                        documento.Add(paragrafoListagem);
+                        
+                        cabecalhoPagina.AdicionarQuarto(pdfDocumento.GetLastPage(), quarto);
                     }
+
+                    if (indice + 1 < quartos.Count())
+                        documento.Add(new AreaBreak(AreaBreakType.NEXT_PAGE));
                 }
 
                 documento.Close();
                 return new MemoryStream(stream.GetBuffer());
-            }
+            }            
         }
+    }
+
+    public class RelDivisaoQuarto
+    {
+        public int IdQuarto { get; set; }
+        public string NomeQuarto { get; set; }
+        public string DescricaoQuarto { get; set; }
+        public string DescricaoQtdeParticipantes { get; set; }
+        public string NomeParticipante { get; set; }
+        public bool ParticipanteEhCoordenador { get; set; }
     }
 }

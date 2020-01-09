@@ -38,8 +38,8 @@ namespace EventoWeb.WS.Secretaria.Controllers
             return File(appRelDivisao.GerarImpressoPDF(idEvento), TIPO_CONTEUDO_PDF);
         }
 
-        [Authorize("Bearer")]
-        [HttpPut("evento/{idEvento}/divisao-quartos")]
+        //[Authorize("Bearer")]
+        [HttpGet("evento/{idEvento}/divisao-quartos")]
         public IActionResult GerarRelatorioDivisaoQuartos(int idEvento)
         {
             var appRelDivisao = new AppRelatorioDivisaoQuartos(m_Contexto,
