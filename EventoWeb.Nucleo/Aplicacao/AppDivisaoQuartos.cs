@@ -106,7 +106,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             ExecutarSeguramente(() =>
             {
                 Evento evento = m_RepEventos.ObterEventoPeloId(idEvento);
-                InscricaoParticipante inscricao = (InscricaoParticipante)m_RepInscricoes.ObterInscricaoPeloId(idInscricao);
+                InscricaoParticipante inscricao = (InscricaoParticipante)m_RepInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);
 
                 Quarto quarto = m_RepQuartos.ObterQuartoPorIdEventoEQuarto(idEvento, idQuarto);
 
@@ -148,7 +148,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             ExecutarSeguramente(() =>
             {
                 Evento evento = m_RepEventos.ObterEventoPeloId(idEvento);
-                InscricaoParticipante inscricao = (InscricaoParticipante)m_RepInscricoes.ObterInscricaoPeloId(idInscricao);
+                InscricaoParticipante inscricao = (InscricaoParticipante)m_RepInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);
 
                 Quarto quarto = m_RepQuartos.ObterQuartoPorIdEventoEQuarto(idEvento, idQuarto);
 
@@ -170,7 +170,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             List<DTODivisaoQuarto> quartosDTO = new List<DTODivisaoQuarto>();
 
             IList<Quarto> quartos = m_RepQuartos.ListarTodosQuartosPorEventoComParticipantes(idEvento);
-            IList<Inscricao> listaInscricoes = m_RepInscricoes.ListarTodasInscricoesComPessoasDormemEvento(idEvento);
+            IList<Inscricao> listaInscricoes = m_RepInscricoes.ListarTodasInscricoesAceitasComPessoasDormemEvento(idEvento);
 
             var inscritosNosQuartos = quartos.SelectMany(x => x.Inscritos).Select(x => x.Inscricao);
             var inscritosSemQuartos = listaInscricoes.Where(x => !inscritosNosQuartos.Contains(x));

@@ -20,14 +20,6 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
             mSessao = sessao;
         }
 
-        public IList<Inscricao> ListarTodasInscricoesComPessoasPorEvento(int idEvento)
-        {
-            return mSessao.QueryOver<Inscricao>()
-                .Where(x => x.Evento.Id == idEvento)
-                .JoinQueryOver(x => x.Pessoa)
-                .List();
-        }
-
         public IList<Inscricao> ListarInscricoesComPessoasPorEventoENomePessoa(int idEvento, string nome)
         {
             return mSessao.QueryOver<Inscricao>()
@@ -99,21 +91,21 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
             return consulta.List();
         }
 
-        public IList<TAtividade> ListarTodasInscricoesPorAtividade<TAtividade>(Evento evento) where TAtividade: AAtividadeInscricao
+        public IList<TAtividade> ListarTodasInscricoesAceitasPorAtividade<TAtividade>(Evento evento) where TAtividade: AAtividadeInscricao
         {
             var consulta = mSessao.QueryOver<TAtividade>()
                 .JoinQueryOver(x => x.Inscrito)
-                    .Where(x => x.Evento == evento)
+                    .Where(x => x.Evento == evento && x.Situacao == EnumSituacaoInscricao.Aceita)
                 .JoinQueryOver(y => y.Pessoa);
 
             return consulta.List();
         }
 
 
-        public IList<Inscricao> ListarTodasInscricoesComPessoasDormemEvento(int idEvento)
+        public IList<Inscricao> ListarTodasInscricoesAceitasComPessoasDormemEvento(int idEvento)
         {
             return mSessao.QueryOver<Inscricao>()
-                .Where(x => x.Evento.Id == idEvento && x.DormeEvento)
+                .Where(x => x.Evento.Id == idEvento && x.DormeEvento && x.Situacao == EnumSituacaoInscricao.Aceita)
                 .JoinQueryOver(x => x.Pessoa)
                 .List();
         }

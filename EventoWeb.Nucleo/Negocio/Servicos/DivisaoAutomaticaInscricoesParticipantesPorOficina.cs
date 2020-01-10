@@ -46,7 +46,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             var listaOrdenada = new List<OrdenaDivisao>();
 
             var participantesDividir = mRepositorioInscricoes
-                .ListarTodasInscricoesPorAtividade<AtividadeInscricaoOficinas>(mEvento)
+                .ListarTodasInscricoesAceitasPorAtividade<AtividadeInscricaoOficinas>(mEvento)
                 .ToList();
 
             foreach (var oficina in oficinas)

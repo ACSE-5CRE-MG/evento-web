@@ -31,7 +31,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             {
                 var evento = m_RepEventos.ObterEventoPeloId(idEvento);
                 var salas = m_RepSalasEstudo.ListarTodasSalasEstudoComParticipantesDoEvento(evento);
-                var atividadesSalasCoordenadores = m_RepInscricoes.ListarTodasInscricoesPorAtividade<AtividadeInscricaoSalaEstudoCoordenacao>(evento);
+                var atividadesSalasCoordenadores = m_RepInscricoes.ListarTodasInscricoesAceitasPorAtividade<AtividadeInscricaoSalaEstudoCoordenacao>(evento);
 
                 relatorio = m_GeradorRelDivisaoSalas.Gerar(salas, atividadesSalasCoordenadores);
             });

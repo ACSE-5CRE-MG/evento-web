@@ -54,7 +54,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                 }
                 else
                 {
-                    inscricaoInfantil = (InscricaoInfantil)repInscricoes.ObterInscricaoPeloId(dtoCrianca.Id.Value);
+                    inscricaoInfantil = (InscricaoInfantil)repInscricoes.ObterInscricaoPeloIdEventoEInscricao(inscricao.Evento.Id, dtoCrianca.Id.Value);
                     inscricaoInfantil.AtribuirDados(dtoCrianca);
 
                     if (inscricaoInfantil.InscricaoResponsavel2 == null)

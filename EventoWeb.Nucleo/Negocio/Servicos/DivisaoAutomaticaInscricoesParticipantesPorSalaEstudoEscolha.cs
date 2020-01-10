@@ -49,7 +49,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
             var listaOrdenada = new List<OrdenaDivisao>();
 
             var participantesDividir = mRepositorioInscricoes
-                .ListarTodasInscricoesPorAtividade<AtividadeInscricaoSalaEstudoOrdemEscolha>(mEvento)
+                .ListarTodasInscricoesAceitasPorAtividade<AtividadeInscricaoSalaEstudoOrdemEscolha>(mEvento)
                 .ToList();
 
             int capacidadeParticipantesPorSala = participantesDividir.Count / salas.Count;

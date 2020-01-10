@@ -23,6 +23,7 @@ namespace EventoWeb.BancoDados.Migracoes
             CriarOficinasParticipantes();
             CriarQuartos();
             CriarQuartosInscrito();
+            CriarIndices();
         }
 
         private void CriarSalasEstudoParticipantes()
@@ -56,6 +57,11 @@ namespace EventoWeb.BancoDados.Migracoes
                     .ForeignKey("FK_QUARTO_EVENTO", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade)
                 .WithColumn("NOME").AsString(100).NotNullable()
                 .WithColumn("SEXO").AsInt16().NotNullable();
+
+            Create
+                .Index("IDX_QUARTO_1").OnTable("QUARTOS")
+                    .OnColumn("ID_EVENTO").Ascending()
+                    .OnColumn("ID_QUARTO").Ascending();
         }
 
         private void CriarQuartosInscrito()
@@ -68,6 +74,35 @@ namespace EventoWeb.BancoDados.Migracoes
                     .ForeignKey("FK_QI_INSCRICAO", "INSCRICOES", "ID_INSCRICAO").OnDelete(Rule.None).OnUpdate(Rule.Cascade)
                 .WithColumn("ID_QUARTO").AsInt32().NotNullable()
                     .ForeignKey("FK_QI_QUARTO", "QUARTOS", "ID_QUARTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade);
+        }
+
+        private void CriarIndices()
+        {
+            Create
+                .Index("IDX_INSCRICAO_1").OnTable("INSCRICOES")
+                    .OnColumn("ID_EVENTO").Ascending()
+                    .OnColumn("ID_INSCRICAO").Ascending();
+
+            Create
+                .Index("IDX_INSCRICAO_2").OnTable("INSCRICOES")
+                    .OnColumn("ID_EVENTO").Ascending()
+                    .OnColumn("ID_INSCRICAO").Ascending()
+                    .OnColumn("SITUACAO").Ascending();
+
+            Create
+                .Index("IDX_SL_ESTUDO_1").OnTable("SALAS_ESTUDO")
+                    .OnColumn("ID_EVENTO").Ascending()
+                    .OnColumn("ID_SALA_ESTUDO").Ascending();
+
+            Create
+                .Index("IDX_OFICINA_1").OnTable("OFICINAS")
+                    .OnColumn("ID_EVENTO").Ascending()
+                    .OnColumn("ID_OFICINA").Ascending();
+
+            Create
+                .Index("IDX_AP_SARAU_1").OnTable("APRESENTACOES_SARAU")
+                    .OnColumn("ID_EVENTO").Ascending()
+                    .OnColumn("ID_APRESENTACAO_SARAU").Ascending();
         }
 
         private void CriarConta()

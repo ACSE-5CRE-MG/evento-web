@@ -117,7 +117,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             ExecutarSeguramente(() =>
             {
                 Evento evento = m_RepEventos.ObterEventoPeloId(idEvento);
-                InscricaoParticipante inscricao = (InscricaoParticipante)m_RepInscricoes.ObterInscricaoPeloId(idInscricao);
+                InscricaoParticipante inscricao = (InscricaoParticipante)m_RepInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);
 
                 SalaEstudo sala = m_RepSalas.ObterPorId(idEvento, idSala);
 
@@ -169,7 +169,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             IList<SalaEstudo> salas = m_RepSalas.ListarTodasSalasEstudoComParticipantesDoEvento(evento);
             IList<InscricaoParticipante> participantesSemSala = pesquisasParticipantesSemSala[evento.ConfiguracaoSalaEstudo.Value](evento);
             IList<AtividadeInscricaoSalaEstudoCoordenacao> coordenadores =
-                 m_RepInscricoes.ListarTodasInscricoesPorAtividade<AtividadeInscricaoSalaEstudoCoordenacao>(evento);
+                 m_RepInscricoes.ListarTodasInscricoesAceitasPorAtividade<AtividadeInscricaoSalaEstudoCoordenacao>(evento);
 
 
             salasDTO.AddRange(salas.Select(x => new DTODivisaoSalaEstudo

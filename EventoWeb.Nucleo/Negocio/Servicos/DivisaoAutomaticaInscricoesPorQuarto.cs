@@ -86,7 +86,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
         public IList<Quarto> Dividir()
         {
             var quartos = mRepQuartos.ListarTodosQuartosPorEvento(mEvento.Id);
-            var listaInscricoes = mRepInscricoes.ListarTodasInscricoesComPessoasDormemEvento(mEvento.Id);
+            var listaInscricoes = mRepInscricoes.ListarTodasInscricoesAceitasComPessoasDormemEvento(mEvento.Id);
 
             var criancas = listaInscricoes
                 .Where(x => x is InscricaoInfantil && x.Pessoa.CalcularIdadeEmAnos(mEvento.PeriodoRealizacaoEvento.DataInicial) <= 6)

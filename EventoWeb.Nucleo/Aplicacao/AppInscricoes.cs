@@ -159,7 +159,7 @@ namespace EventoWeb.Nucleo.Aplicacao
 
             foreach (var dtoCrianca in dtoInscricao.Criancas.Where(x => x.Sarais?.Count > 0))
             {
-                var crianca = repInscricoes.ObterInscricaoPeloId(dtoCrianca.Id.Value);
+                var crianca = repInscricoes.ObterInscricaoPeloIdEventoEInscricao(inscParticipante.Evento.Id, dtoCrianca.Id.Value);
                 appApresentacaoSarau
                     .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(crianca, dtoCrianca.Sarais);
             }

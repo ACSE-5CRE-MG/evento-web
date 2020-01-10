@@ -107,7 +107,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public EstatisticaGeral GerarEstatisticas()
         {
-            var inscricoes = mRepositorio.ListarTodasInscricoesComPessoasPorEvento(mIdEvento);
+            var inscricoes = mRepositorio.ListarTodasPorEventoESituacao(mIdEvento, EnumSituacaoInscricao.Aceita);
             var estatistica = new EstatisticaGeral();
             estatistica.TotalInscricoes = inscricoes.Count;
             estatistica.TotalInscricoesPresentes = inscricoes.Count(x => x.ConfirmadoNoEvento);

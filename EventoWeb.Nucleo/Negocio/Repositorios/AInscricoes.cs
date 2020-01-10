@@ -20,7 +20,6 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
 
     public interface AInscricoes : IPersistencia<Inscricao>
     {
-        IList<Inscricao> ListarTodasInscricoesComPessoasPorEvento(int idEvento);
         IList<Inscricao> ListarInscricoesPorEvento(int idEvento, EnumTipoBuscaInscricao tipoBusca);
         IList<Inscricao> ListarInscricoesComPessoasPorEventoENomePessoa(int idEvento, string nome);
         IList<Inscricao> ListarInscricoesParticipanteTrabalhadorPeloNomePessoaPorEvento(int idEvento, String nome);
@@ -30,8 +29,8 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
         Boolean PessoaInscritaEvento(int idEvento, int idPessoa);
         IList<InscricaoInfantil> ListarInscricoesInfantisDoResponsavel(Inscricao inscrito);
         IList<InscricaoParticipante> ListarTodasInscricoesParticipantesComPessoasDoEvento(Evento evento);
-        IList<TAtividade> ListarTodasInscricoesPorAtividade<TAtividade>(Evento evento) where TAtividade : AAtividadeInscricao;
-        IList<Inscricao> ListarTodasInscricoesComPessoasDormemEvento(int idEvento);
+        IList<TAtividade> ListarTodasInscricoesAceitasPorAtividade<TAtividade>(Evento evento) where TAtividade : AAtividadeInscricao;
+        IList<Inscricao> ListarTodasInscricoesAceitasComPessoasDormemEvento(int idEvento);
         bool HaInscricaoVinculadaTransacao(int idTransacao);
         bool HaInscricaoVinculadaTitulo(int idTitulo);
 

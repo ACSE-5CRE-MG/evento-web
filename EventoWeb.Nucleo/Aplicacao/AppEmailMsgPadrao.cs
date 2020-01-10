@@ -126,15 +126,6 @@ namespace EventoWeb.Nucleo.Aplicacao
             
         }
 
-        public void Testar(int idInscricao)
-        {
-            ExecutarSeguramente(() =>
-            {
-                var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(idInscricao);
-                EnviarInscricaoRegistrada((InscricaoParticipante)inscricao);
-            });
-        }
-
         private MensagemEmailPadrao ObterMensagem(int idEvento)
         {
             return Contexto.RepositorioMensagensEmailPadrao.Obter(idEvento) ??

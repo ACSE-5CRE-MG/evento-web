@@ -26,7 +26,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
                 throw new InvalidOperationException("Há salas sem coordenador definido.");
 
             var participantes =
-                mInscricoes.ListarTodasInscricoesPorAtividade<AtividadeInscricaoSalaEstudo>(mEvento);
+                mInscricoes.ListarTodasInscricoesAceitasPorAtividade<AtividadeInscricaoSalaEstudo>(mEvento);
 
             IList<SalaEstudo> salas = mSalasEstudo.ListarTodasPorEvento(mEvento.Id);
             foreach (var sala in salas)

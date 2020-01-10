@@ -28,7 +28,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             {
                 var evento = m_RepEventos.ObterEventoPeloId(idEvento);
                 var salas = m_RepOficinas.ListarTodasComParticipantesPorEvento(evento);
-                var atividadesOficinasCoordenadores = m_RepInscricoes.ListarTodasInscricoesPorAtividade<AtividadeInscricaoOficinasCoordenacao>(evento);
+                var atividadesOficinasCoordenadores = m_RepInscricoes.ListarTodasInscricoesAceitasPorAtividade<AtividadeInscricaoOficinasCoordenacao>(evento);
 
                 relatorio = m_GeradorRelDivisaoOficinas.Gerar(salas, atividadesOficinasCoordenadores);
             });
