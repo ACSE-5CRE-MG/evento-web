@@ -1,7 +1,7 @@
 <layout-geral>
   <div fxLayout="column" fxLayoutGap="5px" class="padding-padrao">
     <div>
-      <span class="secao">Cadastros</span>
+      <span class="secao">Sobre o evento</span>
       <mat-divider></mat-divider>
     </div>
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
@@ -10,6 +10,17 @@
         <br />
         <span>Dados Evento</span>
       </button>
+      <a mat-stroked-button [routerLink]="'./estatisticas'">
+        <span class="far fa-chart-bar fa-4x"></span>
+        <br />
+        <span>Estatística</span>
+      </a>
+    </div>
+    <div>
+      <span class="secao">Cadastros</span>
+      <mat-divider></mat-divider>
+    </div>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
       <a mat-stroked-button [routerLink]="'./salas'">
         <span class="fas fa-chalkboard fa-4x"></span>
         <br />

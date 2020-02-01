@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
-    public enum EnumTipoParticipante { Participante, ParticipanteTrabalhador }
+    public enum EnumTipoParticipante { Participante, ParticipanteTrabalhador, Trabalhador }
 
     public enum EnumPagamento { Comprovante, ComprovanteOutraInscricao, Outro }
 

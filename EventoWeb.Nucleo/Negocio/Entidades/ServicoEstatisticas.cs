@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
@@ -11,10 +10,12 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public int Criancas { get; set; }
         public int Participantes { get; set; }
         public int ParticipantesTrabalhadores { get; set; }
+        public int Trabalhadores { get; set; }
 
         public int CriancasPresentes { get; set; }
         public int ParticipantesPresentes { get; set; }
         public int ParticipantesTrabalhadoresPresentes { get; set; }
+        public int TrabalhadoresPresentes { get; set; }
     }
 
     public class EstatisticaSexo
@@ -144,9 +145,11 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 {
                     estatistica.Participantes = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.Participante);
                     estatistica.ParticipantesTrabalhadores = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.ParticipanteTrabalhador);
+                    estatistica.Trabalhadores = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.Trabalhador);
 
                     estatistica.ParticipantesPresentes = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.Participante && x.ConfirmadoNoEvento);
                     estatistica.ParticipantesTrabalhadoresPresentes = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.ParticipanteTrabalhador && x.ConfirmadoNoEvento);
+                    estatistica.TrabalhadoresPresentes = tipo.Count(x => ((InscricaoParticipante)x).Tipo == EnumTipoParticipante.Trabalhador && x.ConfirmadoNoEvento);
                 }
             }
 

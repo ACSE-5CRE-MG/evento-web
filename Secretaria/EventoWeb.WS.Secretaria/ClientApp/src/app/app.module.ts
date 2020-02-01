@@ -105,6 +105,8 @@ import { TelaListagemQuartos } from './quartos/tela-listagem-quartos';
 import { DlgFormQuarto, DialogosQuarto } from './quartos/dlg-form-quarto';
 import { TelaDivisaoOficina } from './divisao-oficinas/tela-divisao-oficina';
 import { TelaDivisaoQuarto } from './divisao-quartos/tela-divisao-quarto';
+import { WebServiceEstatisticas } from './webservices/webservice-estatisticas';
+import { TelaEstatisticas } from './estatisticas/tela-estatisticas';
 
 declare function require(url: string);
 
@@ -157,7 +159,8 @@ export function init_app(appLoadService: AppLoadService) {
     ComponentePagamento,
     TelaDivisaoSala, TelaDivisaoOficina, TelaDivisaoQuarto,
     TelaListagemOficinas, DlgFormOficina,
-    TelaListagemQuartos, DlgFormQuarto
+    TelaListagemQuartos, DlgFormQuarto,
+    TelaEstatisticas
   ],
   imports: [
     BrowserModule,
@@ -218,6 +221,7 @@ export function init_app(appLoadService: AppLoadService) {
           { path: 'divisao-oficinas', component: TelaDivisaoOficina, canActivate: [PermissaoAcessoRota] },
           { path: 'quartos', component: TelaListagemQuartos, canActivate: [PermissaoAcessoRota] },
           { path: 'divisao-quartos', component: TelaDivisaoQuarto, canActivate: [PermissaoAcessoRota] },
+          { path: 'estatisticas', component: TelaEstatisticas, canActivate: [PermissaoAcessoRota] },
         ]
       },
       { path: '** ', redirectTo: '' }
@@ -235,7 +239,8 @@ export function init_app(appLoadService: AppLoadService) {
     Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
     WebServiceAutenticacao, WebServiceEventos, WebServiceSalas, WebServiceInscricoes, ServicoEventoSelecionado,
     WebServiceDivisaoSalas, WebServiceRelatorios, WebServiceOficinas, WebServiceQuartos, WebServiceDivisaoOficinas, WebServiceDivisaoQuartos,
-    DialogosSarau, DialogosCrianca, DialogosSala, DialogosOficina, DialogosQuarto],
+    DialogosSarau, DialogosCrianca, DialogosSala, DialogosOficina, DialogosQuarto,
+    WebServiceEstatisticas],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule {

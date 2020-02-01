@@ -73,3 +73,18 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; font-size: 
     height: 257.8px;
   }
 }
+
+.mat-tab-body-wrapper {
+  flex-grow: 1;
+}
+
+.mat-tab-body {
+  display: flex !important;
+  flex-direction: column;
+}
+
+.mat-tab-body-content {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}

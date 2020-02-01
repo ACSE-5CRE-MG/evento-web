@@ -316,7 +316,7 @@ class DadosTela {
 
   Sexos: string[] = ["Masculino", "Feminino"];
   EstadosFederacao: string[] = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
-  TiposInscricao: string[] = ['Participante', 'Participante/Trabalhador'];
+  TiposInscricao: string[] = ['Participante', 'Participante/Trabalhador', 'Trabalhador'];
 
   nome: string;
   dataNascimento: Date;

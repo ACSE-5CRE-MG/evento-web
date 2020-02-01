@@ -126,6 +126,17 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
 
         private static void ConverterBasico(this DTOBasicoInscricao dto, Inscricao inscricao)
         {
+            var gerarDescricaoTipo = new Func<InscricaoParticipante, string>((insc) =>
+            {
+                switch (insc.Tipo)
+                {
+                    case EnumTipoParticipante.Participante: return "Participante";
+                    case EnumTipoParticipante.ParticipanteTrabalhador: return "Participante/Trabalhador";
+                    case EnumTipoParticipante.Trabalhador: return "Trabalhador";
+                    default: return "";
+                }
+            });
+
             dto.Email = inscricao.Pessoa.Email;
             dto.IdEvento = inscricao.Evento.Id;
             dto.IdInscricao = inscricao.Id;
@@ -134,7 +145,7 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
             dto.Cidade = inscricao.Pessoa.Endereco.Cidade;
             dto.DataNascimento = inscricao.Pessoa.DataNascimento;
             dto.Situacao = inscricao.Situacao;
-            dto.Tipo = (inscricao is InscricaoInfantil ? "Infantil" : "Participante/Trabalhador");
+            dto.Tipo = (inscricao is InscricaoInfantil ? "Infantil" : gerarDescricaoTipo((InscricaoParticipante)inscricao));
             dto.UF = inscricao.Pessoa.Endereco.UF;
         }
 

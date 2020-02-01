@@ -5,7 +5,7 @@ import { DTODepartamento } from "../departamentos/objetos";
 
 export enum EnumSituacaoInscricao { Incompleta, Pendente, Aceita, Rejeitada }
 export enum EnumSexo { Masculino, Feminino }
-export enum EnumTipoInscricao { Participante, ParticipanteTrabalhador }
+export enum EnumTipoInscricao { Participante, ParticipanteTrabalhador, Trabalhador }
 
 export enum EnumApresentacaoAtividades { ApenasParticipante, PodeEscolher }
 

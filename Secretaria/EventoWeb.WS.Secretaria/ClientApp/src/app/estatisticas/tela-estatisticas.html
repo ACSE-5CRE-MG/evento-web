@@ -1,0 +1,237 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <a mat-icon-button style="margin-right:5px" matTooltip="Volta para a gestão do evento" routerLink="../">
+      <span class="fas fa-arrow-left"></span>
+    </a>
+    <span class="far fa-chart-bar" style="margin-right:10px"></span>
+    <span class="cursor-pointer">Estatísticas</span>
+  </mat-toolbar>  
+  <layout-geral>
+    <div fxLayout="column" fxLayoutGap="5px" style="padding: 5px" class="cartao" layout-geral-cabecalho>
+      <div fxLayout="row" fxLayoutGap="5px">
+        <div fxFlex="50" fxLayout="row" fxLayoutGap="5px">
+          <label>Total de Inscrições:</label>
+          <span>{{estatistica.TotalInscricoes}}</span>
+        </div>
+        <div fxFlex="50" fxLayout="row" fxLayoutGap="5px">
+          <label>Não dormirão:</label>
+          <span>{{estatistica.TotalInscricoesNaoDormem}}</span>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px">
+        <div fxFlex="50" fxLayout="row" fxLayoutGap="5px">
+          <label>Total de Presentes:</label>
+          <span>{{estatistica.TotalInscricoesPresentes}}</span>
+        </div>
+        <div fxFlex="50" fxLayout="row" fxLayoutGap="5px">
+          <label>Não dormirão Presentes:</label>
+          <span>{{estatistica.TotalInscricoesNaoDormemPresentes}}</span>
+        </div>
+      </div>
+    </div>
+    <mat-tab-group fxFill>
+      <mat-tab label="Geral">
+        <div fxLayout="column" fxLayoutGap="5px">          
+          <div fxLayout="row" fxLayoutGap="5px">
+            <div class="cartao" fxLayout="column" fxLayoutGap="5px" fxFlex="30">
+              <h2>Tipos Inscrição</h2>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Crianças:</span>
+                <span>{{estatistica.TiposInscricao.Criancas}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Crianças Presentes:</span>
+                <span>{{estatistica.TiposInscricao.CriancasPresentes}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Participantes:</span>
+                <span>{{estatistica.TiposInscricao.Participantes}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Participantes Presentes:</span>
+                <span>{{estatistica.TiposInscricao.ParticipantesPresentes}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Participantes/Trabalhadores:</span>
+                <span>{{estatistica.TiposInscricao.ParticipantesTrabalhadores}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Participantes/Trabalhadores Presentes:</span>
+                <span>{{estatistica.TiposInscricao.ParticipantesTrabalhadoresPresentes}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Trabalhadores:</span>
+                <span>{{estatistica.TiposInscricao.Trabalhadores}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Trabalhadores Presentes:</span>
+                <span>{{estatistica.TiposInscricao.TrabalhadoresPresentes}}</span>
+              </div>
+            </div>
+            <div class="cartao" fxLayout="column" fxLayoutGap="5px"  fxFlex="30">
+              <h2>Inscrições por sexo</h2>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Mulheres:</span>
+                <span>{{estatistica.Sexo.Mulheres}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Mulheres Presentes:</span>
+                <span>{{estatistica.Sexo.MulheresPresentes}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Homens:</span>
+                <span>{{estatistica.Sexo.Homens}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Homens Presentes:</span>
+                <span>{{estatistica.Sexo.HomensPresentes}}</span>
+              </div>
+            </div>
+            <div class="cartao" fxLayout="column" fxLayoutGap="5px"  fxFlex="30">
+              <h2>Vegetarianos</h2>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>São:</span>
+                <span>{{estatistica.Vegetarianos.Sao}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>São Presentes:</span>
+                <span>{{estatistica.Vegetarianos.SaoPresentes}}</span>
+              </div>
+            </div>
+          </div>
+          <div fxLayout="row" fxLayoutGap="5px">
+            <div class="cartao" fxLayout="column" fxLayoutGap="5px"  fxFlex="30">
+              <h2>Adoçante</h2>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Usam:</span>
+                <span>{{estatistica.UsamAdocante.Usam}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>Usam Presentes:</span>
+                <span>{{estatistica.UsamAdocante.UsamPresentes}}</span>
+              </div>
+            </div>
+            <div class="cartao" fxLayout="column" fxLayoutGap="5px" fxFlex="30">
+              <h2>Diabéticos</h2>
+              <mat-divider></mat-divider>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>São:</span>
+                <span>{{estatistica.Diabeticos.Sao}}</span>
+              </div>
+              <div fxLayout="row" fxLayoutGap="5px">
+                <span>São Presentes:</span>
+                <span>{{estatistica.Diabeticos.SaoPresentes}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Evangelização">
+        <div fxLayout="row" fxLayoutGap="5px">
+          <div class="cartao" fxLayout="column" fxLayoutGap="5px" fxFlex="50">
+            <h2>Por Sexo</h2>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Meninos:</span>
+              <span>{{estatistica.Evangelizacao.NumeroMeninos}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Meninos Presentes:</span>
+              <span>{{estatistica.Evangelizacao.NumeroMeninosPresentes}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Meninas:</span>
+              <span>{{estatistica.Evangelizacao.NumeroMeninas}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Meninas Presentes:</span>
+              <span>{{estatistica.Evangelizacao.NumeroMeninasPresentes}}</span>
+            </div>
+          </div>
+          <div class="cartao" fxLayout="column" fxLayoutGap="5px" fxFlex="30">
+            <h2>Por idade</h2>
+            <mat-divider></mat-divider>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Crianças de 00 a 03 anos:</span>
+              <span>{{estatistica.Evangelizacao.NumeroCriancas0a3Anos}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Crianças presentes de 00 a 03 anos:</span>
+              <span>{{estatistica.Evangelizacao.NumeroCriancas0a3AnosPresentes}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Crianças de 04 a 06 anos:</span>
+              <span>{{estatistica.Evangelizacao.NumeroCriancas4a6Anos}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Crianças presentes de 04 a 06 anos:</span>
+              <span>{{estatistica.Evangelizacao.NumeroCriancas4a6AnosPresentes}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Crianças de 07 a 09 anos:</span>
+              <span>{{estatistica.Evangelizacao.NumeroCriancas7a9Anos}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Crianças Presentes de 07 a 09 anos:</span>
+              <span>{{estatistica.Evangelizacao.NumeroCriancas7a9AnosPresentes}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Crianças de 10 a 12 anos:</span>
+              <span>{{estatistica.Evangelizacao.NumeroCriancas10a12Anos}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutGap="5px">
+              <span>Crianças Presentes de 10 a 12 anos:</span>
+              <span>{{estatistica.Evangelizacao.NumeroCriancas10a12AnosPresentes}}</span>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Por Cidade">
+        <dx-data-grid id="gridContainer" fxFill
+                      [showBorders]="true"
+                      [dataSource]="estatistica.InscritosCidade"
+                      [hoverStateEnabled]="true"
+                      [columnResizingMode]="'nextColumn'"
+                      [allowColumnResizing]="true">
+          <dxo-load-panel [enabled]="true"></dxo-load-panel>
+          <dxo-scrolling mode="virtual"></dxo-scrolling>
+          <dxo-sorting mode="multiple"></dxo-sorting>
+
+          <dxi-column dataField="Cidade" caption="Cidade" [minWidth]="100"></dxi-column>
+          <dxi-column dataField="NumeroInscricoes" caption="Total inscrições" [width]="150"></dxi-column>
+        </dx-data-grid>
+      </mat-tab>
+      <mat-tab label="Carnes não comem">
+        <dx-list style="padding:5px"
+                 fxFill
+                 [dataSource]="estatistica.CarnesNaoCome"
+                 noDataText="Não encontrei nada!!"
+                 [searchEnabled]="true"
+                 searchMode="contains">
+        </dx-list>
+      </mat-tab>
+      <mat-tab label="Medicamentos">
+        <dx-list style="padding:5px"
+                 fxFill
+                 [dataSource]="estatistica.Medicamentos"
+                 noDataText="Não encontrei nada!!"
+                 [searchEnabled]="true"
+                 searchMode="contains">
+        </dx-list>
+      </mat-tab>
+      <mat-tab label="Alergias">
+        <dx-list style="padding:5px"
+                 fxFill
+                 [dataSource]="estatistica.Alergias"
+                 noDataText="Não encontrei nada!!"
+                 [searchEnabled]="true"
+                 searchMode="contains">
+        </dx-list>
+      </mat-tab>
+    </mat-tab-group>
+  </layout-geral>
+</layout-geral>
