@@ -25,12 +25,13 @@ namespace EventoWeb.Nucleo.Aplicacao
         AApresentacoesSarau RepositorioApresentacoesSarau { get; }
         AArquivosBinarios RepositorioArquivosBinarios { get; }
         AQuartos RepositorioQuartos { get; }
+        AContratosInscricao RepositorioContratosInscricao { get; }
 
         IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro { get; }
 
         ATitulos RepositorioTitulosFinanceiros { get; }
         ATransacoes RepositorioTransacoesFinanceiras { get; }
         AContas RepositorioContasBancarias { get; }
-        AFaturamentos RepositorioFaturamentos { get; }
+        AFaturamentos RepositorioFaturamentos { get; }        
     }
 }
