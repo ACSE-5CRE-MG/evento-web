@@ -6,8 +6,8 @@ namespace EventoWeb.Nucleo.Aplicacao
 {
     public class DTOContratoInscricao: DTOId
     {
-        public virtual string Regulamento { get; set; }
-        public virtual string InstrucoesPagamento { get; set; }
-        public virtual string PassoAPassoInscricao { get; set; }
+        public string Regulamento { get; set; }
+        public string InstrucoesPagamento { get; set; }
+        public string PassoAPassoInscricao { get; set; }
     }
 }

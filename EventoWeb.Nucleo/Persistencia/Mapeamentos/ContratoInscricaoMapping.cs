@@ -12,7 +12,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
             this.Table("CONTRATOS_INSCRICAO");
             this.Id(x => x.Id, m =>
               {
-                  m.Access(Accessor.Property);
+                  m.Access(Accessor.NoSetter);
                   m.Column("ID_CONTRATO_INSCRICAO");
                   m.Generator(Generators.Native, g =>
                   {

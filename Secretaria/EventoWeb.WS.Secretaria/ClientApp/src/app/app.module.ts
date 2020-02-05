@@ -54,7 +54,8 @@ import {
   DxValidationGroupModule,
   DxSelectBoxModule,
   DxFileUploaderModule,
-  DxGalleryModule
+  DxGalleryModule,
+  DxHtmlEditorModule
 } from 'devextreme-angular';
 
 import { locale, loadMessages } from 'devextreme/localization';
@@ -107,6 +108,8 @@ import { TelaDivisaoOficina } from './divisao-oficinas/tela-divisao-oficina';
 import { TelaDivisaoQuarto } from './divisao-quartos/tela-divisao-quarto';
 import { WebServiceEstatisticas } from './webservices/webservice-estatisticas';
 import { TelaEstatisticas } from './estatisticas/tela-estatisticas';
+import { TelaContratosInscricao } from './contratos-inscricao/tela-contratos-inscricao';
+import { WebServiceContratosInscricao } from './webservices/webservice-contratos-inscricao';
 
 declare function require(url: string);
 
@@ -160,7 +163,7 @@ export function init_app(appLoadService: AppLoadService) {
     TelaDivisaoSala, TelaDivisaoOficina, TelaDivisaoQuarto,
     TelaListagemOficinas, DlgFormOficina,
     TelaListagemQuartos, DlgFormQuarto,
-    TelaEstatisticas
+    TelaEstatisticas, TelaContratosInscricao
   ],
   imports: [
     BrowserModule,
@@ -206,6 +209,7 @@ export function init_app(appLoadService: AppLoadService) {
     DxSelectBoxModule,
     DxFileUploaderModule,
     DxGalleryModule,
+    DxHtmlEditorModule,
     RouterModule.forRoot([
       { path: '', component: TelaListaEventos, canActivate: [PermissaoAcessoRota] },
       { path: 'login', component: TelaLogin },
@@ -222,6 +226,7 @@ export function init_app(appLoadService: AppLoadService) {
           { path: 'quartos', component: TelaListagemQuartos, canActivate: [PermissaoAcessoRota] },
           { path: 'divisao-quartos', component: TelaDivisaoQuarto, canActivate: [PermissaoAcessoRota] },
           { path: 'estatisticas', component: TelaEstatisticas, canActivate: [PermissaoAcessoRota] },
+          { path: 'contratos', component: TelaContratosInscricao, canActivate: [PermissaoAcessoRota] },
         ]
       },
       { path: '** ', redirectTo: '' }
@@ -240,7 +245,7 @@ export function init_app(appLoadService: AppLoadService) {
     WebServiceAutenticacao, WebServiceEventos, WebServiceSalas, WebServiceInscricoes, ServicoEventoSelecionado,
     WebServiceDivisaoSalas, WebServiceRelatorios, WebServiceOficinas, WebServiceQuartos, WebServiceDivisaoOficinas, WebServiceDivisaoQuartos,
     DialogosSarau, DialogosCrianca, DialogosSala, DialogosOficina, DialogosQuarto,
-    WebServiceEstatisticas],
+    WebServiceEstatisticas, WebServiceContratosInscricao],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule {

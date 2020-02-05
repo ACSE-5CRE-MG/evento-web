@@ -20,6 +20,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             PassoAPassoInscricao = passoAPassoInscricao;
         }
 
+        protected ContratoInscricao() { }
+
         public virtual Evento Evento { get => m_Evento; }
         public virtual string Regulamento 
         {
