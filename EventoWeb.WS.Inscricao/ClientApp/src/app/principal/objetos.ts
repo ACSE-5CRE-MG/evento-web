@@ -44,3 +44,11 @@ export enum EnumModeloDivisaoSalasEstudo { PorIdadeCidade, PorOrdemEscolhaInscri
 
 export enum EnumPublicoEvangelizacao { Todos, TrabalhadoresOuParticipantesTrabalhadores }
 
+export class DTOContratoInscricao
+{
+  Id: number;
+  Regulamento: string;
+  InstrucoesPagamento: string;
+  PassoAPassoInscricao: string;
+}
+

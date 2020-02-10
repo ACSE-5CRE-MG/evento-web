@@ -10,12 +10,12 @@ namespace EventoWeb.WS.Inscricao.Controllers
     public class EventosController : ControllerBase
     {
         private readonly AppInscOnlineEvento mAppEvento;
-        private readonly AppEmailMsgPadrao mAppEmail;
+        private readonly AppContratosInscricao mAppContrato;
 
         public EventosController(IContexto contexto)
         {
             mAppEvento = new AppInscOnlineEvento(contexto);
-            mAppEmail = new AppEmailMsgPadrao(contexto, new ServicoEmail(), new GeracaoMensagemEmailRazor());
+            mAppContrato = new AppContratosInscricao(contexto);
         }
 
         [HttpGet("disponiveis")]
@@ -28,6 +28,13 @@ namespace EventoWeb.WS.Inscricao.Controllers
         public DTOEventoMinimo ObterEventos(int id)
         {
             return mAppEvento.ObterPorIdDisponivelInscricaoOnline(id);
+        }
+
+
+        [HttpGet("{id}/contrato")]
+        public DTOContratoInscricao ObterContrato(int id)
+        {
+            return mAppContrato.ObterPorEvento(id);
         }
     }
 }

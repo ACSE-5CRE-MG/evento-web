@@ -62,6 +62,7 @@ import { ComponentePagamento } from './inscricao/pagamento/comp-pagamento';
 import { ClienteWs } from './webservices/cliente-ws';
 import { Observable } from 'rxjs';
 import { Configuracao, ConfiguracaoSistemaService } from './configuracao-sistema-service';
+import { ComponenteContrato, SanitizeHtmlPipe } from './contrato/comp-contrato';
 
 declare function require(url: string);
 
@@ -106,7 +107,8 @@ export function init_app(appLoadService: AppLoadService) {
     ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
     ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
     ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario,
-    ComponentePagamento
+    ComponentePagamento,
+    ComponenteContrato, SanitizeHtmlPipe
   ],
   imports: [
     BrowserModule,

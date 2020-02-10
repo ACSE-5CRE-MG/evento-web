@@ -1,0 +1,19 @@
+<div fxLayout="column">
+  <div fxFlex="70" fxFlex.xs="95" fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px">
+    <div class="cartao margem-5px" fxFlex="33" fxFlex.xs="100" fxLayoutGap="5px" style="height:350px; overflow-x:auto">
+      <mat-card-title>Passo-a-passo da Inscrição</mat-card-title>
+      <mat-divider></mat-divider>
+      <div [innerHTML]="contrato && contrato.PassoAPassoInscricao | sanitizeHtml"></div>
+    </div>
+    <div class="cartao margem-5px" fxFlex="33" fxFlex.xs="100" fxLayoutGap="5px" style="height:350px; overflow-x:auto">
+      <mat-card-title>Regulamento</mat-card-title>
+      <mat-divider></mat-divider>
+      <div [innerHTML]="contrato && contrato.Regulamento | sanitizeHtml"></div>
+    </div>
+    <div class="cartao margem-5px" fxFlex="33" fxFlex.xs="100" fxLayoutGap="5px" style="height:350px; overflow-x:auto">
+      <mat-card-title>Instruções de Pagamento</mat-card-title>
+      <mat-divider></mat-divider>
+      <div [innerHTML]="contrato && contrato.InstrucoesPagamento | sanitizeHtml"></div>
+    </div>
+  </div>  
+</div>

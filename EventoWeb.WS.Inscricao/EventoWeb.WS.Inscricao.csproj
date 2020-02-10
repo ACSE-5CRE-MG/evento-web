@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\contrato\comp-contrato.ts" />
     <None Remove="ClientApp\src\app\inscricao\atividades\comp-departamentos.ts" />
     <None Remove="ClientApp\src\app\inscricao\atividades\comp-oficinas.ts" />
     <None Remove="ClientApp\src\app\inscricao\atividades\comp-salas.ts" />
