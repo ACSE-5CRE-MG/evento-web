@@ -50,7 +50,7 @@ import { TelaPesquisaInscricao } from './inscricao/tela-pesquisa-inscricao';
 import { WsEventos } from './webservices/wsEventos';
 import { WsInscricoes } from './webservices/wsInscricoes';
 import { TelaCodigoInscricao } from './inscricao/tela-codigo-inscricao';
-import { TelaInscricao } from './inscricao/tela-inscricao';
+import { TelaInscricaoAtualizacao, TelaInscricaoInclusao } from './inscricao/tela-inscricao';
 import { PermissaoAcessoInscricao } from './permissao-acesso-inscricao';
 import { WsManutencaoInscricoes } from './webservices/wsManutencaoInscricoes';
 import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador } from './inscricao/atividades/comp-oficinas';
@@ -63,6 +63,7 @@ import { ClienteWs } from './webservices/cliente-ws';
 import { Observable } from 'rxjs';
 import { Configuracao, ConfiguracaoSistemaService } from './configuracao-sistema-service';
 import { ComponenteContrato, SanitizeHtmlPipe } from './contrato/comp-contrato';
+import { DlgContrato, DialogoContrato } from './contrato/dlg-contrato';
 
 declare function require(url: string);
 
@@ -101,14 +102,14 @@ export function init_app(appLoadService: AppLoadService) {
 
 @NgModule({
   declarations: [
-    TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao, TelaCodigoInscricao, TelaInscricao,
+    TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao, TelaCodigoInscricao, TelaInscricaoInclusao, TelaInscricaoAtualizacao,
     CaixaMensagemDlg, DlgEmProcessamento, LayoutGeral,
     ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
     ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
     ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
     ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario,
     ComponentePagamento,
-    ComponenteContrato, SanitizeHtmlPipe
+    ComponenteContrato, SanitizeHtmlPipe, DlgContrato
   ],
   imports: [
     BrowserModule,
@@ -141,17 +142,18 @@ export function init_app(appLoadService: AppLoadService) {
       { path: 'comecar/:idevento', component: TelaCriacaoInscricao },
       { path: 'pesquisar', component: TelaPesquisaInscricao },
       { path: 'validar/:idinscricao', component: TelaCodigoInscricao },
-      { path: 'inscricao/:idinscricao', component: TelaInscricao, canActivate: [PermissaoAcessoInscricao], },
+      { path: 'inscricao/:idinscricao', component: TelaInscricaoAtualizacao, canActivate: [PermissaoAcessoInscricao], },
+      { path: 'evento/{idevento}/criar-inscricao', component: TelaInscricaoInclusao, canActivate: [PermissaoAcessoInscricao], },
       { path: '**', redirectTo: '' }
     ]),
     BrowserAnimationsModule
   ],
-  entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario],
+  entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario, DlgContrato],
   providers: [
     AppLoadService,
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [AppLoadService], multi: true },
-    CoordenacaoCentral, WsEventos, ClienteWs, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau, DialogosCrianca
+    CoordenacaoCentral, WsEventos, ClienteWs, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau, DialogosCrianca, DialogoContrato
   ],
   bootstrap: [TelaBase]
 })

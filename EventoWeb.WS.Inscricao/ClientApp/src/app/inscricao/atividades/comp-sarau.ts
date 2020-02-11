@@ -35,7 +35,7 @@ export class ComponenteSarau {
 
                         let dlg = this.coordenacao.Alertas.alertarProcessamento("Buscando sarau pelo código...");
 
-                        this.wsManInscricoes.obterSarau(this.inscrito.IdEvento, this.inscrito.Id, codigo.toUpperCase())
+                        this.wsManInscricoes.obterSarau(this.inscrito.IdEvento, codigo.toUpperCase())
                             .subscribe(
                                 (sarau) => {
                                     dlg.close();

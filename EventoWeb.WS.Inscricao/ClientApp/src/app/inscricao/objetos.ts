@@ -1,7 +1,7 @@
 import { DTOOficina, DTOEventoCompleto, DTOSalaEstudo, DTODepartamento } from '../principal/objetos';
 
 export enum EnumSexo { Masculino, Feminino }
-export enum EnumTipoInscricao { Participante, ParticipanteTrabalhador }
+export enum EnumTipoInscricao { Participante, ParticipanteTrabalhador, Trabalhador }
 export enum EnumApresentacaoAtividades {
     ApenasParticipante, PodeEscolher
 }

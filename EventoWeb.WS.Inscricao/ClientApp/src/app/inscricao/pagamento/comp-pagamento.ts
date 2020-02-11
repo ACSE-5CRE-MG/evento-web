@@ -44,12 +44,6 @@ export class ComponentePagamento {
   @Input()
   valorInscricao: number;
 
-  @Input()
-  valorInscCrianca: number;
-
-  @Input()
-  totalCriancas: number;
-
   opcoes: string[] = ["Enviar Comprovante", "Comprovante esta em outra inscrição", "Outros"];
 
   get opcaoEscolhida(): string {

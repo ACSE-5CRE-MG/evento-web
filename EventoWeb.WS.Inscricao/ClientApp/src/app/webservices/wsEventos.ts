@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { DTOEventoListagem, DTOContratoInscricao } from '../principal/objetos';
+import { DTOEventoListagem, DTOContratoInscricao, DTOEventoCompleto } from '../principal/objetos';
 import { ClienteWs } from './cliente-ws';
 import { ConfiguracaoSistemaService } from '../configuracao-sistema-service';
 
 @Injectable()
 export class WsEventos {
+    
 
   constructor(private clienteWs: ClienteWs) { }
 
@@ -23,5 +24,9 @@ export class WsEventos {
   public obterContrato(idEvento: number): Observable<DTOContratoInscricao> {
     this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'eventos/' + idEvento.toString()  + "/contrato";
     return this.clienteWs.executarGet("");
+  }
+
+  obterCompleto(idEvento: number): Observable<DTOEventoCompleto> {
+    throw new Error("Method not implemented.");
   }
 }

@@ -13,6 +13,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
         public InscricaoMapping()
         {
             Table("INSCRICOES");
+            this.Lazy(false);
 
             Discriminator(d =>
             {
@@ -94,7 +95,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
         public InscricaoInfantilMapping()
         {
             DiscriminatorValue("INFANTIL");
-
+            
             ManyToOne(x => x.InscricaoResponsavel1, m =>
             {
                 m.Column("ID_INSC_RESPONSAVEL_1");

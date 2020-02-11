@@ -24,15 +24,13 @@ export class WsManutencaoInscricoes {
         return this.clienteWs.executarPut("", inscricao);
     }
 
-    obterSarau(idEvento: number, idInscricao: number, codigo: string): Observable<DTOSarau> {
+    obterSarau(idEvento: number, codigo: string): Observable<DTOSarau> {
         this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'manutencaoinscricoes/evento/' + idEvento.toString() + '/obterSarau/' + codigo;
-        this.clienteWs.TokenAutorizacao = this.coordenacao.AutorizacoesInscricao.obterAutorizacao(idInscricao);
         return this.clienteWs.executarGet("");
     }
 
-    obterCrianca(idEvento: number, idInscricao: number, codigo: string): Observable<DTOCrianca> {
+    obterCrianca(idEvento: number, codigo: string): Observable<DTOCrianca> {
         this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'manutencaoinscricoes/evento/' + idEvento.toString() + '/obterCrianca/' + codigo;
-        this.clienteWs.TokenAutorizacao = this.coordenacao.AutorizacoesInscricao.obterAutorizacao(idInscricao);
         return this.clienteWs.executarGet("");        
     }
 }

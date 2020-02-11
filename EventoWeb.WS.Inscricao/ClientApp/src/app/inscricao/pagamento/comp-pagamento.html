@@ -1,8 +1,7 @@
 <div fxLayout="column" fxLayoutGap="5px">
   <div>
     <p><strong>Valor Inscrição:</strong> &nbsp; {{valorInscricao| currency:'BRL'}}</p>
-    <p *ngIf="totalCriancas > 0"><strong>Crianças:</strong> &nbsp; {{totalCriancas}} &nbsp; X &nbsp; {{valorInscCrianca| currency:'BRL'}} = {{totalCriancas * valorInscCrianca| currency:'BRL'}} </p>
-    <p><strong>Total: </strong> &nbsp; {{valorInscricao + (totalCriancas * valorInscCrianca) | currency:'BRL'}}</p>
+    <p><strong>Total: </strong> &nbsp; {{valorInscricao | currency:'BRL'}}</p>
   </div>
   <mat-divider></mat-divider>
   <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">

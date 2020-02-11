@@ -31,14 +31,12 @@ namespace EventoWeb.WS.Inscricao.Controllers
             mAppInscricao.AtualizarInscricao(id, dtoInscricao);
         }
 
-        [Authorize(Policy = "Bearer")]
         [HttpGet("evento/{idEvento}/obterSarau/{codigo}")]
         public DTOSarau ObterSarau(int idEvento, string codigo) 
         {
             return mAppInscricao.ObterSarau(idEvento, codigo);
         }
 
-        [Authorize(Policy = "Bearer")]
         [HttpGet("evento/{idEvento}/obterCrianca/{codigo}")]
         public DTOCrianca ObterCrianca(int idEvento, string codigo)
         {
