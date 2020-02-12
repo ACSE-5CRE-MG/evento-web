@@ -36,5 +36,10 @@ namespace EventoWeb.Nucleo.Aplicacao
 
             return dtoEventos;
         }
+
+        public DTOEventoCompleto ObterPorIdCompleto(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

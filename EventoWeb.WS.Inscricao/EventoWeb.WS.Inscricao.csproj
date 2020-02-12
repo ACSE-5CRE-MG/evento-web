@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\componentes\geracao-md5.ts" />
     <None Remove="ClientApp\src\app\contrato\comp-contrato.ts" />
     <None Remove="ClientApp\src\app\inscricao\atividades\comp-departamentos.ts" />
     <None Remove="ClientApp\src\app\inscricao\atividades\comp-oficinas.ts" />
@@ -29,6 +30,7 @@
   <ItemGroup>
     <TypeScriptCompile Remove="ClientApp\src\app\configuracao-sistema-service.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\contrato\dlg-contrato.ts" />
+    <TypeScriptCompile Remove="ClientApp\src\app\inscricao\dlg-validacao-email.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\permissao-acesso-inscricao.ts" />
     <TypeScriptCompile Remove="ClientApp\src\app\webservices\cliente-ws.ts" />
   </ItemGroup>

@@ -7,6 +7,8 @@ import { DTOEventoCompleto } from '../principal/objetos';
 import { CompFormInscricao } from './comp-form-inscricao';
 import { WsInscricoes } from '../webservices/wsInscricoes';
 import { WsEventos } from '../webservices/wsEventos';
+import { DialogoValidacaoEmail } from './dlg-validacao-email';
+import { md5 } from '../componentes/geracao-md5';
 
 export abstract class ATelaInscricao {
   inscricao: DTOInscricaoAtualizacao;
@@ -114,7 +116,7 @@ export class TelaInscricaoAtualizacao extends ATelaInscricao implements OnInit {
 export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
 
   constructor(public coordenacao: CoordenacaoCentral, private rotaAtual: ActivatedRoute, protected navegadorUrl: Router,
-    private wsInscricoes: WsInscricoes, private wsEventos: WsEventos) {
+    private wsInscricoes: WsInscricoes, private wsEventos: WsEventos, private dlgValidacaoEmail: DialogoValidacaoEmail) {
     super(coordenacao, navegadorUrl);
   }
 
@@ -150,18 +152,39 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
 
   protected processarAtualizacao(inscricao: DTOInscricaoAtualizacao) {
 
-    let dlg = this.coordenacao.Alertas.alertarProcessamento("Atualizando inscrição...");
+    let dlgEnvioCodigo = this.coordenacao.Alertas.alertarProcessamento("Enviando código de validação...");
 
-    this.wsInscricoes.criar(this.evento.Id, null)
+    let identificacao = md5(new Date().toISOString() + inscricao.DadosPessoais.Email + inscricao.DadosPessoais.Nome);
+
+    this.wsInscricoes.enviarCodigoValidacaoEmail(identificacao, inscricao.DadosPessoais.Email)
       .subscribe(
-        (retorno) => {
-          dlg.close();
-          this.coordenacao.Alertas.alertarInformacao("Inscrição enviada com sucesso!!",
-            "Agora é aguardar a análise da secretaria do evento para que a sua inscrição seja efetivada!");
-          this.clicarVoltar();
+        () => {
+          dlgEnvioCodigo.close();
+          this.dlgValidacaoEmail.apresentarDlg(inscricao.DadosPessoais.Email, inscricao.DadosPessoais.Nome, identificacao)
+            .subscribe(
+              (validou) => {                
+                if (validou) {
+                  let dlg = this.coordenacao.Alertas.alertarProcessamento("Incluindo inscrição...");
+
+                  this.wsInscricoes.criar(this.evento.Id, null)
+                    .subscribe(
+                      (retorno) => {                        
+                        dlg.close();
+                        this.coordenacao.Alertas.alertarInformacao("Inscrição incluída com sucesso!!",
+                          "Agora é aguardar a análise da secretaria do evento para que a sua inscrição seja efetivada!");
+                        this.clicarVoltar();
+                      },
+                      (erro) => {
+                        dlg.close();
+                        this.coordenacao.ProcessamentoErro.processar(erro);
+                      }
+                    );
+                }
+              }
+            );
         },
         (erro) => {
-          dlg.close();
+          dlgEnvioCodigo.close();
           this.coordenacao.ProcessamentoErro.processar(erro);
         }
       );

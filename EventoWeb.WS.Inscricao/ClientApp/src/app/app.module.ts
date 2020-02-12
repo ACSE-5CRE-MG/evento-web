@@ -64,6 +64,7 @@ import { Observable } from 'rxjs';
 import { Configuracao, ConfiguracaoSistemaService } from './configuracao-sistema-service';
 import { ComponenteContrato, SanitizeHtmlPipe } from './contrato/comp-contrato';
 import { DlgContrato, DialogoContrato } from './contrato/dlg-contrato';
+import { DlgValidacaoEmail, DialogoValidacaoEmail } from './inscricao/dlg-validacao-email';
 
 declare function require(url: string);
 
@@ -109,7 +110,8 @@ export function init_app(appLoadService: AppLoadService) {
     ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
     ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario,
     ComponentePagamento,
-    ComponenteContrato, SanitizeHtmlPipe, DlgContrato
+    ComponenteContrato, SanitizeHtmlPipe, DlgContrato,
+    DlgValidacaoEmail
   ],
   imports: [
     BrowserModule,
@@ -153,7 +155,8 @@ export function init_app(appLoadService: AppLoadService) {
     AppLoadService,
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [AppLoadService], multi: true },
-    CoordenacaoCentral, WsEventos, ClienteWs, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau, DialogosCrianca, DialogoContrato
+    CoordenacaoCentral, WsEventos, ClienteWs, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau, DialogosCrianca, DialogoContrato,
+    DialogoValidacaoEmail
   ],
   bootstrap: [TelaBase]
 })

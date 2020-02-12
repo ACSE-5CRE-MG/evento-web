@@ -4,6 +4,7 @@ using EventoWeb.Nucleo.Negocio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
@@ -87,7 +88,19 @@ namespace EventoWeb.Nucleo.Aplicacao
             return dto;
         }
 
-        public DTODadosConfirmacao CriarInscricao(int idEvento, DTODadosCriarInscricao dadosInscricao)
+        public bool ValidarCodigoEmail(string identificacao, string codigo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EnviarCodigoEmail(string identificacao, string email)
+        {
+            string codigo = Contexto.ServicoGeradorCodigoSeguro.GerarCodigoInscricao(identificacao);
+
+            m_AppEmail.EnviarCodigoCriacaoInscricao(novaInscricao, codigo);
+        }
+
+        public DTODadosConfirmacao CriarInscricao(int idEvento, DTOInscricaoAtualizacao dtoInscricao)
         {
             DTODadosConfirmacao dto = null;
             ExecutarSeguramente(() =>
@@ -96,17 +109,39 @@ namespace EventoWeb.Nucleo.Aplicacao
                 if (evento.PeriodoInscricaoOnLine.DataFinal < DateTime.Now || evento.PeriodoInscricaoOnLine.DataInicial > DateTime.Now)
                     throw new ExcecaoAplicacao("AppInscOnlineEventoAcessoInscricoes", "Evento encerrado");
 
+                var pessoa = new Pessoa(dtoInscricao.DadosPessoais.Nome,
+                    new Endereco(dtoInscricao.DadosPessoais.Cidade, dtoInscricao.DadosPessoais.Uf), dtoInscricao.DadosPessoais.DataNascimento,
+                    dtoInscricao.DadosPessoais.Sexo, dtoInscricao.DadosPessoais.Email);
 
-                var pessoa = new Pessoa(dadosInscricao.Nome,
-                    new Endereco(dadosInscricao.Cidade, dadosInscricao.UF), dadosInscricao.DataNascimento,
-                    dadosInscricao.Sexo, dadosInscricao.Email);
+                var novaInscricao = new InscricaoParticipante(evento, pessoa, DateTime.Now, dtoInscricao.TipoInscricao);
+                var inscParticipante = (InscricaoParticipante)novaInscricao;
+                inscParticipante.AtribuirDados(dtoInscricao);
 
-                var novaInscricao = new InscricaoParticipante(evento, pessoa, DateTime.Now, dadosInscricao.TipoInscricao);
-                Contexto.RepositorioInscricoes.Incluir(novaInscricao);
+                inscParticipante.RemoverTodasAtividade();
+                inscParticipante.AtribuirAtividadeOficina(dtoInscricao.Oficina, Contexto.RepositorioOficinas);
+                inscParticipante.AtribuirAtividadeSalaEstudo(dtoInscricao.SalasEstudo, Contexto.RepositorioSalasEstudo);
+                inscParticipante.AtribuirAtividadeDepartamento(dtoInscricao.Departamento, Contexto.RepositorioDepartamentos);
 
-                string codigo = Contexto.ServicoGeradorCodigoSeguro.GerarCodigoInscricao(novaInscricao);
+                inscParticipante.TornarPendente();
 
-                m_AppEmail.EnviarCodigoCriacaoInscricao(novaInscricao, codigo);
+                var repInscricoes = Contexto.RepositorioInscricoes;
+                repInscricoes.Incluir(inscParticipante);
+
+                new AppInscricaoInfantil(Contexto)
+                    .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Criancas);
+
+                var appApresentacaoSarau = new AppApresentacaoSarau(Contexto);
+                appApresentacaoSarau
+                    .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Sarais);
+
+                foreach (var dtoCrianca in dtoInscricao.Criancas.Where(x => x.Sarais?.Count > 0))
+                {
+                    var crianca = repInscricoes.ObterInscricaoPeloIdEventoEInscricao(inscParticipante.Evento.Id, dtoCrianca.Id.Value);
+                    appApresentacaoSarau
+                        .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(crianca, dtoCrianca.Sarais);
+                }
+
+                m_AppEmail.EnviarInscricaoRegistrada(inscParticipante);
 
                 dto = new DTODadosConfirmacao
                 {

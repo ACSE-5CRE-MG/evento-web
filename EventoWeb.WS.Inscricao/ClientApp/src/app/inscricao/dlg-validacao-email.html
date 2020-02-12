@@ -1,0 +1,28 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div><h1>Validação de email</h1></div>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-icon-button (click)="clicarValidar()" matTooltip="Valida o código">Validar</button>
+    <button mat-icon-button (click)="clicarCancelar()" matTooltip="Permite fechar esta tela"><i class="fa fa-times"></i></button>
+  </mat-toolbar>
+  <div class="cartao margem-5px" fxFlex="50" fxFlex.xs="95">
+    <div fxLayout="column">
+      <mat-card-subtitle>{{"Inscrição de " + nome}}</mat-card-subtitle>
+    </div>
+    <mat-divider></mat-divider>
+    <div fxLayout="column" fxLayoutGap="5px" fxFill>
+      <div class="margem-5px">
+        Foi enviado um email para <strong>{{email}}</strong> com o código para validação Por favor, verifique a sua caixa de email, pode estar na pasta de SPAM, e nos informe o código recebido.
+      </div>
+      <mat-divider></mat-divider>
+      <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Código:</label>
+        <dx-text-box [(value)]="codigo" fxFlex="200px">
+          <dx-validator>
+            <dxi-validation-rule type="required" message="Você não informou o código."></dxi-validation-rule>
+          </dx-validator>
+        </dx-text-box>
+      </dx-validation-group>
+    </div>
+  </div>
+</layout-geral>

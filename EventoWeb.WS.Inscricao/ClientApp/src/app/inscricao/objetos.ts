@@ -7,16 +7,6 @@ export enum EnumApresentacaoAtividades {
 }
 export enum EnumSituacaoInscricao { Incompleta, Pendente, Aceita, Rejeitada }
 
-export class DTODadosCriarInscricao {
-    Nome: string;
-    DataNascimento: Date;
-    Email: string;
-    Sexo: EnumSexo;
-    TipoInscricao: EnumTipoInscricao;
-    Cidade: string;
-    UF: string;
-}
-
 export class DTODadosConfirmacao {
     public IdInscricao: number;
     public EnderecoEmail: string;

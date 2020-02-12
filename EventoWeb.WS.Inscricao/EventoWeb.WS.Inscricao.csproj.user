@@ -16,6 +16,11 @@
     <NameOfLastUsedPublishProfile>FolderProfile</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ItemGroup>
+    <TypeScriptCompile Update="ClientApp\src\app\componentes\geracao-md5.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+  </ItemGroup>
+  <ItemGroup>
     <TypeScriptCompile Update="ClientApp\src\app\principal\objetos.ts">
       <SubType>Code</SubType>
     </TypeScriptCompile>

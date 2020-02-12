@@ -27,6 +27,7 @@ export class WsEventos {
   }
 
   obterCompleto(idEvento: number): Observable<DTOEventoCompleto> {
-    throw new Error("Method not implemented.");
+    this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'eventos/' + idEvento.toString() + "/completo";
+    return this.clienteWs.executarGet("");
   }
 }

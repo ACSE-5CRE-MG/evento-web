@@ -25,9 +25,15 @@ namespace EventoWeb.WS.Inscricao.Controllers
         }
 
         [HttpGet("{id}")]
-        public DTOEventoMinimo ObterEventos(int id)
+        public DTOEventoMinimo ObterEventoMinimo(int id)
         {
             return mAppEvento.ObterPorIdDisponivelInscricaoOnline(id);
+        }
+
+        [HttpGet("{id}/completo")]
+        public DTOEventoCompleto ObterEventoCompleto(int id)
+        {
+            return mAppEvento.ObterPorIdCompleto(id);
         }
 
 
