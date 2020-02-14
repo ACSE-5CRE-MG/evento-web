@@ -38,9 +38,17 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
             this.ManyToOne(x => x.Inscricao, m =>
             {
                 m.Access(Accessor.Property);
-                m.NotNullable(true);
+                m.NotNullable(false);
                 m.Column("ID_INSCRICAO");
             });
+
+            this.Property(x => x.Identificacao, m =>
+             {
+                 m.Access(Accessor.Property);
+                 m.NotNullable(false);
+                 m.Column("IDENTIFICACAO");
+                 m.Length(100);
+             });
         }
     }
 }

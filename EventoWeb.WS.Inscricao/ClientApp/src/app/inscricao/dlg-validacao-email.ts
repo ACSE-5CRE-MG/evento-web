@@ -36,7 +36,7 @@ export class DlgValidacaoEmail {
       let dlg = this.coordenacao.Alertas.alertarProcessamento("Validando código...");
 
       this.wsInscricao.validarCodigoEmail(this.identificacao, this.codigo)
-        .subcribe(
+        .subscribe(
           (codigoEhvalido) => {
             if (codigoEhvalido)
               this.dialogRef.close(true);

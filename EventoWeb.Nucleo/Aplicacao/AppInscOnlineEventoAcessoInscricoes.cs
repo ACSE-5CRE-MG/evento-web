@@ -70,7 +70,9 @@ namespace EventoWeb.Nucleo.Aplicacao
 
                         if (dto.Resultado == EnumResultadoEnvio.InscricaoOK)
                         {
-                            string codigo = Contexto.ServicoGeradorCodigoSeguro.GerarCodigoInscricao(inscricao);
+                            string codigo = GerarCodigoUnico();
+                            var codigoAcesso = new CodigoAcessoInscricao(codigo, inscricao, DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59));
+                            Contexto.RepositorioCodigosAcessoInscricao.Incluir(codigoAcesso);
 
                             m_AppEmail.EnviarCodigoAcompanhamentoInscricao((InscricaoParticipante)inscricao, codigo);                            
                         }
@@ -90,15 +92,45 @@ namespace EventoWeb.Nucleo.Aplicacao
 
         public bool ValidarCodigoEmail(string identificacao, string codigo)
         {
-            throw new NotImplementedException();
+            bool valido = false;
+            ExecutarSeguramente(() =>
+            {
+                var repCodigos = Contexto.RepositorioCodigosAcessoInscricao;
+                repCodigos.ExcluirCodigosVencidos();
+
+                var codigoAcesso = repCodigos.ObterPeloCodigo(codigo);
+                valido = codigoAcesso != null && codigoAcesso.Identificacao.ToUpper() == identificacao.ToUpper();
+            });
+
+            return valido;
         }
 
-        public void EnviarCodigoEmail(string identificacao, string email)
+        public void EnviarCodigoEmail(int idEvento, string identificacao, string email)
         {
-            string codigo = Contexto.ServicoGeradorCodigoSeguro.GerarCodigoInscricao(identificacao);
+            ExecutarSeguramente(() =>
+            {
+                string codigo = GerarCodigoUnico();
+                var codigoAcesso = new CodigoAcessoInscricao(codigo, identificacao, DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59));
+                Contexto.RepositorioCodigosAcessoInscricao.Incluir(codigoAcesso);
 
-            m_AppEmail.EnviarCodigoCriacaoInscricao(novaInscricao, codigo);
+                m_AppEmail.EnviarCodigoValidacaoEmail(idEvento, email, codigo);
+            });
         }
+
+        private string GerarCodigoUnico()
+        {
+            var m_RepCodigosAcessoInscricao = Contexto.RepositorioCodigosAcessoInscricao;
+            m_RepCodigosAcessoInscricao.ExcluirCodigosVencidos();
+
+            string codigo;
+            do
+            {
+                codigo = Contexto.ServicoGeradorCodigoSeguro.GerarCodigo5Caracteres();
+            } while (m_RepCodigosAcessoInscricao.ObterPeloCodigo(codigo) != null);
+
+            return codigo;
+        }
+
 
         public DTODadosConfirmacao CriarInscricao(int idEvento, DTOInscricaoAtualizacao dtoInscricao)
         {

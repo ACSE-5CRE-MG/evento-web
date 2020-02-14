@@ -37,7 +37,6 @@ import {
 } from 'devextreme-angular';
 
 import { locale, loadMessages } from 'devextreme/localization';
-import 'devextreme-intl';
 
 import { TelaBase } from './tela-base';
 import { TelaPrincipal } from './principal/tela-principal';
@@ -65,6 +64,7 @@ import { Configuracao, ConfiguracaoSistemaService } from './configuracao-sistema
 import { ComponenteContrato, SanitizeHtmlPipe } from './contrato/comp-contrato';
 import { DlgContrato, DialogoContrato } from './contrato/dlg-contrato';
 import { DlgValidacaoEmail, DialogoValidacaoEmail } from './inscricao/dlg-validacao-email';
+import { CompFormInscricao } from './inscricao/comp-form-inscricao';
 
 declare function require(url: string);
 
@@ -109,7 +109,7 @@ export function init_app(appLoadService: AppLoadService) {
     ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
     ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
     ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario,
-    ComponentePagamento,
+    ComponentePagamento, CompFormInscricao,
     ComponenteContrato, SanitizeHtmlPipe, DlgContrato,
     DlgValidacaoEmail
   ],
@@ -145,12 +145,12 @@ export function init_app(appLoadService: AppLoadService) {
       { path: 'pesquisar', component: TelaPesquisaInscricao },
       { path: 'validar/:idinscricao', component: TelaCodigoInscricao },
       { path: 'inscricao/:idinscricao', component: TelaInscricaoAtualizacao, canActivate: [PermissaoAcessoInscricao], },
-      { path: 'evento/{idevento}/criar-inscricao', component: TelaInscricaoInclusao, canActivate: [PermissaoAcessoInscricao], },
+      { path: 'criar-inscricao/:idevento', component: TelaInscricaoInclusao, },
       { path: '**', redirectTo: '' }
     ]),
     BrowserAnimationsModule
   ],
-  entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario, DlgContrato],
+  entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario, DlgContrato, DlgValidacaoEmail],
   providers: [
     AppLoadService,
     { provide: LOCALE_ID, useValue: 'pt' },

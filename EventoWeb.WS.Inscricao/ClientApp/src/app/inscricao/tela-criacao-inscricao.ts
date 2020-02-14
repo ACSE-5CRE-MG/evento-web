@@ -52,6 +52,6 @@ export class TelaCriacaoInscricao implements OnInit {
 
   public clicarContinuar(): void {
 
-    this.navegadorUrl.navigate(['evento/' + this.idEvento  + '/criar-inscricao']);    
+    this.navegadorUrl.navigate(['criar-inscricao/' + this.idEvento]);    
   }
 }

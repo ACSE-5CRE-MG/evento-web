@@ -8,6 +8,5 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
     public interface IServicoGeradorCodigoSeguro
     {
         string GerarCodigo5Caracteres();
-        string GerarCodigoInscricao(Inscricao inscricao);
     }
 }

@@ -78,7 +78,7 @@ namespace EventoWeb.Nucleo.Persistencia
         public AArquivosBinarios RepositorioArquivosBinarios => new RepositorioArquivosBinariosNH(m_Sessao);
         public AQuartos RepositorioQuartos => new RepositorioQuartosNH(m_Sessao);
 
-        public IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro => new ServicoGeradorCodigoSeguro(RepositorioCodigosAcessoInscricao);
+        public IServicoGeradorCodigoSeguro ServicoGeradorCodigoSeguro => new ServicoGeradorCodigoSeguro();
 
         public ATitulos RepositorioTitulosFinanceiros => new RepositorioTitulosFinanceirosNH(m_Sessao);
         public ATransacoes RepositorioTransacoesFinanceiras => new RepositorioTransacoesFinanceirasNH(m_Sessao);

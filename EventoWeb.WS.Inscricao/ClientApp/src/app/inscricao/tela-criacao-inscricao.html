@@ -5,7 +5,7 @@
       <span class="versao">{{nomeEvento}}</span>
     </div>
     <span style="flex: 1 1 auto;"></span>
-    <button type="button" mat-raised-button (click)="clicarContinuar()" *ngIf="dadosTela.eventoEncontrado">
+    <button type="button" mat-raised-button (click)="clicarContinuar()" *ngIf="eventoEncontrado">
       Aceito
     </button>
   </mat-toolbar>
@@ -19,9 +19,10 @@
     </div>
   </div>
   <div fxLayout="column" *ngIf="eventoEncontrado">
-    <div>
-      <p>Leia atentamente o regulamento!!!</p>
-      <p><strong>Ao clicar em aceitar e fazer a sua inscrição, você confirma que leu, compreendeu e aceitou as regras do encontro.</strong></p>
+    <div class="cartao margem-5px">
+      <mat-card-title>Leia atentamente o regulamento!!!</mat-card-title>
+      <mat-divider></mat-divider>
+      <p>Ao clicar em aceitar e fazer a sua inscrição, você confirma que leu, compreendeu e aceitou as regras do encontro.</p>
     </div>
     <comp-contrato fxFlex="70" fxFlex.xs="95" [idEvento]="idEvento"></comp-contrato>    
   </div>

@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DTOInscricaoCompleta, EnumSituacaoInscricao, DTOInscricaoAtualizacao } from './objetos';
+import { DTOInscricaoCompleta, EnumSituacaoInscricao, DTOInscricaoAtualizacao, DTOInscricaoDadosPessoais, DTOPagamento } from './objetos';
 import { WsManutencaoInscricoes } from '../webservices/wsManutencaoInscricoes';
-import { DTOEventoCompleto } from '../principal/objetos';
+import { DTOEventoCompleto, Periodo } from '../principal/objetos';
 import { CompFormInscricao } from './comp-form-inscricao';
 import { WsInscricoes } from '../webservices/wsInscricoes';
 import { WsEventos } from '../webservices/wsEventos';
@@ -122,7 +122,16 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
 
   ngOnInit(): void {
     this.inscricao = new DTOInscricaoAtualizacao();
+    this.inscricao.DadosPessoais = new DTOInscricaoDadosPessoais();
+    this.inscricao.DadosPessoais.DataNascimento = null;
+    this.inscricao.Pagamento = new DTOPagamento();
+    this.inscricao.Criancas = [];
+    this.inscricao.Sarais = [];
+
     this.evento = new DTOEventoCompleto();
+    this.evento.PeriodoInscricao = new Periodo();
+    this.evento.PeriodoRealizacao = new Periodo();
+
     this.NaoEhIncompleta = false;
 
     let dlg = this.coordenacao.Alertas.alertarProcessamento("Carregando dados...");
@@ -135,6 +144,7 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
           this.wsEventos.obterCompleto(idEvento)
             .subscribe(
               (evento) => {
+                dlg.close();
                 if (evento == null)
                   this.clicarVoltar();
                 else
@@ -156,7 +166,7 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
 
     let identificacao = md5(new Date().toISOString() + inscricao.DadosPessoais.Email + inscricao.DadosPessoais.Nome);
 
-    this.wsInscricoes.enviarCodigoValidacaoEmail(identificacao, inscricao.DadosPessoais.Email)
+    this.wsInscricoes.enviarCodigoValidacaoEmail(this.evento.Id, identificacao, inscricao.DadosPessoais.Email)
       .subscribe(
         () => {
           dlgEnvioCodigo.close();

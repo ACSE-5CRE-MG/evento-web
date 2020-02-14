@@ -15,8 +15,9 @@ namespace EventoWeb.BancoDados.Migracoes
 
         public override void Up()
         {
-            CriarContratoInscricao();
-        }
+            //CriarContratoInscricao();
+            AtualizarCodigoInscricao();
+        }        
 
         private void CriarContratoInscricao()
         {
@@ -28,6 +29,14 @@ namespace EventoWeb.BancoDados.Migracoes
                 .WithColumn("REGULAMENTO").AsString(Int32.MaxValue).NotNullable()
                 .WithColumn("ID_EVENTO").AsInt32().NotNullable()
                     .ForeignKey("FK_CI_EVENTO", "EVENTOS", "ID_EVENTO").OnDelete(Rule.Cascade).OnUpdate(Rule.Cascade);
+        }
+
+        private void AtualizarCodigoInscricao()
+        {
+            Alter
+                .Table("CODIGOS_ACESSO_INSCRICAO")
+                .AddColumn("IDENTIFICACAO").AsString(100).Nullable()
+                .AlterColumn("ID_INSCRICAO").AsInt32().Nullable();
         }
     }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { DTODadosCriarInscricao, DTODadosConfirmacao, DTOBasicoInscricao, DTOAcessoInscricao, DTOEnvioCodigoAcessoInscricao, DTOInscricaoAtualizacao } from '../inscricao/objetos';
+import { DTODadosConfirmacao, DTOBasicoInscricao, DTOAcessoInscricao, DTOEnvioCodigoAcessoInscricao, DTOInscricaoAtualizacao } from '../inscricao/objetos';
 import { ClienteWs } from './cliente-ws';
 import { ConfiguracaoSistemaService } from '../configuracao-sistema-service';
 
@@ -28,8 +28,8 @@ export class WsInscricoes {
     return this.clienteWs.executarPut("", "'" + codigo + "'");
   }
 
-  enviarCodigoValidacaoEmail(identificacao: string, Email: string): Observable<void> {
-    this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'inscricoes/enviarCodigoEmail/';
+  enviarCodigoValidacaoEmail(idEvento: number, identificacao: string, Email: string): Observable<void> {
+    this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'inscricoes/enviarCodigoEmail/' + idEvento;
     return this.clienteWs.executarPut("", "{Identificacao:'" + identificacao + "', Email:'" + Email + "'}");
   }
 

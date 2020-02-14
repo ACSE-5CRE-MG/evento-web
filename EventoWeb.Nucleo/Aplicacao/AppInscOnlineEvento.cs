@@ -39,7 +39,14 @@ namespace EventoWeb.Nucleo.Aplicacao
 
         public DTOEventoCompleto ObterPorIdCompleto(int id)
         {
-            throw new NotImplementedException();
+            DTOEventoCompleto dtoEvento = null;
+            ExecutarSeguramente(() =>
+            {
+                var evento = Contexto.RepositorioEventos.ObterEventoPeloId(id);
+                dtoEvento = evento?.ConverterApenasEvento();
+            });
+
+            return dtoEvento;
         }
     }
 }

@@ -17,25 +17,22 @@ namespace EventoWeb.Nucleo.Aplicacao
             m_GeradorMsgEmail = geradorMsgEmail;
         }
 
-        public void EnviarCodigoCriacaoInscricao(InscricaoParticipante inscricao, string codigo)
+        public void EnviarCodigoValidacaoEmail(int idEvento, string email, string codigo)
         {
-            var mensagem = ObterMensagem(inscricao.Evento.Id);
-            m_ServicoEmail.Configuracao = ObterCnfEmail(inscricao.Evento.Id);
+            var evento = Contexto.RepositorioEventos.ObterEventoPeloId(idEvento);
+            var mensagem = ObterMensagem(idEvento);
+            m_ServicoEmail.Configuracao = ObterCnfEmail(idEvento);
             m_ServicoEmail.Enviar(new Email
             {
                 Assunto = mensagem.MensagemInscricaoCodigoAcessoCriacao.Assunto,
-                Conteudo = m_GeradorMsgEmail.GerarMensagemModelo<EmailCodigoInscricao>(mensagem.MensagemInscricaoCodigoAcessoCriacao.Mensagem, 
-                    new EmailCodigoInscricao
+                Conteudo = m_GeradorMsgEmail.GerarMensagemModelo<EmailValidacaoEmail>(mensagem.MensagemInscricaoCodigoAcessoCriacao.Mensagem, 
+                    new EmailValidacaoEmail
                     {
                         Codigo = codigo,
-                        Evento = inscricao.Evento.Nome,
-                        NomePessoa = inscricao.Pessoa.Nome,
-                        Cidade = inscricao.Pessoa.Endereco.Cidade,
-                        Identificacao = new AppInscOnLineIdentificacaoInscricao().GerarCodigo(inscricao.Id),
-                        UF = inscricao.Pessoa.Endereco.UF
+                        Evento = evento.Nome
                     }
                 ),
-                Endereco = inscricao.Pessoa.Email
+                Endereco = email
             });
         }
 
@@ -137,6 +134,12 @@ namespace EventoWeb.Nucleo.Aplicacao
             return Contexto.RepositorioConfiguracoesEmail.Obter(idEvento) ??
                 throw new ExcecaoAplicacao("AppEmailMsgPadrao", "Configuração de Email não foi cadastrada");
         }
+    }
+
+    public class EmailValidacaoEmail
+    {
+        public string Evento { get; set; }
+        public string Codigo { get; set; }
     }
 
     public class EmailCodigoInscricao
