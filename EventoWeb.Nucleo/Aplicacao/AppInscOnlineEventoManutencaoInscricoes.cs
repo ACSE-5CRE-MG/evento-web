@@ -40,10 +40,6 @@ namespace EventoWeb.Nucleo.Aplicacao
 
                     dto.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(inscParticipante.Id)
                         .Select(x => x.Converter()).ToList();
-
-                    dto.Criancas = Contexto.RepositorioInscricoes.ListarInscricoesInfantisDoResponsavel(inscParticipante)
-                        .Select(x => x.Converter())
-                        .ToList();
                 }
             });
             return dto;
@@ -72,19 +68,9 @@ namespace EventoWeb.Nucleo.Aplicacao
 
                 repInscricoes.Atualizar(inscParticipante);
 
-                new AppInscricaoInfantil(Contexto)
-                    .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Criancas);
-
                 var appApresentacaoSarau = new AppApresentacaoSarau(Contexto);
                 appApresentacaoSarau
                     .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Sarais);
-
-                foreach (var dtoCrianca in dtoInscricao.Criancas.Where(x => x.Sarais?.Count > 0))
-                {
-                    var crianca = repInscricoes.ObterInscricaoPeloIdEventoEInscricao(inscParticipante.Evento.Id, dtoCrianca.Id.Value);
-                    appApresentacaoSarau
-                        .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(crianca, dtoCrianca.Sarais);
-                }
 
                 m_AppEmail.EnviarInscricaoRegistrada(inscParticipante);
             });

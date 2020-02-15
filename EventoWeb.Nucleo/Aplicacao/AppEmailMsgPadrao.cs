@@ -78,19 +78,6 @@ namespace EventoWeb.Nucleo.Aplicacao
                         .ToList();
 
             var idCrianca = new AppInscOnLineIdentificacaoInfantil();
-            dto.Criancas = Contexto.RepositorioInscricoes.ListarInscricoesInfantisDoResponsavel(inscricao)
-                .Select(x => 
-                {
-                    var crianca = x.ConverterComCodigo();
-                    crianca.Codigo = idCrianca.GerarCodigo(x.Id);
-                    return crianca;
-                })
-                .ToList();
-           /* foreach(var dtoCrianca in dto.Criancas)
-            {
-                dtoCrianca.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(dtoCrianca.Id.Value)
-                        .Select(x => x.ConverterComCodigo()).ToList();
-            }*/
 
             m_ServicoEmail.Enviar(new Email
             {

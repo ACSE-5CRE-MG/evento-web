@@ -124,9 +124,12 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
     this.inscricao = new DTOInscricaoAtualizacao();
     this.inscricao.DadosPessoais = new DTOInscricaoDadosPessoais();
     this.inscricao.DadosPessoais.DataNascimento = null;
+    this.inscricao.DadosPessoais.EhDiabetico = false;
+    this.inscricao.DadosPessoais.EhVegetariano = false;
+    this.inscricao.DadosPessoais.UsaAdocanteDiariamente = false;
     this.inscricao.Pagamento = new DTOPagamento();
-    this.inscricao.Criancas = [];
     this.inscricao.Sarais = [];
+    this.inscricao.PrimeiroEncontro = false;
 
     this.evento = new DTOEventoCompleto();
     this.evento.PeriodoInscricao = new Periodo();
@@ -176,7 +179,7 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
                 if (validou) {
                   let dlg = this.coordenacao.Alertas.alertarProcessamento("Incluindo inscrição...");
 
-                  this.wsInscricoes.criar(this.evento.Id, null)
+                  this.wsInscricoes.criar(this.evento.Id, inscricao)
                     .subscribe(
                       (retorno) => {                        
                         dlg.close();

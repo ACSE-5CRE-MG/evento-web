@@ -38,6 +38,7 @@ export class DlgValidacaoEmail {
       this.wsInscricao.validarCodigoEmail(this.identificacao, this.codigo)
         .subscribe(
           (codigoEhvalido) => {
+            dlg.close();
             if (codigoEhvalido)
               this.dialogRef.close(true);
             else
@@ -62,7 +63,7 @@ export class DialogoValidacaoEmail {
   constructor(private srvDialog: MatDialog) { }
 
   apresentarDlg(email: string, nome: string, identificacao: string): Observable<boolean> {
-    const dlg = this.srvDialog.open(DlgValidacaoEmail, { data: { email: email, nome: nome, identificacao: identificacao } });
+    const dlg = this.srvDialog.open(DlgValidacaoEmail, { data: { email: email, nome: nome, identificacao: identificacao }, width: "40vw" });
     return dlg.afterClosed();
   }
 }

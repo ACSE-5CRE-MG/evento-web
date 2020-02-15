@@ -2,9 +2,9 @@ import { Component, ViewChild, Input } from '@angular/core';
 import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  DTOInscricaoCompleta, EnumApresentacaoAtividades, DTOSarau, DTOInscricaoSimplificada,
-  DTOCrianca, DTOPagamento, DTOInscricaoAtualizacao, EnumSexo, DTOInscricaoDadosPessoais, EnumTipoInscricao,
-  DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOInscricaoDepartamento, EnumSituacaoInscricao, EnumPagamento
+  EnumApresentacaoAtividades, DTOSarau, DTOInscricaoSimplificada,
+  DTOPagamento, DTOInscricaoAtualizacao, EnumSexo, DTOInscricaoDadosPessoais, EnumTipoInscricao,
+  DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOInscricaoDepartamento, EnumPagamento
 } from './objetos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { WsManutencaoInscricoes } from '../webservices/wsManutencaoInscricoes';
@@ -67,7 +67,6 @@ export class CompFormInscricao {
     this.dadosTela.salasEscolhidas = this.mInscricao.SalasEstudo;
     this.dadosTela.departamentoEscolhido = this.mInscricao.Departamento;
     this.dadosTela.sarais = this.mInscricao.Sarais;
-    this.dadosTela.criancas = this.mInscricao.Criancas;
     this.dadosTela.pagamento = this.mInscricao.Pagamento;
     this.dadosTela.observacoes = this.mInscricao.Observacoes;
 
@@ -143,6 +142,12 @@ export class CompFormInscricao {
       this.dadosTela.salasEscolhidas.EscolhidasParticipante != null &&
       this.dadosTela.salasEscolhidas.EscolhidasParticipante.length != this.mEvento.SalasEstudo.length)
       this.coordenacao.Alertas.alertarAtencao("Você não escolheu todas as salas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
+    else if (this.dadosTela.tipoInscricaoEscolhida == this.coordenacao.TiposInscricao[1] &&
+      ((this.mEvento.TemDepartamentalizacao || this.mEvento.TemOficinas || this.mEvento.ConfiguracaoSalaEstudo != null) &&
+        !((this.mEvento.TemOficinas && this.dadosTela.oficinasEscolhidas != null) ||
+          (this.mEvento.TemDepartamentalizacao && this.dadosTela.departamentoEscolhido != null) ||
+          (this.mEvento.ConfiguracaoSalaEstudo != null && this.dadosTela.salasEscolhidas != null))))
+      this.coordenacao.Alertas.alertarAtencao("Você nos disse que a sua inscrição é de Participante/Trabalhador, mas não escolheu participar em nenhuma atividade!", "Por favor escolha um atividade para fazer parte.");
     else if (this.dadosTela.pagamento == null || this.dadosTela.pagamento.Forma == null)
       this.coordenacao.Alertas.alertarAtencao("Você precisa informar o Pagamento.", "Sem essa informação não é possível enviar a inscrição.");
     else if (this.dadosTela.pagamento != null && this.dadosTela.pagamento.Forma == EnumPagamento.Comprovante &&
@@ -164,22 +169,24 @@ export class CompFormInscricao {
       atualizacao.DadosPessoais.TelefoneFixo = this.dadosTela.telefoneFixo;
       atualizacao.DadosPessoais.Celular = this.dadosTela.celular;
       atualizacao.PrimeiroEncontro = this.dadosTela.primeiroEncontro;
-      atualizacao.TipoInscricao = (this.coordenacao.TiposInscricao[0] == this.dadosTela.tipoInscricao ? EnumTipoInscricao.Participante : EnumTipoInscricao.ParticipanteTrabalhador);
+      atualizacao.TipoInscricao = this.coordenacao.TiposInscricao.indexOf(this.dadosTela.tipoInscricao);
       atualizacao.DadosPessoais.Uf = this.dadosTela.uf;
       atualizacao.DadosPessoais.UsaAdocanteDiariamente = this.dadosTela.usaAdocanteDiariamente;
       atualizacao.NomeCracha = this.dadosTela.nomeCracha;
       atualizacao.CentroEspirita = this.dadosTela.centroEspirita;
-      atualizacao.Departamento = this.dadosTela.departamentoEscolhido;
       atualizacao.NomeResponsavelCentro = this.dadosTela.nomeResponsavelCentro;
       atualizacao.NomeResponsavelLegal = this.dadosTela.nomeResponsavelLegal;
-      atualizacao.Oficina = this.dadosTela.oficinasEscolhidas;
-      atualizacao.SalasEstudo = this.dadosTela.salasEscolhidas;
       atualizacao.TelefoneResponsavelCentro = this.dadosTela.telefoneResponsavelCentro;
       atualizacao.TelefoneResponsavelLegal = this.dadosTela.telefoneResponsavelLegal;
       atualizacao.TempoEspirita = this.dadosTela.tempoEspirita;
 
+      if (atualizacao.TipoInscricao != EnumTipoInscricao.Trabalhador) {
+        atualizacao.Departamento = this.dadosTela.departamentoEscolhido;
+        atualizacao.Oficina = this.dadosTela.oficinasEscolhidas;
+        atualizacao.SalasEstudo = this.dadosTela.salasEscolhidas;
+      }
+
       atualizacao.Sarais = this.dadosTela.sarais;
-      atualizacao.Criancas = this.dadosTela.criancas;
       atualizacao.Observacoes = this.dadosTela.observacoes;
 
       atualizacao.Pagamento = new DTOPagamento();
@@ -232,8 +239,6 @@ class DadosTela {
   departamentoEscolhido: DTOInscricaoDepartamento;
   sarais: DTOSarau[];
   inscricaoSimples: DTOInscricaoSimplificada;
-
-  criancas: DTOCrianca[];
 
   pagamento: DTOPagamento;
 

@@ -37,13 +37,25 @@ namespace EventoWeb.Nucleo.Aplicacao
             return dtoEventos;
         }
 
-        public DTOEventoCompleto ObterPorIdCompleto(int id)
+        public DTOEventoCompletoInscricao ObterPorIdCompleto(int id)
         {
-            DTOEventoCompleto dtoEvento = null;
+            DTOEventoCompletoInscricao dtoEvento = null;
             ExecutarSeguramente(() =>
             {
                 var evento = Contexto.RepositorioEventos.ObterEventoPeloId(id);
-                dtoEvento = evento?.ConverterApenasEvento();
+                dtoEvento = evento?.ConverterParaInsOnLine();
+                if (dtoEvento != null)
+                {
+                    dtoEvento.Departamentos = Contexto.RepositorioDepartamentos.ListarTodosPorEvento(id)
+                        .Select(x => x.Converter())
+                        .ToList();
+                    dtoEvento.Oficinas = Contexto.RepositorioOficinas.ListarTodasPorEvento(id)
+                        .Select(x => x.Converter())
+                        .ToList();
+                    dtoEvento.SalasEstudo = Contexto.RepositorioSalasEstudo.ListarTodasPorEvento(id)
+                        .Select(x => x.Converter())
+                        .ToList();
+                }                
             });
 
             return dtoEvento;

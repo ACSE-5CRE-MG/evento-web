@@ -159,19 +159,9 @@ namespace EventoWeb.Nucleo.Aplicacao
                 var repInscricoes = Contexto.RepositorioInscricoes;
                 repInscricoes.Incluir(inscParticipante);
 
-                new AppInscricaoInfantil(Contexto)
-                    .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Criancas);
-
                 var appApresentacaoSarau = new AppApresentacaoSarau(Contexto);
                 appApresentacaoSarau
                     .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Sarais);
-
-                foreach (var dtoCrianca in dtoInscricao.Criancas.Where(x => x.Sarais?.Count > 0))
-                {
-                    var crianca = repInscricoes.ObterInscricaoPeloIdEventoEInscricao(inscParticipante.Evento.Id, dtoCrianca.Id.Value);
-                    appApresentacaoSarau
-                        .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(crianca, dtoCrianca.Sarais);
-                }
 
                 m_AppEmail.EnviarInscricaoRegistrada(inscParticipante);
 

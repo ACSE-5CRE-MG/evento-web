@@ -67,8 +67,6 @@ export class DTOInscricaoAtualizacao {
     Departamento: DTOInscricaoDepartamento;
     Sarais: DTOSarau[];
 
-    Criancas: DTOCrianca[];
-
     Pagamento: DTOPagamento;
 }
 

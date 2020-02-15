@@ -74,8 +74,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string TelefoneFixo { get; set; }
     }
 
-    public class ADTOInscricaoAtualizacao<TSarau, TCrianca> 
-        where TCrianca: DTOCrianca 
+    public class ADTOInscricaoAtualizacao<TSarau> 
         where TSarau: DTOSarau
     {
         public DTOInscricaoDadosPessoais DadosPessoais { get; set; }
@@ -93,15 +92,14 @@ namespace EventoWeb.Nucleo.Aplicacao
         public DTOInscricaoSalaEstudo SalasEstudo { get; set; }
         public DTOInscricaoDepartamento Departamento { get; set; }
         public IList<TSarau> Sarais { get; set; }
-        public IList<TCrianca> Criancas { get; set; }
         public DTOPagamento Pagamento { get; set; }
     }
 
-    public class DTOInscricaoAtualizacao: ADTOInscricaoAtualizacao<DTOSarau, DTOCrianca>
+    public class DTOInscricaoAtualizacao: ADTOInscricaoAtualizacao<DTOSarau>
     {       
     }
 
-    public class ADTOInscricaoCompleta<TSarau, TCrianca> : ADTOInscricaoAtualizacao<TSarau, TCrianca>
+    public class ADTOInscricaoCompleta<TSarau, TCrianca> : ADTOInscricaoAtualizacao<TSarau>
         where TCrianca : DTOCrianca
         where TSarau : DTOSarau
     {
