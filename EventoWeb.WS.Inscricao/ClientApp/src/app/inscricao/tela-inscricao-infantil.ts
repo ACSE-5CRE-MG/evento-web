@@ -1,22 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DTOInscricaoCompleta, EnumSituacaoInscricao, DTOInscricaoAtualizacao, DTOInscricaoDadosPessoais, DTOPagamento } from './objetos';
+import { EnumSituacaoInscricao, DTOInscricaoDadosPessoais, DTOPagamento, DTOInscricaoAtualizacaoInfantil, DTOInscricaoCompletaInfantil } from './objetos';
 import { WsManutencaoInscricoes } from '../webservices/wsManutencaoInscricoes';
 import { DTOEventoCompleto, Periodo } from '../principal/objetos';
-import { CompFormInscricao } from './comp-form-inscricao';
 import { WsInscricoes } from '../webservices/wsInscricoes';
 import { WsEventos } from '../webservices/wsEventos';
 import { DialogoValidacaoEmail } from './dlg-validacao-email';
 import { md5 } from '../componentes/geracao-md5';
+import { CompFormInscricaoInfantil } from './comp-form-inscricao-infantil';
 
-export abstract class ATelaInscricao {
-  inscricao: DTOInscricaoAtualizacao;
+export abstract class ATelaInscricaoInfantil {
+  inscricao: DTOInscricaoAtualizacaoInfantil;
   evento: DTOEventoCompleto;
   NaoEhIncompleta: boolean = false;
 
   @ViewChild("formInscricao", { static: false })
-  formInscricao: CompFormInscricao;
+  formInscricao: CompFormInscricaoInfantil;
 
   constructor(public coordenacao: CoordenacaoCentral, protected navegadorUrl: Router) { }
 
@@ -30,17 +30,17 @@ export abstract class ATelaInscricao {
       this.processarAtualizacao(resultado.inscricaoAtualizar);
   }
 
-  protected abstract processarAtualizacao(inscricao: DTOInscricaoAtualizacao);
+  protected abstract processarAtualizacao(inscricao: DTOInscricaoAtualizacaoInfantil);
 }
 
 @Component({
-  selector: 'tela-inscricao-atualizacao',
-  templateUrl: './tela-inscricao.html',
-  styleUrls: ['./tela-inscricao.scss']
+  selector: 'tela-inscricao-atualizacao-infantil',
+  templateUrl: './tela-inscricao-infantil.html',
+  styleUrls: ['./tela-inscricao-infantil.scss']
 })
-export class TelaInscricaoAtualizacao extends ATelaInscricao implements OnInit {
+export class TelaInscricaoAtualizacaoInfantil extends ATelaInscricaoInfantil implements OnInit {
 
-  inscricaoCompleta: DTOInscricaoCompleta;
+  inscricaoCompleta: DTOInscricaoCompletaInfantil;
 
   constructor(public coordenacao: CoordenacaoCentral, private rotaAtual: ActivatedRoute, protected navegadorUrl: Router,
     private wsInscricoes: WsManutencaoInscricoes) {
@@ -48,7 +48,7 @@ export class TelaInscricaoAtualizacao extends ATelaInscricao implements OnInit {
   }
 
   ngOnInit(): void {
-    this.inscricao = new DTOInscricaoCompleta();
+    this.inscricao = new DTOInscricaoCompletaInfantil();
     this.evento = new DTOEventoCompleto();
 
     let dlg = this.coordenacao.Alertas.alertarProcessamento("Carregando dados...");
@@ -58,7 +58,7 @@ export class TelaInscricaoAtualizacao extends ATelaInscricao implements OnInit {
         (parametrosUrl) => {
           let idInscricao = parametrosUrl["idinscricao"];
 
-          this.wsInscricoes.obterInscricaoCompleta(idInscricao)
+          this.wsInscricoes.obterInscricaoCompletaInfantil(idInscricao)
             .subscribe(
               (dadosInscricao) => {
                 dlg.close();
@@ -90,7 +90,7 @@ export class TelaInscricaoAtualizacao extends ATelaInscricao implements OnInit {
     super.clicarVoltar();
   }
 
-  protected processarAtualizacao(inscricao: DTOInscricaoAtualizacao) {
+  protected processarAtualizacao(inscricao: DTOInscricaoAtualizacaoInfantil) {
 
     this.voltar(this.inscricaoCompleta.Id);
   }
@@ -101,7 +101,7 @@ export class TelaInscricaoAtualizacao extends ATelaInscricao implements OnInit {
   templateUrl: './tela-inscricao.html',
   styleUrls: ['./tela-inscricao.scss']
 })
-export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
+export class TelaInscricaoInclusaoInfantil extends ATelaInscricaoInfantil implements OnInit {
 
   constructor(public coordenacao: CoordenacaoCentral, private rotaAtual: ActivatedRoute, protected navegadorUrl: Router,
     private wsInscricoes: WsInscricoes, private wsEventos: WsEventos, private dlgValidacaoEmail: DialogoValidacaoEmail) {
@@ -109,7 +109,7 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
   }
 
   ngOnInit(): void {
-    this.inscricao = new DTOInscricaoAtualizacao();
+    this.inscricao = new DTOInscricaoAtualizacaoInfantil();
     this.inscricao.DadosPessoais = new DTOInscricaoDadosPessoais();
     this.inscricao.DadosPessoais.DataNascimento = null;
     this.inscricao.DadosPessoais.EhDiabetico = false;
@@ -151,7 +151,7 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
       );
   }
 
-  protected processarAtualizacao(inscricao: DTOInscricaoAtualizacao) {
+  protected processarAtualizacao(inscricao: DTOInscricaoAtualizacaoInfantil) {
 
     let dlgEnvioCodigo = this.coordenacao.Alertas.alertarProcessamento("Enviando código de validação...");
 
@@ -167,7 +167,7 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
                 if (validou) {
                   let dlg = this.coordenacao.Alertas.alertarProcessamento("Incluindo inscrição...");
 
-                  this.wsInscricoes.criar(this.evento.Id, inscricao)
+                  this.wsInscricoes.criarInfantil(this.evento.Id, inscricao)
                     .subscribe(
                       (retorno) => {                        
                         dlg.close();

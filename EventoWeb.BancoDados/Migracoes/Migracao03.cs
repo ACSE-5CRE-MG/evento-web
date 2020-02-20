@@ -15,8 +15,9 @@ namespace EventoWeb.BancoDados.Migracoes
 
         public override void Up()
         {
-            //CriarContratoInscricao();
+            CriarContratoInscricao();
             AtualizarCodigoInscricao();
+            AtualizarMensagemEmailPadrao();
         }        
 
         private void CriarContratoInscricao()
@@ -37,6 +38,15 @@ namespace EventoWeb.BancoDados.Migracoes
                 .Table("CODIGOS_ACESSO_INSCRICAO")
                 .AddColumn("IDENTIFICACAO").AsString(100).Nullable()
                 .AlterColumn("ID_INSCRICAO").AsInt32().Nullable();
+        }
+
+        private void AtualizarMensagemEmailPadrao()
+        {
+            Alter
+                .Table("MENSAGENS_EMAIL_PADRAO")
+                    .AddColumn("ASSUNTO_INSC_REGISTRADA_INFANTIL").AsString(150).Nullable()
+                    .AddColumn("MENSAGEM_INSC_REGISTRADA_INFANTIL").AsString(Int32.MaxValue).Nullable();
+
         }
     }
 }

@@ -9,25 +9,17 @@ namespace EventoWeb.Nucleo.Aplicacao
 {
     public static class AtribuicaoInscricao
     {
-        public static void AtribuirDados(this InscricaoParticipante inscParticipante, DTOInscricaoAtualizacao dtoInscricao)
+        public static void AtribuirDados(this InscricaoParticipante inscParticipante, DTOInscricaoAtualizacaoAdulto dtoInscricao)
         {
+            inscParticipante.AtribuirDadosComum(dtoInscricao);
+
             inscParticipante.InstituicoesEspiritasFrequenta = dtoInscricao.CentroEspirita;
-            inscParticipante.NomeCracha = dtoInscricao.NomeCracha;
             inscParticipante.NomeResponsavelCentro = dtoInscricao.NomeResponsavelCentro;
             inscParticipante.NomeResponsavelLegal = dtoInscricao.NomeResponsavelLegal;
-            inscParticipante.Observacoes = dtoInscricao.Observacoes;
-            inscParticipante.PrimeiroEncontro = dtoInscricao.PrimeiroEncontro;
             inscParticipante.TelefoneResponsavelCentro = dtoInscricao.TelefoneResponsavelCentro;
             inscParticipante.TelefoneResponsavelLegal = dtoInscricao.TelefoneResponsavelLegal;
             inscParticipante.TempoEspirita = dtoInscricao.TempoEspirita;
             inscParticipante.Tipo = dtoInscricao.TipoInscricao;
-
-            inscParticipante.Pagamento.AtribuirFormaPagamento(dtoInscricao.Pagamento.Forma.Value,
-                dtoInscricao.Pagamento.ComprovantesBase64
-                        .Select(x => new ArquivoBinario(Convert.FromBase64String(x), EnumTipoArquivoBinario.ImagemJPEG)));
-            inscParticipante.Pagamento.Observacao = dtoInscricao.Pagamento.Observacao;
-
-            inscParticipante.Pessoa.AtribuirDados(dtoInscricao.DadosPessoais);
         }
 
         public static void AtribuirDados(this Pessoa pessoa, DTOInscricaoDadosPessoais dadosPessoais)
@@ -141,22 +133,25 @@ namespace EventoWeb.Nucleo.Aplicacao
             }
         }
 
-        public static void AtribuirDados(this InscricaoInfantil inscricao, DTOCrianca dto)
+        public static void AtribuirDados(this InscricaoInfantil inscricao, DTOInscricaoAtualizacaoInfantil dto)
         {
-            inscricao.Pessoa.AlergiaAlimentos = dto.AlimentosAlergia;
-            inscricao.Pessoa.DataNascimento = dto.DataNascimento;
-            inscricao.Pessoa.EhDiabetico = dto.EhDiabetico;
-            inscricao.Pessoa.EhVegetariano = dto.EhVegetariano;
-            inscricao.Pessoa.Email = dto.Email;
-            inscricao.Pessoa.Endereco.Cidade = dto.Cidade;
-            inscricao.Pessoa.Endereco.UF = dto.Uf;
-            inscricao.Pessoa.MedicamentosUsados = dto.MedicamentosUsa;
-            inscricao.Pessoa.Nome = dto.Nome;
-            inscricao.Pessoa.Sexo = dto.Sexo;
-            inscricao.Pessoa.TiposCarneNaoCome = dto.CarnesNaoCome;
-            inscricao.Pessoa.UsaAdocanteDiariamente = dto.UsaAdocanteDiariamente;
-            inscricao.NomeCracha = dto.NomeCracha;
-            inscricao.PrimeiroEncontro = dto.PrimeiroEncontro;
+            inscricao.AtribuirDadosComum(dto);
+        }
+
+        private static void AtribuirDadosComum<TSarau>(this Inscricao inscricao, ADTOInscricaoAtualizacao<TSarau> dtoInscricao)
+            where TSarau: DTOSarau
+        {
+            inscricao.Pessoa.AtribuirDados(dtoInscricao.DadosPessoais);
+            inscricao.NomeCracha = dtoInscricao.NomeCracha;
+            inscricao.Observacoes = dtoInscricao.Observacoes;
+            inscricao.PrimeiroEncontro = dtoInscricao.PrimeiroEncontro;           
+
+            inscricao.Pagamento.AtribuirFormaPagamento(dtoInscricao.Pagamento.Forma.Value,
+                dtoInscricao.Pagamento.ComprovantesBase64
+                        .Select(x => new ArquivoBinario(Convert.FromBase64String(x), EnumTipoArquivoBinario.ImagemJPEG)));
+            inscricao.Pagamento.Observacao = dtoInscricao.Pagamento.Observacao;
+
+            inscricao.Pessoa.AtribuirDados(dtoInscricao.DadosPessoais);
         }
     }
 }

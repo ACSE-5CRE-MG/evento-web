@@ -2,9 +2,6 @@
 using NHibernate;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
@@ -42,7 +39,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 });
             });
 
-            this.Component(x => x.MensagemInscricaoRegistrada, c =>
+            this.Component(x => x.MensagemInscricaoRegistradaAdulto, c =>
             {
                 c.Access(Accessor.NoSetter);
                 c.Property(o => o.Assunto, m =>
@@ -57,6 +54,25 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                     m.Access(Accessor.NoSetter);
                     m.NotNullable(false);
                     m.Column("MENSAGEM_INSC_REGISTRADA");
+                    m.Type(NHibernateUtil.StringClob);
+                });
+            });
+
+            this.Component(x => x.MensagemInscricaoRegistradaInfantil, c =>
+            {
+                c.Access(Accessor.NoSetter);
+                c.Property(o => o.Assunto, m =>
+                {
+                    m.Access(Accessor.NoSetter);
+                    m.NotNullable(false);
+                    m.Column("ASSUNTO_INSC_REGISTRADA_INFANTIL");
+                    m.Length(150);
+                });
+                c.Property(O => O.Mensagem, m =>
+                {
+                    m.Access(Accessor.NoSetter);
+                    m.NotNullable(false);
+                    m.Column("MENSAGEM_INSC_REGISTRADA_INFANTIL");
                     m.Type(NHibernateUtil.StringClob);
                 });
             });

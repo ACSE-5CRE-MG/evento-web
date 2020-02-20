@@ -39,14 +39,14 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
         [Authorize("Bearer")]
         [HttpGet("evento/{idEvento}/obter/{idInscricao}")]
-        public DTOInscricaoCompleta Obter(int idEvento, int idInscricao)
+        public DTOInscricaoCompletaAdulto Obter(int idEvento, int idInscricao)
         {
             return m_App.Obter(idEvento, idInscricao);
         }
 
         [Authorize("Bearer")]
         [HttpPut("evento/{idEvento}/aceitar/{idInscricao}")]
-        public void Aceitar(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacao atualizacao)
+        public void Aceitar(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacaoAdulto atualizacao)
         {
             m_App.Aceitar(idEvento, idInscricao, atualizacao);
         }
@@ -60,14 +60,14 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
         [Authorize("Bearer")]
         [HttpPut("evento/{idEvento}/completar/{idInscricao}")]
-        public void CompletarEAceitar(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacao atualizacao)
+        public void CompletarEAceitar(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacaoAdulto atualizacao)
         {
             m_App.CompletarEAceitar(idEvento, idInscricao, atualizacao);
         }
 
         [Authorize("Bearer")]
         [HttpPut("evento/{idEvento}/atualizar/{idInscricao}")]
-        public void Atualizar(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacao atualizacao)
+        public void Atualizar(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacaoAdulto atualizacao)
         {
             m_App.Atualizar(idEvento, idInscricao, atualizacao);
         }

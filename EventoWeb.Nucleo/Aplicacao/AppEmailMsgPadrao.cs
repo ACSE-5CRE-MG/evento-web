@@ -36,7 +36,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             });
         }
 
-        public void EnviarCodigoAcompanhamentoInscricao(InscricaoParticipante inscricao, string codigo)
+        public void EnviarCodigoAcompanhamentoInscricao(Inscricao inscricao, string codigo)
         {
             var mensagem = ObterMensagem(inscricao.Evento.Id);
             m_ServicoEmail.Configuracao = ObterCnfEmail(inscricao.Evento.Id);
@@ -58,11 +58,10 @@ namespace EventoWeb.Nucleo.Aplicacao
             });
         }
 
-        public void EnviarInscricaoRegistrada(InscricaoParticipante inscricao)
+        public void EnviarInscricaoRegistradaAdulto(InscricaoParticipante inscricao)
         {
             var mensagem = ObterMensagem(inscricao.Evento.Id);
             m_ServicoEmail.Configuracao = ObterCnfEmail(inscricao.Evento.Id);
-
 
             var dto = inscricao.ConverterComCodigo();
             dto.Codigo = new AppInscOnLineIdentificacaoInscricao().GerarCodigo(inscricao.Id);
@@ -77,17 +76,41 @@ namespace EventoWeb.Nucleo.Aplicacao
                         })
                         .ToList();
 
-            var idCrianca = new AppInscOnLineIdentificacaoInfantil();
-
             m_ServicoEmail.Enviar(new Email
             {
-                Assunto = mensagem.MensagemInscricaoRegistrada.Assunto,
-                Conteudo = m_GeradorMsgEmail.GerarMensagemModelo<DTOInscricaoCompletaCodigo>(mensagem.MensagemInscricaoRegistrada.Mensagem, dto),
+                Assunto = mensagem.MensagemInscricaoRegistradaAdulto.Assunto,
+                Conteudo = m_GeradorMsgEmail.GerarMensagemModelo<DTOInscricaoCompletaAdultoCodigo>(mensagem.MensagemInscricaoRegistradaAdulto.Mensagem, dto),
                 Endereco = inscricao.Pessoa.Email
             });
         }
 
-        public void EnviarInscricaoAceita(InscricaoParticipante inscricao)
+        public void EnviarInscricaoRegistradaInfantil(InscricaoInfantil inscricao)
+        {
+            var mensagem = ObterMensagem(inscricao.Evento.Id);
+            m_ServicoEmail.Configuracao = ObterCnfEmail(inscricao.Evento.Id);
+
+            var dto = inscricao.ConverterComCodigo();
+            dto.Codigo = new AppInscOnLineIdentificacaoInscricao().GerarCodigo(inscricao.Id);
+
+            var idSarau = new AppInscOnLineIdentificacaoSarau();
+            dto.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(inscricao.Id)
+                        .Select(x =>
+                        {
+                            var sarau = x.ConverterComCodigo();
+                            sarau.Codigo = idSarau.GerarCodigo(x.Id);
+                            return sarau;
+                        })
+                        .ToList();
+
+            m_ServicoEmail.Enviar(new Email
+            {
+                Assunto = mensagem.MensagemInscricaoRegistradaAdulto.Assunto,
+                Conteudo = m_GeradorMsgEmail.GerarMensagemModelo<DTOInscricaoCompletaInfantilCodigo>(mensagem.MensagemInscricaoRegistradaAdulto.Mensagem, dto),
+                Endereco = inscricao.Pessoa.Email
+            });
+        }
+
+        public void EnviarInscricaoAceita(Inscricao inscricao)
         {
             var mensagem = ObterMensagem(inscricao.Evento.Id);
             m_ServicoEmail.Configuracao = ObterCnfEmail(inscricao.Evento.Id);

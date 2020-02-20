@@ -49,11 +49,4 @@ namespace EventoWeb.Nucleo.Aplicacao
         {
         }
     }
-
-    public class AppInscOnLineIdentificacaoInfantil : AppInscOnlineIdentificacao
-    {
-        public AppInscOnLineIdentificacaoInfantil() : base("INSCINF", 6)
-        {
-        }
-    }
 }

@@ -2,9 +2,6 @@
 using NHibernate;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
 {
@@ -86,7 +83,48 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Column("SITUACAO");
                 m.NotNullable(true);
                 m.Type<EnumGeneric<EnumSituacaoInscricao>>();
-            });            
+            });
+
+            Property(x => x.Observacoes, m =>
+            {
+                m.Access(Accessor.Property);
+                m.Column("OBSERVACOES");
+                m.NotNullable(false);
+                m.Type(NHibernateUtil.StringClob);
+            });
+
+            Component(x => x.Pagamento, m =>
+            {
+                m.Access(Accessor.NoSetter);
+                m.Parent(x => x.Inscricao, n =>
+                {
+                    n.Access(Accessor.NoSetter);
+                });
+
+                m.Bag(y => y.Comprovantes, n =>
+                {
+                    n.Cascade(Cascade.All | Cascade.DeleteOrphans);
+                    n.Inverse(true);
+                    n.Lazy(CollectionLazy.Lazy);
+                    n.Access(Accessor.NoSetter);
+                    n.Key(k => k.Column("ID_INSCRICAO"));
+                }, c => c.OneToMany(o => o.Class(typeof(ComprovantePagamento))));
+
+                m.Property(y => y.Forma, n =>
+                {
+                    n.Column("FORMA_PAGAMENTO");
+                    n.Access(Accessor.NoSetter);
+                    n.NotNullable(false);
+                    n.Type<EnumGeneric<EnumPagamento>>();
+                });
+                m.Property(y => y.Observacao, n =>
+                {
+                    n.Column("OBS_PAGAMENTO");
+                    n.Access(Accessor.Property);
+                    n.NotNullable(false);
+                    n.Type(NHibernateUtil.StringClob);
+                });
+            });
         }
     }
 
@@ -153,14 +191,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Column("NOME_RESP_LEGAL");
                 m.Length(150);
                 m.NotNullable(false);
-            });
-            Property(x => x.Observacoes, m =>
-            {
-                m.Access(Accessor.Property);
-                m.Column("OBSERVACOES");
-                m.NotNullable(false);
-                m.Type(NHibernateUtil.StringClob);
-            });
+            });            
             Property(x => x.TelefoneResponsavelCentro, m =>
             {
                 m.Access(Accessor.Property);
@@ -181,39 +212,6 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Column("TEMPO_ESPIRITA");
                 m.NotNullable(false);
             });
-            Component(x => x.Pagamento, m =>
-            {
-                m.Access(Accessor.NoSetter);
-                m.Parent(x => x.Inscricao, n =>
-                {
-                    n.Access(Accessor.NoSetter);
-                });
-
-                m.Bag(y => y.Comprovantes, n =>
-                {
-                    n.Cascade(Cascade.All | Cascade.DeleteOrphans);
-                    n.Inverse(true);
-                    n.Lazy(CollectionLazy.Lazy);
-                    n.Access(Accessor.NoSetter);
-                    n.Key(k => k.Column("ID_INSCRICAO"));
-                }, c => c.OneToMany(o => o.Class(typeof(ComprovantePagamento))));
-
-                m.Property(y => y.Forma, n =>
-                  {
-                      n.Column("FORMA_PAGAMENTO");
-                      n.Access(Accessor.NoSetter);
-                      n.NotNullable(false);
-                      n.Type<EnumGeneric<EnumPagamento>>();
-                  });
-                m.Property(y => y.Observacao, n =>
-                {
-                    n.Column("OBS_PAGAMENTO");
-                    n.Access(Accessor.Property);
-                    n.NotNullable(false);
-                    n.Type(NHibernateUtil.StringClob);
-                });
-            });
-
         }
     }
 

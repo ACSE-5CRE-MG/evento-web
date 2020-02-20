@@ -56,7 +56,6 @@ import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoo
 import { ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador } from './inscricao/atividades/comp-salas';
 import { ComponenteDepartamentos } from './inscricao/atividades/comp-departamentos';
 import { ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DialogosSarau } from './inscricao/atividades/comp-sarau';
-import { ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario, DialogosCrianca } from './inscricao/criancas/comp-criancas';
 import { ComponentePagamento } from './inscricao/pagamento/comp-pagamento';
 import { ClienteWs } from './webservices/cliente-ws';
 import { Observable } from 'rxjs';
@@ -65,6 +64,9 @@ import { ComponenteContrato, SanitizeHtmlPipe } from './contrato/comp-contrato';
 import { DlgContrato, DialogoContrato } from './contrato/dlg-contrato';
 import { DlgValidacaoEmail, DialogoValidacaoEmail } from './inscricao/dlg-validacao-email';
 import { CompFormInscricao } from './inscricao/comp-form-inscricao';
+import { TelaInscricaoAtualizacaoInfantil, TelaInscricaoInclusaoInfantil } from './inscricao/tela-inscricao-infantil';
+import { DlgInscricaoAdultoCodigo, DialogosInscricao } from './inscricao/dlg-inscricao-adulto-codigo';
+import { CompFormInscricaoInfantil } from './inscricao/comp-form-inscricao-infantil';
 
 declare function require(url: string);
 
@@ -108,10 +110,10 @@ export function init_app(appLoadService: AppLoadService) {
     ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
     ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
     ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
-    ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario,
     ComponentePagamento, CompFormInscricao,
     ComponenteContrato, SanitizeHtmlPipe, DlgContrato,
-    DlgValidacaoEmail
+    DlgValidacaoEmail, TelaInscricaoInclusaoInfantil, TelaInscricaoAtualizacaoInfantil,
+    CompFormInscricaoInfantil
   ],
   imports: [
     BrowserModule,
@@ -146,17 +148,19 @@ export function init_app(appLoadService: AppLoadService) {
       { path: 'validar/:idinscricao', component: TelaCodigoInscricao },
       { path: 'inscricao/:idinscricao', component: TelaInscricaoAtualizacao, canActivate: [PermissaoAcessoInscricao], },
       { path: 'criar-inscricao/:idevento', component: TelaInscricaoInclusao, },
+      { path: 'inscricao-infantil/:idinscricao', component: TelaInscricaoAtualizacaoInfantil, canActivate: [PermissaoAcessoInscricao], },
+      { path: 'criar-inscricao-infantil/:idevento', component: TelaInscricaoInclusaoInfantil, },
       { path: '**', redirectTo: '' }
     ]),
     BrowserAnimationsModule
   ],
-  entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario, DlgContrato, DlgValidacaoEmail],
+  entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, DlgSarauCodigo, DlgSarauFormulario, DlgContrato, DlgValidacaoEmail, DlgInscricaoAdultoCodigo],
   providers: [
     AppLoadService,
     { provide: LOCALE_ID, useValue: 'pt' },
     { provide: APP_INITIALIZER, useFactory: init_app, deps: [AppLoadService], multi: true },
-    CoordenacaoCentral, WsEventos, ClienteWs, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau, DialogosCrianca, DialogoContrato,
-    DialogoValidacaoEmail
+    CoordenacaoCentral, WsEventos, ClienteWs, WsInscricoes, WsManutencaoInscricoes, PermissaoAcessoInscricao, DialogosSarau, DialogoContrato,
+    DialogoValidacaoEmail, DialogosInscricao
   ],
   bootstrap: [TelaBase]
 })

@@ -15,6 +15,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         private Pessoa m_Pessoa;
         private Evento m_Evento;
         private EnumSituacaoInscricao m_Situacao;
+        private Pagamento m_Pagamento;
 
         public Inscricao(Evento evento, Pessoa pessoa, DateTime dataRecebimento)
         {
@@ -30,6 +31,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             DataRecebimento = dataRecebimento;
             ConfirmadoNoEvento = false;
             DormeEvento = true;
+            m_Pagamento = new Pagamento(this);
 
             if (!EhValidaIdade(pessoa.CalcularIdadeEmAnos(evento.PeriodoRealizacaoEvento.DataInicial)))
                 throw new ArgumentException("A idade da pessoa é inválida para este tipo de inscrição.");
@@ -57,6 +59,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         public virtual EnumSituacaoInscricao Situacao { get => m_Situacao; }
         public virtual String NomeCracha { get; set; }
         public virtual bool PrimeiroEncontro { get; set; }
+        public virtual string Observacoes { get; set; }
+        public virtual Pagamento Pagamento { get => m_Pagamento; }
 
 
         public virtual void PagarDepois(Titulo titulo)

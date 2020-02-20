@@ -1,22 +1,20 @@
 ﻿using EventoWeb.Nucleo.Aplicacao.ConversoresDTO;
 using EventoWeb.Nucleo.Negocio.Entidades;
+using System;
 using System.Linq;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
     public class AppInscOnlineEventoManutencaoInscricoes : AppBase
     {
-        private readonly AppEmailMsgPadrao m_AppEmail;
-
-        public AppInscOnlineEventoManutencaoInscricoes(IContexto contexto, AppEmailMsgPadrao appEmail)
+        public AppInscOnlineEventoManutencaoInscricoes(IContexto contexto)
             : base(contexto)
         {
-            m_AppEmail = appEmail;
         }
 
-        public DTOInscricaoCompleta ObterInscricao(int id)
+        public DTOInscricaoCompletaAdulto ObterInscricao(int id)
         {
-            DTOInscricaoCompleta dto = null;
+            DTOInscricaoCompletaAdulto dto = null;
             ExecutarSeguramente(() =>
             {
                 var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(id);
@@ -43,37 +41,26 @@ namespace EventoWeb.Nucleo.Aplicacao
                 }
             });
             return dto;
-        }
+        }        
 
-        public void AtualizarInscricao(int id, DTOInscricaoAtualizacao dtoInscricao)
+        public DTOInscricaoSimplificada ObterInscricaoAdultoPorCodigo(int idEvento, string codigo)
         {
+            DTOInscricaoSimplificada dto = null;
             ExecutarSeguramente(() =>
             {
-                var repInscricoes = Contexto.RepositorioInscricoes;
-                var inscricao = repInscricoes.ObterInscricaoPeloId(id) ??
-                    throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "Inscrição não encontrada");
+                var idInscricao = new AppInscOnLineIdentificacaoInscricao().ExtrarId(codigo);
 
-                if (inscricao is InscricaoInfantil)
-                    throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "Não é possível atualizar inscrição infantil");
+                var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(idInscricao);
 
-                var inscParticipante = (InscricaoParticipante)inscricao;
-                inscParticipante.AtribuirDados(dtoInscricao);
+                if (inscricao != null)
+                {
+                    if (inscricao.Evento.Id != idEvento)
+                        throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "Essa inscrição não pertence ao evento escolhido");
 
-                inscParticipante.RemoverTodasAtividade();
-                inscParticipante.AtribuirAtividadeOficina(dtoInscricao.Oficina, Contexto.RepositorioOficinas);
-                inscParticipante.AtribuirAtividadeSalaEstudo(dtoInscricao.SalasEstudo, Contexto.RepositorioSalasEstudo);
-                inscParticipante.AtribuirAtividadeDepartamento(dtoInscricao.Departamento, Contexto.RepositorioDepartamentos);
-
-                inscParticipante.TornarPendente();                
-
-                repInscricoes.Atualizar(inscParticipante);
-
-                var appApresentacaoSarau = new AppApresentacaoSarau(Contexto);
-                appApresentacaoSarau
-                    .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Sarais);
-
-                m_AppEmail.EnviarInscricaoRegistrada(inscParticipante);
+                    dto = inscricao.ConverterSimplificada();
+                }
             });
+            return dto;
         }
 
         public DTOSarau ObterSarau(int idEvento, string codigo)
@@ -88,21 +75,18 @@ namespace EventoWeb.Nucleo.Aplicacao
             return dto;
         }
 
-        public DTOCrianca ObterInscricaoInfantil(int idEvento, string codigo)
+        public DTOInscricaoCompletaInfantil ObterInscricaoInfantil(int id)
         {
-            DTOCrianca dto = null;
+            DTOInscricaoCompletaInfantil dto = null;
             ExecutarSeguramente(() =>
             {
-                var idInscricao = new AppInscOnLineIdentificacaoInfantil().ExtrarId(codigo);
-                var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(idInscricao);
+                var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(id);
                 if (inscricao != null)
                 {
                     if (inscricao is InscricaoParticipante)
                         throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "Inscrição informada não é de uma criança.");
-                    else if (inscricao.Evento.Id != idEvento)
-                        throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "Essa inscrição não é do evento escolhido.");
-                    else if (((InscricaoInfantil)inscricao).InscricaoResponsavel2 == null)
-                        dto = ((InscricaoInfantil)inscricao).Converter();
+
+                    dto = ((InscricaoInfantil)inscricao).Converter();
                 }
             });
             return dto;

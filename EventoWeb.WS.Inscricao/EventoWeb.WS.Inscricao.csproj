@@ -12,12 +12,14 @@
     <None Remove="ClientApp\src\app\inscricao\atividades\comp-oficinas.ts" />
     <None Remove="ClientApp\src\app\inscricao\atividades\comp-salas.ts" />
     <None Remove="ClientApp\src\app\inscricao\atividades\comp-sarau.ts" />
+    <None Remove="ClientApp\src\app\inscricao\comp-form-inscricao-infantil.ts" />
     <None Remove="ClientApp\src\app\inscricao\comp-form-inscricao.ts" />
-    <None Remove="ClientApp\src\app\inscricao\criancas\comp-criancas.ts" />
+    <None Remove="ClientApp\src\app\inscricao\dlg-inscricao-adulto-codigo.ts" />
     <None Remove="ClientApp\src\app\inscricao\pagamento\comp-financeiro.ts" />
     <None Remove="ClientApp\src\app\inscricao\objetos.ts" />
     <None Remove="ClientApp\src\app\inscricao\tela-codigo-inscricao.ts" />
     <None Remove="ClientApp\src\app\inscricao\tela-criacao-inscricao.ts" />
+    <None Remove="ClientApp\src\app\inscricao\tela-inscricao-infantil.ts" />
     <None Remove="ClientApp\src\app\inscricao\tela-inscricao.ts" />
     <None Remove="ClientApp\src\app\inscricao\tela-pesquisa-inscricao.ts" />
     <None Remove="ClientApp\src\app\principal\objetos.ts" />

@@ -8,17 +8,6 @@ namespace EventoWeb.Nucleo.Aplicacao
     public enum EnumApresentacaoAtividades { ApenasParticipante, PodeEscolher }
     public enum EnumResultadoEnvio { InscricaoNaoEncontrada, EventoEncerradoInscricao, InscricaoOK, IdentificacaoInvalida }
 
-    public class DTODadosCriarInscricao
-    {
-        public string Nome { get; set; }
-        public DateTime DataNascimento { get; set; }
-        public string Email { get; set; }
-        public SexoPessoa Sexo { get; set; }
-        public EnumTipoParticipante TipoInscricao { get; set; }
-        public string Cidade { get; set; }
-        public string UF { get; set; }
-    }
-
     public class DTODadosConfirmacao
     {
         public int IdInscricao { get; set; }
@@ -39,7 +28,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string Tipo { get; set; }
     }
 
-    public class DTOBasicoInscricaoResp: DTOBasicoInscricao
+    public class DTOBasicoInscricaoResp : DTOBasicoInscricao
     {
         public IList<DTOInscricaoSimplificada> Responsaveis { get; set; }
     }
@@ -48,7 +37,7 @@ namespace EventoWeb.Nucleo.Aplicacao
     {
         public int IdInscricao { get; set; }
         public string Autorizacao { get; set; }
-    }    
+    }
 
     public class DTOEnvioCodigoAcessoInscricao
     {
@@ -74,33 +63,44 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string TelefoneFixo { get; set; }
     }
 
-    public class ADTOInscricaoAtualizacao<TSarau> 
-        where TSarau: DTOSarau
+    public abstract class ADTOInscricaoAtualizacao<TSarau>
+        where TSarau : DTOSarau
     {
         public DTOInscricaoDadosPessoais DadosPessoais { get; set; }
-        public EnumTipoParticipante TipoInscricao { get; set; }
         public string NomeCracha { get; set; }
+        public bool PrimeiroEncontro { get; set; }
+        public string Observacoes { get; set; }
+        public IList<TSarau> Sarais { get; set; }
+        public DTOPagamento Pagamento { get; set; }
+    }
+
+    public interface IDTOInscricaoCompleta
+    {
+        int Id { get; set; }
+        DTOEventoCompletoInscricao Evento { get; set; }
+        EnumSituacaoInscricao Situacao { get; set; }
+    }
+
+    public abstract class ADTOInscricaoAtualizacaoAdulto<TSarau> : ADTOInscricaoAtualizacao<TSarau>
+        where TSarau : DTOSarau
+    {
+        public EnumTipoParticipante TipoInscricao { get; set; }
         public string CentroEspirita { get; set; }
         public string TempoEspirita { get; set; }
         public string NomeResponsavelCentro { get; set; }
         public string TelefoneResponsavelCentro { get; set; }
         public string NomeResponsavelLegal { get; set; }
         public string TelefoneResponsavelLegal { get; set; }
-        public bool PrimeiroEncontro { get; set; }
-        public string Observacoes { get; set; }
         public DTOInscricaoOficina Oficina { get; set; }
         public DTOInscricaoSalaEstudo SalasEstudo { get; set; }
         public DTOInscricaoDepartamento Departamento { get; set; }
-        public IList<TSarau> Sarais { get; set; }
-        public DTOPagamento Pagamento { get; set; }
     }
 
-    public class DTOInscricaoAtualizacao: ADTOInscricaoAtualizacao<DTOSarau>
-    {       
+    public class DTOInscricaoAtualizacaoAdulto : ADTOInscricaoAtualizacaoAdulto<DTOSarau>
+    {
     }
 
-    public class ADTOInscricaoCompleta<TSarau, TCrianca> : ADTOInscricaoAtualizacao<TSarau>
-        where TCrianca : DTOCrianca
+    public abstract class ADTOInscricaoCompletaAdulto<TSarau> : ADTOInscricaoAtualizacaoAdulto<TSarau>, IDTOInscricaoCompleta
         where TSarau : DTOSarau
     {
         public int Id { get; set; }
@@ -108,11 +108,13 @@ namespace EventoWeb.Nucleo.Aplicacao
         public EnumSituacaoInscricao Situacao { get; set; }
     }
 
-    public class DTOInscricaoCompleta : ADTOInscricaoCompleta<DTOSarau, DTOCrianca> { }
-
-    public class DTOInscricaoCompletaCodigo : ADTOInscricaoCompleta<DTOSarauCodigo, DTOCriancaCodigo>
+    public class DTOInscricaoCompletaAdulto : ADTOInscricaoCompletaAdulto<DTOSarau>
     {
-        public string Codigo { get; set; }
+    }
+
+    public class DTOInscricaoCompletaAdultoCodigo : ADTOInscricaoCompletaAdulto<DTOSarauCodigo>
+    {
+        public string Codigo { get; set; } 
     }
 
     public class DTOInscricaoOficina
@@ -141,7 +143,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         public IList<DTOInscricaoSimplificada> Participantes { get; set; }
     }
 
-    public class DTOSarauCodigo: DTOSarau
+    public class DTOSarauCodigo : DTOSarau
     {
         public string Codigo { get; set; }
     }
@@ -155,28 +157,29 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string UF { get; set; }
     }
 
-    public class DTOCrianca
+    public abstract class ADTOInscricaoAtualizacaoInfantil<TSarau> : ADTOInscricaoAtualizacao<TSarau> where TSarau : DTOSarau
     {
-        public int? Id { get; set; }
-        public string Nome { get; set; }
-        public DateTime DataNascimento { get; set; }
-        public SexoPessoa Sexo { get; set; }
-        public bool EhVegetariano { get; set; }
-        public bool UsaAdocanteDiariamente { get; set; }
-        public bool EhDiabetico { get; set; }
-        public string CarnesNaoCome { get; set; }
-        public string AlimentosAlergia { get; set; }
-        public string MedicamentosUsa { get; set; }
-        public IList<DTOInscricaoSimplificada> Responsaveis { get; set; }
-        public string Cidade { get; set; }
-        public string Uf { get; set; }
-        public string Email { get; set; }
-        public string NomeCracha { get; set; }
-        public bool PrimeiroEncontro { get; set; }
-        public IList<DTOSarau> Sarais { get; set; }
+        public DTOInscricaoSimplificada Responsavel1 { get; set; }
+        public DTOInscricaoSimplificada Responsavel2 { get; set; }
     }
 
-    public class DTOCriancaCodigo : DTOCrianca
+    public class DTOInscricaoAtualizacaoInfantil: ADTOInscricaoAtualizacaoInfantil<DTOSarau>
+    {
+    }
+
+    public abstract class ADTOInscricaoCompletaInfantil<TSarau> : ADTOInscricaoAtualizacaoInfantil<TSarau>, IDTOInscricaoCompleta
+        where TSarau : DTOSarau
+    {
+        public int Id { get; set; }
+        public DTOEventoCompletoInscricao Evento { get; set; }
+        public EnumSituacaoInscricao Situacao { get; set; }
+    }
+
+    public class DTOInscricaoCompletaInfantil : ADTOInscricaoCompletaInfantil<DTOSarau>
+    {
+    }
+
+    public class DTOInscricaoCompletaInfantilCodigo : ADTOInscricaoCompletaInfantil<DTOSarauCodigo>
     {
         public string Codigo { get; set; }
     }

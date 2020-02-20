@@ -1,0 +1,16 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <button type="button" mat-raised-button (click)="clicarVoltar()">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <div fxLayout="column" class="sistema">
+      <span>Sua Inscrição Infantil</span>
+      <span class="versao">{{evento.Nome}}</span>
+    </div>
+    <span style="flex: 1 1 auto;"></span>
+    <button *ngIf="!NaoEhIncompleta" type="button" mat-raised-button (click)="clicarAtualizar()">
+      Salvar
+    </button>
+  </mat-toolbar>
+  <comp-form-inscricao-infantil #formInscricao [inscricao]="inscricao" [evento]="evento" [NaoEhIncompleta]="naoEhIncompleta"></comp-form-inscricao-infantil>
+</layout-geral>

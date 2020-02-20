@@ -49,6 +49,25 @@ export class DTOInscricaoDadosPessoais {
     TelefoneFixo: string;
 }
 
+export class DTOInscricaoAtualizacaoInfantil {
+  DadosPessoais: DTOInscricaoDadosPessoais;
+  NomeCracha: string;
+  PrimeiroEncontro: boolean;
+  Observacoes: string;
+
+  Sarais: DTOSarau[];
+  Responsavel1: DTOInscricaoSimplificada;
+  Responsavel2: DTOInscricaoSimplificada;
+
+  Pagamento: DTOPagamento;
+}
+
+export class DTOInscricaoCompletaInfantil extends DTOInscricaoAtualizacaoInfantil {
+  Id: number;
+  Evento: DTOEventoCompleto;
+  Situacao: EnumSituacaoInscricao;
+}
+
 export class DTOInscricaoAtualizacao {
     DadosPessoais: DTOInscricaoDadosPessoais;
     TipoInscricao: EnumTipoInscricao;
@@ -102,26 +121,6 @@ export class DTOInscricaoSimplificada {
     Id: number;
     IdEvento: number;
     Nome: string;
-}
-
-export class DTOCrianca {
-    Id: number;
-    Nome: string;
-    DataNascimento: Date;
-    Sexo: EnumSexo;
-    EhVegetariano: boolean;
-    UsaAdocanteDiariamente: boolean;
-    EhDiabetico: boolean;
-    CarnesNaoCome: string;
-    AlimentosAlergia: string;
-    MedicamentosUsa: string;
-    Responsaveis: DTOInscricaoSimplificada[];
-    Cidade: string;
-    Uf: string;
-    Email: string;
-    NomeCracha: string;
-    PrimeiroEncontro: boolean;
-    Sarais: DTOSarau[];
 }
 
 export enum EnumPagamento { Comprovante, ComprovanteOutraInscricao, Outro }

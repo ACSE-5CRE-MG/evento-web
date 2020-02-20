@@ -44,7 +44,7 @@ namespace EventoWeb.WS.Inscricao.Controllers
         }
 
         [HttpPost("criar/{idEvento}")]
-        public DTODadosConfirmacao CriarInscricao(int idEvento, [FromBody] DTOInscricaoAtualizacao dadosInscricao)
+        public DTODadosConfirmacao CriarInscricao(int idEvento, [FromBody] DTOInscricaoAtualizacaoAdulto dadosInscricao)
         {
             return mAppInscricao.CriarInscricao(idEvento, dadosInscricao);
         }
@@ -59,6 +59,12 @@ namespace EventoWeb.WS.Inscricao.Controllers
         public void EnviarCodigoEmail(int idEvento, DTOEnvioCodigoEmail envio)
         {
             mAppInscricao.EnviarCodigoEmail(idEvento, envio.Identificacao, envio.Email);
+        }
+
+        [HttpPost("criar-infantil/{idEvento}")]
+        public void CriarInscricaoInfantil(int idEvento, [FromBody] DTOInscricaoAtualizacaoInfantil dadosInscricao)
+        {
+            mAppInscricao.CriarInscricaoInfantil(idEvento, dadosInscricao);
         }
     }
 

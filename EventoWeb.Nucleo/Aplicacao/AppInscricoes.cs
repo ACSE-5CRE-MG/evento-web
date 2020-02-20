@@ -85,7 +85,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             });
         }
 
-        public void Aceitar(int idEvento, int idInscricao, DTOInscricaoAtualizacao atualizacao)
+        public void Aceitar(int idEvento, int idInscricao, DTOInscricaoAtualizacaoAdulto atualizacao)
         {
             ExecutarSeguramente(() =>
             {
@@ -103,7 +103,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             });
         }
 
-        public void CompletarEAceitar(int idEvento, int idInscricao, DTOInscricaoAtualizacao atualizacao)
+        public void CompletarEAceitar(int idEvento, int idInscricao, DTOInscricaoAtualizacaoAdulto atualizacao)
         {
             ExecutarSeguramente(() =>
             {
@@ -122,7 +122,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             });
         }
 
-        public void Atualizar(int idEvento, int idInscricao, DTOInscricaoAtualizacao atualizacao)
+        public void Atualizar(int idEvento, int idInscricao, DTOInscricaoAtualizacaoAdulto atualizacao)
         {
             ExecutarSeguramente(() =>
             {
@@ -137,7 +137,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             });
         }
 
-        private void AtualizarInscricao(InscricaoParticipante inscParticipante, DTOInscricaoAtualizacao dtoInscricao)
+        private void AtualizarInscricao(InscricaoParticipante inscParticipante, DTOInscricaoAtualizacaoAdulto dtoInscricao)
         {
             var repInscricoes = Contexto.RepositorioInscricoes;
 
@@ -155,9 +155,9 @@ namespace EventoWeb.Nucleo.Aplicacao
                 .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Sarais);
         }
 
-        public DTOInscricaoCompleta Obter(int idEvento, int idInscricao)
+        public DTOInscricaoCompletaAdulto Obter(int idEvento, int idInscricao)
         {
-            DTOInscricaoCompleta dto = null;
+            DTOInscricaoCompletaAdulto dto = null;
             ExecutarSeguramente(() =>
             {
                 var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);

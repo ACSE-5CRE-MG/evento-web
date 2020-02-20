@@ -1,5 +1,4 @@
 ﻿using EventoWeb.Nucleo.Aplicacao;
-using EventoWeb.Nucleo.Persistencia.Comunicacao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,22 +12,14 @@ namespace EventoWeb.WS.Inscricao.Controllers
 
         public ManutencaoInscricoesController(IContexto contexto)
         {
-            mAppInscricao = new AppInscOnlineEventoManutencaoInscricoes(contexto,
-                new AppEmailMsgPadrao(contexto, new ServicoEmail(), new GeracaoMensagemEmailRazor()));
+            mAppInscricao = new AppInscOnlineEventoManutencaoInscricoes(contexto);
         }
 
         [Authorize(Policy = "Bearer")]
         [HttpGet("obterInscricao/{id}")]
-        public DTOInscricaoCompleta ObterInscricao(int id)
+        public DTOInscricaoCompletaAdulto ObterInscricao(int id)
         {
             return mAppInscricao.ObterInscricao(id);
-        }
-
-        [Authorize(Policy = "Bearer")]
-        [HttpPut("atualizarInscricao/{id}")]
-        public void AtualizarInscricao(int id, [FromBody]DTOInscricaoAtualizacao dtoInscricao)
-        {
-            mAppInscricao.AtualizarInscricao(id, dtoInscricao);
         }
 
         [HttpGet("evento/{idEvento}/obterSarau/{codigo}")]
@@ -37,10 +28,16 @@ namespace EventoWeb.WS.Inscricao.Controllers
             return mAppInscricao.ObterSarau(idEvento, codigo);
         }
 
-        [HttpGet("evento/{idEvento}/obterCrianca/{codigo}")]
-        public DTOCrianca ObterCrianca(int idEvento, string codigo)
+        [HttpGet("obterInscricaoInfantil/{idInscricao}")]
+        public DTOInscricaoCompletaInfantil ObterInscricaoInfantil(int idInscricao)
         {
-            return mAppInscricao.ObterInscricaoInfantil(idEvento, codigo);
+            return mAppInscricao.ObterInscricaoInfantil(idInscricao);
+        }
+
+        [HttpGet("evento/{idEvento}/obter-inscricao-adulto/{codigo}")]
+        public DTOInscricaoSimplificada ObterInscricaoAdultoCodigo(int idEvento, string codigo)
+        {
+            return mAppInscricao.ObterInscricaoAdultoPorCodigo(idEvento, codigo);
         }
     }
 }

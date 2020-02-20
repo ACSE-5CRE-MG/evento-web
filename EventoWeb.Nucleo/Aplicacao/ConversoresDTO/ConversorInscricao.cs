@@ -8,26 +8,55 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
 {
     public static class ConversorInscricao
     {
-        public static DTOInscricaoCompleta Converter(this InscricaoParticipante inscricao)
+        public static DTOInscricaoCompletaAdulto Converter(this InscricaoParticipante inscricao)
         {
-            var dto = new DTOInscricaoCompleta();
+            var dto = new DTOInscricaoCompletaAdulto();
             dto.Converter(inscricao);
             return dto;
         }
 
-        public static DTOInscricaoCompletaCodigo ConverterComCodigo(this InscricaoParticipante inscricao)
+        public static DTOInscricaoCompletaAdultoCodigo ConverterComCodigo(this InscricaoParticipante inscricao)
         {
-            var dto = new DTOInscricaoCompletaCodigo();
+            var dto = new DTOInscricaoCompletaAdultoCodigo();
             dto.Converter(inscricao);
             return dto;
         }
 
-        private static ADTOInscricaoCompleta<TSarau, TCrianca> Converter<TSarau, TCrianca>(this ADTOInscricaoCompleta<TSarau, TCrianca> dto, 
+        private static ADTOInscricaoCompletaAdulto<TSarau> Converter<TSarau>(this ADTOInscricaoCompletaAdulto<TSarau> dto, 
             InscricaoParticipante inscricao)
             where TSarau: DTOSarau
-            where TCrianca: DTOCrianca
         {
+            dto.ConverterDTOAtualizacao(inscricao);
+            dto.ConverterDTOCompleta(inscricao);
+
             dto.CentroEspirita = inscricao.InstituicoesEspiritasFrequenta;
+            dto.NomeResponsavelCentro = inscricao.NomeResponsavelCentro;
+            dto.NomeResponsavelLegal = inscricao.NomeResponsavelLegal;
+            dto.TelefoneResponsavelCentro = inscricao.TelefoneResponsavelCentro;
+            dto.TelefoneResponsavelLegal = inscricao.TelefoneResponsavelLegal;
+            dto.TempoEspirita = inscricao.TempoEspirita;
+            dto.TipoInscricao = inscricao.Tipo;
+
+            dto.Departamento = ((AtividadeInscricaoDepartamento)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoDepartamento))?.Converter();
+
+            dto.Oficina = ((AtividadeInscricaoOficinas)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoOficinas))?.Converter();
+            if (dto.Oficina == null)
+                dto.Oficina = ((AtividadeInscricaoOficinasCoordenacao)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoOficinasCoordenacao))?.Converter();
+
+            dto.SalasEstudo = ((AtividadeInscricaoSalaEstudo)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoSalaEstudo))?.Converter();
+            if (dto.SalasEstudo == null)
+                dto.SalasEstudo = ((AtividadeInscricaoSalaEstudoOrdemEscolha)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoSalaEstudoOrdemEscolha))?.Converter();
+            if (dto.SalasEstudo == null)
+                dto.SalasEstudo = ((AtividadeInscricaoSalaEstudoCoordenacao)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoSalaEstudoCoordenacao))?.Converter();
+
+
+            return dto;
+        }
+
+        private static ADTOInscricaoAtualizacao<TSarau> ConverterDTOAtualizacao<TSarau>(this ADTOInscricaoAtualizacao<TSarau> dto,
+            Inscricao inscricao)
+            where TSarau : DTOSarau
+        {
             dto.DadosPessoais = new DTOInscricaoDadosPessoais
             {
                 AlimentosAlergia = inscricao.Pessoa.AlergiaAlimentos,
@@ -45,32 +74,11 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
                 Celular = inscricao.Pessoa.Celular,
                 TelefoneFixo = inscricao.Pessoa.TelefoneFixo,
             };
-            dto.Evento = inscricao.Evento.ConverterParaInsOnLine();
-            dto.Id = inscricao.Id;
             dto.NomeCracha = inscricao.NomeCracha;
-            dto.NomeResponsavelCentro = inscricao.NomeResponsavelCentro;
-            dto.NomeResponsavelLegal = inscricao.NomeResponsavelLegal;
             dto.Observacoes = inscricao.Observacoes;
             dto.PrimeiroEncontro = inscricao.PrimeiroEncontro;
-            dto.TelefoneResponsavelCentro = inscricao.TelefoneResponsavelCentro;
-            dto.TelefoneResponsavelLegal = inscricao.TelefoneResponsavelLegal;
-            dto.TempoEspirita = inscricao.TempoEspirita;
-            dto.TipoInscricao = inscricao.Tipo;
-            dto.Situacao = inscricao.Situacao;
-            
-            dto.Departamento = ((AtividadeInscricaoDepartamento)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoDepartamento))?.Converter();
 
-            dto.Oficina = ((AtividadeInscricaoOficinas)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoOficinas))?.Converter();
-            if (dto.Oficina == null)
-                dto.Oficina = ((AtividadeInscricaoOficinasCoordenacao)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoOficinasCoordenacao))?.Converter();
-
-            dto.SalasEstudo = ((AtividadeInscricaoSalaEstudo)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoSalaEstudo))?.Converter();
-            if (dto.SalasEstudo == null)
-                dto.SalasEstudo = ((AtividadeInscricaoSalaEstudoOrdemEscolha)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoSalaEstudoOrdemEscolha))?.Converter();
-            if (dto.SalasEstudo == null)
-                dto.SalasEstudo = ((AtividadeInscricaoSalaEstudoCoordenacao)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoSalaEstudoCoordenacao))?.Converter();
-
-            if (inscricao.Pagamento != null)
+           if (inscricao.Pagamento != null)
             {
                 dto.Pagamento = new DTOPagamento
                 {
@@ -79,6 +87,16 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
                     Observacao = inscricao.Pagamento.Observacao
                 };
             }
+
+            return dto;
+        }
+
+        private static IDTOInscricaoCompleta ConverterDTOCompleta(this IDTOInscricaoCompleta dto,
+            Inscricao inscricao)
+        {
+            dto.Evento = inscricao.Evento.ConverterParaInsOnLine();
+            dto.Id = inscricao.Id;
+            dto.Situacao = inscricao.Situacao;
 
             return dto;
         }
@@ -149,44 +167,31 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
             dto.UF = inscricao.Pessoa.Endereco.UF;
         }
 
-        public static DTOCrianca Converter(this InscricaoInfantil inscricao)
+        public static DTOInscricaoCompletaInfantil Converter(this InscricaoInfantil inscricao)
         {
-            var crianca = new DTOCrianca();
+            var crianca = new DTOInscricaoCompletaInfantil();
             crianca.Converter(inscricao);
 
             return crianca;
         }
 
-        public static DTOCriancaCodigo ConverterComCodigo(this InscricaoInfantil inscricao)
+        public static DTOInscricaoCompletaInfantilCodigo ConverterComCodigo(this InscricaoInfantil inscricao)
         {
-            var crianca = new DTOCriancaCodigo();
+            var crianca = new DTOInscricaoCompletaInfantilCodigo();
             crianca.Converter(inscricao);
 
             return crianca;
         }
 
-        private static DTOCrianca Converter(this DTOCrianca dto, InscricaoInfantil inscricao)
+        private static ADTOInscricaoCompletaInfantil<TSarau> Converter<TSarau>(this ADTOInscricaoCompletaInfantil<TSarau> dto,
+            InscricaoInfantil inscricao)
+            where TSarau : DTOSarau
         {
-            dto.AlimentosAlergia = inscricao.Pessoa.AlergiaAlimentos;
-            dto.CarnesNaoCome = inscricao.Pessoa.TiposCarneNaoCome;
-            dto.DataNascimento = inscricao.Pessoa.DataNascimento;
-            dto.EhDiabetico = inscricao.Pessoa.EhDiabetico;
-            dto.EhVegetariano = inscricao.Pessoa.EhVegetariano;
-            dto.MedicamentosUsa = inscricao.Pessoa.MedicamentosUsados;
-            dto.Nome = inscricao.Pessoa.Nome;
-            dto.Sexo = inscricao.Pessoa.Sexo;
-            dto.UsaAdocanteDiariamente = inscricao.Pessoa.UsaAdocanteDiariamente;
-            dto.Id = inscricao.Id;
-            dto.Responsaveis = new List<DTOInscricaoSimplificada>() { inscricao.InscricaoResponsavel1.ConverterSimplificada() };
-            dto.Cidade = inscricao.Pessoa.Endereco.Cidade;
-            dto.Email = inscricao.Pessoa.Email;
-            dto.NomeCracha = inscricao.NomeCracha;
-            dto.PrimeiroEncontro = inscricao.PrimeiroEncontro;
-            dto.Uf = inscricao.Pessoa.Endereco.UF;
-            
+            dto.ConverterDTOAtualizacao(inscricao);
+            dto.ConverterDTOCompleta(inscricao);
 
-            if (inscricao.InscricaoResponsavel2 != null)
-                dto.Responsaveis.Add(inscricao.InscricaoResponsavel2.ConverterSimplificada());
+            dto.Responsavel1 = inscricao.InscricaoResponsavel1.ConverterSimplificada();
+            dto.Responsavel2 = inscricao.InscricaoResponsavel2?.ConverterSimplificada();
 
             return dto;
         }

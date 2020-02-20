@@ -95,10 +95,11 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
     public class MensagemEmailPadrao : Entidade
     {
         private Evento m_Evento;
-        private ModeloMensagem m_MensagemInscricaoRegistrada;
+        private ModeloMensagem m_MensagemInscricaoRegistradaAdulto;
         private ModeloMensagem m_MensagemInscricaoConfirmada;
         private ModeloMensagem m_MensagemInscricaoCodigoAcessoAcompanhamento;
         private ModeloMensagem m_MensagemInscricaoCodigoAcessoCriacao;
+        private ModeloMensagem m_MensagemInscricaoRegistradaInfantil;
 
         public MensagemEmailPadrao(Evento evento)
         {
@@ -112,10 +113,16 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         public virtual Evento Evento { get => m_Evento; }
 
-        public virtual ModeloMensagem MensagemInscricaoRegistrada
+        public virtual ModeloMensagem MensagemInscricaoRegistradaAdulto
         {
-            get { return m_MensagemInscricaoRegistrada; }
-            set { m_MensagemInscricaoRegistrada = value; }
+            get { return m_MensagemInscricaoRegistradaAdulto; }
+            set { m_MensagemInscricaoRegistradaAdulto = value; }
+        }
+
+        public virtual ModeloMensagem MensagemInscricaoRegistradaInfantil
+        {
+            get { return m_MensagemInscricaoRegistradaInfantil; }
+            set { m_MensagemInscricaoRegistradaInfantil = value; }
         }
 
         public virtual ModeloMensagem MensagemInscricaoConfirmada

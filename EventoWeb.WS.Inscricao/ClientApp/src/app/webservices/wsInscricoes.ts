@@ -1,11 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs';
-import { DTODadosConfirmacao, DTOBasicoInscricao, DTOAcessoInscricao, DTOEnvioCodigoAcessoInscricao, DTOInscricaoAtualizacao } from '../inscricao/objetos';
+import { DTODadosConfirmacao, DTOBasicoInscricao, DTOAcessoInscricao, DTOEnvioCodigoAcessoInscricao, DTOInscricaoAtualizacao, DTOInscricaoAtualizacaoInfantil } from '../inscricao/objetos';
 import { ClienteWs } from './cliente-ws';
 import { ConfiguracaoSistemaService } from '../configuracao-sistema-service';
 
 @Injectable()
 export class WsInscricoes {
+    
   constructor(private clienteWs: ClienteWs) { }
 
   public obterBasicoInscricao(idInscricao: number): Observable<DTOBasicoInscricao> {
@@ -36,5 +37,10 @@ export class WsInscricoes {
   validarCodigoEmail(identificacao: string, codigo: string): Observable<boolean> {
     this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'inscricoes/validarCodigoEmail/';
     return this.clienteWs.executarPut("", "{Identificacao:'" + identificacao + "', Codigo:'" + codigo + "'}");
+  }
+
+  criarInfantil(idEvento: number, inscricao: DTOInscricaoAtualizacaoInfantil): Observable<void> {
+    this.clienteWs.URLWs = ConfiguracaoSistemaService.configuracao.urlBaseWs + 'inscricoes/criar-infantil/' + idEvento.toString();
+    return this.clienteWs.executarPost("", inscricao);
   }
 }
