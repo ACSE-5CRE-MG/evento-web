@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EventoWeb.Nucleo.Negocio.Excecoes;
+using System;
 
 namespace EventoWeb.Nucleo.Negocio.Entidades
 {
@@ -12,19 +13,12 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
         protected InscricaoInfantil() { }
 
-        public InscricaoInfantil(Evento evento, Pessoa pessoa, Inscricao inscricaoResponsavel, DateTime dataRecebimento)
-            : base(evento, pessoa, dataRecebimento)
-        {
-            AtribuirResponsaveis(inscricaoResponsavel, null);
-            TornarPendente();
-        }
-
         public InscricaoInfantil(Pessoa pessoa, Evento evento, Inscricao inscricaoResponsavel,
             Inscricao inscricaoResponsavel2, DateTime dataRecebimento)
             : base(evento, pessoa, dataRecebimento)
         {
-            if (inscricaoResponsavel2 == null)
-                throw new ArgumentNullException("InscricaoResponsavel2", "Responsável deve ser informado.");
+            if (evento.ConfiguracaoEvangelizacao == null)
+                throw new ExcecaoNegocioAtributo("InscricaoInfantil", "evento", "Este evento não aceita inscrições infantis");
 
             AtribuirResponsaveis(inscricaoResponsavel, inscricaoResponsavel2);
         }
@@ -49,6 +43,10 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (Evento != responsavel1.Evento)
                 throw new ArgumentException(MSG_ERRO_INSCRICAO_OUTRO_EVENTO, "InscricaoResponsavel1");
 
+            if (Evento.ConfiguracaoEvangelizacao == EnumPublicoEvangelizacao.TrabalhadoresOuParticipantesTrabalhadores && 
+                ((InscricaoParticipante)responsavel1).Tipo == EnumTipoParticipante.Participante)
+                throw new ExcecaoNegocioAtributo("InscricaoInfantil", "responsavel1", "O responsável 1 deve ser Trabalhador ou Participante/Trabalhador");
+
             if (responsavel2 != null)
             {
                 if (responsavel2.GetType() == typeof(InscricaoInfantil))
@@ -59,6 +57,10 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
                 if (responsavel1 == responsavel2)
                     throw new ArgumentException("Os responsáveis devem ser diferentes.", "InscricaoResponsavel1/InscricaoResponsavel2");
+
+                if (Evento.ConfiguracaoEvangelizacao == EnumPublicoEvangelizacao.TrabalhadoresOuParticipantesTrabalhadores &&
+                    ((InscricaoParticipante)responsavel2).Tipo == EnumTipoParticipante.Participante)
+                    throw new ExcecaoNegocioAtributo("InscricaoInfantil", "responsavel2", "O responsável 2 deve ser Trabalhador ou Participante/Trabalhador");
             }
 
             if (DormeEvento)

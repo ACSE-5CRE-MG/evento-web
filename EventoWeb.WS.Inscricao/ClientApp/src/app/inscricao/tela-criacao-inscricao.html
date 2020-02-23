@@ -5,6 +5,12 @@
       <span class="versao">{{nomeEvento}}</span>
     </div>
     <span style="flex: 1 1 auto;"></span>
+    <dx-radio-group [items]="tiposInscricao"
+                    [(value)]="tipoInscricaoEscolhida"
+                    layout="horizontal"
+                    ngClass="rd-filtro"
+                    *ngIf="permiteInscricaoInfantil">
+    </dx-radio-group>
     <button type="button" mat-raised-button (click)="clicarContinuar()" *ngIf="eventoEncontrado">
       Aceito
     </button>

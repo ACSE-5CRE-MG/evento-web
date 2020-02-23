@@ -53,7 +53,8 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
                 Nome = evento.Nome,
                 Logotipo = evento.Logotipo != null ? Convert.ToBase64String(evento.Logotipo.Arquivo) : null,
                 IdadeMinima = evento.IdadeMinimaInscricaoAdulto,
-                PeriodoRealizacao = evento.PeriodoRealizacaoEvento
+                PeriodoRealizacao = evento.PeriodoRealizacaoEvento,
+                PermiteInscricaoInfantil = evento.ConfiguracaoEvangelizacao != null
             };
         }
     }

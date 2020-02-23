@@ -113,7 +113,7 @@ export function init_app(appLoadService: AppLoadService) {
     ComponentePagamento, CompFormInscricao,
     ComponenteContrato, SanitizeHtmlPipe, DlgContrato,
     DlgValidacaoEmail, TelaInscricaoInclusaoInfantil, TelaInscricaoAtualizacaoInfantil,
-    CompFormInscricaoInfantil
+    CompFormInscricaoInfantil, DlgInscricaoAdultoCodigo 
   ],
   imports: [
     BrowserModule,

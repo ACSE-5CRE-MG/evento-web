@@ -23,7 +23,7 @@
             <dx-date-box [(value)]="dadosTela.dataNascimento" type="date" [disabled]="NaoEhIncompleta">
               <dx-validator>
                 <dxi-validation-rule type="required" message="Você não informou o nome a data de nascimento"></dxi-validation-rule>
-                <dxi-validation-rule type="range" [max]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no mínimo, de {{dadosTela.idadeMinima}} anos"></dxi-validation-rule>
+                <dxi-validation-rule type="range" [min]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no máximo, de {{dadosTela.idadeMinima - 1}} anos"></dxi-validation-rule>
               </dx-validator>
             </dx-date-box>
             <label>{{"(" + dadosTela.idade + " anos)"}}</label>
@@ -134,7 +134,7 @@
           <label class="label_campos" fxFlex="106px">Responsável 1:</label>
           <dx-text-box [(value)]="dadosTela.responsavel1 && dadosTela.responsavel1.Nome" fxFlex="100" [readOnly]="true">
             <dx-validator>
-              <dxi-validation-rule type="required" message="Você não informou o Centro Espírita que frequenta."></dxi-validation-rule>
+              <dxi-validation-rule type="required" message="Você não informou o responsável."></dxi-validation-rule>
             </dx-validator>
           </dx-text-box>
           <button mat-raised-button [disabled]="NaoEhIncompleta" (click)="clicarPesquisarResp1()">
@@ -143,7 +143,7 @@
         </div>
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <label class="label_campos" fxFlex="106px">Responsável 2:</label>
-          <dx-text-box [(value)]="dadosTela.responsavel1 && dadosTela.responsavel2.Nome" fxFlex="100" [readOnly]="true" [disabled]="NaoEhIncompleta">
+          <dx-text-box [(value)]="dadosTela.responsavel2 && dadosTela.responsavel2.Nome" fxFlex="100" [readOnly]="true" [disabled]="NaoEhIncompleta">
           </dx-text-box>
           <button mat-raised-button [disabled]="NaoEhIncompleta" (click)="clicarPesquisarResp2()">
             <i class="fas fa-search"></i>

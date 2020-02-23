@@ -97,9 +97,9 @@ export class TelaInscricaoAtualizacaoInfantil extends ATelaInscricaoInfantil imp
 }
 
 @Component({
-  selector: 'tela-inscricao-inclusao',
-  templateUrl: './tela-inscricao.html',
-  styleUrls: ['./tela-inscricao.scss']
+  selector: 'tela-inscricao-inclusao-infantil',
+  templateUrl: './tela-inscricao-infantil.html',
+  styleUrls: ['./tela-inscricao-infantil.scss']
 })
 export class TelaInscricaoInclusaoInfantil extends ATelaInscricaoInfantil implements OnInit {
 

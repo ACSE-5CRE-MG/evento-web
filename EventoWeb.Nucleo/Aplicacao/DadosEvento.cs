@@ -45,5 +45,6 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string Nome { get; set; }
         public String Logotipo { get; set; }
         public int IdadeMinima { get; set; }
+        public bool PermiteInscricaoInfantil { get; set; }
     }
 }

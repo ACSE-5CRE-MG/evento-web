@@ -75,7 +75,7 @@ export class CompFormInscricaoInfantil {
     this.dadosTela.descricaoEvento = this.mEvento.Nome;
     this.dadosTela.idadeMinima = this.mEvento.IdadeMinima;
     this.dadosTela.dataMinimaNascimento = new Date(this.mEvento.PeriodoRealizacao.DataInicial);
-    this.dadosTela.dataMinimaNascimento.setFullYear(this.dadosTela.dataMinimaNascimento.getFullYear() - this.mEvento.IdadeMinima);
+    this.dadosTela.dataMinimaNascimento.setFullYear(this.dadosTela.dataMinimaNascimento.getFullYear() - (this.mEvento.IdadeMinima));
     this.dadosTela.dataInicioEvento = new Date(this.mEvento.PeriodoRealizacao.DataInicial);
 
     this.atribuirInscricaoSimples();
@@ -127,6 +127,8 @@ export class CompFormInscricaoInfantil {
       atualizacao.DadosPessoais.Uf = this.dadosTela.uf;
       atualizacao.DadosPessoais.UsaAdocanteDiariamente = this.dadosTela.usaAdocanteDiariamente;
       atualizacao.NomeCracha = this.dadosTela.nomeCracha;
+      atualizacao.Responsavel1 = this.dadosTela.responsavel1;
+      atualizacao.Responsavel2 = this.dadosTela.responsavel2;
 
       atualizacao.Sarais = this.dadosTela.sarais;
       atualizacao.Observacoes = this.dadosTela.observacoes;

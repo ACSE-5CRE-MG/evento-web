@@ -182,15 +182,16 @@ namespace EventoWeb.Nucleo.Aplicacao
                     new Endereco(dtoInscricao.DadosPessoais.Cidade, dtoInscricao.DadosPessoais.Uf), dtoInscricao.DadosPessoais.DataNascimento,
                     dtoInscricao.DadosPessoais.Sexo, dtoInscricao.DadosPessoais.Email);
 
-                var responsavel1 = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(dtoInscricao.Responsavel1.Id);
-                var responsavel2 = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(dtoInscricao.Responsavel2.Id);
+                Inscricao responsavel1 = null;
+                Inscricao responsavel2 = null;
 
-                InscricaoInfantil inscInfantil;
-                if (responsavel1 != null && responsavel2 != null)
-                    inscInfantil = new InscricaoInfantil(pessoa, evento, responsavel1, responsavel2, DateTime.Now);
-                else
-                    inscInfantil = new InscricaoInfantil(evento, pessoa, responsavel1, DateTime.Now);
+                if (dtoInscricao.Responsavel1 != null)
+                    responsavel1 = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(dtoInscricao.Responsavel1.Id);
 
+                if (dtoInscricao.Responsavel2 != null)
+                    responsavel2 = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(dtoInscricao.Responsavel2.Id);
+
+                InscricaoInfantil inscInfantil = new InscricaoInfantil(pessoa, evento, responsavel1, responsavel2, DateTime.Now);
                 inscInfantil.AtribuirDados(dtoInscricao);
 
                 inscInfantil.TornarPendente();

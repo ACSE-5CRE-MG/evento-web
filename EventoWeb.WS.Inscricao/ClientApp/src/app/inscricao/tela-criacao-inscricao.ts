@@ -13,6 +13,9 @@ export class TelaCriacaoInscricao implements OnInit {
   idEvento: number;
   nomeEvento: string;
   eventoEncontrado: boolean;
+  permiteInscricaoInfantil: boolean;
+  tiposInscricao: string[] = ["Infantil", "Adulto"];
+  tipoInscricaoEscolhida: string;
 
   constructor(private rotaAtual: ActivatedRoute, public coordenacao: CoordenacaoCentral,
     private wsEventos: WsEventos, private navegadorUrl: Router) { }
@@ -37,6 +40,7 @@ export class TelaCriacaoInscricao implements OnInit {
                 if (dadosEvento != null) {
                   this.nomeEvento = dadosEvento.Nome;
                   this.eventoEncontrado = true;
+                  this.permiteInscricaoInfantil = dadosEvento.PermiteInscricaoInfantil;
                 }
 
                 dlg.close();
@@ -52,6 +56,13 @@ export class TelaCriacaoInscricao implements OnInit {
 
   public clicarContinuar(): void {
 
-    this.navegadorUrl.navigate(['criar-inscricao/' + this.idEvento]);    
+    if (this.permiteInscricaoInfantil && (this.tipoInscricaoEscolhida == null || this.tipoInscricaoEscolhida.trim().length == 0))
+      this.coordenacao.Alertas.alertarAtencao("Você não escolheu o tipo de inscrição que deseja fazer", "Escolha um tipo de inscrição para podermos continuar!!");
+    else {
+      if (!this.permiteInscricaoInfantil || (this.permiteInscricaoInfantil && this.tipoInscricaoEscolhida == this.tiposInscricao[1]))
+        this.navegadorUrl.navigate(['criar-inscricao/' + this.idEvento]);
+      else
+        this.navegadorUrl.navigate(['criar-inscricao-infantil/' + this.idEvento]);
+    }        
   }
 }
