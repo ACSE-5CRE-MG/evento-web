@@ -8,9 +8,9 @@
       <span class="versao">{{evento.Nome}}</span>
     </div>
     <span style="flex: 1 1 auto;"></span>
-    <button *ngIf="!NaoEhIncompleta" type="button" mat-raised-button (click)="clicarAtualizar()">
+    <button *ngIf="!naoEhIncompleta" type="button" mat-raised-button (click)="clicarAtualizar()">
       Salvar
     </button>
   </mat-toolbar>
-  <comp-form-inscricao #formInscricao [inscricao]="inscricao" [evento]="evento" [NaoEhIncompleta]="naoEhIncompleta"></comp-form-inscricao>
+  <comp-form-inscricao #formInscricao [inscricao]="inscricao" [evento]="evento" [naoEhIncompleta]="naoEhIncompleta"></comp-form-inscricao>
 </layout-geral>

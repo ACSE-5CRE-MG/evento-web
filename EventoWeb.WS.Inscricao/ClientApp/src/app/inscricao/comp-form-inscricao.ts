@@ -18,7 +18,7 @@ import { EnumModeloDivisaoSalasEstudo, DTOEventoCompleto } from '../principal/ob
 export class CompFormInscricao {  
 
   @Input()
-  NaoEhIncompleta: boolean = false;
+  naoEhIncompleta: boolean = false;
 
   dadosTela: DadosTela;
 

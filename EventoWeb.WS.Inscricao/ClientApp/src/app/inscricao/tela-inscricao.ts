@@ -13,7 +13,7 @@ import { md5 } from '../componentes/geracao-md5';
 export abstract class ATelaInscricao {
   inscricao: DTOInscricaoAtualizacao;
   evento: DTOEventoCompleto;
-  NaoEhIncompleta: boolean = false;
+  naoEhIncompleta: boolean = false;
 
   @ViewChild("formInscricao", { static: false })
   formInscricao: CompFormInscricao;
@@ -66,7 +66,7 @@ export class TelaInscricaoAtualizacao extends ATelaInscricao implements OnInit {
                   this.inscricao = dadosInscricao;
                   this.inscricaoCompleta = dadosInscricao;
                   this.evento = dadosInscricao.Evento;
-                  this.NaoEhIncompleta = this.inscricaoCompleta.Situacao != EnumSituacaoInscricao.Incompleta;
+                  this.naoEhIncompleta = this.inscricaoCompleta.Situacao != EnumSituacaoInscricao.Incompleta;
                 }
                 else
                   this.voltar(idInscricao);
@@ -123,7 +123,7 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
     this.evento.PeriodoInscricao = new Periodo();
     this.evento.PeriodoRealizacao = new Periodo();
 
-    this.NaoEhIncompleta = false;
+    this.naoEhIncompleta = false;
 
     let dlg = this.coordenacao.Alertas.alertarProcessamento("Carregando dados...");
 

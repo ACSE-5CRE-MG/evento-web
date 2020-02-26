@@ -17,7 +17,7 @@ import { DialogosInscricao } from './dlg-inscricao-adulto-codigo';
 export class CompFormInscricaoInfantil {  
 
   @Input()
-  NaoEhIncompleta: boolean = false;
+  naoEhIncompleta: boolean = false;
 
   dadosTela: DadosTela;
 

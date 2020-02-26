@@ -13,7 +13,7 @@ import { CompFormInscricaoInfantil } from './comp-form-inscricao-infantil';
 export abstract class ATelaInscricaoInfantil {
   inscricao: DTOInscricaoAtualizacaoInfantil;
   evento: DTOEventoCompleto;
-  NaoEhIncompleta: boolean = false;
+  naoEhIncompleta: boolean = false;
 
   @ViewChild("formInscricao", { static: false })
   formInscricao: CompFormInscricaoInfantil;
@@ -66,7 +66,7 @@ export class TelaInscricaoAtualizacaoInfantil extends ATelaInscricaoInfantil imp
                   this.inscricao = dadosInscricao;
                   this.inscricaoCompleta = dadosInscricao;
                   this.evento = dadosInscricao.Evento;
-                  this.NaoEhIncompleta = this.inscricaoCompleta.Situacao != EnumSituacaoInscricao.Incompleta;
+                  this.naoEhIncompleta = this.inscricaoCompleta.Situacao != EnumSituacaoInscricao.Incompleta;
                 }
                 else
                   this.voltar(idInscricao);
@@ -123,7 +123,7 @@ export class TelaInscricaoInclusaoInfantil extends ATelaInscricaoInfantil implem
     this.evento.PeriodoInscricao = new Periodo();
     this.evento.PeriodoRealizacao = new Periodo();
 
-    this.NaoEhIncompleta = false;
+    this.naoEhIncompleta = false;
 
     let dlg = this.coordenacao.Alertas.alertarProcessamento("Carregando dados...");
 

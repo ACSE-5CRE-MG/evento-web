@@ -10,7 +10,7 @@
             <dx-radio-group [items]="coordenacao.TiposInscricao"
                             [(value)]="dadosTela.tipoInscricaoEscolhida"
                             layout="horizontal"
-                            [disabled]="NaoEhIncompleta">
+                            [disabled]="naoEhIncompleta">
               <dx-validator>
                 <dxi-validation-rule type="required" message="Você não escolheu o tipo de inscrição."></dxi-validation-rule>
               </dx-validator>
@@ -29,7 +29,7 @@
         </div>
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <label class="label_campos" fxFlex="106px">Nome:</label>
-          <dx-text-box [(value)]="dadosTela.nome" fxFlex="100" [disabled]="NaoEhIncompleta" [maxLength]="150">
+          <dx-text-box [(value)]="dadosTela.nome" fxFlex="100" [disabled]="naoEhIncompleta" [maxLength]="150">
             <dx-validator>
               <dxi-validation-rule type="required" message="Você não informou o nome."></dxi-validation-rule>
             </dx-validator>
@@ -37,13 +37,13 @@
         </div>
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <label class="label_campos" fxFlex="106px">Nome Crachá:</label>
-          <dx-text-box [(value)]="dadosTela.nomeCracha" fxFlex="100" [disabled]="NaoEhIncompleta" [maxLength]="150">
+          <dx-text-box [(value)]="dadosTela.nomeCracha" fxFlex="100" [disabled]="naoEhIncompleta" [maxLength]="150">
           </dx-text-box>
         </div>
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
             <label class="label_campos" fxFlex="106px">Nascimento:</label>
-            <dx-date-box [(value)]="dadosTela.dataNascimento" type="date" [disabled]="NaoEhIncompleta">
+            <dx-date-box [(value)]="dadosTela.dataNascimento" type="date" [disabled]="naoEhIncompleta">
               <dx-validator>
                 <dxi-validation-rule type="required" message="Você não informou o nome a data de nascimento"></dxi-validation-rule>
                 <dxi-validation-rule type="range" [max]="dadosTela.dataMinimaNascimento" message="Sua idade deve ser, no mínimo, de {{dadosTela.idadeMinima}} anos"></dxi-validation-rule>
@@ -58,7 +58,7 @@
             <dx-radio-group [items]="coordenacao.Sexos"
                             [(value)]="this.dadosTela.sexoEscolhido"
                             layout="horizontal"
-                            [disabled]="NaoEhIncompleta">
+                            [disabled]="naoEhIncompleta">
               <dx-validator>
                 <dxi-validation-rule type="required" message="Você não escolheu o sexo."></dxi-validation-rule>
               </dx-validator>
@@ -68,7 +68,7 @@
         <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
           <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
             <label class="label_campos" fxFlex="106px">E-mail:</label>
-            <dx-text-box [(value)]="dadosTela.email" fxFlex="60" [disabled]="NaoEhIncompleta" [maxLength]="100">
+            <dx-text-box [(value)]="dadosTela.email" fxFlex="60" [disabled]="naoEhIncompleta" [maxLength]="100">
               <dx-validator>
                 <dxi-validation-rule type="required" message="Você não informou o e-mail."></dxi-validation-rule>
                 <dxi-validation-rule type="email" message="Você informou um email que não é válido"></dxi-validation-rule>
@@ -84,7 +84,7 @@
         </div>
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <label class="label_campos" fxFlex="106px">Cidade/UF:</label>
-          <dx-text-box [(value)]="dadosTela.cidade" fxFlex="80" [disabled]="NaoEhIncompleta" [maxLength]="100">
+          <dx-text-box [(value)]="dadosTela.cidade" fxFlex="80" [disabled]="naoEhIncompleta" [maxLength]="100">
             <dx-validator>
               <dxi-validation-rule type="required" message="Você não informou a Cidade."></dxi-validation-rule>
             </dx-validator>
@@ -96,7 +96,7 @@
                          [searchEnabled]="true"
                          [(value)]="dadosTela.uf"
                          fxFlex="20"
-                         [disabled]="NaoEhIncompleta">
+                         [disabled]="naoEhIncompleta">
             <dx-validator>
               <dxi-validation-rule type="required" message="Você não informou a UF."></dxi-validation-rule>
             </dx-validator>
@@ -105,14 +105,14 @@
         <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
           <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
             <label class="label_campos" fxFlex="106px">Celular:</label>
-            <dx-text-box [(value)]="dadosTela.celular" fxFlex="60" [disabled]="NaoEhIncompleta" [maxLength]="15">
+            <dx-text-box [(value)]="dadosTela.celular" fxFlex="60" [disabled]="naoEhIncompleta" [maxLength]="15">
             </dx-text-box>
           </div>
         </div>
         <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
           <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
             <label class="label_campos" fxFlex="106px">Tel. Fixo:</label>
-            <dx-text-box [(value)]="dadosTela.telefoneFixo" fxFlex="60" [disabled]="NaoEhIncompleta" [maxLength]="15">
+            <dx-text-box [(value)]="dadosTela.telefoneFixo" fxFlex="60" [disabled]="naoEhIncompleta" [maxLength]="15">
             </dx-text-box>
           </div>
         </div>
@@ -122,23 +122,23 @@
     <div class="margem-5px" fxFlex="100" fxLayout="column" fxLayoutGap="5px">
       <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
         <div fxFlex="106px"></div>
-        <dx-check-box [(value)]="dadosTela.ehVegetariano" text="É Vegetariano?" [disabled]="NaoEhIncompleta"></dx-check-box>
-        <dx-check-box [(value)]="dadosTela.usaAdocanteDiariamente" text="Usa adoçante diariamente?" [disabled]="NaoEhIncompleta"></dx-check-box>
-        <dx-check-box [(value)]="dadosTela.ehDiabetico" text="É diabético?" [disabled]="NaoEhIncompleta"></dx-check-box>
+        <dx-check-box [(value)]="dadosTela.ehVegetariano" text="É Vegetariano?" [disabled]="naoEhIncompleta"></dx-check-box>
+        <dx-check-box [(value)]="dadosTela.usaAdocanteDiariamente" text="Usa adoçante diariamente?" [disabled]="naoEhIncompleta"></dx-check-box>
+        <dx-check-box [(value)]="dadosTela.ehDiabetico" text="É diabético?" [disabled]="naoEhIncompleta"></dx-check-box>
       </div>
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
         <label class="label_campos" fxFlex="106px">Carnes que você não come:</label>
-        <dx-text-box [(value)]="dadosTela.carnesNaoCome" fxFlex="100" [disabled]="NaoEhIncompleta" [maxLength]="150">
+        <dx-text-box [(value)]="dadosTela.carnesNaoCome" fxFlex="100" [disabled]="naoEhIncompleta" [maxLength]="150">
         </dx-text-box>
       </div>
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
         <label class="label_campos" fxFlex="106px">Alimentos que você tem alergia:</label>
-        <dx-text-box [(value)]="dadosTela.alimentosAlergia" fxFlex="100" [disabled]="NaoEhIncompleta" [maxLength]="100">
+        <dx-text-box [(value)]="dadosTela.alimentosAlergia" fxFlex="100" [disabled]="naoEhIncompleta" [maxLength]="100">
         </dx-text-box>
       </div>
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
         <label class="label_campos" fxFlex="106px">Medicamentos que você usa:</label>
-        <dx-text-box [(value)]="dadosTela.medicamentosUsa" fxFlex="100" [disabled]="NaoEhIncompleta" [maxLength]="150">
+        <dx-text-box [(value)]="dadosTela.medicamentosUsa" fxFlex="100" [disabled]="naoEhIncompleta" [maxLength]="150">
         </dx-text-box>
       </div>
     </div>
@@ -147,7 +147,7 @@
       <div class="margem-5px" fxFlex="100" fxLayout="column" fxLayoutGap="5px">
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <label class="label_campos" fxFlex="106px">Centro Espírita:</label>
-          <dx-text-box [(value)]="dadosTela.centroEspirita" fxFlex="100" [disabled]="NaoEhIncompleta" [maxLength]="300">
+          <dx-text-box [(value)]="dadosTela.centroEspirita" fxFlex="100" [disabled]="naoEhIncompleta" [maxLength]="300">
             <dx-validator>
               <dxi-validation-rule type="required" message="Você não informou o Centro Espírita que frequenta."></dxi-validation-rule>
             </dx-validator>
@@ -155,7 +155,7 @@
         </div>
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <label class="label_campos" fxFlex="106px">Tempo que é espírita:</label>
-          <dx-text-box [(value)]="dadosTela.tempoEspirita" fxFlex="40" [disabled]="NaoEhIncompleta" [maxLength]="20">
+          <dx-text-box [(value)]="dadosTela.tempoEspirita" fxFlex="40" [disabled]="naoEhIncompleta" [maxLength]="20">
             <dx-validator>
               <dxi-validation-rule type="required" message="Você não informou o tempo que é espírita."></dxi-validation-rule>
             </dx-validator>
@@ -164,11 +164,11 @@
                         [width]="80"
                         fxFlex="40"
                         text="Primeiro Encontro?"
-                        [disabled]="NaoEhIncompleta"></dx-check-box>
+                        [disabled]="naoEhIncompleta"></dx-check-box>
         </div>
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <label class="label_campos" fxFlex="106px">Nome Responsável Casa Espírita:</label>
-          <dx-text-box [(value)]="dadosTela.nomeResponsavelCentro" fxFlex="100" [disabled]="NaoEhIncompleta" [maxLength]="150">
+          <dx-text-box [(value)]="dadosTela.nomeResponsavelCentro" fxFlex="100" [disabled]="naoEhIncompleta" [maxLength]="150">
             <dx-validator>
               <dxi-validation-rule type="required" message="Você não informou o responsável pela Casa Espírita ou pela reunião que você frequenta."></dxi-validation-rule>
             </dx-validator>
@@ -176,7 +176,7 @@
         </div>
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <label class="label_campos" fxFlex="106px">Telefone Responsável Casa Espírita:</label>
-          <dx-text-box [(value)]="dadosTela.telefoneResponsavelCentro" fxFlex="60" [disabled]="NaoEhIncompleta" [maxLength]="15">
+          <dx-text-box [(value)]="dadosTela.telefoneResponsavelCentro" fxFlex="60" [disabled]="naoEhIncompleta" [maxLength]="15">
             <dx-validator>
               <dxi-validation-rule type="required" message="Você não informou o telefone do responsável pela Casa Espírita ou pela reunião que você frequenta."></dxi-validation-rule>
             </dx-validator>
@@ -185,7 +185,7 @@
         <mat-divider></mat-divider>
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <label class="label_campos" fxFlex="106px">Nome Responsável Legal:</label>
-          <dx-text-box [(value)]="dadosTela.nomeResponsavelLegal" fxFlex="100" [disabled]="dadosTela.idade >= 18 || NaoEhIncompleta" [maxLength]="150">
+          <dx-text-box [(value)]="dadosTela.nomeResponsavelLegal" fxFlex="100" [disabled]="dadosTela.idade >= 18 || naoEhIncompleta" [maxLength]="150">
             <dx-validator>
               <dxi-validation-rule type="required" message="Você não informou o nome do responsável legal por você. Precisamos dessa informação já que você ainda não tem 18 anos."></dxi-validation-rule>
             </dx-validator>
@@ -193,7 +193,7 @@
         </div>
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <label class="label_campos" fxFlex="106px">Telefone Responsável Legal:</label>
-          <dx-text-box [(value)]="dadosTela.telefoneResponsavelLegal" fxFlex="60" [disabled]="dadosTela.idade >= 18 || NaoEhIncompleta" [maxLength]="15">
+          <dx-text-box [(value)]="dadosTela.telefoneResponsavelLegal" fxFlex="60" [disabled]="dadosTela.idade >= 18 || naoEhIncompleta" [maxLength]="15">
             <dx-validator>
               <dxi-validation-rule type="required" message="Você não informou o telefone do responsável legal por você. Precisamos dessa informação já que você ainda não tem 18 anos."></dxi-validation-rule>
             </dx-validator>
@@ -208,16 +208,16 @@
     <mat-divider></mat-divider>
     <mat-tab-group>
       <mat-tab label="Oficinas" *ngIf="evento.TemOficinas && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != coordenacao.TiposInscricao[2]">
-        <comp-oficinas [desabilitar]="NaoEhIncompleta" [oficinas]="evento.Oficinas" [forma]="dadosTela.formaEscolha" [(escolhido)]="dadosTela.oficinasEscolhidas"></comp-oficinas>
+        <comp-oficinas [desabilitar]="naoEhIncompleta" [oficinas]="evento.Oficinas" [forma]="dadosTela.formaEscolha" [(escolhido)]="dadosTela.oficinasEscolhidas"></comp-oficinas>
       </mat-tab>
       <mat-tab label="Estudo" *ngIf="evento.ConfiguracaoSalaEstudo != null && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != coordenacao.TiposInscricao[2]">
-        <comp-salas [desabilitar]="NaoEhIncompleta" [salas]="evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="evento.ConfiguracaoSalaEstudo" [(escolhido)]="dadosTela.salasEscolhidas"></comp-salas>
+        <comp-salas [desabilitar]="naoEhIncompleta" [salas]="evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="evento.ConfiguracaoSalaEstudo" [(escolhido)]="dadosTela.salasEscolhidas"></comp-salas>
       </mat-tab>
       <mat-tab label="Departamentos" *ngIf="evento.TemDepartamentalizacao && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != coordenacao.TiposInscricao[2]">
-        <comp-departamentos [desabilitar]="NaoEhIncompleta" [departamentos]="evento.Departamentos" [forma]="dadosTela.formaEscolha" [(valor)]="dadosTela.departamentoEscolhido"></comp-departamentos>
+        <comp-departamentos [desabilitar]="naoEhIncompleta" [departamentos]="evento.Departamentos" [forma]="dadosTela.formaEscolha" [(valor)]="dadosTela.departamentoEscolhido"></comp-departamentos>
       </mat-tab>
       <mat-tab label="Sarau" *ngIf="evento.ConfiguracaoTempoSarauMin != null" style="padding: 5px">
-        <comp-sarau [desabilitar]="NaoEhIncompleta" [(valor)]="dadosTela.sarais" [inscrito]="dadosTela.inscricaoSimples"></comp-sarau>
+        <comp-sarau [desabilitar]="naoEhIncompleta" [(valor)]="dadosTela.sarais" [inscrito]="dadosTela.inscricaoSimples"></comp-sarau>
       </mat-tab>
     </mat-tab-group>
   </div>
@@ -227,14 +227,14 @@
               (evento.ConfiguracaoEvangelizacao == 0 ||(evento.ConfiguracaoEvangelizacao == 1 && dadosTela.tipoInscricao == this.coordenacao.TiposInscricao[1]))">
     <mat-card-title>Crianças que você será responsável</mat-card-title>
     <mat-divider></mat-divider>
-    <comp-criancas [desabilitar]="NaoEhIncompleta" [(valor)]="dadosTela.criancas" [inscrito]="inscricao"></comp-criancas>
+    <comp-criancas [desabilitar]="naoEhIncompleta" [(valor)]="dadosTela.criancas" [inscrito]="inscricao"></comp-criancas>
   </div>-->
   <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
     <mat-card-title>Informações sobre pagamentos</mat-card-title>
     <mat-divider></mat-divider>
     <comp-pagamento [(valor)]="dadosTela.pagamento"
                     [valorInscricao]="evento.ValorInscricaoAdulto"
-                    [desabilitar]="NaoEhIncompleta"></comp-pagamento>
+                    [desabilitar]="naoEhIncompleta"></comp-pagamento>
   </div>
   <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
     <mat-card-title>Outras informações</mat-card-title>
@@ -243,7 +243,7 @@
     <p>Ou nos fale de alguma outra informação que você ache pertinente e não encontrou lugar na inscrição. Este campo esta aberto para podermos te ouvir!</p>
     <dx-text-area [height]="180"
                   [(value)]="dadosTela.observacoes"
-                  [disabled]="NaoEhIncompleta">
+                  [disabled]="naoEhIncompleta">
     </dx-text-area>
   </div>
 </div>

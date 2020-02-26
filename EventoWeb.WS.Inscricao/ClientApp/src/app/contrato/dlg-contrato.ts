@@ -17,6 +17,10 @@ export class DlgContrato {
       this.idEvento = data.idEvento;
     }
   }
+
+  clicarCancelar(): void {
+    this.dialogRef.close();
+  }
 }
 
 @Injectable()
