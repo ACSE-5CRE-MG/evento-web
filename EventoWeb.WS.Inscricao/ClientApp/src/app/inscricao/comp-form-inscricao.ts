@@ -25,10 +25,10 @@ export class CompFormInscricao {
   private mEvento: DTOEventoCompleto;
   private mInscricao: DTOInscricaoAtualizacao;
 
-  @ViewChild("grupoValidacaoEssencial", { static: false })
+  @ViewChild("grupoValidacaoEssencial")
   grupoValidacaoEssencial: DxValidationGroupComponent;
 
-  @ViewChild("grupoValidacaoEspirita", { static: false })
+  @ViewChild("grupoValidacaoEspirita")
   grupoValidacaoEspirita: DxValidationGroupComponent;
 
   constructor(public coordenacao: CoordenacaoCentral, private rotaAtual: ActivatedRoute, private navegadorUrl: Router, private wsInscricoes: WsManutencaoInscricoes) { }

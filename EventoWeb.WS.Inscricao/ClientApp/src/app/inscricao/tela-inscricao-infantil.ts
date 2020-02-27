@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Directive } from '@angular/core';
 import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EnumSituacaoInscricao, DTOInscricaoDadosPessoais, DTOPagamento, DTOInscricaoAtualizacaoInfantil, DTOInscricaoCompletaInfantil } from './objetos';
@@ -10,12 +10,13 @@ import { DialogoValidacaoEmail } from './dlg-validacao-email';
 import { md5 } from '../componentes/geracao-md5';
 import { CompFormInscricaoInfantil } from './comp-form-inscricao-infantil';
 
+@Directive()
 export abstract class ATelaInscricaoInfantil {
   inscricao: DTOInscricaoAtualizacaoInfantil;
   evento: DTOEventoCompleto;
   naoEhIncompleta: boolean = false;
 
-  @ViewChild("formInscricao", { static: false })
+  @ViewChild("formInscricao")
   formInscricao: CompFormInscricaoInfantil;
 
   constructor(public coordenacao: CoordenacaoCentral, protected navegadorUrl: Router) { }

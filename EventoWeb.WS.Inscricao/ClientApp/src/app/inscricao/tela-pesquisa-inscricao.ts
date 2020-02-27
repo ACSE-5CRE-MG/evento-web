@@ -22,7 +22,7 @@ export class TelaPesquisaInscricao implements OnInit {
         this.identificacao = "";
     }
 
-    @ViewChild("grupoValidacao", { static: false })
+    @ViewChild("grupoValidacao")
     grupoValidacao: DxValidationGroupComponent;
 
     public clicarContinuar(): void {

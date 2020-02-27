@@ -1,5 +1,5 @@
 import { Component, ViewChild, Injectable } from '@angular/core';
-import { MatDialogRef, MatDialog } from '@angular/material';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { Observable } from 'rxjs';
 
@@ -11,7 +11,7 @@ export class DlgInscricaoAdultoCodigo {
 
   codigo: string;
 
-  @ViewChild("grupoValidacao", { static: false })
+  @ViewChild("grupoValidacao")
   grupoValidacao: DxValidationGroupComponent;
 
   constructor(private dialogRef: MatDialogRef<DlgInscricaoAdultoCodigo>) { }

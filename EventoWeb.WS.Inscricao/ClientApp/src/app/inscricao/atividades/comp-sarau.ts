@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output, ViewChild, Inject, Injectable } from '@angular/core';
 import { DTOSarau, DTOInscricaoSimplificada } from '../objetos';
 import { CoordenacaoCentral } from '../../componentes/central/coordenacao-central';
-import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { Observable } from 'rxjs';
 import { WsManutencaoInscricoes } from '../../webservices/wsManutencaoInscricoes';
@@ -126,7 +126,7 @@ export class DlgSarauCodigo {
 
     codigo: string;
 
-    @ViewChild("grupoValidacao", { static: false })
+    @ViewChild("grupoValidacao")
     grupoValidacao: DxValidationGroupComponent;
 
     constructor(private dialogRef: MatDialogRef<DlgSarauCodigo>) { }
@@ -148,7 +148,7 @@ export class DlgSarauCodigo {
 })
 export class DlgSarauFormulario {
 
-    @ViewChild("grupoValidacao", { static: false })
+    @ViewChild("grupoValidacao")
     grupoValidacao: DxValidationGroupComponent;
 
     sarau: DTOSarau;

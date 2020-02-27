@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { ServicoProcessamentoErros } from "./servico-processamento-erros";
 import { Alertas } from "../alertas-dlg/alertas";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 
 @Injectable()

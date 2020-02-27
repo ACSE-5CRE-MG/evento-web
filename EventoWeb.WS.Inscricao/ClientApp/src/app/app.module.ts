@@ -8,15 +8,13 @@ import localePt from '@angular/common/locales/pt';
 
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import {
-  MatSidenavModule,
-  MatDialogModule,
-  MatToolbarModule,
-  MatButtonModule,
-  MatDividerModule,
-  MatCardModule,
-  MatTabsModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 import {
   DxDataGridModule,
