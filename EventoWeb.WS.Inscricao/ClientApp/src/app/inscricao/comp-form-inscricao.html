@@ -221,18 +221,11 @@
       </mat-tab>
     </mat-tab-group>
   </div>
-  <!--
-  <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100"
-       *ngIf="evento.ConfiguracaoEvangelizacao != null &&
-              (evento.ConfiguracaoEvangelizacao == 0 ||(evento.ConfiguracaoEvangelizacao == 1 && dadosTela.tipoInscricao == this.coordenacao.TiposInscricao[1]))">
-    <mat-card-title>Crianças que você será responsável</mat-card-title>
-    <mat-divider></mat-divider>
-    <comp-criancas [desabilitar]="naoEhIncompleta" [(valor)]="dadosTela.criancas" [inscrito]="inscricao"></comp-criancas>
-  </div>-->
   <div class="cartao margem-5px" fxLayout="column" fxFlex="48" fxFlex.sm="90" fxFlex.xs="100">
     <mat-card-title>Informações sobre pagamentos</mat-card-title>
     <mat-divider></mat-divider>
     <comp-pagamento [(valor)]="dadosTela.pagamento"
+                    [idEvento]="evento.Id"
                     [valorInscricao]="evento.ValorInscricaoAdulto"
                     [desabilitar]="naoEhIncompleta"></comp-pagamento>
   </div>

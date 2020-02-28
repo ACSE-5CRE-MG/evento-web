@@ -1,7 +1,7 @@
 <div fxLayout="column" fxLayoutGap="5px">
   <div>
     <p><strong>Valor Inscrição:</strong> &nbsp; {{valorInscricao| currency:'BRL'}}</p>
-    <p><strong>Total: </strong> &nbsp; {{valorInscricao | currency:'BRL'}}</p>
+    <p><button mat-raised-button (click)="clicarAbrirRegulamento()">Acesse o Regulamento</button></p>
   </div>
   <mat-divider></mat-divider>
   <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">

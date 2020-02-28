@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { DTOPagamento, EnumPagamento } from '../objetos';
 import { Observable, forkJoin } from 'rxjs';
+import { DialogoContrato } from '../../contrato/dlg-contrato';
 
 @Component({
   selector: 'comp-pagamento',
@@ -13,6 +14,9 @@ export class ComponentePagamento {
 
   @Input()
   desabilitar: boolean;
+
+  @Input()
+  idEvento: number;
 
   @Input()
   set valor(param: DTOPagamento) {
@@ -45,6 +49,8 @@ export class ComponentePagamento {
   valorInscricao: number;
 
   opcoes: string[] = ["Enviar Comprovante", "Comprovante esta em outra inscrição", "Outros"];
+
+  constructor(private dlgContrato: DialogoContrato) { }
 
   get opcaoEscolhida(): string {
 
@@ -159,5 +165,9 @@ export class ComponentePagamento {
     }
     else
       return [];
+  }
+
+  public clicarAbrirRegulamento(): void {
+    this.dlgContrato.apresentarDlgFormDialogoInclusao(this.idEvento);
   }
 }

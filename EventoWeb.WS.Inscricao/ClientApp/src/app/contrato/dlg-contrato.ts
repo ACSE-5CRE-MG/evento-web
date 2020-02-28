@@ -28,7 +28,7 @@ export class DialogoContrato {
 
   constructor(private srvDialog: MatDialog) { }
 
-  apresentarDlgFormDialogoInclusao(idEvento: number, podeUsarFaixaEtaria: boolean): Observable<void> {
+  apresentarDlgFormDialogoInclusao(idEvento: number): Observable<void> {
     const dlg = this.srvDialog.open(DlgContrato, { data: { idEvento: idEvento } });
     return dlg.afterClosed();
   }
