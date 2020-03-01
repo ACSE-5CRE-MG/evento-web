@@ -29,7 +29,7 @@ export class DialogoContrato {
   constructor(private srvDialog: MatDialog) { }
 
   apresentarDlgFormDialogoInclusao(idEvento: number): Observable<void> {
-    const dlg = this.srvDialog.open(DlgContrato, { data: { idEvento: idEvento } });
+    const dlg = this.srvDialog.open(DlgContrato, { data: { idEvento: idEvento }, width: '90vw', height:'90vh' });
     return dlg.afterClosed();
   }
 }

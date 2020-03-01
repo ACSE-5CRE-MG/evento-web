@@ -10,10 +10,7 @@
                     layout="horizontal"
                     ngClass="rd-filtro"
                     *ngIf="permiteInscricaoInfantil">
-    </dx-radio-group>
-    <button type="button" mat-raised-button (click)="clicarContinuar()" *ngIf="eventoEncontrado">
-      Aceito
-    </button>
+    </dx-radio-group>  
   </mat-toolbar>
   <div *ngIf="!eventoEncontrado" fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center">
     <div fxLayout="column" class="margem-5px" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
@@ -24,12 +21,21 @@
       <a mat-raised-button [routerLink]="''">Voltar</a>
     </div>
   </div>
-  <div fxLayout="column" *ngIf="eventoEncontrado">
-    <div class="cartao margem-5px">
-      <mat-card-title>Leia atentamente o regulamento!!!</mat-card-title>
+  <layout-geral>
+    <div class="cartao margem-5px" layout-geral-cabecalho>
+      <mat-card-title>
+        Leia atentamente o regulamento!!!
+      </mat-card-title>
       <mat-divider></mat-divider>
-      <p>Ao clicar em aceitar e fazer a sua inscrição, você confirma que leu, compreendeu e aceitou as regras do encontro.</p>
+      <div fxLayout="row" fxLayoutGap="5px">
+        <p>Ao clicar em aceitar e fazer a sua inscrição, você confirma que leu, compreendeu e aceitou as regras do encontro.</p>
+        <span style="flex: 1 1 auto;"></span>
+        <button type="button" mat-raised-button (click)="clicarContinuar()" *ngIf="eventoEncontrado">
+          Aceitar
+        </button>
+      </div>
+      
     </div>
-    <comp-contrato fxFlex="70" fxFlex.xs="95" [idEvento]="idEvento"></comp-contrato>    
-  </div>
+    <comp-contrato fxFill [idEvento]="idEvento"></comp-contrato>
+  </layout-geral>
 </layout-geral>

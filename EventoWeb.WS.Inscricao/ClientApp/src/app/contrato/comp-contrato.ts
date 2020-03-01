@@ -6,7 +6,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'comp-contrato',
-  templateUrl: './comp-contrato.html'
+  templateUrl: './comp-contrato.html',
+  styleUrls: ['./comp-contrato.scss']
 })
 export class ComponenteContrato implements OnInit {
 

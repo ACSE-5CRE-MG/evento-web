@@ -147,7 +147,7 @@ export class CompFormInscricaoInfantil {
   }
 
   clicarPesquisarResp1(): void {
-    this.DlgsInscricao.apresentarDlgCodigo()
+    this.DlgsInscricao.apresentarDlgCodigo(this.evento.Id)
       .subscribe(
         (codigo) => {
           if (codigo != null) {
@@ -178,7 +178,7 @@ export class CompFormInscricaoInfantil {
     if (this.dadosTela.responsavel1 == null)
       this.coordenacao.Alertas.alertarAtencao("Você precisa informar o Responsável 1 pela criança, antes de informar o segundo.", "");
     else {
-      this.DlgsInscricao.apresentarDlgCodigo()
+      this.DlgsInscricao.apresentarDlgCodigo(this.evento.Id)
         .subscribe(
           (codigo) => {
             if (codigo != null) {

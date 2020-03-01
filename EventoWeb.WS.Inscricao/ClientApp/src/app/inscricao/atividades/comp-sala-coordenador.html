@@ -1,5 +1,4 @@
-<div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-  <label class="label_campos" fxFlex="106px">Coordena Sala:</label>
+<div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" style="width: 100%">
   <dx-select-box [dataSource]="salas"
                  displayExpr="Nome"
                  [searchMode]="'contains'"
@@ -8,6 +7,6 @@
                  [searchEnabled]="true"
                  [(value)]="salaCoordena"
                  [disabled]="desabilitar"
-                 fxFlex="70">
+                 fxFlex="100">
   </dx-select-box>
 </div>

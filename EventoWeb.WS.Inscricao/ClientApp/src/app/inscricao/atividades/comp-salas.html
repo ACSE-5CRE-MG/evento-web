@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+<div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" style="width:100%">
   <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" *ngIf="apresentacao == 1">
     <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
       <label class="label_campos" fxFlex.xs="106px">Você é:</label>
@@ -16,6 +16,6 @@
   <comp-sala-participante-sem-escolha *ngIf="opcaoEscolhida == opcoes[0] && configuracaoSala == 0">
   </comp-sala-participante-sem-escolha>
 
-  <comp-sala-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [salas]="salas" [(valor)]="coordenador" [desabilitar]="desabilitar">
+  <comp-sala-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [salas]="salas" [(valor)]="coordenador" [desabilitar]="desabilitar" style="width: 100%">
   </comp-sala-coordenador>
 </div>

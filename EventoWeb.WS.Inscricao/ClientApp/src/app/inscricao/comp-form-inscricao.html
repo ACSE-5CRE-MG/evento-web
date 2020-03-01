@@ -211,7 +211,7 @@
         <comp-oficinas [desabilitar]="naoEhIncompleta" [oficinas]="evento.Oficinas" [forma]="dadosTela.formaEscolha" [(escolhido)]="dadosTela.oficinasEscolhidas"></comp-oficinas>
       </mat-tab>
       <mat-tab label="Estudo" *ngIf="evento.ConfiguracaoSalaEstudo != null && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != coordenacao.TiposInscricao[2]">
-        <comp-salas [desabilitar]="naoEhIncompleta" [salas]="evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="evento.ConfiguracaoSalaEstudo" [(escolhido)]="dadosTela.salasEscolhidas"></comp-salas>
+        <comp-salas [desabilitar]="naoEhIncompleta" [salas]="evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="evento.ConfiguracaoSalaEstudo" [(escolhido)]="dadosTela.salasEscolhidas" style="width: 100%"></comp-salas>
       </mat-tab>
       <mat-tab label="Departamentos" *ngIf="evento.TemDepartamentalizacao && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != coordenacao.TiposInscricao[2]">
         <comp-departamentos [desabilitar]="naoEhIncompleta" [departamentos]="evento.Departamentos" [forma]="dadosTela.formaEscolha" [(valor)]="dadosTela.departamentoEscolhido"></comp-departamentos>

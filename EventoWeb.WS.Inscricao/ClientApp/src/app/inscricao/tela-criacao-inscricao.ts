@@ -14,7 +14,7 @@ export class TelaCriacaoInscricao implements OnInit {
   nomeEvento: string;
   eventoEncontrado: boolean;
   permiteInscricaoInfantil: boolean;
-  tiposInscricao: string[] = ["Infantil", "Adulto"];
+  tiposInscricao: string[] = ["Infantil", "Participante e/ou trabalhador"];
   tipoInscricaoEscolhida: string;
 
   constructor(private rotaAtual: ActivatedRoute, public coordenacao: CoordenacaoCentral,
@@ -41,6 +41,8 @@ export class TelaCriacaoInscricao implements OnInit {
                   this.nomeEvento = dadosEvento.Nome;
                   this.eventoEncontrado = true;
                   this.permiteInscricaoInfantil = dadosEvento.PermiteInscricaoInfantil;
+
+                  this.tiposInscricao[0] = this.tiposInscricao[0] + " (menores de " + dadosEvento.IdadeMinima + ")";
                 }
 
                 dlg.close();

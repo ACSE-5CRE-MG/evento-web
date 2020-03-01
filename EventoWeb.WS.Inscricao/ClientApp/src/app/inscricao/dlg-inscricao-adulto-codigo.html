@@ -1,12 +1,16 @@
 <layout-geral>
   <mat-toolbar layout-geral-cabecalho color="primary">
-    <div><h1>Criança - Código da Inscrição</h1></div>
+    <div><h1>Código da Inscrição</h1></div>
     <span style="flex: 1 1 auto;"></span>
   </mat-toolbar>
-  <div style="margin: 5px">
-    <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
-      <label class="label_campos">Código:</label>
-      <dx-text-box [(value)]="codigo" fxFlex="100">
+  <div style="margin: 5px" fxLayout="column" fxLayoutGap="5px">
+    <div>
+      <p>Informe o código de inscrição que será responsável por esta criança. Esta pessoa deverá estar inscrita e terá recebido um e-mail com os dados da sua inscrição na qual haverá um código no formato <strong>INSCXXXXXX</strong>, onde o "X" representa um número. Este código deverá ser informado aqui.</p>
+      <p>Se você tiver dúvidas, por favor clique no botão "Regulamento". Na tela que se abrirá haverá informações sobre o evento e contatos para você poder conversar.</p>
+    </div>
+    <dx-validation-group name="grupoValidacao" #grupoValidacao fxFlex="auto" fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <label class="label_campos">Código Inscrição:</label>
+      <dx-text-box [(value)]="codigo" fxFlex="100px">
         <dx-validator>
           <dxi-validation-rule type="required" message="Você não informou o Código da criança."></dxi-validation-rule>
         </dx-validator>
@@ -15,7 +19,8 @@
   </div>
   <mat-divider></mat-divider>
   <div style="margin: 5px; text-align: right">
-    <button mat-raised-button (click)="clicarCancelar()">Cancelar</button>
-    <button mat-raised-button (click)="clicarOK()" cdkFocusInitial style="margin-left:5px">OK</button>
+    <button mat-raised-button (click)="clicarRegulamento()">Regulamento</button>
+    <button mat-raised-button (click)="clicarCancelar()" style="margin-left:5px">Cancelar</button>
+    <button mat-raised-button (click)="clicarOK()" style="margin-left:5px">OK</button>
   </div>
 </layout-geral>
