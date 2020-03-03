@@ -10,7 +10,7 @@
                     layout="horizontal"
                     ngClass="rd-filtro"
                     *ngIf="permiteInscricaoInfantil">
-    </dx-radio-group>  
+    </dx-radio-group>
   </mat-toolbar>
   <div *ngIf="!eventoEncontrado" fxLayout="row" fxLayoutGap="5px" fxFill fxLayoutAlign="center center">
     <div fxLayout="column" class="margem-5px" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
@@ -27,15 +27,14 @@
         Leia atentamente o regulamento!!!
       </mat-card-title>
       <mat-divider></mat-divider>
-      <div fxLayout="row" fxLayoutGap="5px">
-        <p>Ao clicar em aceitar e fazer a sua inscrição, você confirma que leu, compreendeu e aceitou as regras do encontro.</p>
-        <span style="flex: 1 1 auto;"></span>
-        <button type="button" mat-raised-button (click)="clicarContinuar()" *ngIf="eventoEncontrado">
-          Aceitar
-        </button>
-      </div>
-      
+      <p>Ao clicar em aceitar e fazer a sua inscrição, você confirma que leu, compreendeu e aceitou as regras do encontro.</p>
     </div>
     <comp-contrato fxFill [idEvento]="idEvento"></comp-contrato>
   </layout-geral>
+  <mat-toolbar layout-geral-rodape color="primary">
+    <span style="flex: 1 1 auto;"></span>
+    <button type="button" mat-raised-button (click)="clicarContinuar()" *ngIf="eventoEncontrado">
+      Aceitar
+    </button>
+  </mat-toolbar>
 </layout-geral>

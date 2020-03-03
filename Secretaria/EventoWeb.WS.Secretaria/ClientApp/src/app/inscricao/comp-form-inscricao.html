@@ -52,7 +52,7 @@
       <div fxLayout="column" fxLayoutGap="5px" fxLayoutGap.xs="5px">
         <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
           <label class="label_campos" fxFlex="106px">Tipo Inscrição:</label>
-          <dx-radio-group [items]="coordenacao.TiposInscricao"
+          <dx-radio-group [items]="dadosTela.TiposInscricao"
                           [(value)]="dadosTela.tipoInscricaoEscolhida"
                           layout="horizontal"
                           [disabled]="naoEhIncompleta">
@@ -100,7 +100,7 @@
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
         <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="5px">
           <label class="label_campos" fxFlex="106px">Sexo:</label>
-          <dx-radio-group [items]="coordenacao.Sexos"
+          <dx-radio-group [items]="dadosTela.Sexos"
                           [(value)]="this.dadosTela.sexoEscolhido"
                           layout="horizontal"
                           [disabled]="naoEhIncompleta">
@@ -134,7 +134,7 @@
             <dxi-validation-rule type="required" message="Você não informou a Cidade."></dxi-validation-rule>
           </dx-validator>
         </dx-text-box>
-        <dx-select-box [dataSource]="coordenacao.EstadosFederacao"
+        <dx-select-box [dataSource]="dadosTela.EstadosFederacao"
                        [searchMode]="'contains'"
                        [searchTimeout]="200"
                        [minSearchLength]="0"
@@ -249,13 +249,13 @@
 </ng-template>
 <ng-template #participacaoAtividades>
   <mat-tab-group fxFill>
-    <mat-tab label="Oficinas" *ngIf="evento.TemOficinas && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != coordenacao.TiposInscricao[2]">
+    <mat-tab label="Oficinas" *ngIf="evento.TemOficinas && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != dadosTela.TiposInscricao[2]">
       <comp-oficinas [desabilitar]="naoEhIncompleta" [oficinas]="evento.Oficinas" [forma]="dadosTela.formaEscolha" [(escolhido)]="dadosTela.oficinasEscolhidas"></comp-oficinas>
     </mat-tab>
-    <mat-tab label="Estudo" *ngIf="evento.ConfiguracaoSalaEstudo != null && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != coordenacao.TiposInscricao[2]">
+    <mat-tab label="Estudo" *ngIf="evento.ConfiguracaoSalaEstudo != null && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != dadosTela.TiposInscricao[2]">
       <comp-salas [desabilitar]="naoEhIncompleta" [salas]="evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="evento.ConfiguracaoSalaEstudo" [(escolhido)]="dadosTela.salasEscolhidas" style="width: 100%"></comp-salas>
     </mat-tab>
-    <mat-tab label="Departamentos" *ngIf="evento.TemDepartamentalizacao && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != coordenacao.TiposInscricao[2]">
+    <mat-tab label="Departamentos" *ngIf="evento.TemDepartamentalizacao && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != dadosTela.TiposInscricao[2]">
       <comp-departamentos [desabilitar]="naoEhIncompleta" [departamentos]="evento.Departamentos" [forma]="dadosTela.formaEscolha" [(valor)]="dadosTela.departamentoEscolhido"></comp-departamentos>
     </mat-tab>
     <mat-tab label="Sarau" *ngIf="evento.ConfiguracaoTempoSarauMin != null" style="padding: 5px">

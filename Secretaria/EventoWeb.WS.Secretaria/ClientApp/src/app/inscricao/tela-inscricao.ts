@@ -2,14 +2,35 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
   DTOInscricaoCompleta, EnumApresentacaoAtividades, DTOSarau, DTOInscricaoSimplificada,
-  DTOCrianca, DTOPagamento, DTOInscricaoAtualizacao, EnumSexo, DTOInscricaoDadosPessoais, EnumTipoInscricao,
+  DTOPagamento, DTOInscricaoAtualizacao, EnumSexo, DTOInscricaoDadosPessoais, EnumTipoInscricao,
   DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOInscricaoDepartamento, EnumSituacaoInscricao, EnumPagamento
 } from './objetos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
-import { EnumModeloDivisaoSalasEstudo, DTOEventoCompletoInscricao } from '../evento/objetos';
+import { EnumModeloDivisaoSalasEstudo, DTOEventoCompletoInscricao, Periodo } from '../evento/objetos';
 import { WebServiceInscricoes } from '../webservices/webservice-inscricoes';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
 import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';
+import { CompFormInscricao, ResultadoAtualizacaoInscricao } from './comp-form-inscricao';
+import { WebServiceEventos } from '../webservices/webservice-eventos';
+
+export abstract class ATelaInscricao {
+  inscricao: DTOInscricaoAtualizacao;
+  evento: DTOEventoCompletoInscricao;
+  naoEhIncompleta: boolean = false;
+
+  @ViewChild("formInscricao", { static:false })
+  formInscricao: CompFormInscricao;
+
+  constructor(protected navegadorUrl: Router) { }
+
+  clicarVoltar(): void {
+    this.navegadorUrl.navigate(['evento/' + this.evento.Id.toString() + '/inscricoes']);
+  }
+
+  protected obterAtualizacao(): ResultadoAtualizacaoInscricao {
+    return this.formInscricao.gerarAtualizacaoInscricao();
+  }
+}
 
 
 @Component({
@@ -17,98 +38,41 @@ import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem
   templateUrl: './tela-inscricao.html',
   styleUrls: ['./tela-inscricao.scss']
 })
-export class TelaInscricao implements OnInit {
+export class TelaInscricao extends ATelaInscricao implements OnInit {
 
-  dadosTela: DadosTela;
-
-  @ViewChild("grupoValidacaoEssencial", { static: false })
-  grupoValidacaoEssencial: DxValidationGroupComponent;
-
-  @ViewChild("grupoValidacaoEspirita", { static: false })
-  grupoValidacaoEspirita: DxValidationGroupComponent;
-
-  inscricao: DTOInscricaoCompleta;
-
+  inscricaoCompleta: DTOInscricaoCompleta;
   NaoEhIncompleta: boolean = false;
 
-  private m_IdEvento: number;
-
-  constructor(private mensageria: Alertas, private rotaAtual: ActivatedRoute, private navegadorUrl: Router, private wsInscricoes: WebServiceInscricoes) { }
+  constructor(private mensageria: Alertas, private rotaAtual: ActivatedRoute, protected navegadorUrl: Router, private wsInscricoes: WebServiceInscricoes) {
+    super(navegadorUrl);
+  }
 
   ngOnInit(): void {
-    this.dadosTela = new DadosTela();
     this.inscricao = new DTOInscricaoCompleta();
-    this.inscricao.Evento = new DTOEventoCompletoInscricao();
+    this.evento = new DTOEventoCompletoInscricao();
 
     let dlg = this.mensageria.alertarProcessamento("Carregando dados...");
 
     this.rotaAtual.parent.params
       .subscribe(
         (parametrosUrlPai) => {
-          this.m_IdEvento = parametrosUrlPai["id"];
+          let idEvento = parametrosUrlPai["id"];
 
           this.rotaAtual.params
             .subscribe(
               (parametrosUrl) => {
                 let idInscricao = parametrosUrl["idInscricao"];
 
-                this.wsInscricoes.obterInscricaoCompleta(this.m_IdEvento, idInscricao)
+                this.wsInscricoes.obterInscricaoCompleta(idEvento, idInscricao)
                   .subscribe(
                     (dadosInscricao) => {
                       dlg.close();
                       if (dadosInscricao != null) {
                         this.inscricao = dadosInscricao;
-                        this.dadosTela.nome = this.inscricao.DadosPessoais.Nome;
-                        this.dadosTela.dataNascimento = new Date(this.inscricao.DadosPessoais.DataNascimento);
-                        this.dadosTela.email = this.inscricao.DadosPessoais.Email;
-                        this.dadosTela.descricaoEvento = this.inscricao.Evento.Nome;
-                        this.dadosTela.idadeMinima = this.inscricao.Evento.IdadeMinima;
-                        this.dadosTela.sexoEscolhido = this.dadosTela.Sexos[this.inscricao.DadosPessoais.Sexo];
-                        this.dadosTela.tipoInscricaoEscolhida = this.dadosTela.TiposInscricao[this.inscricao.TipoInscricao];
-                        this.dadosTela.cidade = this.inscricao.DadosPessoais.Cidade;
-                        this.dadosTela.uf = this.inscricao.DadosPessoais.Uf;
-                        this.dadosTela.ehVegetariano = this.inscricao.DadosPessoais.EhVegetariano;
-                        this.dadosTela.usaAdocanteDiariamente = this.inscricao.DadosPessoais.UsaAdocanteDiariamente;
-                        this.dadosTela.ehDiabetico = this.inscricao.DadosPessoais.EhDiabetico;
-                        this.dadosTela.carnesNaoCome = this.inscricao.DadosPessoais.CarnesNaoCome;
-                        this.dadosTela.alimentosAlergia = this.inscricao.DadosPessoais.AlimentosAlergia;
-                        this.dadosTela.medicamentosUsa = this.inscricao.DadosPessoais.MedicamentosUsa;
-                        this.dadosTela.centroEspirita = this.inscricao.CentroEspirita;
-                        this.dadosTela.tempoEspirita = this.inscricao.TempoEspirita;
-                        this.dadosTela.primeiroEncontro = this.inscricao.PrimeiroEncontro;
-                        this.dadosTela.nomeResponsavelCentro = this.inscricao.NomeResponsavelCentro;
-                        this.dadosTela.telefoneResponsavelCentro = this.inscricao.TelefoneResponsavelCentro;
-                        this.dadosTela.nomeResponsavelLegal = this.inscricao.NomeResponsavelLegal;
-                        this.dadosTela.telefoneResponsavelLegal = this.inscricao.TelefoneResponsavelLegal;
-                        this.dadosTela.telefoneFixo = this.inscricao.DadosPessoais.TelefoneFixo;
-                        this.dadosTela.celular = this.inscricao.DadosPessoais.Celular;
-                        this.dadosTela.nomeCracha = this.inscricao.NomeCracha;
+                        this.inscricaoCompleta = dadosInscricao;
+                        this.evento = dadosInscricao.Evento;                        
 
-                        this.dadosTela.dataMinimaNascimento = new Date(this.inscricao.Evento.PeriodoRealizacao.DataInicial);
-                        this.dadosTela.dataMinimaNascimento.setFullYear(this.dadosTela.dataMinimaNascimento.getFullYear() - this.inscricao.Evento.IdadeMinima);
-
-                        this.dadosTela.dataInicioEvento = new Date(this.inscricao.Evento.PeriodoRealizacao.DataInicial);
-                        this.dadosTela.oficinasEscolhidas = this.inscricao.Oficina;
-                        this.dadosTela.salasEscolhidas = this.inscricao.SalasEstudo;
-                        this.dadosTela.departamentoEscolhido = this.inscricao.Departamento;
-                        this.dadosTela.sarais = this.inscricao.Sarais;
-                        this.dadosTela.criancas = this.inscricao.Criancas;
-                        this.dadosTela.pagamento = this.inscricao.Pagamento;
-                        this.dadosTela.observacoes = this.inscricao.Observacoes;
-
-                        if (this.dadosTela.pagamento.ComprovantesBase64 != null)
-                          this.dadosTela.pagamento.ComprovantesBase64 = this.dadosTela.pagamento.ComprovantesBase64.map(x => 'data:image/jpeg;base64,' + x);
-
-                        this.dadosTela.inscricaoSimples =
-                        {
-                          Id: this.inscricao.Id,
-                          IdEvento: this.inscricao.Evento.Id,
-                          Nome: this.inscricao.DadosPessoais.Nome,
-                          Cidade: this.inscricao.DadosPessoais.Cidade,
-                          UF: this.inscricao.DadosPessoais.Uf
-                        };
-
-                        this.NaoEhIncompleta = this.inscricao.Situacao != EnumSituacaoInscricao.Incompleta;
+                        this.NaoEhIncompleta = false;
                       }
                       else
                         this.clicarVoltar();
@@ -124,17 +88,14 @@ export class TelaInscricao implements OnInit {
       );
   }
 
-  clicarVoltar(): void {
-    this.navegadorUrl.navigate(['evento/' + this.m_IdEvento.toString() + '/inscricoes']);
-  }
-
   clicarAceitar(): void {
 
-    if (this.validarDados()) {
-      let atualizacao = this.criarObjetoAtualizacao();
+    let resultado = this.obterAtualizacao();
+    if (resultado.valido) {
+      let atualizacao = resultado.inscricaoAtualizar;
       let dlg = this.mensageria.alertarProcessamento("Registrando aceitação...");
 
-      this.wsInscricoes.aceitar(this.inscricao.Evento.Id, this.inscricao.Id, atualizacao)
+      this.wsInscricoes.aceitar(this.evento.Id, this.inscricaoCompleta.Id, atualizacao)
         .subscribe(
           (retorno) => {
             dlg.close();
@@ -149,11 +110,12 @@ export class TelaInscricao implements OnInit {
   }
 
   clicarAtualizar(): void {
-    if (this.validarDados()) {
-      let atualizacao = this.criarObjetoAtualizacao();
+    let resultado = this.obterAtualizacao();
+    if (resultado.valido) {
+      let atualizacao = resultado.inscricaoAtualizar;
       let dlg = this.mensageria.alertarProcessamento("Atualizando...");
 
-      this.wsInscricoes.atualizar(this.inscricao.Evento.Id, this.inscricao.Id, atualizacao)
+      this.wsInscricoes.atualizar(this.evento.Id, this.inscricaoCompleta.Id, atualizacao)
         .subscribe(
           (retorno) => {
             dlg.close();
@@ -168,11 +130,12 @@ export class TelaInscricao implements OnInit {
   }
 
   clicarCompletarAceitar(): void {
-    if (this.validarDados()) {
-      let atualizacao = this.criarObjetoAtualizacao();
+    let resultado = this.obterAtualizacao();
+    if (resultado.valido) {
+      let atualizacao = resultado.inscricaoAtualizar;
       let dlg = this.mensageria.alertarProcessamento("Atualizando...");
 
-      this.wsInscricoes.completar(this.inscricao.Evento.Id, this.inscricao.Id, atualizacao)
+      this.wsInscricoes.completar(this.evento.Id, this.inscricaoCompleta.Id, atualizacao)
         .subscribe(
           (retorno) => {
             dlg.close();
@@ -185,103 +148,7 @@ export class TelaInscricao implements OnInit {
         );
     }
   }
-
-  private validarDados(): boolean {
-
-    let ehValido = false;
-
-    let dadosPessoaisValidos = this.grupoValidacaoEssencial.instance.validate().isValid;
-    let dadosEspiritasValidos = this.grupoValidacaoEspirita.instance.validate().isValid;
-
-    if (!dadosPessoaisValidos || !dadosEspiritasValidos)
-      this.mensageria.alertarAtencao("Há informações pessoais que precisam de seus cuidados.", "Sem essas informações não é possível enviar a inscrição.");
-    else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[0] &&
-      this.inscricao.Evento.TemOficinas &&
-      this.dadosTela.oficinasEscolhidas == null)
-      this.mensageria.alertarAtencao("Você não escolheu as oficinas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
-    else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[0] &&
-      this.inscricao.Evento.TemOficinas &&
-      this.dadosTela.oficinasEscolhidas.EscolhidasParticipante.length != this.inscricao.Evento.Oficinas.length)
-      this.mensageria.alertarAtencao("Você não escolheu todas as oficinas.", "Sem essa informação não é possível enviar a inscrição.");
-    else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[0] &&
-      this.inscricao.Evento.ConfiguracaoSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao &&
-      this.dadosTela.salasEscolhidas == null)
-      this.mensageria.alertarAtencao("Você não escolheu as salas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
-    else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[0] &&
-      this.inscricao.Evento.ConfiguracaoSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao &&
-      this.dadosTela.salasEscolhidas.EscolhidasParticipante.length != this.inscricao.Evento.SalasEstudo.length)
-      this.mensageria.alertarAtencao("Você não escolheu todas as salas.", "Sem essa informação não é possível enviar a inscrição.");
-    else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[0] &&
-      this.inscricao.Evento.TemDepartamentalizacao &&
-      this.dadosTela.departamentoEscolhido == null)
-      this.mensageria.alertarAtencao("Você não escolheu o departamento que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
-    else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[1] &&
-      this.inscricao.Evento.TemOficinas &&
-      this.dadosTela.oficinasEscolhidas != null &&
-      this.dadosTela.oficinasEscolhidas.EscolhidasParticipante != null &&
-      this.dadosTela.oficinasEscolhidas.EscolhidasParticipante.length != this.inscricao.Evento.Oficinas.length)
-      this.mensageria.alertarAtencao("Você não escolheu todas as oficinas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
-    else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[1] &&
-      this.inscricao.Evento.ConfiguracaoSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao &&
-      this.dadosTela.salasEscolhidas != null &&
-      this.dadosTela.salasEscolhidas.EscolhidasParticipante != null &&
-      this.dadosTela.salasEscolhidas.EscolhidasParticipante.length != this.inscricao.Evento.SalasEstudo.length)
-      this.mensageria.alertarAtencao("Você não escolheu todas as salas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
-    else if (this.dadosTela.pagamento == null || this.dadosTela.pagamento.Forma == null)
-      this.mensageria.alertarAtencao("Você precisa informar o Pagamento.", "Sem essa informação não é possível enviar a inscrição.");
-    else if (this.dadosTela.pagamento != null && this.dadosTela.pagamento.Forma == EnumPagamento.Comprovante &&
-      (this.dadosTela.pagamento.ComprovantesBase64 == null || this.dadosTela.pagamento.ComprovantesBase64.length == 0))
-      this.mensageria.alertarAtencao("Você precisa informar o(s) comprovante(s) de pagamento.", "Sem essa informação não é possível enviar a inscrição.");
-    else
-      ehValido = true;
-
-    return ehValido;
-  }
-
-  private criarObjetoAtualizacao(): DTOInscricaoAtualizacao {
-
-    let atualizacao = new DTOInscricaoAtualizacao();
-    atualizacao.DadosPessoais = new DTOInscricaoDadosPessoais();
-    atualizacao.DadosPessoais.DataNascimento = this.dadosTela.dataNascimento;
-    atualizacao.DadosPessoais.Email = this.dadosTela.email;
-    atualizacao.DadosPessoais.Nome = this.dadosTela.nome;
-    atualizacao.DadosPessoais.Sexo = (this.dadosTela.sexoEscolhido == this.dadosTela.Sexos[0] ? EnumSexo.Masculino : EnumSexo.Feminino);
-    atualizacao.DadosPessoais.AlimentosAlergia = this.dadosTela.alimentosAlergia;
-    atualizacao.DadosPessoais.CarnesNaoCome = this.dadosTela.carnesNaoCome;
-    atualizacao.DadosPessoais.Cidade = this.dadosTela.cidade;
-    atualizacao.DadosPessoais.EhDiabetico = this.dadosTela.ehDiabetico;
-    atualizacao.DadosPessoais.EhVegetariano = this.dadosTela.ehVegetariano;
-    atualizacao.DadosPessoais.MedicamentosUsa = this.dadosTela.medicamentosUsa;
-    atualizacao.DadosPessoais.TelefoneFixo = this.dadosTela.telefoneFixo;
-    atualizacao.DadosPessoais.Celular = this.dadosTela.celular;
-    atualizacao.PrimeiroEncontro = this.dadosTela.primeiroEncontro;
-    atualizacao.TipoInscricao = (this.dadosTela.TiposInscricao[0] == this.dadosTela.tipoInscricao ? EnumTipoInscricao.Participante : EnumTipoInscricao.ParticipanteTrabalhador);
-    atualizacao.DadosPessoais.Uf = this.dadosTela.uf;
-    atualizacao.DadosPessoais.UsaAdocanteDiariamente = this.dadosTela.usaAdocanteDiariamente;
-    atualizacao.NomeCracha = this.dadosTela.nomeCracha;
-    atualizacao.CentroEspirita = this.dadosTela.centroEspirita;
-    atualizacao.Departamento = this.dadosTela.departamentoEscolhido;
-    atualizacao.NomeResponsavelCentro = this.dadosTela.nomeResponsavelCentro;
-    atualizacao.NomeResponsavelLegal = this.dadosTela.nomeResponsavelLegal;
-    atualizacao.Oficina = this.dadosTela.oficinasEscolhidas;
-    atualizacao.SalasEstudo = this.dadosTela.salasEscolhidas;
-    atualizacao.TelefoneResponsavelCentro = this.dadosTela.telefoneResponsavelCentro;
-    atualizacao.TelefoneResponsavelLegal = this.dadosTela.telefoneResponsavelLegal;
-    atualizacao.TempoEspirita = this.dadosTela.tempoEspirita;
-
-    atualizacao.Sarais = this.dadosTela.sarais;
-    atualizacao.Criancas = this.dadosTela.criancas;
-    atualizacao.Observacoes = this.dadosTela.observacoes;
-
-    atualizacao.Pagamento = new DTOPagamento();
-    atualizacao.Pagamento.Forma = this.dadosTela.pagamento.Forma;
-    atualizacao.Pagamento.Observacao = this.dadosTela.pagamento.Observacao;
-    if (this.dadosTela.pagamento.ComprovantesBase64 != null)
-      atualizacao.Pagamento.ComprovantesBase64 = this.dadosTela.pagamento.ComprovantesBase64.map(x => x.substring(x.indexOf(",") + 1));
-
-    return atualizacao;
-  }
-
+  
   public clicarRejeitar(): void {
 
     this.mensageria.alertarConfirmacao("Deseja rejeitar esta Inscrição?", "")
@@ -289,7 +156,7 @@ export class TelaInscricao implements OnInit {
         (botaoPressionado) => {
           if (botaoPressionado == CaixaMensagemResposta.Sim) {
             let dlg = this.mensageria.alertarProcessamento("Registrando rejeição...");
-            this.wsInscricoes.rejeitar(this.inscricao.Evento.Id, this.inscricao.Id)
+            this.wsInscricoes.rejeitar(this.evento.Id, this.inscricaoCompleta.Id)
               .subscribe(
                 (retorno) => {
                   dlg.close();
@@ -303,86 +170,78 @@ export class TelaInscricao implements OnInit {
           }
         });
   }
-
-  public contarCriancasPrimeiroResponsavel(): number {
-    if (this.dadosTela.criancas == null)
-      return 0;
-    else
-      return this.dadosTela.criancas.filter(x => x.Responsaveis[0] != null && x.Responsaveis[0].Id == this.inscricao.Id).length;
-  }
 }
 
-class DadosTela {
+@Component({
+  selector: 'tela-inscricao-inclusao',
+  templateUrl: './tela-inscricao.html',
+  styleUrls: ['./tela-inscricao.scss']
+})
+export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
 
-  Sexos: string[] = ["Masculino", "Feminino"];
-  EstadosFederacao: string[] = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
-  TiposInscricao: string[] = ['Participante', 'Participante/Trabalhador', 'Trabalhador'];
+  constructor(private mensageria: Alertas, private rotaAtual: ActivatedRoute, protected navegadorUrl: Router,
+    private wsInscricoes: WebServiceInscricoes, private wsEventos: WebServiceEventos) {
+    super(navegadorUrl);
+  }
 
-  nome: string;
-  dataNascimento: Date;
-  email: string;
-  descricaoEvento: string;
-  dataMinimaNascimento: Date;
-  idadeMinima: number;
-  sexoEscolhido: string;
-  tipoInscricao: string;
-  cidade: string;
-  uf: string;
-  ehVegetariano: boolean;
-  usaAdocanteDiariamente: boolean;
-  ehDiabetico: boolean;
-  carnesNaoCome: string;
-  alimentosAlergia: string;
-  medicamentosUsa: string;
-  centroEspirita: string;
-  tempoEspirita: string;
-  primeiroEncontro: boolean;
-  nomeResponsavelCentro: string;
-  telefoneResponsavelCentro: string;
-  nomeResponsavelLegal: string;
-  telefoneResponsavelLegal: string;
-  dataInicioEvento: Date;
-  observacoes: string;
-  celular: string;
-  telefoneFixo: string;
-  nomeCracha: string;
+  ngOnInit(): void {
+    this.inscricao = new DTOInscricaoAtualizacao();
+    this.inscricao.DadosPessoais = new DTOInscricaoDadosPessoais();
+    this.inscricao.DadosPessoais.DataNascimento = null;
+    this.inscricao.DadosPessoais.EhDiabetico = false;
+    this.inscricao.DadosPessoais.EhVegetariano = false;
+    this.inscricao.DadosPessoais.UsaAdocanteDiariamente = false;
+    this.inscricao.Pagamento = new DTOPagamento();
+    this.inscricao.Sarais = [];
+    this.inscricao.PrimeiroEncontro = false;
 
-  formaEscolha: EnumApresentacaoAtividades;
-  oficinasEscolhidas: DTOInscricaoOficina;
-  salasEscolhidas: DTOInscricaoSalaEstudo;
-  departamentoEscolhido: DTOInscricaoDepartamento;
-  sarais: DTOSarau[];
-  inscricaoSimples: DTOInscricaoSimplificada;
+    this.evento = new DTOEventoCompletoInscricao();
+    this.evento.PeriodoInscricao = new Periodo();
+    this.evento.PeriodoRealizacao = new Periodo();
 
-  criancas: DTOCrianca[];
+    this.naoEhIncompleta = false;
 
-  pagamento: DTOPagamento;
+    let dlg = this.mensageria.alertarProcessamento("Carregando dados...");
 
-  constructor() { }
+    this.rotaAtual.params
+      .subscribe(
+        (parametrosUrl) => {
+          let idEvento = parametrosUrl["idevento"];
 
-  get idade(): number {
-    if (this.dataInicioEvento == null || this.dataNascimento == null)
-      return 0;
-    else {
-      let idade = this.dataInicioEvento.getFullYear() - this.dataNascimento.getFullYear();
-      let meses = this.dataInicioEvento.getMonth() - this.dataNascimento.getMonth();
+          this.wsEventos.obterParaInscricao(idEvento)
+            .subscribe(
+              (evento) => {
+                dlg.close();
+                if (evento == null)
+                  this.clicarVoltar();
+                else
+                  this.evento = evento;
+              },
+              (erro) => {
+                dlg.close();
+                this.mensageria.alertarErro(erro);
+              }
+            );
 
-      if (meses < 0 || (meses === 0 && this.dataInicioEvento.getDate() < this.dataNascimento.getDate()))
-        idade--;
+        }
+      );
+  }
 
-      return idade;
+  clicarSalvar(): void {
+    let resultado = this.obterAtualizacao();
+    if (resultado.valido) {
+      let dlg = this.mensageria.alertarProcessamento("Atualizando...");
+      this.wsInscricoes.incluir(this.evento.Id, resultado.inscricaoAtualizar)
+        .subscribe(
+          (retorno) => {
+            dlg.close();
+            this.clicarVoltar();
+          },
+          (erro) => {
+            dlg.close();
+            this.mensageria.alertarErro(erro);
+          }
+        );
     }
-  }
-
-  get tipoInscricaoEscolhida(): string {
-    return this.tipoInscricao;
-  }
-
-  set tipoInscricaoEscolhida(valor: string) {
-    this.tipoInscricao = valor;
-    if (valor == this.TiposInscricao[0])
-      this.formaEscolha = EnumApresentacaoAtividades.ApenasParticipante
-    else
-      this.formaEscolha = EnumApresentacaoAtividades.PodeEscolher;
   }
 }

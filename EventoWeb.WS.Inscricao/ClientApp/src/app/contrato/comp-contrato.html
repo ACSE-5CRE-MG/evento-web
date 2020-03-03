@@ -1,4 +1,4 @@
-<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" style="height:98%; max-height:98%">
+<div fxLayout="row" fxLayout.xs="column" fxLayoutGap="5px" style="height:98%; max-height:98%" fxHide.xs>
   <div class="cartao margem-5px" fxFlex="33" fxFlex.xs="350px" fxLayoutGap="5px" style="height:100%; overflow-x:auto">
     <mat-card-title>Passo-a-passo da Inscrição</mat-card-title>
     <mat-divider></mat-divider>
@@ -15,3 +15,15 @@
     <div [innerHTML]="contrato && contrato.InstrucoesPagamento | sanitizeHtml"></div>
   </div>
 </div>
+
+<mat-tab-group fxShow.xs fxHide.gt-xs fxFill>
+  <mat-tab label="Passo-a-passo">
+    <div [innerHTML]="contrato && contrato.PassoAPassoInscricao | sanitizeHtml" class="margem-5px"></div>
+  </mat-tab>
+  <mat-tab label="Regulamento">
+    <div [innerHTML]="contrato && contrato.Regulamento | sanitizeHtml" class="margem-5px"></div>
+  </mat-tab>
+  <mat-tab label="Pagamento">
+    <div [innerHTML]="contrato && contrato.InstrucoesPagamento | sanitizeHtml" class="margem-5px"></div>
+  </mat-tab>
+</mat-tab-group>

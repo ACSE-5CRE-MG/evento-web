@@ -4,11 +4,11 @@ import { Observable } from 'rxjs/Observable';
 
 import { WebServiceBase } from './webservice-base';
 import { GestaoAutenticacao } from '../seguranca/gestao-autenticacao';
-import { DTOEventoMinimo, DTOEventoCompleto, DTOEvento, DTOId } from '../evento/objetos';
+import { DTOEventoMinimo, DTOEventoCompleto, DTOEvento, DTOId, DTOEventoCompletoInscricao } from '../evento/objetos';
 
 @Injectable()
 export class WebServiceEventos extends WebServiceBase {
-
+  
   constructor(http: HttpClient, public gestorAutenticacao: GestaoAutenticacao) {
     super(http, gestorAutenticacao, "eventos/");
   }
@@ -20,6 +20,10 @@ export class WebServiceEventos extends WebServiceBase {
   obterId(id: number): Observable<DTOEventoCompleto> {
     return this.executarGet<DTOEventoCompleto>('obter-id/' + id);
   };
+
+  obterParaInscricao(idEvento: number): Observable<DTOEventoCompletoInscricao> {
+    throw new Error("Method not implemented.");
+  }
 
   incluir(evento: DTOEvento): Observable<DTOId> {
     return this.executarPost('incluir/', evento);

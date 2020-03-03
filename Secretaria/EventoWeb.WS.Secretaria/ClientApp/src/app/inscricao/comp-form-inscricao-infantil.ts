@@ -1,13 +1,9 @@
 import { Component, ViewChild, Input } from '@angular/core';
-import { CoordenacaoCentral } from '../componentes/central/coordenacao-central';
-import {
-  DTOSarau, DTOInscricaoSimplificada, DTOPagamento, EnumSexo,
-  DTOInscricaoDadosPessoais, EnumPagamento, DTOInscricaoAtualizacaoInfantil
-} from './objetos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
-import { WsManutencaoInscricoes } from '../webservices/wsManutencaoInscricoes';
-import { DTOEventoCompleto } from '../principal/objetos';
-import { DialogosInscricao } from './dlg-inscricao-adulto-codigo';
+import { DTOEventoCompletoInscricao } from '../evento/objetos';
+import { DTOInscricaoDadosPessoais, DTOPagamento, DTOSarau, DTOInscricaoSimplificada, EnumPagamento, DTOInscricaoAtualizacaoInfantil, EnumSexo } from './objetos';
+import { Alertas } from '../componentes/alertas-dlg/alertas';
+
 
 @Component({
   selector: 'comp-form-inscricao-infantil',
@@ -21,27 +17,27 @@ export class CompFormInscricaoInfantil {
 
   dadosTela: DadosTela;
 
-  private mEvento: DTOEventoCompleto;
+  private mEvento: DTOEventoCompletoInscricao;
   private mInscricao: DTOInscricaoAtualizacaoInfantil;
 
-  @ViewChild("grupoValidacaoEssencial")
+  @ViewChild("grupoValidacaoEssencial", { static: false })
   grupoValidacaoEssencial: DxValidationGroupComponent;
 
-  @ViewChild("grupoValidacaoEspirita")
+  @ViewChild("grupoValidacaoEspirita", { static: false })
   grupoValidacaoEspirita: DxValidationGroupComponent;
 
-  constructor(public coordenacao: CoordenacaoCentral, private wsInscricoes: WsManutencaoInscricoes, private DlgsInscricao: DialogosInscricao) { }
+  constructor(private mensageria: Alertas) { }
 
   @Input()
   set inscricao(valor: DTOInscricaoAtualizacaoInfantil) {
 
     this.mInscricao = valor;
-
-    this.dadosTela = new DadosTela(this.coordenacao);
+    
+    this.dadosTela = new DadosTela();
     this.dadosTela.nome = this.mInscricao.DadosPessoais.Nome;
     this.dadosTela.dataNascimento = this.mInscricao.DadosPessoais.DataNascimento && new Date(this.mInscricao.DadosPessoais.DataNascimento);
     this.dadosTela.email = this.mInscricao.DadosPessoais.Email;
-    this.dadosTela.sexoEscolhido = this.coordenacao.Sexos[this.mInscricao.DadosPessoais.Sexo];
+    this.dadosTela.sexoEscolhido = this.dadosTela.Sexos[this.mInscricao.DadosPessoais.Sexo];
     this.dadosTela.cidade = this.mInscricao.DadosPessoais.Cidade;
     this.dadosTela.uf = this.mInscricao.DadosPessoais.Uf;
     this.dadosTela.ehVegetariano = this.mInscricao.DadosPessoais.EhVegetariano;
@@ -68,7 +64,7 @@ export class CompFormInscricaoInfantil {
   }
 
   @Input()
-  set evento(valor: DTOEventoCompleto) {
+  set evento(valor: DTOEventoCompletoInscricao) {
 
     this.mEvento = valor;
 
@@ -87,12 +83,18 @@ export class CompFormInscricaoInfantil {
   private atribuirInscricaoSimples(): void {
 
     if (this.mEvento && this.mInscricao)
-      this.dadosTela.inscricaoSimples = { Id: 0, IdEvento: this.mEvento.Id, Nome: this.mInscricao.DadosPessoais.Nome };
+      this.dadosTela.inscricaoSimples = {
+        Id: 0,
+        IdEvento: this.mEvento.Id,
+        Nome: this.mInscricao.DadosPessoais.Nome,
+        Cidade: this.mInscricao.DadosPessoais.Cidade,
+        UF: this.mInscricao.DadosPessoais.Uf
+      };
   }
 
-  gerarAtualizacaoInscricao(): ResultadoAtualizacaoInscricaoInfantil {
+  gerarAtualizacaoInscricao(): ResultadoAtualizacaoInscricao {
 
-    let resultado = new ResultadoAtualizacaoInscricaoInfantil();
+    let resultado = new ResultadoAtualizacaoInscricao();
     resultado.valido = false;
     resultado.inscricaoAtualizar = null;
 
@@ -100,21 +102,21 @@ export class CompFormInscricaoInfantil {
     let dadosEspiritasValidos = this.grupoValidacaoEspirita.instance.validate().isValid;
 
     if (!dadosPessoaisValidos || !dadosEspiritasValidos)
-      this.coordenacao.Alertas.alertarAtencao("Há informações pessoais que precisam de seus cuidados.", "Sem essas informações não é possível enviar a inscrição.");
+      this.mensageria.alertarAtencao("Há informações pessoais que precisam de seus cuidados.", "Sem essas informações não é possível enviar a inscrição.");
     else if (this.dadosTela.responsavel1 == null)
-      this.coordenacao.Alertas.alertarAtencao("Você não nos informou um pessoa responsável pela criança.", "Sem essa informação não é possível enviar a inscrição.");
+      this.mensageria.alertarAtencao("Você não nos informou um pessoa responsável pela criança.", "Sem essa informação não é possível enviar a inscrição.");
     else if (this.dadosTela.pagamento == null || this.dadosTela.pagamento.Forma == null)
-      this.coordenacao.Alertas.alertarAtencao("Você precisa informar o Pagamento.", "Sem essa informação não é possível enviar a inscrição.");
+      this.mensageria.alertarAtencao("Você precisa informar o Pagamento.", "Sem essa informação não é possível enviar a inscrição.");
     else if (this.dadosTela.pagamento != null && this.dadosTela.pagamento.Forma == EnumPagamento.Comprovante &&
       (this.dadosTela.pagamento.ComprovantesBase64 == null || this.dadosTela.pagamento.ComprovantesBase64.length == 0))
-      this.coordenacao.Alertas.alertarAtencao("Você precisa informar o(s) comprovante(s) de pagamento.", "Sem essa informação não é possível enviar a inscrição.");
+      this.mensageria.alertarAtencao("Você precisa informar o(s) comprovante(s) de pagamento.", "Sem essa informação não é possível enviar a inscrição.");
     else {
       let atualizacao = new DTOInscricaoAtualizacaoInfantil();
       atualizacao.DadosPessoais = new DTOInscricaoDadosPessoais();
       atualizacao.DadosPessoais.DataNascimento = this.dadosTela.dataNascimento;
       atualizacao.DadosPessoais.Email = this.dadosTela.email;
       atualizacao.DadosPessoais.Nome = this.dadosTela.nome;
-      atualizacao.DadosPessoais.Sexo = (this.dadosTela.sexoEscolhido == this.coordenacao.Sexos[0] ? EnumSexo.Masculino : EnumSexo.Feminino);
+      atualizacao.DadosPessoais.Sexo = (this.dadosTela.sexoEscolhido == this.dadosTela.Sexos[0] ? EnumSexo.Masculino : EnumSexo.Feminino);
       atualizacao.DadosPessoais.AlimentosAlergia = this.dadosTela.alimentosAlergia;
       atualizacao.DadosPessoais.CarnesNaoCome = this.dadosTela.carnesNaoCome;
       atualizacao.DadosPessoais.Cidade = this.dadosTela.cidade;
@@ -147,12 +149,12 @@ export class CompFormInscricaoInfantil {
   }
 
   clicarPesquisarResp1(): void {
-    this.DlgsInscricao.apresentarDlgCodigo(this.evento.Id)
+    /*this.DlgsInscricao.apresentarDlgCodigo(this.evento.Id)
       .subscribe(
         (codigo) => {
           if (codigo != null) {
 
-            let dlg = this.coordenacao.Alertas.alertarProcessamento("Buscando inscrição pelo código...");
+            let dlg = this.mensageria.alertarProcessamento("Buscando inscrição pelo código...");
 
             this.wsInscricoes.obterInscricaoAdultoSimplificadaPorCodigo(this.evento.Id, codigo.toUpperCase())
               .subscribe(
@@ -162,7 +164,7 @@ export class CompFormInscricaoInfantil {
                   if (inscricao != null)
                     this.dadosTela.responsavel1 = inscricao;
                   else
-                    this.coordenacao.Alertas.alertarInformacao("Inscrição não encontrada com o código informado, ou ela é infantil", "");
+                    this.mensageria.alertarInformacao("Inscrição não encontrada com o código informado, ou ela é infantil", "");
                 },
                 (erro) => {
                   dlg.close();
@@ -171,19 +173,19 @@ export class CompFormInscricaoInfantil {
               );
           }
         }
-      );
+      );*/
   }
 
   clicarPesquisarResp2(): void {
     if (this.dadosTela.responsavel1 == null)
-      this.coordenacao.Alertas.alertarAtencao("Você precisa informar o Responsável 1 pela criança, antes de informar o segundo.", "");
+      this.mensageria.alertarAtencao("Você precisa informar o Responsável 1 pela criança, antes de informar o segundo.", "");
     else {
-      this.DlgsInscricao.apresentarDlgCodigo(this.evento.Id)
+      /*this.DlgsInscricao.apresentarDlgCodigo(this.evento.Id)
         .subscribe(
           (codigo) => {
             if (codigo != null) {
 
-              let dlg = this.coordenacao.Alertas.alertarProcessamento("Buscando inscrição pelo código...");
+              let dlg = this.mensageria.alertarProcessamento("Buscando inscrição pelo código...");
 
               this.wsInscricoes.obterInscricaoAdultoSimplificadaPorCodigo(this.evento.Id, codigo.toUpperCase())
                 .subscribe(
@@ -193,7 +195,7 @@ export class CompFormInscricaoInfantil {
                     if (inscricao != null)
                       this.dadosTela.responsavel2 = inscricao;
                     else
-                      this.coordenacao.Alertas.alertarInformacao("Inscrição não encontrada com o código informado, ou ela é infantil", "");
+                      this.mensageria.alertarInformacao("Inscrição não encontrada com o código informado, ou ela é infantil", "");
                   },
                   (erro) => {
                     dlg.close();
@@ -202,12 +204,16 @@ export class CompFormInscricaoInfantil {
                 );
             }
           }
-        );
+        );*/
     }
   }
 }
 
 class DadosTela {
+
+  Sexos: string[] = ["Masculino", "Feminino"];
+  EstadosFederacao: string[] = ['AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'];
+
   nome: string;
   dataNascimento: Date;
   email: string;
@@ -239,7 +245,7 @@ class DadosTela {
 
   pagamento: DTOPagamento;
 
-  constructor(private coordenacao: CoordenacaoCentral) { }
+  constructor() { }
 
   get idade(): number {
     if (this.dataInicioEvento == null || this.dataNascimento == null)
@@ -256,7 +262,7 @@ class DadosTela {
   }
 }
 
-export class ResultadoAtualizacaoInscricaoInfantil {
+export class ResultadoAtualizacaoInscricao {
   valido: boolean;
   inscricaoAtualizar: DTOInscricaoAtualizacaoInfantil;
 }
