@@ -3,8 +3,9 @@ import { Alertas } from '../componentes/alertas-dlg/alertas';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EnumSituacaoInscricao, DTOBasicoInscricao } from './objetos';
 import { WebServiceInscricoes } from '../webservices/webservice-inscricoes';
-import { Data } from '../seguranca/gestao-autenticacao';
 import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';
+import { WebServiceEventos } from '../webservices/webservice-eventos';
+import { DTOEventoCompleto } from '../evento/objetos';
 
 @Component({
   selector: 'tela-lista-inscricoes',
@@ -13,15 +14,17 @@ import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem
 })
 export class TelaListagemInscricoes implements OnInit {
 
-  public filtros: string[] = ["Incompleta", "Pendente", "Aceita", "Rejeitada"];
+  public filtros: string[] = ["Pendente", "Aceita", "Rejeitada"];
   public inscricoes: DTOBasicoInscricao[] = [];
+  public evento: DTOEventoCompleto;
   private m_FiltroEscolhido: string = null;
   private m_IdEvento: number = null;
 
-  constructor(public wsInscricoes: WebServiceInscricoes,
-    public alertas: Alertas,
-    public router: Router,
-    public roteador: ActivatedRoute) { }
+  constructor(private wsInscricoes: WebServiceInscricoes,
+    private wsEventos: WebServiceEventos,
+    private alertas: Alertas,
+    private router: Router,
+    private roteador: ActivatedRoute) { }
 
   set filtroEscolhido(valor: string) {
     if (valor != this.m_FiltroEscolhido) {
@@ -55,6 +58,14 @@ export class TelaListagemInscricoes implements OnInit {
     this.roteador.parent.params.subscribe(parametros => {
       this.m_IdEvento = +parametros["id"];
       this.filtroEscolhido = this.filtros[1];
+
+      this.wsEventos.obterId(this.m_IdEvento)
+        .subscribe(
+          (evento) => {
+            this.evento = evento;
+          },
+          (erro) => this.alertas.alertarProcessamento(erro)
+        );
     });
   }
 
@@ -62,8 +73,6 @@ export class TelaListagemInscricoes implements OnInit {
     switch (situacao) {
       case EnumSituacaoInscricao.Aceita:
         return "Aceita";
-      case EnumSituacaoInscricao.Incompleta:
-        return "Incompleta";
       case EnumSituacaoInscricao.Pendente:
         return "Pendente";
       case EnumSituacaoInscricao.Rejeitada:

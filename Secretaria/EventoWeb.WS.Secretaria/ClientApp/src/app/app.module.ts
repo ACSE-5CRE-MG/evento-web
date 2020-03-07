@@ -84,12 +84,11 @@ import { TelaRoteamentoEvento, ServicoEventoSelecionado } from './evento/tela-ro
 import { WebServiceSalas } from './webservices/webservice-salas';
 import { TelaListagemInscricoes } from './inscricao/tela-lista-inscricoes';
 import { WebServiceInscricoes } from './webservices/webservice-inscricoes';
-import { TelaInscricao } from './inscricao/tela-inscricao';
+import { TelaInscricao, TelaInscricaoInclusao } from './inscricao/tela-inscricao';
 import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador } from './inscricao/atividades/comp-oficinas';
 import { ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador } from './inscricao/atividades/comp-salas';
 import { ComponenteDepartamentos } from './inscricao/atividades/comp-departamentos';
 import { ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DialogosSarau } from './inscricao/atividades/comp-sarau';
-import { ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario, DialogosCrianca } from './inscricao/criancas/comp-criancas';
 import { ComponentePagamento } from './inscricao/pagamento/comp-pagamento';
 import { Observable } from 'rxjs';
 import { DialogosSala, DlgFormSala } from './sala-estudo/dlg-form-sala';
@@ -110,6 +109,9 @@ import { WebServiceEstatisticas } from './webservices/webservice-estatisticas';
 import { TelaEstatisticas } from './estatisticas/tela-estatisticas';
 import { TelaContratosInscricao } from './contratos-inscricao/tela-contratos-inscricao';
 import { WebServiceContratosInscricao } from './webservices/webservice-contratos-inscricao';
+import { TelaInscricaoInfantil, TelaInscricaoInfantilInclusao } from './inscricao/tela-inscricao-infantil';
+import { CompFormInscricao } from './inscricao/comp-form-inscricao';
+import { CompFormInscricaoInfantil } from './inscricao/comp-form-inscricao-infantil';
 
 declare function require(url: string);
 
@@ -154,11 +156,10 @@ export function init_app(appLoadService: AppLoadService) {
     TelaListaEventos, DlgFormEvento, TelaGestaoEvento, TelaRoteamentoEvento,
     TelaListagemSalas, DlgFormSala,
     TelaListagemInscricoes,
-    TelaInscricao,
+    TelaInscricao, TelaInscricaoInclusao, TelaInscricaoInfantil, TelaInscricaoInfantilInclusao, CompFormInscricao, CompFormInscricaoInfantil,
     ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
     ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
     ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
-    ComponenteCriancas, DlgCriancaCodigo, DlgCriancaFormulario,
     ComponentePagamento,
     TelaDivisaoSala, TelaDivisaoOficina, TelaDivisaoQuarto,
     TelaListagemOficinas, DlgFormOficina,
@@ -219,6 +220,9 @@ export function init_app(appLoadService: AppLoadService) {
           { path: '', component: TelaGestaoEvento, canActivate: [PermissaoAcessoRota] },
           { path: 'inscricoes', component: TelaListagemInscricoes, canActivate: [PermissaoAcessoRota] },
           { path: 'inscricoes/:idInscricao/editar', component: TelaInscricao, canActivate: [PermissaoAcessoRota] },
+          { path: 'inscricoes/incluir', component: TelaInscricaoInclusao, canActivate: [PermissaoAcessoRota] },
+          { path: 'inscricoes/:idInscricao/editar-infantil', component: TelaInscricaoInfantil, canActivate: [PermissaoAcessoRota] },
+          { path: 'inscricoes/incluir-infantil', component: TelaInscricaoInfantilInclusao, canActivate: [PermissaoAcessoRota] },
           { path: 'salas', component: TelaListagemSalas, canActivate: [PermissaoAcessoRota] },
           { path: 'divisao-salas', component: TelaDivisaoSala, canActivate: [PermissaoAcessoRota] },
           { path: 'oficinas', component: TelaListagemOficinas, canActivate: [PermissaoAcessoRota] },
@@ -235,7 +239,7 @@ export function init_app(appLoadService: AppLoadService) {
   entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
     TelaListaEventos, DlgFormEvento, TelaRoteamentoEvento,
     TelaListagemSalas, DlgFormSala, DlgFormOficina, DlgFormQuarto,
-    DlgSarauCodigo, DlgSarauFormulario, DlgCriancaCodigo, DlgCriancaFormulario],
+    DlgSarauCodigo, DlgSarauFormulario],
   providers: [
     AppLoadService,
     { provide: LOCALE_ID, useValue: 'pt' },
@@ -244,7 +248,7 @@ export function init_app(appLoadService: AppLoadService) {
     Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
     WebServiceAutenticacao, WebServiceEventos, WebServiceSalas, WebServiceInscricoes, ServicoEventoSelecionado,
     WebServiceDivisaoSalas, WebServiceRelatorios, WebServiceOficinas, WebServiceQuartos, WebServiceDivisaoOficinas, WebServiceDivisaoQuartos,
-    DialogosSarau, DialogosCrianca, DialogosSala, DialogosOficina, DialogosQuarto,
+    DialogosSarau, DialogosSala, DialogosOficina, DialogosQuarto,
     WebServiceEstatisticas, WebServiceContratosInscricao],
   bootstrap: [TelaPrincipal]
 })

@@ -45,10 +45,24 @@ namespace EventoWeb.WS.Secretaria.Controllers
         }
 
         [Authorize("Bearer")]
+        [HttpGet("evento/{idEvento}/obter-infantil/{idInscricao}")]
+        public DTOInscricaoCompletaInfantil ObterInfantil(int idEvento, int idInscricao)
+        {
+            return m_App.ObterInfantil(idEvento, idInscricao);
+        }
+
+        [Authorize("Bearer")]
         [HttpPut("evento/{idEvento}/aceitar/{idInscricao}")]
         public void Aceitar(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacaoAdulto atualizacao)
         {
             m_App.Aceitar(idEvento, idInscricao, atualizacao);
+        }
+
+        [Authorize("Bearer")]
+        [HttpPut("evento/{idEvento}/aceitar-infantil/{idInscricao}")]
+        public void AceitarInfantil(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacaoInfantil atualizacao)
+        {
+            m_App.AceitarInfantil(idEvento, idInscricao, atualizacao);
         }
 
         [Authorize("Bearer")]
@@ -59,17 +73,31 @@ namespace EventoWeb.WS.Secretaria.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpPut("evento/{idEvento}/completar/{idInscricao}")]
-        public void CompletarEAceitar(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacaoAdulto atualizacao)
-        {
-            m_App.CompletarEAceitar(idEvento, idInscricao, atualizacao);
-        }
-
-        [Authorize("Bearer")]
         [HttpPut("evento/{idEvento}/atualizar/{idInscricao}")]
         public void Atualizar(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacaoAdulto atualizacao)
         {
             m_App.Atualizar(idEvento, idInscricao, atualizacao);
+        }
+
+        [Authorize("Bearer")]
+        [HttpPut("evento/{idEvento}/atualizar-infantil/{idInscricao}")]
+        public void AtualizarInfantil(int idEvento, int idInscricao, [FromBody] DTOInscricaoAtualizacaoInfantil atualizacao)
+        {
+            m_App.AtualizarInfantil(idEvento, idInscricao, atualizacao);
+        }
+
+        [Authorize("Bearer")]
+        [HttpPost("evento/{idEvento}/incluir")]
+        public void Incluir(int idEvento, [FromBody] DTOInscricaoAtualizacaoAdulto inscricao)
+        {
+            m_App.Incluir(idEvento, inscricao);
+        }
+
+        [Authorize("Bearer")]
+        [HttpPost("evento/{idEvento}/incluir-infantil")]
+        public void IncluirInfantil(int idEvento, [FromBody] DTOInscricaoAtualizacaoInfantil inscricao)
+        {
+            m_App.IncluirInfantil(idEvento, inscricao);
         }
     }
 }

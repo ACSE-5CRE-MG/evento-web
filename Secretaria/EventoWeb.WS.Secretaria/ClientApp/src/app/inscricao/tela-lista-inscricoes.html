@@ -9,6 +9,16 @@
                     layout="horizontal"
                     ngClass="rd-filtro">
     </dx-radio-group>
+    <a mat-raised-button [routerLink]="'./incluir'" *ngIf="evento && evento.ConfiguracaoEvangelizacao == null">Nova</a>
+    <button mat-raised-button [matMenuTriggerFor]="menuInclusao">Nova</button>
+    <mat-menu #menuInclusao="matMenu">
+      <a [routerLink]="'./incluir-infantil'" mat-menu-item>
+        Infantil
+      </a>
+      <a [routerLink]="'./incluir'" mat-menu-item>
+        Participante - Trabalhador
+      </a>
+    </mat-menu>
   </mat-toolbar>
   <div fxFill fxLayout="column" fxLayoutAlign="center center" *ngIf="inscricoes == null || inscricoes.length == 0">
     <span class="fa fa-plus fa-5x"></span>
@@ -37,7 +47,7 @@
     <dxi-column dataField="Tipo" caption="Tipo" [width]="200"></dxi-column>
 
     <div *dxTemplate="let data of 'templateCelulaId'">
-      <a mat-icon-button [routerLink]="'./' + data.data.IdInscricao + '/editar'" matTooltip="Edita a inscrição selecionada"><i class="fas fa-pencil-alt"></i></a>
+      <a mat-icon-button [routerLink]="'./' + data.data.IdInscricao + '/' + (data.data.Tipo == 'Infantil' ? 'editar-infantil' : 'editar')" matTooltip="Edita a inscrição selecionada"><i class="fas fa-pencil-alt"></i></a>
       <button mat-icon-button (click)="excluir(data.data)" matTooltip="Exclui a inscrição selecionada"><i class="fas fa-trash-alt"></i></button>
     </div>
     <div *dxTemplate="let data of 'templateCidade'">

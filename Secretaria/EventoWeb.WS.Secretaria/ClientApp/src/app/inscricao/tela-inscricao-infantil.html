@@ -4,7 +4,7 @@
       <i class="fas fa-arrow-left"></i>
     </button>
     <span class="fas fa-users" style="margin-right:10px"></span>
-    <span>Manutenção de Inscrição</span>
+    <span>Manutenção de Inscrição Infantil</span>
     <span style="flex: 1 1 auto;"></span>
     <button type="button" mat-button (click)="clicarAceitar()" *ngIf="inscricaoCompleta.Situacao == 1">
       Aceitar
@@ -16,5 +16,5 @@
       Atualizar
     </button>
   </mat-toolbar>
-  <comp-form-inscricao #formInscricao [inscricao]="inscricao" [evento]="evento" [naoEhIncompleta]="naoEhIncompleta" fxFill></comp-form-inscricao>  
+  <comp-form-inscricao-infantil #formInscricao [inscricao]="inscricao" [evento]="evento" [naoEhIncompleta]="naoEhIncompleta" fxFill></comp-form-inscricao-infantil>  
 </layout-geral>

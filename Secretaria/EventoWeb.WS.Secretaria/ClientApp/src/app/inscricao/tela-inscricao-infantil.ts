@@ -1,25 +1,22 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  DTOInscricaoCompleta, EnumApresentacaoAtividades, DTOSarau, DTOInscricaoSimplificada,
-  DTOPagamento, DTOInscricaoAtualizacao, EnumSexo, DTOInscricaoDadosPessoais, EnumTipoInscricao,
-  DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOInscricaoDepartamento, EnumSituacaoInscricao, EnumPagamento
+    DTOPagamento, DTOInscricaoDadosPessoais, DTOInscricaoAtualizacaoInfantil, DTOInscricaoCompletaInfantil
 } from './objetos';
-import { DxValidationGroupComponent } from 'devextreme-angular';
-import { EnumModeloDivisaoSalasEstudo, DTOEventoCompletoInscricao, Periodo } from '../evento/objetos';
+import { DTOEventoCompletoInscricao, Periodo } from '../evento/objetos';
 import { WebServiceInscricoes } from '../webservices/webservice-inscricoes';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
 import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';
-import { CompFormInscricao, ResultadoAtualizacaoInscricao } from './comp-form-inscricao';
 import { WebServiceEventos } from '../webservices/webservice-eventos';
+import { ResultadoAtualizacaoInscricaoInfantil, CompFormInscricaoInfantil } from './comp-form-inscricao-infantil';
 
-export abstract class ATelaInscricao {
-  inscricao: DTOInscricaoAtualizacao;
+export abstract class ATelaInscricaoInfantil {
+  inscricao: DTOInscricaoAtualizacaoInfantil;
   evento: DTOEventoCompletoInscricao;
   naoEhIncompleta: boolean = false;
 
   @ViewChild("formInscricao", { static:false })
-  formInscricao: CompFormInscricao;
+  formInscricao: CompFormInscricaoInfantil;
 
   constructor(protected navegadorUrl: Router) { }
 
@@ -27,20 +24,20 @@ export abstract class ATelaInscricao {
     this.navegadorUrl.navigate(['evento/' + this.evento.Id.toString() + '/inscricoes']);
   }
 
-  protected obterAtualizacao(): ResultadoAtualizacaoInscricao {
+  protected obterAtualizacao(): ResultadoAtualizacaoInscricaoInfantil {
     return this.formInscricao.gerarAtualizacaoInscricao();
   }
 }
 
 
 @Component({
-  selector: 'tela-inscricao',
-  templateUrl: './tela-inscricao.html',
-  styleUrls: ['./tela-inscricao.scss']
+  selector: 'tela-inscricao-infantil',
+  templateUrl: './tela-inscricao-infantil.html',
+  styleUrls: ['./tela-inscricao-infantil.scss']
 })
-export class TelaInscricao extends ATelaInscricao implements OnInit {
+export class TelaInscricaoInfantil extends ATelaInscricaoInfantil implements OnInit {
 
-  inscricaoCompleta: DTOInscricaoCompleta;
+  inscricaoCompleta: DTOInscricaoCompletaInfantil;
   NaoEhIncompleta: boolean = false;
 
   constructor(private mensageria: Alertas, private rotaAtual: ActivatedRoute, protected navegadorUrl: Router, private wsInscricoes: WebServiceInscricoes) {
@@ -48,7 +45,7 @@ export class TelaInscricao extends ATelaInscricao implements OnInit {
   }
 
   ngOnInit(): void {
-    this.inscricao = new DTOInscricaoCompleta();
+    this.inscricao = new DTOInscricaoCompletaInfantil();
     this.evento = new DTOEventoCompletoInscricao();
 
     let dlg = this.mensageria.alertarProcessamento("Carregando dados...");
@@ -63,7 +60,7 @@ export class TelaInscricao extends ATelaInscricao implements OnInit {
               (parametrosUrl) => {
                 let idInscricao = parametrosUrl["idInscricao"];
 
-                this.wsInscricoes.obterInscricaoCompleta(idEvento, idInscricao)
+                this.wsInscricoes.obterInscricaoCompletaInfantil(idEvento, idInscricao)
                   .subscribe(
                     (dadosInscricao) => {
                       dlg.close();
@@ -95,9 +92,9 @@ export class TelaInscricao extends ATelaInscricao implements OnInit {
       let atualizacao = resultado.inscricaoAtualizar;
       let dlg = this.mensageria.alertarProcessamento("Registrando aceitação...");
 
-      this.wsInscricoes.aceitar(this.evento.Id, this.inscricaoCompleta.Id, atualizacao)
+      this.wsInscricoes.aceitarInfantil(this.evento.Id, this.inscricaoCompleta.Id, atualizacao)
         .subscribe(
-          (retorno) => {
+          () => {
             dlg.close();
             this.clicarVoltar();
           },
@@ -115,7 +112,7 @@ export class TelaInscricao extends ATelaInscricao implements OnInit {
       let atualizacao = resultado.inscricaoAtualizar;
       let dlg = this.mensageria.alertarProcessamento("Atualizando...");
 
-      this.wsInscricoes.atualizar(this.evento.Id, this.inscricaoCompleta.Id, atualizacao)
+      this.wsInscricoes.atualizarInfantil(this.evento.Id, this.inscricaoCompleta.Id, atualizacao)
         .subscribe(
           (retorno) => {
             dlg.close();
@@ -128,7 +125,7 @@ export class TelaInscricao extends ATelaInscricao implements OnInit {
         );
     }
   }
-
+  
   public clicarRejeitar(): void {
 
     this.mensageria.alertarConfirmacao("Deseja rejeitar esta Inscrição?", "")
@@ -153,11 +150,11 @@ export class TelaInscricao extends ATelaInscricao implements OnInit {
 }
 
 @Component({
-  selector: 'tela-inscricao-inclusao',
-  templateUrl: './tela-inscricao-inclusao.html',
+  selector: 'tela-inscricao-infantil-inclusao',
+  templateUrl: './tela-inscricao-infantil-inclusao.html',
   styleUrls: ['./tela-inscricao.scss']
 })
-export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
+export class TelaInscricaoInfantilInclusao extends ATelaInscricaoInfantil implements OnInit {
 
   constructor(private mensageria: Alertas, private rotaAtual: ActivatedRoute, protected navegadorUrl: Router,
     private wsInscricoes: WebServiceInscricoes, private wsEventos: WebServiceEventos) {
@@ -165,7 +162,7 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
   }
 
   ngOnInit(): void {
-    this.inscricao = new DTOInscricaoAtualizacao();
+    this.inscricao = new DTOInscricaoAtualizacaoInfantil();
     this.inscricao.DadosPessoais = new DTOInscricaoDadosPessoais();
     this.inscricao.DadosPessoais.DataNascimento = null;
     this.inscricao.DadosPessoais.EhDiabetico = false;
@@ -211,7 +208,7 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
     let resultado = this.obterAtualizacao();
     if (resultado.valido) {
       let dlg = this.mensageria.alertarProcessamento("Atualizando...");
-      this.wsInscricoes.incluir(this.evento.Id, resultado.inscricaoAtualizar)
+      this.wsInscricoes.incluirInfantil(this.evento.Id, resultado.inscricaoAtualizar)
         .subscribe(
           (retorno) => {
             dlg.close();

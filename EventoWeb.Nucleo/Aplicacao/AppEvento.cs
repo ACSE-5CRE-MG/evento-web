@@ -23,6 +23,31 @@ namespace EventoWeb.Nucleo.Aplicacao
             return dtoEvento;
         }
 
+        public DTOEventoCompletoInscricao ObterPorIdCompletoInscricao(int id)
+        {
+            DTOEventoCompletoInscricao dtoEvento = null;
+            ExecutarSeguramente(() =>
+            {
+                var evento = Contexto.RepositorioEventos.ObterEventoPeloId(id);
+                dtoEvento = evento?.ConverterParaInsOnLine();
+
+                if (dtoEvento != null)
+                {
+                    dtoEvento.Departamentos = Contexto.RepositorioDepartamentos.ListarTodosPorEvento(id)
+                        .Select(x => x.Converter())
+                        .ToList();
+                    dtoEvento.Oficinas = Contexto.RepositorioOficinas.ListarTodasPorEvento(id)
+                        .Select(x => x.Converter())
+                        .ToList();
+                    dtoEvento.SalasEstudo = Contexto.RepositorioSalasEstudo.ListarTodasPorEvento(id)
+                        .Select(x => x.Converter())
+                        .ToList();
+                }
+            });
+
+            return dtoEvento;
+        }
+
         public IList<DTOEventoMinimo> ObterTodos()
         {
             IList<DTOEventoMinimo> dtoEventos = null;
@@ -58,7 +83,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             {
                 Id = evento.Id
             };
-        }
+        }        
 
         public void Atualizar(int id, DTOEvento dto)
         {

@@ -3,11 +3,11 @@ import { Injectable } from "@angular/core";
 import { GestaoAutenticacao } from "../seguranca/gestao-autenticacao";
 import { HttpClient } from "@angular/common/http";
 import { Observable } from 'rxjs/Observable';
-import { EnumSituacaoInscricao, DTOBasicoInscricao, DTOInscricaoCompleta, DTOInscricaoAtualizacao } from "../inscricao/objetos";
+import { EnumSituacaoInscricao, DTOBasicoInscricao, DTOInscricaoCompleta, DTOInscricaoAtualizacao, DTOInscricaoCompletaInfantil, DTOInscricaoAtualizacaoInfantil } from "../inscricao/objetos";
 
 @Injectable()
 export class WebServiceInscricoes extends WebServiceBase {
-
+    
   constructor(http: HttpClient, public gestorAutenticacao: GestaoAutenticacao) {
     super(http, gestorAutenticacao, "inscricoes/");
   }
@@ -24,23 +24,35 @@ export class WebServiceInscricoes extends WebServiceBase {
     return this.executarGet<DTOInscricaoCompleta>('evento/' + idEvento.toString() + '/obter/' + idInscricao.toString());
   }
 
+  obterInscricaoCompletaInfantil(idEvento: number, idInscricao: number): Observable<DTOInscricaoCompletaInfantil> {
+    return this.executarGet<DTOInscricaoCompletaInfantil>('evento/' + idEvento.toString() + '/obter-infantil/' + idInscricao.toString());
+  }
+
   aceitar(idEvento: number, idInscricao: number, atualizacao: DTOInscricaoAtualizacao): Observable<any> {
     return this.executarPut('evento/' + idEvento.toString() + '/aceitar/' + idInscricao.toString(), atualizacao);
+  }
+
+  aceitarInfantil(idEvento: number, idInscricao: number, atualizacao: DTOInscricaoAtualizacaoInfantil): Observable<void> {
+    return this.executarPut('evento/' + idEvento.toString() + '/aceitar-infantil/' + idInscricao.toString(), atualizacao);
   }
 
   rejeitar(idEvento: number, idInscricao: number): Observable<any> {
     return this.executarPut('evento/' + idEvento.toString() + '/rejeitar/' + idInscricao.toString(), null);
   }
 
-  completar(idEvento: number, idInscricao: number, atualizacao: DTOInscricaoAtualizacao): Observable<any> {
-    return this.executarPut('evento/' + idEvento.toString() + '/completar/' + idInscricao.toString(), atualizacao);
-  }
-
   atualizar(idEvento: number, idInscricao: number, atualizacao: DTOInscricaoAtualizacao): Observable<any> {
     return this.executarPut('evento/' + idEvento.toString() + '/atualizar/' + idInscricao.toString(), atualizacao);
   }
 
-  incluir(idEvento: number, atualizacao: DTOInscricaoAtualizacao): Observable<void> {
-    throw new Error("Method not implemented.");
+  atualizarInfantil(idEvento: number, idInscricao: number, atualizacao: DTOInscricaoAtualizacaoInfantil): Observable<any> {
+    return this.executarPut('evento/' + idEvento.toString() + '/atualizar-infantil/' + idInscricao.toString(), atualizacao);
+  }
+
+  incluir(idEvento: number, inscricao: DTOInscricaoAtualizacao): Observable<void> {
+    return this.executarPost('evento/' + idEvento.toString() + '/incluir/', inscricao);
+  }
+
+  incluirInfantil(idEvento: number, inscricao: DTOInscricaoAtualizacaoInfantil): Observable<void> {
+    return this.executarPost('evento/' + idEvento.toString() + '/incluir-infantil/', inscricao);
   }
 }

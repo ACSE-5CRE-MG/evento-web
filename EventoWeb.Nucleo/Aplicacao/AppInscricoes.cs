@@ -75,12 +75,9 @@ namespace EventoWeb.Nucleo.Aplicacao
                 var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);
                 if (inscricao != null)
                 {
-                    if (inscricao is InscricaoInfantil)
-                        throw new ExcecaoAplicacao("AppInscricoes", "A inscrição não pode ser infantil");
-                    var participante = (InscricaoParticipante)inscricao;
-                    participante.Rejeitar();
+                    inscricao.Rejeitar();
 
-                    m_AppEmail.EnviarInscricaoRejeitada((InscricaoParticipante)inscricao);
+                    m_AppEmail.EnviarInscricaoRejeitada(inscricao);
                 }
             });
         }
@@ -103,21 +100,90 @@ namespace EventoWeb.Nucleo.Aplicacao
             });
         }
 
-        public void CompletarEAceitar(int idEvento, int idInscricao, DTOInscricaoAtualizacaoAdulto atualizacao)
+        public void IncluirInfantil(int idEvento, DTOInscricaoAtualizacaoInfantil dtoInscricao)
+        {
+            ExecutarSeguramente(() =>
+            {
+                var evento = Contexto.RepositorioEventos.ObterEventoPeloId(idEvento);
+                if (evento.PeriodoInscricaoOnLine.DataFinal < DateTime.Now || evento.PeriodoInscricaoOnLine.DataInicial > DateTime.Now)
+                    throw new ExcecaoAplicacao("AppInscricoes", "Evento encerrado");
+
+                var pessoa = new Pessoa(dtoInscricao.DadosPessoais.Nome,
+                    new Endereco(dtoInscricao.DadosPessoais.Cidade, dtoInscricao.DadosPessoais.Uf), dtoInscricao.DadosPessoais.DataNascimento,
+                    dtoInscricao.DadosPessoais.Sexo, dtoInscricao.DadosPessoais.Email);
+
+                Inscricao responsavel1 = null;
+                Inscricao responsavel2 = null;
+
+                if (dtoInscricao.Responsavel1 != null)
+                    responsavel1 = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(dtoInscricao.Responsavel1.Id);
+
+                if (dtoInscricao.Responsavel2 != null)
+                    responsavel2 = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(dtoInscricao.Responsavel2.Id);
+
+                InscricaoInfantil inscInfantil = new InscricaoInfantil(pessoa, evento, responsavel1, responsavel2, DateTime.Now);
+                inscInfantil.AtribuirDados(dtoInscricao);
+
+                inscInfantil.TornarPendente();
+
+                var repInscricoes = Contexto.RepositorioInscricoes;
+                repInscricoes.Incluir(inscInfantil);
+
+                var appApresentacaoSarau = new AppApresentacaoSarau(Contexto);
+                appApresentacaoSarau
+                    .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscInfantil, dtoInscricao.Sarais);
+
+                m_AppEmail.EnviarInscricaoRegistradaInfantil(inscInfantil);
+            });
+        }
+
+        public void Incluir(int idEvento, DTOInscricaoAtualizacaoAdulto dtoInscricao)
+        {
+            ExecutarSeguramente(() =>
+            {
+                var evento = Contexto.RepositorioEventos.ObterEventoPeloId(idEvento);
+                if (evento.PeriodoInscricaoOnLine.DataFinal < DateTime.Now || evento.PeriodoInscricaoOnLine.DataInicial > DateTime.Now)
+                    throw new ExcecaoAplicacao("AppInscricoes", "Evento encerrado");
+
+                var pessoa = new Pessoa(dtoInscricao.DadosPessoais.Nome,
+                    new Endereco(dtoInscricao.DadosPessoais.Cidade, dtoInscricao.DadosPessoais.Uf), dtoInscricao.DadosPessoais.DataNascimento,
+                    dtoInscricao.DadosPessoais.Sexo, dtoInscricao.DadosPessoais.Email);
+
+                var inscParticipante = new InscricaoParticipante(evento, pessoa, DateTime.Now, dtoInscricao.TipoInscricao);
+                inscParticipante.AtribuirDados(dtoInscricao);
+
+                inscParticipante.RemoverTodasAtividade();
+                inscParticipante.AtribuirAtividadeOficina(dtoInscricao.Oficina, Contexto.RepositorioOficinas);
+                inscParticipante.AtribuirAtividadeSalaEstudo(dtoInscricao.SalasEstudo, Contexto.RepositorioSalasEstudo);
+                inscParticipante.AtribuirAtividadeDepartamento(dtoInscricao.Departamento, Contexto.RepositorioDepartamentos);
+
+                inscParticipante.TornarPendente();
+
+                var repInscricoes = Contexto.RepositorioInscricoes;
+                repInscricoes.Incluir(inscParticipante);
+
+                var appApresentacaoSarau = new AppApresentacaoSarau(Contexto);
+                appApresentacaoSarau
+                    .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Sarais);
+
+                m_AppEmail.EnviarInscricaoRegistradaAdulto(inscParticipante);
+            });
+        }
+
+        public void AceitarInfantil(int idEvento, int idInscricao, DTOInscricaoAtualizacaoInfantil atualizacao)
         {
             ExecutarSeguramente(() =>
             {
                 var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);
                 if (inscricao != null)
                 {
-                    if (inscricao is InscricaoInfantil)
-                        throw new ExcecaoAplicacao("AppInscricoes", "A inscrição não pode ser infantil");
-                    var participante = (InscricaoParticipante)inscricao;
-                    AtualizarInscricao(participante, atualizacao);
-                    participante.TornarPendente();
-                    participante.Aceitar();
+                    if (inscricao is InscricaoParticipante)
+                        throw new ExcecaoAplicacao("AppInscricoes", "A inscrição não pode ser Participante");
+                    var crianca = (InscricaoInfantil)inscricao;
+                    AtualizarInscricaoInfantil(crianca, atualizacao);
+                    crianca.Aceitar();
 
-                    m_AppEmail.EnviarInscricaoAceita((InscricaoParticipante)inscricao);
+                    m_AppEmail.EnviarInscricaoAceita((InscricaoInfantil)inscricao);
                 }
             });
         }
@@ -133,6 +199,21 @@ namespace EventoWeb.Nucleo.Aplicacao
                         throw new ExcecaoAplicacao("AppInscricoes", "A inscrição não pode ser infantil");
                     var participante = (InscricaoParticipante)inscricao;
                     AtualizarInscricao(participante, atualizacao);
+                }
+            });
+        }
+
+        public void AtualizarInfantil(int idEvento, int idInscricao, DTOInscricaoAtualizacaoInfantil atualizacao)
+        {
+            ExecutarSeguramente(() =>
+            {
+                var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);
+                if (inscricao != null)
+                {
+                    if (inscricao is InscricaoParticipante)
+                        throw new ExcecaoAplicacao("AppInscricoes", "A inscrição não pode ser participante");
+                    var crianca = (InscricaoInfantil)inscricao;
+                    AtualizarInscricaoInfantil(crianca, atualizacao);
                 }
             });
         }
@@ -153,6 +234,30 @@ namespace EventoWeb.Nucleo.Aplicacao
             var appApresentacaoSarau = new AppApresentacaoSarau(Contexto);
             appApresentacaoSarau
                 .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscParticipante, dtoInscricao.Sarais);
+        }
+
+        private void AtualizarInscricaoInfantil(InscricaoInfantil inscricaoInfantil, DTOInscricaoAtualizacaoInfantil dtoInscricao)
+        {
+            var repInscricoes = Contexto.RepositorioInscricoes;
+
+            inscricaoInfantil.AtribuirDados(dtoInscricao);
+
+            Inscricao responsavel1 = null;
+            Inscricao responsavel2 = null;
+
+            if (dtoInscricao.Responsavel1 != null)
+                responsavel1 = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(dtoInscricao.Responsavel1.Id);
+
+            if (dtoInscricao.Responsavel2 != null)
+                responsavel2 = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(dtoInscricao.Responsavel2.Id);
+            
+            inscricaoInfantil.AtribuirResponsaveis(responsavel1, responsavel2);
+
+            repInscricoes.Atualizar(inscricaoInfantil);
+
+            var appApresentacaoSarau = new AppApresentacaoSarau(Contexto);
+            appApresentacaoSarau
+                .IncluirOuAtualizarPorParticipanteSemExecucaoSegura(inscricaoInfantil, dtoInscricao.Sarais);
         }
 
         public DTOInscricaoCompletaAdulto Obter(int idEvento, int idInscricao)
@@ -180,6 +285,27 @@ namespace EventoWeb.Nucleo.Aplicacao
                         .ToList();
 
                     dto.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(inscParticipante.Id)
+                        .Select(x => x.Converter()).ToList();
+                }
+            });
+            return dto;
+        }
+
+        public DTOInscricaoCompletaInfantil ObterInfantil(int idEvento, int idInscricao)
+        {
+            DTOInscricaoCompletaInfantil dto = null;
+            ExecutarSeguramente(() =>
+            {
+                var inscricao = Contexto.RepositorioInscricoes.ObterInscricaoPeloIdEventoEInscricao(idEvento, idInscricao);
+                if (inscricao != null)
+                {
+                    if (inscricao is InscricaoParticipante)
+                        throw new ExcecaoAplicacao("AppInscricoes", "A inscrição não pode ser Participante");
+
+                    var inscricaoInfantil = (InscricaoInfantil)inscricao;
+                    dto = inscricaoInfantil.Converter();
+
+                    dto.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(inscricaoInfantil.Id)
                         .Select(x => x.Converter()).ToList();
                 }
             });

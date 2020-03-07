@@ -22,7 +22,7 @@ export class WebServiceEventos extends WebServiceBase {
   };
 
   obterParaInscricao(idEvento: number): Observable<DTOEventoCompletoInscricao> {
-    throw new Error("Method not implemented.");
+    return this.executarGet<DTOEventoCompletoInscricao>('obter-para-inscricao/' + idEvento);
   }
 
   incluir(evento: DTOEvento): Observable<DTOId> {

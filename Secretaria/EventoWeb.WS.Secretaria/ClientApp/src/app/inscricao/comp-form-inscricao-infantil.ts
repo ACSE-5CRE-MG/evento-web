@@ -92,9 +92,9 @@ export class CompFormInscricaoInfantil {
       };
   }
 
-  gerarAtualizacaoInscricao(): ResultadoAtualizacaoInscricao {
+  gerarAtualizacaoInscricao(): ResultadoAtualizacaoInscricaoInfantil {
 
-    let resultado = new ResultadoAtualizacaoInscricao();
+    let resultado = new ResultadoAtualizacaoInscricaoInfantil();
     resultado.valido = false;
     resultado.inscricaoAtualizar = null;
 
@@ -262,7 +262,7 @@ class DadosTela {
   }
 }
 
-export class ResultadoAtualizacaoInscricao {
+export class ResultadoAtualizacaoInscricaoInfantil {
   valido: boolean;
   inscricaoAtualizar: DTOInscricaoAtualizacaoInfantil;
 }

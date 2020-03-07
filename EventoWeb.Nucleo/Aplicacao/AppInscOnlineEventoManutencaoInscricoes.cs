@@ -87,6 +87,9 @@ namespace EventoWeb.Nucleo.Aplicacao
                         throw new ExcecaoAplicacao("AppInscOnlineEventoManutencaoInscricoes", "Inscrição informada não é de uma criança.");
 
                     dto = ((InscricaoInfantil)inscricao).Converter();
+
+                    dto.Sarais = Contexto.RepositorioApresentacoesSarau.ListarPorInscricao(inscricao.Id)
+                        .Select(x => x.Converter()).ToList();
                 }
             });
             return dto;

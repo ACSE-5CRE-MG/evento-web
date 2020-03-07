@@ -128,7 +128,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             });
         }
 
-        public void EnviarInscricaoRejeitada(InscricaoParticipante inscricao)
+        public void EnviarInscricaoRejeitada(Inscricao inscricao)
         {
             
         }

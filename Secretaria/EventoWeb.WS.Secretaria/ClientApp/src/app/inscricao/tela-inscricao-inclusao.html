@@ -1,0 +1,14 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <button mat-icon-button (click)="clicarVoltar()">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <span class="fas fa-users" style="margin-right:10px"></span>
+    <span>Inclusão de Inscrição</span>
+    <span style="flex: 1 1 auto;"></span>
+    <button type="button" mat-button (click)="clicarSalvar()">
+      Salvar
+    </button>
+  </mat-toolbar>
+  <comp-form-inscricao #formInscricao [inscricao]="inscricao" [evento]="evento" [naoEhIncompleta]="naoEhIncompleta" fxFill></comp-form-inscricao>  
+</layout-geral>

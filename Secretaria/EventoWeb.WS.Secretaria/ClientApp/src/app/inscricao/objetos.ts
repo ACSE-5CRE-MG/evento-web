@@ -3,7 +3,7 @@ import { DTOSalaEstudo } from "../sala-estudo/objetos";
 import { DTOOficina } from "../oficinas/objetos";
 import { DTODepartamento } from "../departamentos/objetos";
 
-export enum EnumSituacaoInscricao { Incompleta, Pendente, Aceita, Rejeitada }
+export enum EnumSituacaoInscricao { Pendente, Aceita, Rejeitada }
 export enum EnumSexo { Masculino, Feminino }
 export enum EnumTipoInscricao { Participante, ParticipanteTrabalhador, Trabalhador }
 

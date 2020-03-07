@@ -34,6 +34,13 @@ namespace EventoWeb.WS.Secretaria.Controllers
             return mAppEvento.ObterPorId(id);
         }
 
+        [HttpGet("obter-para-inscricao/{id}")]
+        [Authorize("Bearer")]
+        public ActionResult<DTOEventoCompletoInscricao> GetCompletoInscricao(int id)
+        {
+            return mAppEvento.ObterPorIdCompletoInscricao(id);
+        }
+
         // POST api/eventos/incluir
         [HttpPost("incluir")]
         [Authorize("Bearer")]
