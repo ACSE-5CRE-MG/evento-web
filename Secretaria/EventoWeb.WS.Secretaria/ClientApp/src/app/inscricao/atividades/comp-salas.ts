@@ -54,10 +54,14 @@ export class ComponenteSalas {
         if (valor != this._opcaoEscolhida) {
             this._opcaoEscolhida = valor;
 
-            if (valor == this.opcoes[0])
-                this.participante = null;
+          if (valor == this.opcoes[0]) {
+            if (this.configuracaoSala == EnumModeloDivisaoSalasEstudo.PorIdadeCidade)
+              this.participante = []
             else
-                this.coordenador = null;
+              this.participante = null;
+          }
+          else
+              this.coordenador = null;
         }
     }
 
@@ -69,7 +73,7 @@ export class ComponenteSalas {
 
     set participante(valor: DTOSalaEstudo[]) {
         this.mParticipante = valor;
-        if (valor == null || valor.length == 0)
+        if (valor == null)
             this.escolhidoChange.emit(null);
         else
             this.escolhidoChange.emit({

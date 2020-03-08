@@ -3,6 +3,7 @@ import { DxValidationGroupComponent } from 'devextreme-angular';
 import { DTOEventoCompletoInscricao } from '../evento/objetos';
 import { DTOInscricaoDadosPessoais, DTOPagamento, DTOSarau, DTOInscricaoSimplificada, EnumPagamento, DTOInscricaoAtualizacaoInfantil, EnumSexo } from './objetos';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
+import { DialogosInscricao } from './dlg-selecao-inscricao-adulto';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class CompFormInscricaoInfantil {
   @ViewChild("grupoValidacaoEspirita", { static: false })
   grupoValidacaoEspirita: DxValidationGroupComponent;
 
-  constructor(private mensageria: Alertas) { }
+  constructor(private mensageria: Alertas, private dlgsInscricao: DialogosInscricao) { }
 
   @Input()
   set inscricao(valor: DTOInscricaoAtualizacaoInfantil) {
@@ -149,62 +150,46 @@ export class CompFormInscricaoInfantil {
   }
 
   clicarPesquisarResp1(): void {
-    /*this.DlgsInscricao.apresentarDlgCodigo(this.evento.Id)
+    this.dlgsInscricao.apresentarDlgPesquisa(this.evento.Id)
       .subscribe(
-        (codigo) => {
-          if (codigo != null) {
-
-            let dlg = this.mensageria.alertarProcessamento("Buscando inscrição pelo código...");
-
-            this.wsInscricoes.obterInscricaoAdultoSimplificadaPorCodigo(this.evento.Id, codigo.toUpperCase())
-              .subscribe(
-                (inscricao) => {
-                  dlg.close();
-
-                  if (inscricao != null)
-                    this.dadosTela.responsavel1 = inscricao;
-                  else
-                    this.mensageria.alertarInformacao("Inscrição não encontrada com o código informado, ou ela é infantil", "");
-                },
-                (erro) => {
-                  dlg.close();
-                  this.coordenacao.ProcessamentoErro.processar(erro);
-                }
-              );
+        (inscricaoSelecionada) => {
+          if (inscricaoSelecionada != null) {
+            if (inscricaoSelecionada.Tipo == "Infantil")
+              this.mensageria.alertarAtencao("Um inscrição infantil não pode ser escolhida para responsável!!", "");
+            else
+              this.dadosTela.responsavel1 = {
+                Cidade: inscricaoSelecionada.Cidade,
+                Id: inscricaoSelecionada.IdInscricao,
+                IdEvento: inscricaoSelecionada.IdEvento,
+                Nome: inscricaoSelecionada.NomeInscrito,
+                UF: inscricaoSelecionada.UF
+              };
           }
         }
-      );*/
+      );
   }
 
   clicarPesquisarResp2(): void {
     if (this.dadosTela.responsavel1 == null)
       this.mensageria.alertarAtencao("Você precisa informar o Responsável 1 pela criança, antes de informar o segundo.", "");
     else {
-      /*this.DlgsInscricao.apresentarDlgCodigo(this.evento.Id)
+      this.dlgsInscricao.apresentarDlgPesquisa(this.evento.Id)
         .subscribe(
-          (codigo) => {
-            if (codigo != null) {
-
-              let dlg = this.mensageria.alertarProcessamento("Buscando inscrição pelo código...");
-
-              this.wsInscricoes.obterInscricaoAdultoSimplificadaPorCodigo(this.evento.Id, codigo.toUpperCase())
-                .subscribe(
-                  (inscricao) => {
-                    dlg.close();
-
-                    if (inscricao != null)
-                      this.dadosTela.responsavel2 = inscricao;
-                    else
-                      this.mensageria.alertarInformacao("Inscrição não encontrada com o código informado, ou ela é infantil", "");
-                  },
-                  (erro) => {
-                    dlg.close();
-                    this.coordenacao.ProcessamentoErro.processar(erro);
-                  }
-                );
-            }
+          (inscricaoSelecionada) => {
+            if (inscricaoSelecionada != null) {
+              if (inscricaoSelecionada.Tipo == "Infantil")
+                this.mensageria.alertarAtencao("Um inscrição infantil não pode ser escolhida para responsável!!", "");
+              else
+                this.dadosTela.responsavel2 = {
+                  Cidade: inscricaoSelecionada.Cidade,
+                  Id: inscricaoSelecionada.IdInscricao,
+                  IdEvento: inscricaoSelecionada.IdEvento,
+                  Nome: inscricaoSelecionada.NomeInscrito,
+                  UF: inscricaoSelecionada.UF
+                };
+            }            
           }
-        );*/
+        );
     }
   }
 }

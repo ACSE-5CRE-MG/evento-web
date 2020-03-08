@@ -87,6 +87,15 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             return idade < Evento.IdadeMinimaInscricaoAdulto;
         }
 
+        public override void Aceitar()
+        {
+            if (InscricaoResponsavel1.Situacao != EnumSituacaoInscricao.Aceita &&
+                InscricaoResponsavel2?.Situacao != EnumSituacaoInscricao.Aceita)
+                throw new ExcecaoNegocio("InscricaoInfantil", "Não é possível aceitar uma inscrição infantil sem que pelo menos um dos responsáveis por ela esteja aceito também.");
+
+            base.Aceitar();
+        }
+
         protected override void ValidarInscricaoParaSeTornarPendente()
         {
         }

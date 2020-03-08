@@ -183,10 +183,10 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
 
     let dlg = this.mensageria.alertarProcessamento("Carregando dados...");
 
-    this.rotaAtual.params
+    this.rotaAtual.parent.params
       .subscribe(
         (parametrosUrl) => {
-          let idEvento = parametrosUrl["idevento"];
+          let idEvento = parametrosUrl["id"];
 
           this.wsEventos.obterParaInscricao(idEvento)
             .subscribe(

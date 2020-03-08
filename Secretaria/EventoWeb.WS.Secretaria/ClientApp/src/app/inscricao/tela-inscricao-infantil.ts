@@ -180,10 +180,10 @@ export class TelaInscricaoInfantilInclusao extends ATelaInscricaoInfantil implem
 
     let dlg = this.mensageria.alertarProcessamento("Carregando dados...");
 
-    this.rotaAtual.params
+    this.rotaAtual.parent.params
       .subscribe(
         (parametrosUrl) => {
-          let idEvento = parametrosUrl["idevento"];
+          let idEvento = parametrosUrl["id"];
 
           this.wsEventos.obterParaInscricao(idEvento)
             .subscribe(

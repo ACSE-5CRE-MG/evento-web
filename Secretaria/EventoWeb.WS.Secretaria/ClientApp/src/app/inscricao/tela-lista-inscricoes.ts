@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { EnumSituacaoInscricao, DTOBasicoInscricao } from './objetos';
 import { WebServiceInscricoes } from '../webservices/webservice-inscricoes';
 import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';
@@ -14,7 +14,7 @@ import { DTOEventoCompleto } from '../evento/objetos';
 })
 export class TelaListagemInscricoes implements OnInit {
 
-  public filtros: string[] = ["Pendente", "Aceita", "Rejeitada"];
+  public filtros: string[] = ["Incompleta", "Pendente", "Aceita", "Rejeitada"];
   public inscricoes: DTOBasicoInscricao[] = [];
   public evento: DTOEventoCompleto;
   private m_FiltroEscolhido: string = null;
@@ -23,7 +23,6 @@ export class TelaListagemInscricoes implements OnInit {
   constructor(private wsInscricoes: WebServiceInscricoes,
     private wsEventos: WebServiceEventos,
     private alertas: Alertas,
-    private router: Router,
     private roteador: ActivatedRoute) { }
 
   set filtroEscolhido(valor: string) {
@@ -78,10 +77,6 @@ export class TelaListagemInscricoes implements OnInit {
       case EnumSituacaoInscricao.Rejeitada:
         return "Rejeitada";
     }
-  }
-
-  editar(inscricao: DTOBasicoInscricao): void {
-
   }
 
   excluir(inscricao: DTOBasicoInscricao): void {

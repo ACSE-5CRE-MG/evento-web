@@ -3,73 +3,91 @@ import { EnumApresentacaoAtividades, DTOInscricaoDepartamento } from '../objetos
 import { DTODepartamento } from '../../departamentos/objetos';
 
 @Component({
-    selector: 'comp-departamentos',
-    templateUrl: './comp-departamentos.html'
+  selector: 'comp-departamentos',
+  templateUrl: './comp-departamentos.html'
 })
 export class ComponenteDepartamentos {
 
-    apresentacao: EnumApresentacaoAtividades;
-    opcoes: string[] = ["Participante", "Coordenador"];
-    _opcaoEscolhida: string;
+  apresentacao: EnumApresentacaoAtividades;
+  opcoes: string[] = ["Participante", "Coordenador"];
+  _opcaoEscolhida: string;
 
-    private mDepartamentoEscolhido: DTODepartamento;
+  private mDepartamentoEscolhido: DTODepartamento;
+  private mInscDepartamento: DTOInscricaoDepartamento;
+  private mDepartamentos: DTODepartamento[];
 
-    @Input()
-    desabilitar: boolean;
+  @Input()
+  desabilitar: boolean;
 
-    @Input()
-    departamentos: DTODepartamento[];
+  @Input()
+  set departamentos(valor: DTODepartamento[]) {
+    this.mDepartamentos = valor;
+    this.selecionarDepartamento();
+  }
+  get departamentos(): DTODepartamento[] {
+    return this.mDepartamentos;
+  }
 
-    @Input()
-    set valor(param: DTOInscricaoDepartamento) {
-        if (param == null)
-            this.mDepartamentoEscolhido = null;
-        else if (param.Coordenador != null) {
-            this.opcaoEscolhida = this.opcoes[1];
-            this.mDepartamentoEscolhido = param.Coordenador;
-        }
-        else {
-            this.opcaoEscolhida = this.opcoes[0];
-            this.mDepartamentoEscolhido = param.Participante;
-        }
+  @Input()
+  set valor(param: DTOInscricaoDepartamento) {
+    this.mInscDepartamento = param;
+    if (param == null)
+      this.mDepartamentoEscolhido = null;
+    else {
+      if (param.Coordenador != null)
+        this._opcaoEscolhida = this.opcoes[1];
+      else
+        this._opcaoEscolhida = this.opcoes[0];
+
+      this.selecionarDepartamento();
     }
+  }
 
-    @Output()
-    valorChange: EventEmitter<DTOInscricaoDepartamento> = new EventEmitter<DTOInscricaoDepartamento>();
-
-    @Input()
-    set forma(valor: EnumApresentacaoAtividades) {
-
-        this.apresentacao = valor;
-
-        if (this.apresentacao == EnumApresentacaoAtividades.ApenasParticipante)
-          this.opcaoEscolhida = this.opcoes[0];
+  private selecionarDepartamento(): void {
+    if (this.mInscDepartamento && this.mDepartamentos) {
+      if (this.mInscDepartamento.Coordenador != null)
+        this.mDepartamentoEscolhido = this.mDepartamentos.find(x => x.Id == this.mInscDepartamento.Coordenador.Id)
+      else
+        this.mDepartamentoEscolhido = this.mDepartamentos.find(x => x.Id == this.mInscDepartamento.Participante.Id)
     }
+  }
 
-    set opcaoEscolhida(valor: string) {
-        if (valor != this._opcaoEscolhida) {
-            this._opcaoEscolhida = valor;
-            this.departamentoEscolhido = null;
-        }
+  @Output()
+  valorChange: EventEmitter<DTOInscricaoDepartamento> = new EventEmitter<DTOInscricaoDepartamento>();
+
+  @Input()
+  set forma(valor: EnumApresentacaoAtividades) {
+
+    this.apresentacao = valor;
+
+    if (this.apresentacao == EnumApresentacaoAtividades.ApenasParticipante)
+      this.opcaoEscolhida = this.opcoes[0];
+  }
+
+  set opcaoEscolhida(valor: string) {
+    if (valor != this._opcaoEscolhida) {
+      this._opcaoEscolhida = valor;
+      this.departamentoEscolhido = null;
     }
+  }
 
-    get opcaoEscolhida(): string {
-        return this._opcaoEscolhida;
-    }
+  get opcaoEscolhida(): string {
+    return this._opcaoEscolhida;
+  }
 
-    set departamentoEscolhido(valor: DTODepartamento) {
-        this.mDepartamentoEscolhido = valor;
+  set departamentoEscolhido(valor: DTODepartamento) {
+    this.mDepartamentoEscolhido = valor;
 
-        if (valor == null)
-            this.valorChange.emit(null);
-        else
-            this.valorChange.emit({
-                Coordenador: this.opcaoEscolhida == this.opcoes[1] ? valor : null,
-                Participante: this.opcaoEscolhida == this.opcoes[0] ? valor : null
-            });
-    }
+    if (valor == null)
+      this.valorChange.emit(null);
+    else
+      this.valorChange.emit({
+        Coordenador: this.opcaoEscolhida == this.opcoes[1] ? valor : null,
+        Participante: this.opcaoEscolhida == this.opcoes[0] ? valor : null
+      });
+  }
 
-    get departamentoEscolhido(): DTODepartamento {
-        return this.mDepartamentoEscolhido;
-    }
+  get departamentoEscolhido(): DTODepartamento {
+    return this.mDepartamentoEscolhido;
+  }
 }

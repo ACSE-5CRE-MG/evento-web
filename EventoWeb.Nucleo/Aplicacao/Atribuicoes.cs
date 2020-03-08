@@ -84,7 +84,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                         new AtividadeInscricaoSalaEstudoCoordenacao(
                             inscParticipante,
                             repSalas.ObterPorId(inscParticipante.Evento.Id, dto.Coordenador.Id)));
-                else if (dto.EscolhidasParticipante != null)
+                else if (dto.EscolhidasParticipante != null && dto.EscolhidasParticipante.Count > 0)
                 {
                     var salas = repSalas.ListarTodasPorEvento(inscParticipante.Evento.Id);
                     var escolhas = new SalasEstudoEscolhidas(inscParticipante.Evento);

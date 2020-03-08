@@ -42,9 +42,14 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             if (m_Atividades.Count(x=> x.GetType() == atividade.GetType()) > 0)
                 throw new ArgumentException("Não é possível ter a mesma atividade mais de uma vez", "atividade");
 
-            if (!Evento.TemDepartamentalizacao && atividade.GetType() == typeof(AtividadeInscricaoDepartamento) ||
-                !Evento.TemOficinas && atividade.GetType() == typeof(AtividadeInscricaoOficinas) ||
-                Evento.ConfiguracaoSalaEstudo != null && atividade.GetType() == typeof(AtividadeInscricaoSalaEstudo))
+            if ((!Evento.TemDepartamentalizacao && atividade.GetType() == typeof(AtividadeInscricaoDepartamento)) ||
+                (!Evento.TemOficinas && (atividade.GetType() == typeof(AtividadeInscricaoOficinas) || atividade.GetType() == typeof(AtividadeInscricaoOficinasCoordenacao))) ||
+                (Evento.ConfiguracaoSalaEstudo == null && 
+                   (atividade.GetType() == typeof(AtividadeInscricaoSalaEstudo) || 
+                    atividade.GetType() == typeof(AtividadeInscricaoSalaEstudoCoordenacao) ||
+                    atividade.GetType() == typeof(AtividadeInscricaoSalaEstudoOrdemEscolha))) ||
+                (Evento.ConfiguracaoSalaEstudo == EnumModeloDivisaoSalasEstudo.PorIdadeCidade  && atividade.GetType() == typeof(AtividadeInscricaoSalaEstudoOrdemEscolha)) ||
+                (Evento.ConfiguracaoSalaEstudo == EnumModeloDivisaoSalasEstudo.PorOrdemEscolhaInscricao && atividade.GetType() == typeof(AtividadeInscricaoSalaEstudo)))
                 throw new ArgumentException("Tipo de atividade não é aceita pelo evento", "atividade");
 
             m_Atividades.Add(atividade);

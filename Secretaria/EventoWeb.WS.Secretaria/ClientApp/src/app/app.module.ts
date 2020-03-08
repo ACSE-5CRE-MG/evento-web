@@ -112,6 +112,7 @@ import { WebServiceContratosInscricao } from './webservices/webservice-contratos
 import { TelaInscricaoInfantil, TelaInscricaoInfantilInclusao } from './inscricao/tela-inscricao-infantil';
 import { CompFormInscricao } from './inscricao/comp-form-inscricao';
 import { CompFormInscricaoInfantil } from './inscricao/comp-form-inscricao-infantil';
+import { DlgSelecaoInscricaoAdulto, DialogosInscricao } from './inscricao/dlg-selecao-inscricao-adulto';
 
 declare function require(url: string);
 
@@ -159,7 +160,7 @@ export function init_app(appLoadService: AppLoadService) {
     TelaInscricao, TelaInscricaoInclusao, TelaInscricaoInfantil, TelaInscricaoInfantilInclusao, CompFormInscricao, CompFormInscricaoInfantil,
     ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
     ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
-    ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
+    ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DlgSelecaoInscricaoAdulto,
     ComponentePagamento,
     TelaDivisaoSala, TelaDivisaoOficina, TelaDivisaoQuarto,
     TelaListagemOficinas, DlgFormOficina,
@@ -239,7 +240,7 @@ export function init_app(appLoadService: AppLoadService) {
   entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
     TelaListaEventos, DlgFormEvento, TelaRoteamentoEvento,
     TelaListagemSalas, DlgFormSala, DlgFormOficina, DlgFormQuarto,
-    DlgSarauCodigo, DlgSarauFormulario],
+    DlgSarauCodigo, DlgSarauFormulario, DlgSelecaoInscricaoAdulto],
   providers: [
     AppLoadService,
     { provide: LOCALE_ID, useValue: 'pt' },
@@ -248,7 +249,7 @@ export function init_app(appLoadService: AppLoadService) {
     Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
     WebServiceAutenticacao, WebServiceEventos, WebServiceSalas, WebServiceInscricoes, ServicoEventoSelecionado,
     WebServiceDivisaoSalas, WebServiceRelatorios, WebServiceOficinas, WebServiceQuartos, WebServiceDivisaoOficinas, WebServiceDivisaoQuartos,
-    DialogosSarau, DialogosSala, DialogosOficina, DialogosQuarto,
+    DialogosSarau, DialogosSala, DialogosOficina, DialogosQuarto, DialogosInscricao,
     WebServiceEstatisticas, WebServiceContratosInscricao],
   bootstrap: [TelaPrincipal]
 })
