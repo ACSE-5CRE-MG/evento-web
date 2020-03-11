@@ -48,5 +48,13 @@ namespace EventoWeb.WS.Secretaria.Controllers
             return File(appRelDivisao.GerarImpressoPDF(idEvento), TIPO_CONTEUDO_PDF);
         }
 
+        [Authorize("Bearer")]
+        [HttpPut("evento/{idEvento}/inscritos-departamentos")]
+        public IActionResult GerarRelatorioInscritosDepartamentos(int idEvento)
+        {
+            var appRelDivisao = new AppDepartamentos(m_Contexto);
+
+            return File(appRelDivisao.GerarImpressoPDFInscritos(idEvento), TIPO_CONTEUDO_PDF);
+        }
     }
 }

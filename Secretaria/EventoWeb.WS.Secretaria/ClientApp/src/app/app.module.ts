@@ -113,6 +113,9 @@ import { TelaInscricaoInfantil, TelaInscricaoInfantilInclusao } from './inscrica
 import { CompFormInscricao } from './inscricao/comp-form-inscricao';
 import { CompFormInscricaoInfantil } from './inscricao/comp-form-inscricao-infantil';
 import { DlgSelecaoInscricaoAdulto, DialogosInscricao } from './inscricao/dlg-selecao-inscricao-adulto';
+import { TelaListagemDepartamentos } from './departamentos/tela-listagem-departamentos';
+import { DlgFormDepartamento, DialogosDepartamentos } from './departamentos/dlg-form-departamento';
+import { WebServiceDepartamentos } from './webservices/webservice-departamentos';
 
 declare function require(url: string);
 
@@ -165,7 +168,8 @@ export function init_app(appLoadService: AppLoadService) {
     TelaDivisaoSala, TelaDivisaoOficina, TelaDivisaoQuarto,
     TelaListagemOficinas, DlgFormOficina,
     TelaListagemQuartos, DlgFormQuarto,
-    TelaEstatisticas, TelaContratosInscricao
+    TelaEstatisticas, TelaContratosInscricao,
+    TelaListagemDepartamentos, DlgFormDepartamento
   ],
   imports: [
     BrowserModule,
@@ -232,6 +236,7 @@ export function init_app(appLoadService: AppLoadService) {
           { path: 'divisao-quartos', component: TelaDivisaoQuarto, canActivate: [PermissaoAcessoRota] },
           { path: 'estatisticas', component: TelaEstatisticas, canActivate: [PermissaoAcessoRota] },
           { path: 'contratos', component: TelaContratosInscricao, canActivate: [PermissaoAcessoRota] },
+          { path: 'departamentos', component: TelaListagemDepartamentos, canActivate: [PermissaoAcessoRota] },
         ]
       },
       { path: '** ', redirectTo: '' }
@@ -240,7 +245,7 @@ export function init_app(appLoadService: AppLoadService) {
   entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
     TelaListaEventos, DlgFormEvento, TelaRoteamentoEvento,
     TelaListagemSalas, DlgFormSala, DlgFormOficina, DlgFormQuarto,
-    DlgSarauCodigo, DlgSarauFormulario, DlgSelecaoInscricaoAdulto],
+    DlgSarauCodigo, DlgSarauFormulario, DlgSelecaoInscricaoAdulto, DlgFormDepartamento],
   providers: [
     AppLoadService,
     { provide: LOCALE_ID, useValue: 'pt' },
@@ -249,8 +254,8 @@ export function init_app(appLoadService: AppLoadService) {
     Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
     WebServiceAutenticacao, WebServiceEventos, WebServiceSalas, WebServiceInscricoes, ServicoEventoSelecionado,
     WebServiceDivisaoSalas, WebServiceRelatorios, WebServiceOficinas, WebServiceQuartos, WebServiceDivisaoOficinas, WebServiceDivisaoQuartos,
-    DialogosSarau, DialogosSala, DialogosOficina, DialogosQuarto, DialogosInscricao,
-    WebServiceEstatisticas, WebServiceContratosInscricao],
+    DialogosSarau, DialogosSala, DialogosOficina, DialogosQuarto, DialogosInscricao, DialogosDepartamentos,
+    WebServiceEstatisticas, WebServiceContratosInscricao, WebServiceDepartamentos],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule {

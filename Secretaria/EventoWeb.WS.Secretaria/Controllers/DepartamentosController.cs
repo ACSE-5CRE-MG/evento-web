@@ -7,17 +7,17 @@ namespace EventoWeb.WS.Secretaria.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DepartamentoController : ControllerBase
+    public class DepartamentosController : ControllerBase
     {
-        private AppDepartamentos mAppDepartamentos;
+        private readonly AppDepartamentos mAppDepartamentos;
 
-        public DepartamentoController(IContexto contexto)
+        public DepartamentosController(IContexto contexto)
         {
             mAppDepartamentos = new AppDepartamentos(contexto);
         }
 
         [Authorize("Bearer")]
-        [HttpGet("obter")]
+        [HttpGet("evento/{idEvento}/obter/{id}")]
         public DTODepartamento GetObter(int id)
         {
             var departamento = mAppDepartamentos.ObterPorId(id);
@@ -25,7 +25,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet("listarTodos")]
+        [HttpGet("evento/{idEvento}/listarTodos")]
         public IEnumerable<DTODepartamento> ListarTudo(int idEvento)
         {
             var lista = mAppDepartamentos.ObterTodos(idEvento);
@@ -35,23 +35,23 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
         // POST api/afrac/?idEvento=5
         [Authorize("Bearer")]
-        [HttpPost("criar")]
-        public DTOId Incluir(int idEvento, [FromBody] string nome)
+        [HttpPost("evento/{idEvento}/criar")]
+        public DTOId Incluir(int idEvento, [FromBody] DTODepartamento dto)
         {
-            var id = mAppDepartamentos.Incluir(idEvento, nome);
+            var id = mAppDepartamentos.Incluir(idEvento, dto.Nome);
 
             return id;
         }
 
         [Authorize("Bearer")]
-        [HttpPut("atualizar")]
-        public void Alterar(int id, [FromBody] string nome)
+        [HttpPut("evento/{idEvento}/atualizar/{id}")]
+        public void Alterar(int id, [FromBody] DTODepartamento dto)
         {
-            mAppDepartamentos.Atualizar(id, nome);
+            mAppDepartamentos.Atualizar(id, dto.Nome);
         }
 
         [Authorize("Bearer")]
-        [HttpDelete("excluir")]
+        [HttpDelete("evento/{idEvento}/excluir/{id}")]
         public void Excluir(int id)
         {
             mAppDepartamentos.Excluir(id);

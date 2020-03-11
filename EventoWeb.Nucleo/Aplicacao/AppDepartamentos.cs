@@ -1,6 +1,7 @@
 ﻿using EventoWeb.Nucleo.Aplicacao.ConversoresDTO;
 using EventoWeb.Nucleo.Negocio.Entidades;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace EventoWeb.Nucleo.Aplicacao
@@ -83,6 +84,21 @@ namespace EventoWeb.Nucleo.Aplicacao
                 return departamento;
             else
                 throw new ExcecaoAplicacao("AppDepartamentos", "Não foi encontrado nenhum departamento com o id informado.");
+        }
+
+        public Stream GerarImpressoPDFInscritos(int idEvento)
+        {
+            Stream relatorio = new MemoryStream();
+            ExecutarSeguramente(() =>
+            {
+                var inscricoes = Contexto.RepositorioInscricoes;
+                var evento = Contexto.RepositorioEventos.ObterEventoPeloId(idEvento);
+
+                relatorio = Contexto.RelatorioInscritosDepartamentos.Gerar(
+                    inscricoes.ListarTodasInscricoesAceitasPorAtividade<AtividadeInscricaoDepartamento>(evento));
+            });
+
+            return relatorio;
         }
     }
 }

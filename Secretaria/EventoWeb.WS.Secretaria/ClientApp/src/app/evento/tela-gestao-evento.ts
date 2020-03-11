@@ -3,6 +3,7 @@ import { WebServiceEventos } from '../webservices/webservice-eventos';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
 import { ActivatedRoute } from '@angular/router';
 import { DTOEventoCompleto } from './objetos';
+import { WebServiceRelatorios } from '../webservices/webservice-relatorios';
 
 @Component({
   selector: 'tela-gestao-evento',
@@ -13,7 +14,8 @@ export class TelaGestaoEvento implements OnInit {
 
   evento: DTOEventoCompleto = new DTOEventoCompleto();
 
-  constructor(public wsEventos: WebServiceEventos, public mensageria: Alertas, public roteador: ActivatedRoute) { }
+  constructor(public wsEventos: WebServiceEventos, public mensageria: Alertas, public roteador: ActivatedRoute,
+    private wsRelatorios: WebServiceRelatorios) { }
 
   ngOnInit(): void {
     this.roteador.params.subscribe(parametros => {
@@ -33,5 +35,21 @@ export class TelaGestaoEvento implements OnInit {
 
   clicarEditar(): void {
 
+  }
+
+  clicarInscritosDepartamentos(): void {
+    let dlg = this.mensageria.alertarProcessamento("Gerando relatório inscritos departamentos...");
+
+    this.wsRelatorios.obterInscritosDepartamentos(this.evento.Id)
+      .subscribe(
+        relatorioGerado => {
+          dlg.close();
+          window.open(URL.createObjectURL(relatorioGerado), '_blank');
+        },
+        erro => {
+          dlg.close();
+          this.mensageria.alertarErro(erro);
+        }
+      );
   }
 }

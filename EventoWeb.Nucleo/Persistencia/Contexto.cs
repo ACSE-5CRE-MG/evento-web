@@ -90,5 +90,7 @@ namespace EventoWeb.Nucleo.Persistencia
         public IRelatorioDivisaoQuartos RelatorioDivisaoQuartos => new RelatorioDivisaoQuartos();
 
         public AContratosInscricao RepositorioContratosInscricao => new RepositorioContratosInscricao(m_Sessao);
+
+        public IRelatorioInscritosDepartamentos RelatorioInscritosDepartamentos => new RelatorioInscritosDepartamentos();
     }
 }

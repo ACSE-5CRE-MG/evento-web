@@ -26,20 +26,25 @@
       <mat-divider></mat-divider>
     </div>
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
-      <a mat-stroked-button [routerLink]="'./salas'">
+      <a mat-stroked-button [routerLink]="'./salas'" *ngIf="evento.ConfiguracaoSalaEstudo">
         <span class="fas fa-chalkboard fa-4x"></span>
         <br />
         <span>Salas de Estudo</span>
       </a>
-      <a mat-stroked-button [routerLink]="'./oficinas'">
+      <a mat-stroked-button [routerLink]="'./oficinas'" *ngIf="evento.TemOficinas">
         <span class="fas fa-palette fa-4x"></span>
         <br />
         <span>Oficinas</span>
       </a>
-      <a mat-stroked-button [routerLink]="'./quartos'">
+      <a mat-stroked-button [routerLink]="'./quartos'" *ngIf="evento.TemDormitorios">
         <span class="fas fa-bed fa-4x"></span>
         <br />
         <span>Quartos</span>
+      </a>
+      <a mat-stroked-button [routerLink]="'./departamentos'" *ngIf="evento.TemDepartamentalizacao">
+        <span class="fas fa-university fa-4x"></span>
+        <br />
+        <span>Departamentos</span>
       </a>
       <a mat-stroked-button [routerLink]="'./inscricoes'">
         <span class="fas fas fa-users fa-4x"></span>
@@ -54,21 +59,26 @@
       <mat-divider></mat-divider>
     </div>
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
-      <a mat-stroked-button [routerLink]="'./divisao-salas'">
+      <a mat-stroked-button [routerLink]="'./divisao-salas'" *ngIf="evento.ConfiguracaoSalaEstudo">
         <span class="fas fa-chalkboard fa-4x"></span>
         <br />
         <span>Divisão de Salas de Estudo</span>
       </a>
-      <a mat-stroked-button [routerLink]="'./divisao-oficinas'">
+      <a mat-stroked-button [routerLink]="'./divisao-oficinas'" *ngIf="evento.TemOficinas">
         <span class="fas fa-palette fa-4x"></span>
         <br />
         <span>Divisão de Oficinas</span>
       </a>
-      <a mat-stroked-button [routerLink]="'./divisao-quartos'">
+      <a mat-stroked-button [routerLink]="'./divisao-quartos'" *ngIf="evento.TemDormitorios">
         <span class="fas fa-bed fa-4x"></span>
         <br />
         <span>Divisão de Quartos</span>
       </a>
+      <button mat-stroked-button *ngIf="evento.TemDepartamentalizacao" (click)="clicarInscritosDepartamentos()">
+        <span class="fas fa-university fa-4x"></span>
+        <br />
+        <span>Inscritos Departamentos</span>
+      </button>
     </div>
   </div>  
 </layout-geral>
