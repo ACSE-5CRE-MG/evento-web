@@ -88,7 +88,7 @@ import { TelaInscricao, TelaInscricaoInclusao } from './inscricao/tela-inscricao
 import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador } from './inscricao/atividades/comp-oficinas';
 import { ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador } from './inscricao/atividades/comp-salas';
 import { ComponenteDepartamentos } from './inscricao/atividades/comp-departamentos';
-import { ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DialogosSarau } from './inscricao/atividades/comp-sarau';
+import { ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DialogosInscricaoSarau } from './inscricao/atividades/comp-sarau';
 import { ComponentePagamento } from './inscricao/pagamento/comp-pagamento';
 import { Observable } from 'rxjs';
 import { DialogosSala, DlgFormSala } from './sala-estudo/dlg-form-sala';
@@ -116,6 +116,9 @@ import { DlgSelecaoInscricaoAdulto, DialogosInscricao } from './inscricao/dlg-se
 import { TelaListagemDepartamentos } from './departamentos/tela-listagem-departamentos';
 import { DlgFormDepartamento, DialogosDepartamentos } from './departamentos/dlg-form-departamento';
 import { WebServiceDepartamentos } from './webservices/webservice-departamentos';
+import { TelaListagemSarais } from './sarais/tela-listagem-sarais';
+import { DlgFormSarau, DialogosSarau } from './sarais/dlg-form-sarau';
+import { WebServiceSarais } from './webservices/webservice-sarais';
 
 declare function require(url: string);
 
@@ -169,7 +172,8 @@ export function init_app(appLoadService: AppLoadService) {
     TelaListagemOficinas, DlgFormOficina,
     TelaListagemQuartos, DlgFormQuarto,
     TelaEstatisticas, TelaContratosInscricao,
-    TelaListagemDepartamentos, DlgFormDepartamento
+    TelaListagemDepartamentos, DlgFormDepartamento,
+    TelaListagemSarais, DlgFormSarau
   ],
   imports: [
     BrowserModule,
@@ -237,6 +241,7 @@ export function init_app(appLoadService: AppLoadService) {
           { path: 'estatisticas', component: TelaEstatisticas, canActivate: [PermissaoAcessoRota] },
           { path: 'contratos', component: TelaContratosInscricao, canActivate: [PermissaoAcessoRota] },
           { path: 'departamentos', component: TelaListagemDepartamentos, canActivate: [PermissaoAcessoRota] },
+          { path: 'sarau', component: TelaListagemSarais, canActivate: [PermissaoAcessoRota] },
         ]
       },
       { path: '** ', redirectTo: '' }
@@ -245,7 +250,7 @@ export function init_app(appLoadService: AppLoadService) {
   entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
     TelaListaEventos, DlgFormEvento, TelaRoteamentoEvento,
     TelaListagemSalas, DlgFormSala, DlgFormOficina, DlgFormQuarto,
-    DlgSarauCodigo, DlgSarauFormulario, DlgSelecaoInscricaoAdulto, DlgFormDepartamento],
+    DlgSarauCodigo, DlgSarauFormulario, DlgSelecaoInscricaoAdulto, DlgFormDepartamento, DlgFormSarau],
   providers: [
     AppLoadService,
     { provide: LOCALE_ID, useValue: 'pt' },
@@ -254,8 +259,8 @@ export function init_app(appLoadService: AppLoadService) {
     Alertas, PermissaoAcessoRota, GestaoAutenticacao, ServicoDlgFormEvento,
     WebServiceAutenticacao, WebServiceEventos, WebServiceSalas, WebServiceInscricoes, ServicoEventoSelecionado,
     WebServiceDivisaoSalas, WebServiceRelatorios, WebServiceOficinas, WebServiceQuartos, WebServiceDivisaoOficinas, WebServiceDivisaoQuartos,
-    DialogosSarau, DialogosSala, DialogosOficina, DialogosQuarto, DialogosInscricao, DialogosDepartamentos,
-    WebServiceEstatisticas, WebServiceContratosInscricao, WebServiceDepartamentos],
+    DialogosInscricaoSarau, DialogosSala, DialogosOficina, DialogosQuarto, DialogosInscricao, DialogosDepartamentos,
+    WebServiceEstatisticas, WebServiceContratosInscricao, WebServiceDepartamentos, WebServiceSarais, DialogosSarau],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule {

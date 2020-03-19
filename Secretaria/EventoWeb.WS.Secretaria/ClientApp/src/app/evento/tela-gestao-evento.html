@@ -26,6 +26,11 @@
       <mat-divider></mat-divider>
     </div>
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
+      <a mat-stroked-button [routerLink]="'./inscricoes'">
+        <span class="fas fas fa-users fa-4x"></span>
+        <br />
+        <span>Inscrições</span>
+      </a>
       <a mat-stroked-button [routerLink]="'./salas'" *ngIf="evento.ConfiguracaoSalaEstudo">
         <span class="fas fa-chalkboard fa-4x"></span>
         <br />
@@ -46,10 +51,10 @@
         <br />
         <span>Departamentos</span>
       </a>
-      <a mat-stroked-button [routerLink]="'./inscricoes'">
-        <span class="fas fas fa-users fa-4x"></span>
+      <a mat-stroked-button [routerLink]="'./sarau'" *ngIf="evento.ConfiguracaoTempoSarauMin != null">
+        <span class="fas fa-microphone-alt fa-4x"></span>
         <br />
-        <span>Inscrições</span>
+        <span>Sarau</span>
       </a>
     </div>
   </div>

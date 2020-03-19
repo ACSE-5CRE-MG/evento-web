@@ -1,0 +1,45 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <a mat-icon-button style="margin-right:5px" matTooltip="Volta para a gestão do evento" routerLink="../">
+      <span class="fas fa-arrow-left"></span>
+    </a>
+    <span class="fas fa-microphone-alt" style="margin-right:10px"></span>
+    <span class="cursor-pointer">Sarais</span>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-button (click)="clicarIncluir()" matTooltip="Cria uma nova apresentação">
+      <span class="fa fa-plus"></span>
+      Nova
+    </button>
+  </mat-toolbar>
+  <dx-data-grid id="gridContainer" fxFill
+                [showBorders]="true"
+                [dataSource]="sarais"
+                [hoverStateEnabled]="true"
+                [columnResizingMode]="'nextColumn'"
+                [allowColumnResizing]="true">
+    <dxo-load-panel [enabled]="true"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <dxo-sorting mode="multiple"></dxo-sorting>
+
+    <dxi-column dataField="Id" caption="Digitação" cellTemplate="templateCelulaDigitacao" [width]="100" alignment="left" [allowSorting]="false"></dxi-column>
+    <dxi-column dataField="Id" caption="Id" [width]="50"></dxi-column>
+    <dxi-column dataField="Tipo" caption="Tipo" [width]="100"></dxi-column>
+    <dxi-column dataField="DuracaoMin" caption="Duração (Min)" [width]="90"></dxi-column>
+    <dxi-column dataField="Participantes" caption="Participantes" cellTemplate="templateCelulaParticipantes"></dxi-column>
+
+    <div *dxTemplate="let data of 'templateCelulaDigitacao'">
+      <button mat-icon-button (click)="clicarEditar(data.data)" matTooltip="Edita os dados dessa apresentação"><i class="fas fa-pencil-alt"></i></button>
+      <button mat-icon-button (click)="clicarExcluir(data.data)" matTooltip="Exclui essa apresentação"><i class="fas fa-trash-alt"></i></button>
+    </div>
+
+    <div *dxTemplate="let data of 'templateCelulaParticipantes'">
+      {{gerarTextoParticipantes(data.data)}}
+    </div>
+    <dxo-summary>
+      <dxi-total-item column="Id"
+                      summaryType="count"
+                      displayFormat="{0} Sarais">
+      </dxi-total-item>
+    </dxo-summary>
+  </dx-data-grid>
+</layout-geral>

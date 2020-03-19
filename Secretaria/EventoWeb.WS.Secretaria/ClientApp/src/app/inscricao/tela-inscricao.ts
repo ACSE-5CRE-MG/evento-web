@@ -1,12 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  DTOInscricaoCompleta, EnumApresentacaoAtividades, DTOSarau, DTOInscricaoSimplificada,
-  DTOPagamento, DTOInscricaoAtualizacao, EnumSexo, DTOInscricaoDadosPessoais, EnumTipoInscricao,
-  DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOInscricaoDepartamento, EnumSituacaoInscricao, EnumPagamento
+  DTOInscricaoCompleta, DTOPagamento, DTOInscricaoAtualizacao, DTOInscricaoDadosPessoais
 } from './objetos';
-import { DxValidationGroupComponent } from 'devextreme-angular';
-import { EnumModeloDivisaoSalasEstudo, DTOEventoCompletoInscricao, Periodo } from '../evento/objetos';
+import { DTOEventoCompletoInscricao, Periodo } from '../evento/objetos';
 import { WebServiceInscricoes } from '../webservices/webservice-inscricoes';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
 import { CaixaMensagemResposta } from '../componentes/alertas-dlg/caixa-mensagem-dlg';

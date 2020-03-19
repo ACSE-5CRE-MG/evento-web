@@ -1,0 +1,58 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div><h1>{{titulo}}</h1></div>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-icon-button cdkFocusInitial (click)="clicarSalvar()" matTooltip="Permite salvar"><i class="fa fa-save"></i></button>
+    <button mat-icon-button (click)="clicarCancelar()" matTooltip="Permite fechar esta tela"><i class="fa fa-times"></i></button>
+  </mat-toolbar>
+
+  <div fxLayout="row" fxLayoutGap="5px" fxFill class="formulario">
+    <div fxFlex="50" fxLayout="column" class="formulario" fxLayoutGap="5px">
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="250">Tipo Apresentação:</label>
+        <dx-text-box [(value)]="sarau.Tipo" fxFlex="100" [disabled]="desabilitar">
+        </dx-text-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="250">Duração Apresentação(min):</label>
+        <dx-number-box [min]="1" [(value)]="sarau.DuracaoMin" fxFlex="100" [disabled]="desabilitar">
+        </dx-number-box>
+      </div>
+    </div>
+    <layout-geral fxFlex="50">
+      <div layout-geral-cabecalho>
+        <div fxLayout="row" fxLayoutGap="5px">
+          <h2>Participantes</h2>
+          <span style="flex: 1 1 auto;"></span>
+          <button mat-icon-button matTooltip="Você pode incluir um participante" (click)="clicarIncluirParticipante()">
+            <i class="fa fa-plus"></i>
+          </button>
+        </div>
+        <mat-divider></mat-divider>
+      </div>
+      <div *ngIf="sarau.Participantes == null || sarau.Participantes.length == 0"
+           fxFill
+           fxLayout="column" fxLayoutAlign="center center">
+        <i class="fas fa-check-double fa-5x"></i>
+        <h1>Não há participantes aqui!!</h1>
+      </div>
+      <dx-list *ngIf="sarau?.Participantes?.length > 0"
+               class="padding-padrao"
+               fxFill
+               [dataSource]="sarau.Participantes">
+        <div *dxTemplate="let data of 'item'">
+          <div fxLayout="row">
+            <div fxLayout="column">
+              <div>{{data.Nome}}</div>
+              <div>{{data.Cidade + '/' + data.UF}}</div>
+            </div>
+            <span style="flex: 1 1 auto;"></span>
+            <button mat-icon-button matTooltip="Você pode excluir este participante" (click)="clicarExcluirParticipante(data)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
+        </div>
+      </dx-list>
+    </layout-geral>
+  </div>  
+</layout-geral>

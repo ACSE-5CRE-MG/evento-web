@@ -1,12 +1,13 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import {
-  EnumApresentacaoAtividades, DTOSarau, DTOInscricaoSimplificada,
+  EnumApresentacaoAtividades, DTOInscricaoSimplificada,
   DTOPagamento, DTOInscricaoAtualizacao, EnumSexo, DTOInscricaoDadosPessoais, EnumTipoInscricao,
   DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOInscricaoDepartamento, EnumPagamento
 } from './objetos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { DTOEventoCompletoInscricao, EnumModeloDivisaoSalasEstudo } from '../evento/objetos';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
+import { DTOSarau } from '../sarais/objetos';
 
 @Component({
   selector: 'comp-form-inscricao',

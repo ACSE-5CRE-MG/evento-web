@@ -2,6 +2,7 @@ import { DTOEventoCompletoInscricao } from "../evento/objetos";
 import { DTOSalaEstudo } from "../sala-estudo/objetos";
 import { DTOOficina } from "../oficinas/objetos";
 import { DTODepartamento } from "../departamentos/objetos";
+import { DTOSarau } from '../sarais/objetos';
 
 export enum EnumSituacaoInscricao { Incompleta, Pendente, Aceita, Rejeitada }
 export enum EnumSexo { Masculino, Feminino }
@@ -83,13 +84,6 @@ export class DTOInscricaoSalaEstudo {
 export class DTOInscricaoDepartamento {
   Coordenador: DTODepartamento;
   Participante: DTODepartamento;
-}
-
-export class DTOSarau {
-  Id: number;
-  Tipo: string;
-  DuracaoMin: number;
-  Participantes: DTOInscricaoSimplificada[];
 }
 
 export class DTOInscricaoSimplificada {

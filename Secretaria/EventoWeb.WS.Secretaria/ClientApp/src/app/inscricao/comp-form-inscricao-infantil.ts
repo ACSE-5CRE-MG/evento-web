@@ -1,9 +1,10 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { DTOEventoCompletoInscricao } from '../evento/objetos';
-import { DTOInscricaoDadosPessoais, DTOPagamento, DTOSarau, DTOInscricaoSimplificada, EnumPagamento, DTOInscricaoAtualizacaoInfantil, EnumSexo } from './objetos';
+import { DTOInscricaoDadosPessoais, DTOPagamento, DTOInscricaoSimplificada, EnumPagamento, DTOInscricaoAtualizacaoInfantil, EnumSexo } from './objetos';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
 import { DialogosInscricao } from './dlg-selecao-inscricao-adulto';
+import { DTOSarau } from '../sarais/objetos';
 
 
 @Component({

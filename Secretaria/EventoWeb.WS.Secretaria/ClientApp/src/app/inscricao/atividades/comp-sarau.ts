@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output, ViewChild, Inject, Injectable } from '@angular/core';
-import { DTOSarau, DTOInscricaoSimplificada } from '../objetos';
+import { DTOInscricaoSimplificada } from '../objetos';
 import { MatDialogRef, MatDialog, MAT_DIALOG_DATA } from '@angular/material';
 import { DxValidationGroupComponent } from 'devextreme-angular';
 import { Observable } from 'rxjs';
 import { Alertas } from '../../componentes/alertas-dlg/alertas';
 import { CaixaMensagemResposta } from '../../componentes/alertas-dlg/caixa-mensagem-dlg';
+import { DTOSarau } from '../../sarais/objetos';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class ComponenteSarau {
   @Input()
   desabilitar: boolean;
 
-  constructor(private mensageria: Alertas, private DlgsSarau: DialogosSarau) { }
+  constructor(private mensageria: Alertas, private DlgsSarau: DialogosInscricaoSarau) { }
 
   clicarCriar(): void {
     this.DlgsSarau.apresentarDlgForm({ desabilitar: this.desabilitar, sarau: null })
@@ -154,7 +155,7 @@ class TransfDlgFormSarau {
 }
 
 @Injectable()
-export class DialogosSarau {
+export class DialogosInscricaoSarau {
   constructor(private srvDialog: MatDialog) { }
 
   apresentarDlgCodigo(): Observable<string> {

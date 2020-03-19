@@ -1,8 +1,7 @@
-﻿using EventoWeb.Nucleo.Negocio.Entidades;
-using System;
+﻿using EventoWeb.Nucleo.Aplicacao.ConversoresDTO;
+using EventoWeb.Nucleo.Negocio.Entidades;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
@@ -10,6 +9,95 @@ namespace EventoWeb.Nucleo.Aplicacao
     {
         public AppApresentacaoSarau(IContexto contexto)
             : base(contexto) { }
+
+        public IList<DTOSarau> Listar(int idEvento)
+        {
+            var lista = new List<DTOSarau>();
+            ExecutarSeguramente(() =>
+            {
+                var sarais = Contexto.RepositorioApresentacoesSarau.ListarTodas(idEvento);
+                if (sarais.Count > 0)
+                    lista.AddRange(sarais.Select(x => x.Converter()));
+            });
+
+            return lista;
+        }
+
+        public DTOSarau Obter(int idEvento, int idSarau)
+        {
+            DTOSarau dto = null;
+            ExecutarSeguramente(() =>
+            {
+                var sarau = Contexto.RepositorioApresentacoesSarau.ObterPorId(idEvento, idSarau);
+
+                if (sarau != null)
+                    dto = sarau.Converter();
+            });
+
+            return dto;
+        }
+
+        public DTOId Incluir(int idEvento, DTOSarau dto)
+        {
+            DTOId retorno = new DTOId();
+            ExecutarSeguramente(() =>
+            {
+                var evento = Contexto.RepositorioEventos.ObterEventoPeloId(idEvento);
+
+                var inscritos = dto
+                    .Participantes
+                    .Select(x => Contexto.RepositorioInscricoes
+                        .ObterInscricaoPeloIdEventoEInscricao(idEvento, x.Id))
+                    .ToList();
+
+                var sarau = new ApresentacaoSarau(evento, dto.DuracaoMin, dto.Tipo, inscritos);
+
+                Contexto.RepositorioApresentacoesSarau.Incluir(sarau);
+
+                retorno.Id = sarau.Id;
+            });
+
+            return retorno;
+        }
+
+        public void Atualizar(int idEvento, int idSarau, DTOSarau dto)
+        {
+            ExecutarSeguramente(() =>
+            {
+                var sarau = ObterSarauOuExcecaoSeNaoEncontrar(idEvento, idSarau);
+
+                sarau.DuracaoMin = dto.DuracaoMin;
+                sarau.Tipo = dto.Tipo;
+                sarau.AtualizarInscricoes(
+                    dto
+                        .Participantes
+                        .Select(x => Contexto.RepositorioInscricoes
+                            .ObterInscricaoPeloIdEventoEInscricao(idEvento, x.Id))
+                        .ToList());
+
+                Contexto.RepositorioApresentacoesSarau.Atualizar(sarau);
+            });
+        }
+
+        public void Excluir(int idEvento, int idSarau)
+        {
+            ExecutarSeguramente(() =>
+            {
+                var sarau = ObterSarauOuExcecaoSeNaoEncontrar(idEvento, idSarau);
+
+                Contexto.RepositorioApresentacoesSarau.Excluir(sarau);
+            });
+        }
+
+        private ApresentacaoSarau ObterSarauOuExcecaoSeNaoEncontrar(int idEvento, int id)
+        {
+            var sarau = Contexto.RepositorioApresentacoesSarau.ObterPorId(idEvento, id);
+
+            if (sarau != null)
+                return sarau;
+            else
+                throw new ExcecaoAplicacao("AppApresentacaoSarau", "Não foi encontrado nenhum sarau com o id informado.");
+        }
 
         internal void IncluirOuAtualizarPorParticipanteSemExecucaoSegura(Inscricao inscricao, IEnumerable<DTOSarau> dtoApresentacoes)
         {

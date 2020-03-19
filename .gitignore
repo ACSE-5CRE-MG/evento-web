@@ -19,3 +19,5 @@
 /EventoWeb.WS.Inscricao/Properties/PublishProfiles
 /Secretaria/EventoWeb.WS.Secretaria/bin/Release/netcoreapp2.1
 /Secretaria/EventoWeb.WS.Secretaria/.config/dotnet-tools.json
+/EventoWeb.WS.Relatorios/.gradle/
+/EventoWeb.WS.Relatorios/build/
