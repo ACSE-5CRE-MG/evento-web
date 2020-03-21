@@ -43,10 +43,10 @@ export class TelaListaEventos implements OnInit {
   }
 
   clicarNovo(): void {
-    this.srv.abrir()
+    this.srv.apresentarDlgInclusao()
       .subscribe(retorno => {
         if (retorno != null)
-          this.router.navigate(['/evento', { id: retorno.idEvento }], { relativeTo: this.route });
+          this.router.navigate(['evento', retorno.Id], { relativeTo: this.route });
       });
   }
 

@@ -64,6 +64,7 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
             });
             this.ManyToOne(x => x.Logotipo, m => {
                 m.Access(Accessor.Property);
+                m.Cascade(Cascade.All | Cascade.DeleteOrphans);
                 m.NotNullable(false);
                 m.Column("ID_ARQUIVO_LOGOTIPO");
             });

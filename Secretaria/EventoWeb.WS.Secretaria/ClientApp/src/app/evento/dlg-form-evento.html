@@ -3,11 +3,11 @@
     <div><h1>{{titulo}}</h1></div>
     <span style="flex: 1 1 auto;"></span>
     <button mat-icon-button cdkFocusInitial (click)="clicarSalvar()" matTooltip="Permite salvar este evento"><i class="fa fa-save"></i></button>
-    <button mat-icon-button mat-dialog-close matTooltip="Permite fechar esta tela"><i class="fa fa-times"></i></button>
+    <button mat-icon-button (click)="clicarSair()" matTooltip="Permite fechar esta tela"><i class="fa fa-times"></i></button>
   </mat-toolbar>
   <div fxLayout="row" fxLayout.lt-md="column" class="formulario">
     <div fxFlex="20">
-      <img [src]="obterImagem()" style="max-height:50%; max-width:90%; margin:5px"/>
+      <img [src]="obterImagem()" style="max-height:50%; max-width:90%; margin:5px" />
       <input type="file" name="fileUploadImg" fileread="evento.Logotipo" style="visibility:hidden" />
       <div>
         <button mat-raised-button (click)="imageInput.click()">Carregar</button>
@@ -20,71 +20,74 @@
                style="visibility:hidden">
       </div>
     </div>
-    <div fxFlex="80">
-      <div>
-        <mat-form-field style="width:100%">
-          <input matInput placeholder="Nome" [(ngModel)]="evento.Nome">
-        </mat-form-field>
+    <div fxFlex="80" fxLayout="column" fxLayoutGap="5px">
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Nome:</label>
+        <dx-text-box placeholder="Nome" [(value)]="evento.Nome" fxFlex="100" [maxLength]="250"></dx-text-box>
       </div>
-      <div>
-        <mat-form-field class="margem-direita">
-          <input type="text" matInput [matDatepicker]="calCriadoEm" placeholder="Criado Em" name="txtDataCriacao" [(ngModel)]="evento.DataRegistro" disabled="disabled">
-          <mat-datepicker-toggle matSuffix [for]="calCriadoEm"></mat-datepicker-toggle>
-          <mat-datepicker #calCriadoEm></mat-datepicker>
-        </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Criado Em:</label>
+        <dx-date-box name="txtDataCriacao" [(value)]="evento.DataRegistro" type="datetime" [disabled]="true"></dx-date-box>
       </div>
-      <div>
-        <mat-form-field class="margem-direita">
-          <input matInput placeholder="Data/Hora Inicial Inscrição" [(ngModel)]="evento.PeriodoInscricao.DataInicial" [matDatetimepicker]="calDataInicialInsc" />
-          <mat-datetimepicker-toggle [for]="calDataInicialInsc" matSuffix></mat-datetimepicker-toggle>
-          <mat-datetimepicker #calDataInicialInsc type="datetime" timeInterval="5"></mat-datetimepicker>
-        </mat-form-field>
-        <mat-form-field class="margem-direita">
-          <input matInput [matDatetimepicker]="calDataFinalInsc" placeholder="Data/Hora Final Inscrição" [(ngModel)]="evento.PeriodoInscricao.DataFinal">
-          <mat-datetimepicker-toggle matSuffix [for]="calDataFinalInsc"></mat-datetimepicker-toggle>
-          <mat-datetimepicker #calDataFinalInsc type="datetime" timeInterval="5"></mat-datetimepicker>
-        </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Data/Hora Inicial Inscrição:</label>
+        <dx-date-box [(value)]="evento.PeriodoInscricao.DataInicial" type="datetime"></dx-date-box>
+        <label class="label_campos">Data/Hora Final Inscrição:</label>
+        <dx-date-box [(value)]="evento.PeriodoInscricao.DataFinal" type="datetime"></dx-date-box>
       </div>
-      <div>
-        <mat-form-field class="margem-direita">
-          <input matInput [matDatetimepicker]="calDataInicialEvento" placeholder="Data Inicial Evento" [(ngModel)]="evento.PeriodoRealizacao.DataInicial">
-          <mat-datetimepicker-toggle matSuffix [for]="calDataInicialEvento"></mat-datetimepicker-toggle>
-          <mat-datetimepicker #calDataInicialEvento type="datetime" timeInterval="5"></mat-datetimepicker>
-        </mat-form-field>
-        <mat-form-field class="margem-direita">
-          <input matInput [matDatetimepicker]="calDataFinalEvento" placeholder="Data Final Evento" [(ngModel)]="evento.PeriodoRealizacao.DataFinal">
-          <mat-datetimepicker-toggle matSuffix [for]="calDataFinalEvento"></mat-datetimepicker-toggle>
-          <mat-datetimepicker #calDataFinalEvento type="datetime" timeInterval="5"></mat-datetimepicker>
-        </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Data Inicial Evento:</label>
+        <dx-date-box [(value)]="evento.PeriodoRealizacao.DataInicial" type="datetime"></dx-date-box>
+        <label class="label_campos">Data Final Evento:</label>
+        <dx-date-box [(value)]="evento.PeriodoRealizacao.DataFinal" type="datetime"></dx-date-box>
       </div>
-      <div>
-        <mat-checkbox class="margem-direita" [(ngModel)]="temSalaEstudo">Tem Salas Estudo?</mat-checkbox>
-        <mat-form-field>
-          <mat-select placeholder="Modelo Divisão" [(ngModel)]="modeloDivisaoSalaEstudo" [disabled]="!temSalaEstudo">
-            <mat-option value="0">Por Idade e Cidade</mat-option>
-            <mat-option value="1">Por Ordem de Escolha definida na Inscrição</mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <dx-check-box [(value)]="temSalaEstudo" text="Tem Salas Estudo?"></dx-check-box>
+        <dx-select-box [dataSource]="modelosDivisaoSala"
+                       [searchMode]="'contains'"
+                       [searchTimeout]="200"
+                       [minSearchLength]="0"
+                       [searchEnabled]="true"
+                       [(value)]="modeloDivisaoSalaEstudo"
+                       fxFlex="20"
+                       [disabled]="!temSalaEstudo">
+        </dx-select-box>
       </div>
-      <div>
-        <mat-checkbox class="margem-direita" [(ngModel)]="temEvangelizacao">Tem Evangelização?</mat-checkbox>
-        <mat-form-field>
-          <mat-select placeholder="Público Evangelização" [(ngModel)]="publicoEvangelizacao" [disabled]="!temEvangelizacao">
-            <mat-option value="0">Todos</mat-option>
-            <mat-option value="1">Apenas para Trabalhadores e Participantes/Trabalhadores</mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <dx-check-box [(value)]="temEvangelizacao" text="Tem Evangelização?"></dx-check-box>
+        <dx-select-box [dataSource]="publicosEvangelizacao"
+                       [searchMode]="'contains'"
+                       [searchTimeout]="200"
+                       [minSearchLength]="0"
+                       [searchEnabled]="true"
+                       [(value)]="publicoEvangelizacao"
+                       fxFlex="20"
+                       [disabled]="!temEvangelizacao">
+        </dx-select-box>
       </div>
-      <div>
-        <mat-checkbox class="margem-direita" [(ngModel)]="temSarau">Tem Sarau?</mat-checkbox>
-        <mat-form-field>
-          <input matInput placeholder="Tempo Sarau(min)" [textMask]="mascaraNumero" [(ngModel)]="tempoDuracaoSarauMin" [disabled]="!temSarau">
-        </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <dx-check-box [(value)]="temSarau" text="Tem Sarau?"></dx-check-box>
+        <dx-number-box [min]="1" format="####0" [(value)]="evento.ConfiguracaoTempoSarauMin" [disabled]="!temSarau">
+        </dx-number-box>
       </div>
-      <div>
-        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemDepartamentalizacao">Tem Departamentalização?</mat-checkbox>
-        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemOficinas">Tem Oficinas?</mat-checkbox>
-        <mat-checkbox class="margem-direita" [(ngModel)]="evento.TemDormitorios">Tem Dormitórios?</mat-checkbox>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <dx-check-box [(value)]="evento.TemDepartamentalizacao" text="Tem Departamentalização?"></dx-check-box>
+        <dx-check-box [(value)]="evento.TemOficinas" text="Tem Oficinas?"></dx-check-box>
+        <dx-check-box [(value)]="evento.TemDormitorios" text="Tem Dormitórios?"></dx-check-box>
+      </div>
+      <mat-divider></mat-divider>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Idade Mínima Participante (anos):</label>
+        <dx-number-box [min]="1" format="####0" [(value)]="evento.IdadeMinima">
+        </dx-number-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <label class="label_campos" fxFlex="106px">Valor Inscrição Participante:</label>
+        <dx-number-box [min]="0" format="####0.00" [(value)]="evento.ValorInscricaoAdulto">
+        </dx-number-box>
+        <label class="label_campos">Valor Inscrição Infantil:</label>
+        <dx-number-box [min]="0" format="####0.00" [(value)]="evento.ValorInscricaoCrianca" [disabled]="!temEvangelizacao">
+        </dx-number-box>
       </div>
     </div>
   </div>

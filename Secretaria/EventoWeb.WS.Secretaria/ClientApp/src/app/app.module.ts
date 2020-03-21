@@ -75,7 +75,7 @@ import { TelaLogin } from './login/tela-login';
 import { TelaPrincipal } from './tela-principal';
 
 import { TelaListaEventos } from './evento/tela-lista-eventos';
-import { DlgFormEvento, ServicoDlgFormEvento } from './evento/dlg-form-evento';
+import { DlgFormEventoInclusao, ServicoDlgFormEvento, DlgFormEventoAlteracao } from './evento/dlg-form-evento';
 import { TelaGestaoEvento } from './evento/tela-gestao-evento';
 
 import { ConfiguracaoSistemaService, Configuracao } from './configuracao-sistema-service';
@@ -160,7 +160,7 @@ export function init_app(appLoadService: AppLoadService) {
     CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
     TelaPrincipal,
     TelaLogin,
-    TelaListaEventos, DlgFormEvento, TelaGestaoEvento, TelaRoteamentoEvento,
+    TelaListaEventos, DlgFormEventoInclusao, DlgFormEventoAlteracao, TelaGestaoEvento, TelaRoteamentoEvento,
     TelaListagemSalas, DlgFormSala,
     TelaListagemInscricoes,
     TelaInscricao, TelaInscricaoInclusao, TelaInscricaoInfantil, TelaInscricaoInfantilInclusao, CompFormInscricao, CompFormInscricaoInfantil,
@@ -248,7 +248,7 @@ export function init_app(appLoadService: AppLoadService) {
     ], { enableTracing: false })
   ],
   entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
-    TelaListaEventos, DlgFormEvento, TelaRoteamentoEvento,
+    TelaListaEventos, DlgFormEventoInclusao, DlgFormEventoAlteracao, TelaRoteamentoEvento,
     TelaListagemSalas, DlgFormSala, DlgFormOficina, DlgFormQuarto,
     DlgSarauCodigo, DlgSarauFormulario, DlgSelecaoInscricaoAdulto, DlgFormDepartamento, DlgFormSarau],
   providers: [

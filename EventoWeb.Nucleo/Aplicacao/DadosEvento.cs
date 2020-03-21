@@ -19,14 +19,14 @@ namespace EventoWeb.Nucleo.Aplicacao
         public EnumModeloDivisaoSalasEstudo? ConfiguracaoSalaEstudo { get; set; }
         public int? ConfiguracaoTempoSarauMin { get; set; }
         public int IdadeMinima { get; set; }
+        public decimal ValorInscricaoAdulto { get; set; }
+        public decimal ValorInscricaoCrianca { get; set; }
     }
 
     public class DTOEventoCompleto : DTOEvento
     {
         public int Id { get; set; }
         public DateTime DataRegistro { get; set; }
-        public decimal ValorInscricaoAdulto { get; set; }
-        public decimal ValorInscricaoCrianca { get; set; }
     }
 
     public class DTOEventoCompletoInscricao: DTOEventoCompleto

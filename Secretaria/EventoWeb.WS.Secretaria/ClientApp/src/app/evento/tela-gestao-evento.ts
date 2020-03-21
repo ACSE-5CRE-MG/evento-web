@@ -4,6 +4,7 @@ import { Alertas } from '../componentes/alertas-dlg/alertas';
 import { ActivatedRoute } from '@angular/router';
 import { DTOEventoCompleto } from './objetos';
 import { WebServiceRelatorios } from '../webservices/webservice-relatorios';
+import { ServicoDlgFormEvento } from './dlg-form-evento';
 
 @Component({
   selector: 'tela-gestao-evento',
@@ -14,8 +15,8 @@ export class TelaGestaoEvento implements OnInit {
 
   evento: DTOEventoCompleto = new DTOEventoCompleto();
 
-  constructor(public wsEventos: WebServiceEventos, public mensageria: Alertas, public roteador: ActivatedRoute,
-    private wsRelatorios: WebServiceRelatorios) { }
+  constructor(private wsEventos: WebServiceEventos, private mensageria: Alertas, private roteador: ActivatedRoute,
+    private wsRelatorios: WebServiceRelatorios, private dialogosEvento: ServicoDlgFormEvento) { }
 
   ngOnInit(): void {
     this.roteador.params.subscribe(parametros => {
@@ -34,7 +35,13 @@ export class TelaGestaoEvento implements OnInit {
   }
 
   clicarEditar(): void {
-
+    this.dialogosEvento.apresentarDlgAlteracao(this.evento.Id)
+      .subscribe(
+        eventoAtualizado => {
+          if (eventoAtualizado != null)
+            this.evento = eventoAtualizado;
+        }
+      );
   }
 
   clicarInscritosDepartamentos(): void {

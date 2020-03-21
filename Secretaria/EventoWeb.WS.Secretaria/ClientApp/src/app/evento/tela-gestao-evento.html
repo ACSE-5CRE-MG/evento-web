@@ -5,7 +5,7 @@
       <mat-divider></mat-divider>
     </div>
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
-      <button mat-stroked-button>
+      <button mat-stroked-button (click)="clicarEditar()">
         <span class="fas fa-pencil-alt fa-4x"></span>
         <br />
         <span>Dados Evento</span>
@@ -31,7 +31,7 @@
         <br />
         <span>Inscrições</span>
       </a>
-      <a mat-stroked-button [routerLink]="'./salas'" *ngIf="evento.ConfiguracaoSalaEstudo">
+      <a mat-stroked-button [routerLink]="'./salas'" *ngIf="evento.ConfiguracaoSalaEstudo != null">
         <span class="fas fa-chalkboard fa-4x"></span>
         <br />
         <span>Salas de Estudo</span>
@@ -58,13 +58,13 @@
       </a>
     </div>
   </div>
-  <div fxLayout="column" fxLayoutGap="5px" class="padding-padrao">
+  <div fxLayout="column" fxLayoutGap="5px" class="padding-padrao" *ngIf="evento.ConfiguracaoSalaEstudo != null || evento.TemOficinas || evento.TemDormitorios || evento.TemDepartamentalizacao">
     <div>
       <span class="secao">Organização</span>
       <mat-divider></mat-divider>
     </div>
     <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
-      <a mat-stroked-button [routerLink]="'./divisao-salas'" *ngIf="evento.ConfiguracaoSalaEstudo">
+      <a mat-stroked-button [routerLink]="'./divisao-salas'" *ngIf="evento.ConfiguracaoSalaEstudo != null">
         <span class="fas fa-chalkboard fa-4x"></span>
         <br />
         <span>Divisão de Salas de Estudo</span>

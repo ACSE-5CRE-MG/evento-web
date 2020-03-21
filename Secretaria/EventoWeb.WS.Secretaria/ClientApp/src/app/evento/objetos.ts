@@ -4,66 +4,67 @@ import { DTOSalaEstudo } from "../sala-estudo/objetos";
 import { DTODepartamento } from "../departamentos/objetos";
 
 export enum SituacaoEvento {
-    Aberto,
-    EmAndamento,
-    Concluido
+  Aberto,
+  EmAndamento,
+  Concluido
 }
 
 export enum EnumPublicoEvangelizacao {
-    Todos,
-    TrabalhadoresOuParticipantesTrabalhadores
+  Todos,
+  TrabalhadoresOuParticipantesTrabalhadores
 }
 
 export enum EnumModeloDivisaoSalasEstudo {
-    PorIdadeCidade,
-    PorOrdemEscolhaInscricao
+  PorIdadeCidade,
+  PorOrdemEscolhaInscricao
 }
 
 export class DTOEvento {
-    public Nome: string;
-    public PeriodoInscricao: Periodo;
-    public PeriodoRealizacao: Periodo;
-    public Logotipo: string;
-    public TemDepartamentalizacao: Boolean;
-    public TemOficinas: Boolean;
-    public TemDormitorios: Boolean;
-    public ConfiguracaoEvangelizacao: EnumPublicoEvangelizacao;
-    public ConfiguracaoSalaEstudo: EnumModeloDivisaoSalasEstudo;
-    public ConfiguracaoTempoSarauMin: number;
+  public Nome: string;
+  public PeriodoInscricao: Periodo;
+  public PeriodoRealizacao: Periodo;
+  public Logotipo: string;
+  public TemDepartamentalizacao: Boolean;
+  public TemOficinas: Boolean;
+  public TemDormitorios: Boolean;
+  public ConfiguracaoEvangelizacao: EnumPublicoEvangelizacao;
+  public ConfiguracaoSalaEstudo: EnumModeloDivisaoSalasEstudo;
+  public ConfiguracaoTempoSarauMin: number;
 }
 
 export class Periodo {
-    public DataInicial: Date;
-    public DataFinal: Date;
+  public DataInicial: Date;
+  public DataFinal: Date;
 }
 
 export class ConfiguracaoSarau {
-    public TempoDuracaoMin: number;
+  public TempoDuracaoMin: number;
 }
 
 export class DTOEventoCompleto extends DTOEvento {
-    public Id: number;
-    public DataRegistro: Date;
-    public PodeAlterar: Boolean;
+  public Id: number;
+  public DataRegistro: Date;
+  public PodeAlterar: Boolean;
+  IdadeMinima: number;
+  ValorInscricaoAdulto: number;
+  ValorInscricaoCrianca: number;
+
 }
 
 export class DTOEventoCompletoInscricao extends DTOEventoCompleto {
-    IdadeMinima: number;
-    Oficinas: DTOOficina[];
-    SalasEstudo: DTOSalaEstudo[];
-    Departamentos: DTODepartamento[];
-    ValorInscricaoAdulto: number;
-    ValorInscricaoCrianca: number;
+  Oficinas: DTOOficina[];
+  SalasEstudo: DTOSalaEstudo[];
+  Departamentos: DTODepartamento[];
 }
 
 export class DTOEventoMinimo {
-    public Id: number;
-    public PeriodoInscricao: Periodo;
-    public Nome: string;
-    public Logotipo: string;
+  public Id: number;
+  public PeriodoInscricao: Periodo;
+  public Nome: string;
+  public Logotipo: string;
 }
 
 export class DTOId {
-    public Id: number;
+  public Id: number;
 }
 
