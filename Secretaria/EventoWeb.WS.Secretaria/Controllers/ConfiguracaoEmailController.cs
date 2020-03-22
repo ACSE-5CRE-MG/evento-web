@@ -21,7 +21,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpGet("obter")]
+        [HttpGet("evento/{idEvento}/obter")]
         public DTOConfiguracaoEmail GetObter(int idEvento)
         {
             var configuracao = mAppConfiguracoesEmail.Obter(idEvento);
@@ -29,7 +29,7 @@ namespace EventoWeb.WS.Secretaria.Controllers
         }
 
         [Authorize("Bearer")]
-        [HttpPost("salvar")]
+        [HttpPost("evento/{idEvento}/salvar")]
         public void Salvar(int idEvento, [FromBody] DTOConfiguracaoEmail dto)
         {
             mAppConfiguracoesEmail.CriarOuAtualizar(idEvento, dto);

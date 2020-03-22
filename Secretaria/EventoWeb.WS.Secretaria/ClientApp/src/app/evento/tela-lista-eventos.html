@@ -21,8 +21,8 @@
         </h3>
         <img [src]="obterImagem(evento)" alt="Imagem do evento">
         <mat-divider></mat-divider>
-        <button mat-button (click)="clicarExcluir(evento)">EXCLUIR</button>
         <a mat-button [routerLink]="'/evento/' + evento.Id">GERENCIAR</a>
+        <button mat-button (click)="clicarExcluir(evento)">EXCLUIR</button>
       </div>
     </div>
   </layout-geral>

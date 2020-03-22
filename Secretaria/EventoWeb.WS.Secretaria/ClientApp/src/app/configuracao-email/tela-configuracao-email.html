@@ -1,0 +1,47 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <a mat-icon-button style="margin-right:5px" matTooltip="Volta para a gestão do evento" routerLink="../">
+      <span class="fas fa-arrow-left"></span>
+    </a>
+    <span class="fas fa-inbox" style="margin-right:10px"></span>
+    <span class="cursor-pointer">Configuração de Email</span>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-button (click)="clicarSalvar()" matTooltip="Atualiza as informações">
+      <i class="fa fa-save"></i>
+      Salvar
+    </button>
+  </mat-toolbar>
+  <div fxLayout="column" fxLayoutGap="5px" fxFill style="margin: 5px">
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Email:</label>
+      <dx-text-box [(value)]="configuracao.EnderecoEmail" fxFlex="100" [maxLength]="150"></dx-text-box>
+    </div>
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Usuário:</label>
+      <dx-text-box [(value)]="configuracao.UsuarioEmail" fxFlex="80" [maxLength]="100"></dx-text-box>
+    </div>
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Senha:</label>
+      <dx-text-box [(value)]="configuracao.SenhaEmail" mode="password" fxFlex="80" [maxLength]="100"></dx-text-box>
+    </div>
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Servidor:</label>
+      <dx-text-box [(value)]="configuracao.ServidorEmail" fxFlex="50" [maxLength]="50"></dx-text-box>
+    </div>
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Porta:</label>
+      <dx-number-box format="####0" [(value)]="configuracao.PortaServidor"></dx-number-box>
+    </div>
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Tipo Segurança:</label>
+      <dx-select-box [dataSource]="tiposSeguranca"
+                     [searchMode]="'contains'"
+                     [searchTimeout]="200"
+                     [minSearchLength]="0"
+                     [searchEnabled]="true"
+                     [(value)]="tipoSegurancaEscolhida"
+                     fxFlex="80">
+      </dx-select-box>
+    </div>
+  </div>
+</layout-geral>

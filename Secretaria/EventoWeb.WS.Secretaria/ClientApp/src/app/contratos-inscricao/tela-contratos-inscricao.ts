@@ -39,18 +39,6 @@ export class TelaContratosInscricao implements OnInit {
       );
   }
 
-  processarTextoRegulamento(ev: any) {
-    this.contrato.Regulamento = ev.value;
-  }
-
-  processarTextoInstrucoesPagamento(ev: any) {
-    this.contrato.InstrucoesPagamento = ev.value;
-  }
-
-  processarTextoPassoPassoInscricao(ev: any) {
-    this.contrato.PassoAPassoInscricao = ev.value;
-  }
-
   clicarSalvar(): void {
     if (this.contrato.Regulamento == null || this.contrato.Regulamento.trim().length == 0)
       this.mensageria.alertarAtencao("Você não informou o regulamento", "");

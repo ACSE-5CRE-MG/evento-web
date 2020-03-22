@@ -46,16 +46,18 @@ namespace EventoWeb.Nucleo.Aplicacao
             ExecutarSeguramente(() =>
             {
                 var configuracao = Contexto.RepositorioConfiguracoesEmail.Obter(idEvento);
-
-                dto = new DTOConfiguracaoEmail
-                {
-                    EnderecoEmail = configuracao.EnderecoEmail,
-                    PortaServidor = configuracao.PortaServidor,
-                    SenhaEmail = configuracao.SenhaEmail,
-                    ServidorEmail = configuracao.ServidorEmail,
-                    TipoSeguranca = configuracao.TipoSeguranca,
-                    UsuarioEmail = configuracao.UsuarioEmail
-                };
+                if (configuracao == null)
+                    dto = null;
+                else
+                    dto = new DTOConfiguracaoEmail
+                    {
+                        EnderecoEmail = configuracao.EnderecoEmail,
+                        PortaServidor = configuracao.PortaServidor,
+                        SenhaEmail = configuracao.SenhaEmail,
+                        ServidorEmail = configuracao.ServidorEmail,
+                        TipoSeguranca = configuracao.TipoSeguranca,
+                        UsuarioEmail = configuracao.UsuarioEmail
+                    };
             });
 
             return dto;
@@ -85,10 +87,6 @@ namespace EventoWeb.Nucleo.Aplicacao
         public int? PortaServidor { get; set; }
 
         public TipoSegurancaEmail? TipoSeguranca { get; set; }
-
-        public ModeloMensagem MensagemInscricaoRegistrada { get; set; }
-
-        public ModeloMensagem MensagemInscricaoConfirmada { get; set; }
     }
 
 }

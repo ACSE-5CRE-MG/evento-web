@@ -2,42 +2,27 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, LOCALE_ID, APP_INITIALIZER, Injectable } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 
 import {
-  MatCardModule,
   MatIconModule, 
   MatMenuModule,
   MatButtonModule,
-  MatListModule,
-  MatTooltipModule,
-  MatInputModule,
-  MatDatepickerModule,
-  MatNativeDateModule,
   MatDialogModule,
   MatToolbarModule,
   MatButtonToggleModule,
-  MatExpansionModule,
-  MatGridListModule,
   MatSidenavModule,
   MatTabsModule,
-  MatRadioModule,
-  MatCheckboxModule,
+  MatCardModule,
+  MatDividerModule,
   MAT_DATE_LOCALE
 } from '@angular/material';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-
-import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
-import { MatMomentDatetimeModule } from '@mat-datetimepicker/moment';
-
 import { FlexLayoutModule } from "@angular/flex-layout";
 
-import { TextMaskModule } from 'angular2-text-mask';
+import { RichTextEditorAllModule } from '@syncfusion/ej2-angular-richtexteditor';
 
 import {
   DxDataGridModule,
@@ -54,8 +39,7 @@ import {
   DxValidationGroupModule,
   DxSelectBoxModule,
   DxFileUploaderModule,
-  DxGalleryModule,
-  DxHtmlEditorModule
+  DxGalleryModule
 } from 'devextreme-angular';
 
 import { locale, loadMessages } from 'devextreme/localization';
@@ -119,6 +103,10 @@ import { WebServiceDepartamentos } from './webservices/webservice-departamentos'
 import { TelaListagemSarais } from './sarais/tela-listagem-sarais';
 import { DlgFormSarau, DialogosSarau } from './sarais/dlg-form-sarau';
 import { WebServiceSarais } from './webservices/webservice-sarais';
+import { TelaMensagensEmailInscricao } from './mensagens-email-inscricao/tela-mensagens-email-inscricao';
+import { WebServiceMensagensInscricao } from './webservices/webservice-mensagens-email-inscricao';
+import { TelaConfiguracaoEmail } from './configuracao-email/tela-configuracao-email';
+import { WebServiceConfiguracaoEmail } from './webservices/webservice-configuracao-email';
 
 declare function require(url: string);
 
@@ -173,37 +161,24 @@ export function init_app(appLoadService: AppLoadService) {
     TelaListagemQuartos, DlgFormQuarto,
     TelaEstatisticas, TelaContratosInscricao,
     TelaListagemDepartamentos, DlgFormDepartamento,
-    TelaListagemSarais, DlgFormSarau
+    TelaListagemSarais, DlgFormSarau,
+    TelaMensagensEmailInscricao, TelaConfiguracaoEmail
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    FormsModule,
-    MatCardModule,
     MatIconModule,
     MatMenuModule,
     MatButtonModule,
-    MatListModule,
-    MatTooltipModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatNativeDateModule,
     MatDialogModule,
     MatToolbarModule,
     MatButtonToggleModule,
-    MatExpansionModule,
-    MatGridListModule,
     MatSidenavModule,
     MatTabsModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    MatRadioModule,
-    MatCheckboxModule,
-    MatMomentDatetimeModule,
-    MatDatetimepickerModule,
+    MatCardModule,
+    MatDividerModule,
     FlexLayoutModule,
-    TextMaskModule,
     DxDataGridModule,
     DxTextBoxModule,
     DxNumberBoxModule,
@@ -218,8 +193,8 @@ export function init_app(appLoadService: AppLoadService) {
     DxValidationGroupModule,
     DxSelectBoxModule,
     DxFileUploaderModule,
-    DxGalleryModule,
-    DxHtmlEditorModule,
+    DxGalleryModule,    
+    RichTextEditorAllModule,
     RouterModule.forRoot([
       { path: '', component: TelaListaEventos, canActivate: [PermissaoAcessoRota] },
       { path: 'login', component: TelaLogin },
@@ -242,6 +217,8 @@ export function init_app(appLoadService: AppLoadService) {
           { path: 'contratos', component: TelaContratosInscricao, canActivate: [PermissaoAcessoRota] },
           { path: 'departamentos', component: TelaListagemDepartamentos, canActivate: [PermissaoAcessoRota] },
           { path: 'sarau', component: TelaListagemSarais, canActivate: [PermissaoAcessoRota] },
+          { path: 'mensagens-inscricao', component: TelaMensagensEmailInscricao, canActivate: [PermissaoAcessoRota] },
+          { path: 'configuracao-email', component: TelaConfiguracaoEmail, canActivate: [PermissaoAcessoRota] },
         ]
       },
       { path: '** ', redirectTo: '' }
@@ -260,7 +237,8 @@ export function init_app(appLoadService: AppLoadService) {
     WebServiceAutenticacao, WebServiceEventos, WebServiceSalas, WebServiceInscricoes, ServicoEventoSelecionado,
     WebServiceDivisaoSalas, WebServiceRelatorios, WebServiceOficinas, WebServiceQuartos, WebServiceDivisaoOficinas, WebServiceDivisaoQuartos,
     DialogosInscricaoSarau, DialogosSala, DialogosOficina, DialogosQuarto, DialogosInscricao, DialogosDepartamentos,
-    WebServiceEstatisticas, WebServiceContratosInscricao, WebServiceDepartamentos, WebServiceSarais, DialogosSarau],
+    WebServiceEstatisticas, WebServiceContratosInscricao, WebServiceDepartamentos, WebServiceSarais, DialogosSarau,
+    WebServiceMensagensInscricao, WebServiceConfiguracaoEmail],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule {

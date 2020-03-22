@@ -14,118 +14,13 @@
   <div fxLayout="row" fxLayoutGap="5px" fxFill>
     <mat-tab-group fxFill>
       <mat-tab label="Regulamento" fxFill>
-        <dx-html-editor [value]="contrato.Regulamento" (onValueChanged)="processarTextoRegulamento($event)" fxFill>
-          <dxo-toolbar>
-            <dxi-item formatName="undo"></dxi-item>
-            <dxi-item formatName="redo"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="size" [formatValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
-            <dxi-item formatName="font" [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="bold"></dxi-item>
-            <dxi-item formatName="italic"></dxi-item>
-            <dxi-item formatName="strike"></dxi-item>
-            <dxi-item formatName="underline"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="alignLeft"></dxi-item>
-            <dxi-item formatName="alignCenter"></dxi-item>
-            <dxi-item formatName="alignRight"></dxi-item>
-            <dxi-item formatName="alignJustify"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="header" [formatValues]="[false, 1, 2, 3, 4, 5]"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="orderedList"></dxi-item>
-            <dxi-item formatName="bulletList"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="color"></dxi-item>
-            <dxi-item formatName="background"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="link"></dxi-item>
-            <dxi-item formatName="image"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="clear"></dxi-item>
-            <dxi-item formatName="codeBlock"></dxi-item>
-            <dxi-item formatName="blockquote"></dxi-item>
-          </dxo-toolbar>
-          <dxo-media-resizing [enabled]=true>
-          </dxo-media-resizing>          
-        </dx-html-editor>
+        <ejs-richtexteditor [(value)]="contrato.Regulamento" fxFill></ejs-richtexteditor>        
       </mat-tab>
       <mat-tab label="Instruções Pagamento" fxFill>
-        <dx-html-editor [value]="contrato.InstrucoesPagamento" (onValueChanged)="processarTextoInstrucoesPagamento($event)" fxFill>
-          <dxo-toolbar>
-            <dxi-item formatName="undo"></dxi-item>
-            <dxi-item formatName="redo"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="size" [formatValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
-            <dxi-item formatName="font" [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="bold"></dxi-item>
-            <dxi-item formatName="italic"></dxi-item>
-            <dxi-item formatName="strike"></dxi-item>
-            <dxi-item formatName="underline"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="alignLeft"></dxi-item>
-            <dxi-item formatName="alignCenter"></dxi-item>
-            <dxi-item formatName="alignRight"></dxi-item>
-            <dxi-item formatName="alignJustify"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="header" [formatValues]="[false, 1, 2, 3, 4, 5]"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="orderedList"></dxi-item>
-            <dxi-item formatName="bulletList"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="color"></dxi-item>
-            <dxi-item formatName="background"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="link"></dxi-item>
-            <dxi-item formatName="image"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="clear"></dxi-item>
-            <dxi-item formatName="codeBlock"></dxi-item>
-            <dxi-item formatName="blockquote"></dxi-item>
-          </dxo-toolbar>
-          <dxo-media-resizing [enabled]=true>
-          </dxo-media-resizing>
-        </dx-html-editor>
+        <ejs-richtexteditor [(value)]="contrato.InstrucoesPagamento" fxFill></ejs-richtexteditor>        
       </mat-tab>
       <mat-tab label="Passo-a-passo Inscrição">
-        <dx-html-editor [value]="contrato.PassoAPassoInscricao" (onValueChanged)="processarTextoPassoPassoInscricao($event)" fxFill>
-          <dxo-toolbar>
-            <dxi-item formatName="undo"></dxi-item>
-            <dxi-item formatName="redo"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="size" [formatValues]="['8pt', '10pt', '12pt', '14pt', '18pt', '24pt', '36pt']"></dxi-item>
-            <dxi-item formatName="font" [formatValues]="['Arial', 'Courier New', 'Georgia', 'Impact', 'Lucida Console', 'Tahoma', 'Times New Roman', 'Verdana']"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="bold"></dxi-item>
-            <dxi-item formatName="italic"></dxi-item>
-            <dxi-item formatName="strike"></dxi-item>
-            <dxi-item formatName="underline"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="alignLeft"></dxi-item>
-            <dxi-item formatName="alignCenter"></dxi-item>
-            <dxi-item formatName="alignRight"></dxi-item>
-            <dxi-item formatName="alignJustify"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="header" [formatValues]="[false, 1, 2, 3, 4, 5]"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="orderedList"></dxi-item>
-            <dxi-item formatName="bulletList"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="color"></dxi-item>
-            <dxi-item formatName="background"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="link"></dxi-item>
-            <dxi-item formatName="image"></dxi-item>
-            <dxi-item formatName="separator"></dxi-item>
-            <dxi-item formatName="clear"></dxi-item>
-            <dxi-item formatName="codeBlock"></dxi-item>
-            <dxi-item formatName="blockquote"></dxi-item>
-          </dxo-toolbar>
-          <dxo-media-resizing [enabled]=true>
-          </dxo-media-resizing>
-        </dx-html-editor>
+        <ejs-richtexteditor [(value)]="contrato.PassoAPassoInscricao" fxFill></ejs-richtexteditor>        
       </mat-tab>
     </mat-tab-group>
   </div>

@@ -1,0 +1,63 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <a mat-icon-button style="margin-right:5px" matTooltip="Volta para a gestão do evento" routerLink="../">
+      <span class="fas fa-arrow-left"></span>
+    </a>
+    <span class="fas fa-envelope-open-text" style="margin-right:10px"></span>
+    <span class="cursor-pointer">Mensagens Email Inscrição</span>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-button (click)="clicarSalvar()" matTooltip="Atualiza as informações">
+      <i class="fa fa-save"></i>
+      Salvar
+    </button>
+  </mat-toolbar>
+  <div fxLayout="row" fxLayoutGap="5px" fxFill>
+    <mat-tab-group fxFill>
+      <mat-tab label="Código Acesso Acompanhamento" fxFill>
+        <layout-geral fxFill>
+          <div layout-geral-cabecalho fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Assunto:</label>
+            <dx-text-box placeholder="Nome" [(value)]="mensagens.MensagemInscricaoCodigoAcessoAcompanhamento.Assunto" fxFlex="100" [maxLength]="150"></dx-text-box>
+          </div>
+          <ejs-richtexteditor [(value)]="mensagens.MensagemInscricaoCodigoAcessoAcompanhamento.Mensagem" heigth="100%"></ejs-richtexteditor>
+        </layout-geral>
+      </mat-tab>
+      <mat-tab label="Código Acesso Criação" fxFill>
+        <layout-geral fxFill>
+          <div layout-geral-cabecalho fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Assunto:</label>
+            <dx-text-box placeholder="Nome" [(value)]="mensagens.MensagemInscricaoCodigoAcessoCriacao.Assunto" fxFlex="100" [maxLength]="150"></dx-text-box>
+          </div>
+          <ejs-richtexteditor [(value)]="mensagens.MensagemInscricaoCodigoAcessoCriacao.Mensagem" fxFill></ejs-richtexteditor>
+        </layout-geral>
+      </mat-tab>
+      <mat-tab label="Confirmação Inscrição" fxFill>
+        <layout-geral fxFill>
+          <div layout-geral-cabecalho fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Assunto:</label>
+            <dx-text-box placeholder="Nome" [(value)]="mensagens.MensagemInscricaoConfirmada.Assunto" fxFlex="100" [maxLength]="150"></dx-text-box>
+          </div>
+          <ejs-richtexteditor [(value)]="mensagens.MensagemInscricaoConfirmada.Mensagem" fxFill></ejs-richtexteditor>
+        </layout-geral>        
+      </mat-tab>
+      <mat-tab label="Registro Inscrição Participante" fxFill>
+        <layout-geral fxFill>
+          <div layout-geral-cabecalho fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Assunto:</label>
+            <dx-text-box placeholder="Nome" [(value)]="mensagens.MensagemInscricaoRegistradaAdulto.Assunto" fxFlex="100" [maxLength]="150"></dx-text-box>
+          </div>
+          <ejs-richtexteditor [(value)]="mensagens.MensagemInscricaoRegistradaAdulto.Mensagem" fxFill></ejs-richtexteditor>
+        </layout-geral>        
+      </mat-tab>
+      <mat-tab label="Registro Inscrição Infantil" fxFill>
+        <layout-geral fxFill>
+          <div layout-geral-cabecalho fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+            <label class="label_campos" fxFlex="106px">Assunto:</label>
+            <dx-text-box placeholder="Nome" [(value)]="mensagens.MensagemInscricaoRegistradaInfantil.Assunto" fxFlex="100" [maxLength]="150"></dx-text-box>
+          </div>
+          <ejs-richtexteditor [(value)]="mensagens.MensagemInscricaoRegistradaInfantil.Mensagem" fxFill></ejs-richtexteditor>
+        </layout-geral>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</layout-geral>
