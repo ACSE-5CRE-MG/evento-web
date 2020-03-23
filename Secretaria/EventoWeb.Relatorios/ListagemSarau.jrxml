@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListagemSarau" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8baffd51-7a2e-44ff-8457-4c7a687026d3">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ListagemSarau"/>
+	<queryString language="JSON">
+		<![CDATA[]]>
+	</queryString>
+	<field name="idEvento" class="java.lang.Integer">
+		<fieldDescription><![CDATA[idEvento]]></fieldDescription>
+	</field>
+	<field name="nomeEvento" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="nomeEvento"/>
+		<fieldDescription><![CDATA[nomeEvento]]></fieldDescription>
+	</field>
+	<field name="tempoSarauMin" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="tempoSarauMin"/>
+		<fieldDescription><![CDATA[tempoSarauMin]]></fieldDescription>
+	</field>
+	<field name="idApresentacao" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="idApresentacao"/>
+		<fieldDescription><![CDATA[idApresentacao]]></fieldDescription>
+	</field>
+	<field name="tipoApresentacao" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="tipoApresentacao"/>
+		<fieldDescription><![CDATA[tipoApresentacao]]></fieldDescription>
+	</field>
+	<field name="duracaoApresentacaoMin" class="java.lang.Integer">
+		<property name="net.sf.jasperreports.json.field.expression" value="duracaoApresentacaoMin"/>
+		<fieldDescription><![CDATA[duracaoApresentacaoMin]]></fieldDescription>
+	</field>
+	<field name="inscritos" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="inscritos"/>
+		<fieldDescription><![CDATA[inscritos]]></fieldDescription>
+	</field>
+	<variable name="duracaoApresentacaoMin1" class="java.lang.Integer" resetType="Group" resetGroup="GroupEvento" calculation="Sum">
+		<variableExpression><![CDATA[$F{duracaoApresentacaoMin}]]></variableExpression>
+	</variable>
+	<group name="GroupEvento" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{idEvento}]]></groupExpression>
+		<groupHeader>
+			<band height="84">
+				<textField>
+					<reportElement x="2" y="0" width="550" height="20" uuid="e2ef39ff-570d-4ac9-be72-f2022ec73bab"/>
+					<textElement textAlignment="Center">
+						<font fontName="Geometr415 Blk BT" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nomeEvento}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="2" y="23" width="550" height="26" uuid="ed81f1c5-c23a-472c-b550-ceadd6c9898d"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Bahnschrift" size="18"/>
+					</textElement>
+					<text><![CDATA[Listagem do Sarau]]></text>
+				</staticText>
+				<line>
+					<reportElement x="2" y="52" width="550" height="1" uuid="839a8cd7-3463-4d47-9601-c08487dfaaee"/>
+				</line>
+				<staticText>
+					<reportElement x="2" y="70" width="168" height="13" uuid="31191a43-b535-4254-a3b4-0ad72efc14a2"/>
+					<text><![CDATA[Tipo Apresentação]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="174" y="70" width="66" height="13" uuid="c9ef90a8-982d-4455-984e-543c12b80dd3"/>
+					<text><![CDATA[Duração (min)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="260" y="70" width="292" height="13" uuid="cfe5dc1f-79bd-42d9-8b7f-6faf5c279ce6"/>
+					<text><![CDATA[Inscritos]]></text>
+				</staticText>
+				<line>
+					<reportElement x="2" y="83" width="550" height="1" uuid="40097961-fb72-47ea-a10d-e9186b7eec89"/>
+					<graphicElement>
+						<pen lineStyle="Dashed"/>
+					</graphicElement>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="42">
+				<line>
+					<reportElement x="2" y="3" width="550" height="1" uuid="1597577e-da95-40f4-a6e8-82e61027e8bf"/>
+				</line>
+				<textField>
+					<reportElement x="216" y="29" width="100" height="13" uuid="06ea0b9a-89c7-43d4-b079-d8f613ddfbda"/>
+					<textFieldExpression><![CDATA[$V{duracaoApresentacaoMin1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="20" y="10" width="190" height="13" uuid="b23064c7-ab13-4549-bfa5-3e6569e02490"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tempo(min) defindo para o Sarau:]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="216" y="10" width="100" height="13" uuid="1c83eee9-a2c4-453a-97b7-da6129aa5cf4"/>
+					<textFieldExpression><![CDATA[$F{tempoSarauMin}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="20" y="29" width="190" height="13" uuid="14cd56f6-1267-4bd6-b205-fefbc76cf00b"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Tempo Total(min) das apresentações:]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<textField>
+				<reportElement x="2" y="2" width="168" height="13" uuid="91289708-42f2-4aa6-bac0-6d6c0fec32a1"/>
+				<textFieldExpression><![CDATA[$F{tipoApresentacao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="174" y="2" width="66" height="13" uuid="843f03fa-0995-48c3-824e-7c6e565c9ed3"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{duracaoApresentacaoMin}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ContainerHeight" x="260" y="2" width="292" height="13" uuid="b81fb2e9-2ce5-41a1-8786-6ff825f36e1c"/>
+				<textFieldExpression><![CDATA[$F{inscritos}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

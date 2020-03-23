@@ -21,3 +21,6 @@
 /Secretaria/EventoWeb.WS.Secretaria/.config/dotnet-tools.json
 /EventoWeb.WS.Relatorios/.gradle/
 /EventoWeb.WS.Relatorios/build/
+/Secretaria/EventoWeb.WS.Relatorios/target/
+/Secretaria/Relatorios/target/
+/Secretaria/WS.Relatorios/target/
