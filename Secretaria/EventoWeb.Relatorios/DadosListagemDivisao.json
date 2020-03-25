@@ -1,0 +1,50 @@
+[
+	{
+		"idDivisao": 1,
+		"nomeDivisao": "Música",
+		"descricaoDivisao": "Oficinas",
+		"coordenadores": "João da Silva, Renato Antunes",
+		"nomeInscrito": "Marcos Aurelio César",
+		"totalParticipantes": 3		
+	},
+	{
+		"idDivisao": 1,
+		"nomeDivisao": "Música",
+		"descricaoDivisao": "Oficinas",
+		"coordenadores": "João da Silva, Renato Antunes",
+		"nomeInscrito": "Denise Araújo de Oliveira",
+		"totalParticipantes": 3		
+	},
+	{
+		"idDivisao": 1,
+		"nomeDivisao": "Música",
+		"descricaoDivisao": "Oficinas",
+		"coordenadores": "João da Silva, Renato Antunes",
+		"nomeInscrito": "Aluizio Marcos",
+		"totalParticipantes": 3		
+	},
+	{
+		"idDivisao": 2,
+		"nomeDivisao": "Dança",
+		"descricaoDivisao": "Oficinas",
+		"coordenadores": "João da Silva, Renato Antunes",
+		"nomeInscrito": "Marcos Aurelio César",
+		"totalParticipantes": 3		
+	},
+	{
+		"idDivisao": 2,
+		"nomeDivisao": "Dança",
+		"descricaoDivisao": "Oficinas",
+		"coordenadores": "João da Silva, Renato Antunes",
+		"nomeInscrito": "Denise Araújo de Oliveira",
+		"totalParticipantes": 3		
+	},
+	{
+		"idDivisao": 2,
+		"nomeDivisao": "Dança",
+		"descricaoDivisao": "Oficinas",
+		"coordenadores": "João da Silva, Renato Antunes",
+		"nomeInscrito": "Aluizio Marcos",
+		"totalParticipantes": 3		
+	}
+]

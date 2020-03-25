@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.6.0.final using JasperReports Library version 6.6.0  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ListagemSarau" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8baffd51-7a2e-44ff-8457-4c7a687026d3">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ListagemDivisao"/>
+	<queryString language="JSON">
+		<![CDATA[]]>
+	</queryString>
+	<field name="idDivisao" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="idDivisao"/>
+		<fieldDescription><![CDATA[idDivisao]]></fieldDescription>
+	</field>
+	<field name="nomeDivisao" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="nomeDivisao"/>
+		<fieldDescription><![CDATA[nomeDivisao]]></fieldDescription>
+	</field>
+	<field name="descricaoDivisao" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="descricaoDivisao"/>
+		<fieldDescription><![CDATA[descricaoDivisao]]></fieldDescription>
+	</field>
+	<field name="coordenadores" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="coordenadores"/>
+		<fieldDescription><![CDATA[coordenadores]]></fieldDescription>
+	</field>
+	<field name="nomeInscrito" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="nomeInscrito"/>
+		<fieldDescription><![CDATA[nomeInscrito]]></fieldDescription>
+	</field>
+	<field name="totalParticipantes" class="java.lang.String">
+		<property name="net.sf.jasperreports.json.field.expression" value="totalParticipantes"/>
+		<fieldDescription><![CDATA[totalParticipantes]]></fieldDescription>
+	</field>
+	<group name="GroupEvento" isStartNewPage="true" isReprintHeaderOnEachPage="true">
+		<groupExpression><![CDATA[$F{idDivisao}]]></groupExpression>
+		<groupHeader>
+			<band height="89">
+				<textField>
+					<reportElement x="2" y="0" width="550" height="20" uuid="e2ef39ff-570d-4ac9-be72-f2022ec73bab"/>
+					<textElement textAlignment="Center">
+						<font fontName="Geometr415 Blk BT" size="16"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nomeDivisao}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="2" y="88" width="550" height="1" uuid="839a8cd7-3463-4d47-9601-c08487dfaaee"/>
+				</line>
+				<textField>
+					<reportElement x="2" y="22" width="550" height="16" uuid="985927df-ffc1-4e0a-8dd2-edf0dbf38e13"/>
+					<textElement textAlignment="Center">
+						<font fontName="Futura Bk BT" size="12" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{descricaoDivisao}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="2" y="46" width="550" height="16" uuid="2a89d9ae-ee68-4626-8be1-ba56bc698560"/>
+					<textElement textAlignment="Center">
+						<font fontName="Futura Bk BT" size="12" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Coordenador(es): " + $F{coordenadores}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="2" y="70" width="550" height="16" uuid="17c11a79-3e21-4ba5-acc8-31576c8653bf"/>
+					<textElement textAlignment="Center">
+						<font fontName="Futura Bk BT" size="12" isBold="false" isItalic="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Total de Participantes: " + $F{totalParticipantes}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement stretchType="ElementGroupHeight" x="2" y="4" width="550" height="16" uuid="3343c0de-075f-457e-b50c-1ce5567e2433"/>
+				<textElement textAlignment="Center">
+					<font fontName="Serif" size="12" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeInscrito}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

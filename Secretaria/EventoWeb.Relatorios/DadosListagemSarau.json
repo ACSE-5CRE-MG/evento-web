@@ -1,65 +1,65 @@
 [
 	{
-		idEvento: 1,
-		nomeEvento: 'CEOMG',
-		tempoSarauMin: 60,
-		idApresentacao: 1,
-		tipoApresentacao: 'Dança',
-		duracaoApresentacaoMin: 5,
-		inscritos: 'João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona'
+		"idEvento": 1,
+		"nomeEvento": "CEOMG",
+		"tempoSarauMin": 60,
+		"idApresentacao": 1,
+		"tipoApresentacao": "Dança",
+		"duracaoApresentacaoMin": 5,
+		"inscritos": "João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona João, Reco-Reco e Azeitona"
 	},
 	{
-		idEvento: 1,
-		nomeEvento: 'CEOMG',
-		tempoSarauMin: 60,
-		idApresentacao: 1,
-		tipoApresentacao: 'Dança',
-		duracaoApresentacaoMin: 5,
-		inscritos: 'João, Reco-Reco e Azeitona'
+		"idEvento": 1,
+		"nomeEvento": "CEOMG",
+		"tempoSarauMin": 60,
+		"idApresentacao": 1,
+		"tipoApresentacao": "Dança",
+		"duracaoApresentacaoMin": 5,
+		"inscritos": "João, Reco-Reco e Azeitona"
 	},
 	{
-		idEvento: 1,
-		nomeEvento: 'CEOMG',
-		tempoSarauMin: 60,
-		idApresentacao: 1,
-		tipoApresentacao: 'Dança',
-		duracaoApresentacaoMin: 5,
-		inscritos: 'João, Reco-Reco e Azeitona'
+		"idEvento": 1,
+		"nomeEvento": "CEOMG",
+		"tempoSarauMin": 60,
+		"idApresentacao": 1,
+		"tipoApresentacao": "Dança",
+		"duracaoApresentacaoMin": 5,
+		"inscritos": "João, Reco-Reco e Azeitona"
 	},
 	{
-		idEvento: 1,
-		nomeEvento: 'CEOMG',
-		tempoSarauMin: 60,
-		idApresentacao: 1,
-		tipoApresentacao: 'Dança',
-		duracaoApresentacaoMin: 5,
-		inscritos: 'João, Reco-Reco e Azeitona'
+		"idEvento": 1,
+		"nomeEvento": "CEOMG",
+		"tempoSarauMin": 60,
+		"idApresentacao": 1,
+		"tipoApresentacao": "Dança",
+		"duracaoApresentacaoMin": 5,
+		"inscritos": "João, Reco-Reco e Azeitona"
 	},
 	{
-		idEvento: 1,
-		nomeEvento: 'CEOMG',
-		tempoSarauMin: 60,
-		idApresentacao: 1,
-		tipoApresentacao: 'Dança',
-		duracaoApresentacaoMin: 5,
-		inscritos: 'João, Reco-Reco e Azeitona'
+		"idEvento": 1,
+		"nomeEvento": "CEOMG",
+		"tempoSarauMin": 60,
+		"idApresentacao": 1,
+		"tipoApresentacao": "Dança",
+		"duracaoApresentacaoMin": 5,
+		"inscritos": "João, Reco-Reco e Azeitona"
 	},
 	{
-		idEvento: 1,
-		nomeEvento: 'CEOMG',
-		tempoSarauMin: 60,
-		idApresentacao: 1,
-		tipoApresentacao: 'Dança',
-		duracaoApresentacaoMin: 5,
-		inscritos: 'João, Reco-Reco e Azeitona'
+		"idEvento": 1,
+		"nomeEvento": "CEOMG",
+		"tempoSarauMin": 60,
+		"idApresentacao": 1,
+		"tipoApresentacao": "Dança",
+		"duracaoApresentacaoMin": 5,
+		"inscritos": "João, Reco-Reco e Azeitona"
 	},
 	{
-		idEvento: 1,
-		nomeEvento: 'CEOMG',
-		tempoSarauMin: 60,
-		idApresentacao: 1,
-		tipoApresentacao: 'Dança',
-		duracaoApresentacaoMin: 5,
-		inscritos: 'João, Reco-Reco e Azeitona'
+		"idEvento": 1,
+		"nomeEvento": "CEOMG",
+		"tempoSarauMin": 60,
+		"idApresentacao": 1,
+		"tipoApresentacao": "Dança",
+		"duracaoApresentacaoMin": 5,
+		"inscritos": "João, Reco-Reco e Azeitona"
 	}
 ]
