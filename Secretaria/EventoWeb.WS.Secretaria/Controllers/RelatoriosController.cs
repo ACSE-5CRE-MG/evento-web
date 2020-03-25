@@ -56,5 +56,14 @@ namespace EventoWeb.WS.Secretaria.Controllers
 
             return File(appRelDivisao.GerarImpressoPDFInscritos(idEvento), TIPO_CONTEUDO_PDF);
         }
+
+        [Authorize("Bearer")]
+        [HttpPut("evento/{idEvento}/listagem-sarau")]
+        public IActionResult GerarRelatorioListagemSarau(int idEvento)
+        {
+            var appRelSarau = new AppApresentacaoSarau(m_Contexto);
+
+            return File(appRelSarau.GerarImpressoPDF(idEvento), TIPO_CONTEUDO_PDF);
+        }
     }
 }

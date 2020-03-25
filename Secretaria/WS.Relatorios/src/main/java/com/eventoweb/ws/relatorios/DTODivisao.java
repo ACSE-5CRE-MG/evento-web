@@ -2,75 +2,66 @@ package com.eventoweb.ws.relatorios;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DTOApresentacaoSarau {
-    private String nomeEvento;
-    private int tempoSarauMin;
-    private int idApresentacao;
-    private String tipoApresentacao;
-    private int duracaoApresentacaoMin;
-    private String inscritos;  
-    private int idEvento;
-
-    @JsonProperty("nomeEvento")
-    public String getNomeEvento() {
-        return nomeEvento;
-    }
-
-    public void setNomeEvento(String nomeEvento) {
-        this.nomeEvento = nomeEvento;
-    }
-
-    @JsonProperty("tempoSarauMin")
-    public int getTempoSarauMin() {
-        return tempoSarauMin;
-    }
-
-    public void setTempoSarauMin(int tempoSarauMin) {
-        this.tempoSarauMin = tempoSarauMin;
-    }
-
-    @JsonProperty("idApresentacao")
-    public int getIdApresentacao() {
-        return idApresentacao;
-    }
-
-   public void setIdApresentacao(int idApresentacao) {
-        this.idApresentacao = idApresentacao;
-    }
-
-    @JsonProperty("tipoApresentacao")
-    public String getTipoApresentacao() {
-        return tipoApresentacao;
-    }
+public class DTODivisao {
     
-    public void setTipoApresentacao(String tipoApresentacao) {
-        this.tipoApresentacao = tipoApresentacao;
+    private int idDivisao;
+    private String nomeDivisao;
+    private String descricaoDivisao;
+    private String coordenadores;  
+    private String nomeInscrito;
+    private int totalParticipantes;
+
+    @JsonProperty("idDivisao")
+    public int getIdDivisao() {
+        return idDivisao;
     }
 
-    @JsonProperty("duracaoApresentacaoMin")
-    public int getDuracaoApresentacaoMin() {
-        return duracaoApresentacaoMin;
-    }
-    
-    public void setDuracaoApresentacaoMin(int duracaoApresentacaoMin) {
-        this.duracaoApresentacaoMin = duracaoApresentacaoMin;
+    public void setIdDivisao(int idDivisao) {
+        this.idDivisao = idDivisao;
     }
 
-    @JsonProperty("inscritos")
-    public String getInscritos() {
-        return inscritos;
+    @JsonProperty("nomeDivisao")
+    public String getNomeDivisao() {
+        return nomeDivisao;
     }
 
-    public void setInscritos(String inscritos) {
-        this.inscritos = inscritos;
+    public void setNomeDivisao(String nomeDivisao) {
+        this.nomeDivisao = nomeDivisao;
     }
 
-    @JsonProperty("idEvento")
-    public int getIdEvento() {
-        return idEvento;
+    @JsonProperty("coordenadores")
+    public String getCoordenadores() {
+        return coordenadores;
     }
 
-    public void setIdEvento(int idEvento) {
-        this.idEvento = idEvento;
+    public void setCoordenadores(String coordenadores) {
+        this.coordenadores = coordenadores;
+    }
+
+    @JsonProperty("nomeInscrito")
+    public String getNomeInscrito() {
+        return nomeInscrito;
+    }
+
+    public void setNomeInscrito(String nomeInscrito) {
+        this.nomeInscrito = nomeInscrito;
+    }
+
+    public int getTotalParticipantes() {
+        return totalParticipantes;
+    }
+
+    @JsonProperty("totalParticipantes")
+    public void setTotalParticipantes(int totalParticipantes) {
+        this.totalParticipantes = totalParticipantes;
+    }
+
+    @JsonProperty("descricaoDivisao")
+    public String getDescricaoDivisao() {
+        return descricaoDivisao;
+    }
+
+    public void setDescricaoDivisao(String descricaoDivisao) {
+        this.descricaoDivisao = descricaoDivisao;
     }
 }

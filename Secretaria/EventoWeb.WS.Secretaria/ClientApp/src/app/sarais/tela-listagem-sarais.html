@@ -10,6 +10,10 @@
       <span class="fa fa-plus"></span>
       Nova
     </button>
+    <button mat-button (click)="clicarImprimir()" matTooltip="Gera um relatório que lista os sarais cadastrados">
+      <i class="fas fa-print"></i>
+      Imprimir
+    </button>
   </mat-toolbar>
   <dx-data-grid id="gridContainer" fxFill
                 [showBorders]="true"

@@ -1,6 +1,7 @@
 ﻿using EventoWeb.Nucleo.Aplicacao.ConversoresDTO;
 using EventoWeb.Nucleo.Negocio.Entidades;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace EventoWeb.Nucleo.Aplicacao
@@ -87,6 +88,17 @@ namespace EventoWeb.Nucleo.Aplicacao
 
                 Contexto.RepositorioApresentacoesSarau.Excluir(sarau);
             });
+        }
+
+        public Stream GerarImpressoPDF(int idEvento)
+        {
+            Stream relatorio = new MemoryStream();
+            ExecutarSeguramente(() =>
+            {
+                relatorio = Contexto.RelatorioSarau.Gerar(Contexto.RepositorioApresentacoesSarau.ListarTodas(idEvento));
+            });
+
+            return relatorio;
         }
 
         private ApresentacaoSarau ObterSarauOuExcecaoSeNaoEncontrar(int idEvento, int id)

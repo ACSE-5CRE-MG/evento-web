@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.eventoweb.ws.relatorios;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,7 +8,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;
 
-public class MyExceptionMapper
+public class ExcecaoRestMapper
                implements ExceptionMapper<Exception> {
 
   @Override
@@ -31,7 +26,7 @@ public class MyExceptionMapper
           dadosJson = conversorJson.writeValueAsString(exception);
           return dadosJson;
       } catch (JsonProcessingException ex) {
-          Logger.getLogger(MyExceptionMapper.class.getName()).log(Level.SEVERE, null, ex);
+          Logger.getLogger(ExcecaoRestMapper.class.getName()).log(Level.SEVERE, null, ex);
       }
       
       return dadosJson;

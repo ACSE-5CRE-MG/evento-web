@@ -10,6 +10,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         IRelatorioDivisaoOficinas RelatorioDivisaoOficinas { get; }
         IRelatorioDivisaoQuartos RelatorioDivisaoQuartos { get; }
         IRelatorioInscritosDepartamentos RelatorioInscritosDepartamentos { get; }
+        IRelatorioSarau RelatorioSarau { get; }
     }
 
     public interface IRelatorioDivisaoSalasEstudo
@@ -30,5 +31,10 @@ namespace EventoWeb.Nucleo.Aplicacao
     public interface IRelatorioInscritosDepartamentos
     {
         Stream Gerar(IEnumerable<AtividadeInscricaoDepartamento> inscritos);
+    }
+
+    public interface IRelatorioSarau
+    {
+        Stream Gerar(IList<ApresentacaoSarau> apresentacoes);
     }
 }

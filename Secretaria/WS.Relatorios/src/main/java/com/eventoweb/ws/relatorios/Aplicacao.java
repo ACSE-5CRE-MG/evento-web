@@ -17,11 +17,13 @@ public class Aplicacao {
     
     public static void main(String[] args) {
         try {
-            System.out.println("\"Hello World\" Jersey Example App");
+            System.out.println("Serviço Relatório EventoWeb");
+            
+            ConfiguracaoServico.configurar();
             
             final Set<Class<?>> recursos = new HashSet<>();
             recursos.add(RelatoriosController.class);
-            recursos.add(MyExceptionMapper.class);
+            recursos.add(ExcecaoRestMapper.class);
 
             final ResourceConfig resourceConfig = new ResourceConfig(recursos);
             final HttpServer server = GrizzlyHttpServerFactory.createHttpServer(BASE_URI, resourceConfig, false);
@@ -30,7 +32,7 @@ public class Aplicacao {
             }));
             server.start();
 
-            System.out.println(String.format("Application started.\nTry out %s%s\nStop the application using CTRL+C",
+            System.out.println(String.format("Aplicação iniciada.\nTry out %s%s\nPare a aplicação usando CTRL+C",
                     BASE_URI, ROOT_PATH));
             Thread.currentThread().join();
         } catch (IOException | InterruptedException ex) {

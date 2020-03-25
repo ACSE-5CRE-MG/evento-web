@@ -7,6 +7,7 @@ import { DTOEventoCompleto } from '../evento/objetos';
 import { DTOSarau } from './objetos';
 import { WebServiceSarais } from '../webservices/webservice-sarais';
 import { DialogosSarau } from './dlg-form-sarau';
+import { WebServiceRelatorios } from '../webservices/webservice-relatorios';
 
 
 @Component({
@@ -21,7 +22,8 @@ export class TelaListagemSarais implements OnInit {
   private m_Evento: DTOEventoCompleto;
 
   constructor(private wsSarais: WebServiceSarais, private mensageria: Alertas, private roteador: ActivatedRoute,
-    private dialogosSarau: DialogosSarau, private srvEventoSelecionado: ServicoEventoSelecionado) { }
+    private dialogosSarau: DialogosSarau, private srvEventoSelecionado: ServicoEventoSelecionado,
+    private wsRelatorios: WebServiceRelatorios) { }
 
   ngOnInit(): void {
     let dlg = this.mensageria.alertarProcessamento("Buscando sarais...");
@@ -81,6 +83,22 @@ export class TelaListagemSarais implements OnInit {
                   this.mensageria.alertarErro(erro);
                 });
           }
+        }
+      );
+  }
+
+  clicarImprimir(): void {
+    let dlg = this.mensageria.alertarProcessamento("Gerando relatório...");
+
+    this.wsRelatorios.obterListagemSarau(this.m_Evento.Id)
+      .subscribe(
+        relatorioGerado => {
+          dlg.close();
+          window.open(URL.createObjectURL(relatorioGerado), '_blank');
+        },
+        erro => {
+          dlg.close();
+          this.mensageria.alertarErro(erro);
         }
       );
   }

@@ -20,16 +20,38 @@ public class RelatoriosController {
     }
     
     @PUT
-    @Path("/relsarau")
+    @Path("/rel-sarau")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces("application/pdf")
-    public Response getSarau(List<DTOApresentacaoSarau> apresentacoes) throws Exception  {
+    public Response gerarListagemSarau(List<DTOApresentacaoSarau> apresentacoes) throws Exception  {
         
         byte[] relatorioPdf = geradorRelatorio.Gerar(
-                "D:\\Projetos\\EventoWeb-Git\\Secretaria\\EventoWeb.Relatorios\\ListagemSarau.jasper", apresentacoes);
+                obterEnderecoRelatorio(EnumRelatorio.ListagemSarau), apresentacoes);
         
         return Response
                 .ok(relatorioPdf, "application/pdf")
                 .build();
+    }
+    
+    @PUT
+    @Path("/rel-divisao")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces("application/pdf")
+    public Response gerarDivisao(List<DTODivisao> divisoes) throws Exception  {
+        
+        byte[] relatorioPdf = geradorRelatorio.Gerar(
+                obterEnderecoRelatorio(EnumRelatorio.RelatorioDivisao), divisoes);
+        
+        return Response
+                .ok(relatorioPdf, "application/pdf")
+                .build();
+    }    
+    
+    private String obterEnderecoRelatorio(EnumRelatorio relatorio) {
+        String localRelatorio = ConfiguracaoServico.getIntancia().getLocalRelatorios();
+        
+        String nomeArquivoRel = ConfiguracaoServico.getIntancia().getRelatorios().get(relatorio);
+        
+        return localRelatorio + "\\" + nomeArquivoRel;
     }
 }

@@ -26,4 +26,8 @@ export class WebServiceRelatorios extends WebServiceBase {
   obterInscritosDepartamentos(idEvento: number): Observable<Blob> {
     return this.executarPutBlob('evento/' + idEvento.toString() + '/inscritos-departamentos', null);
   }
+
+  obterListagemSarau(idEvento: number): Observable<Blob> {
+    return this.executarPutBlob('evento/' + idEvento.toString() + '/listagem-sarau', null);
+  }
 }
