@@ -45,16 +45,16 @@ namespace EventoWeb.Nucleo.Persistencia
         public void SalvarTransacao()
         {
             var session = m_Sessao;
-            if (session.Transaction.IsActive)
-                session.Transaction.Commit();
+            if (session.GetCurrentTransaction() != null)
+                session.GetCurrentTransaction().Commit();
         }
 
         public void CancelarTransacao()
         {
             var session = m_Sessao;
-            if (session.Transaction.IsActive)
+            if (session.GetCurrentTransaction() != null)
             {
-                session.Transaction.Rollback();
+                session.GetCurrentTransaction().Rollback();
                 session.Clear();
             }
         }

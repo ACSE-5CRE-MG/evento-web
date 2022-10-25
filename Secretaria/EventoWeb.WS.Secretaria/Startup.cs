@@ -1,13 +1,12 @@
 ﻿using EventoWeb.Nucleo.Aplicacao;
 using EventoWeb.Nucleo.Persistencia;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -15,6 +14,7 @@ using Newtonsoft.Json.Serialization;
 using NHibernate;
 using System;
 using System.Net;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 
 namespace EventoWeb.WS.Secretaria
 {
@@ -72,18 +72,7 @@ namespace EventoWeb.WS.Secretaria
                     .RequireAuthenticatedUser().Build());
             });
 
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAll",
-                    builder =>
-                    {
-                        builder
-                        .AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader()
-                        .AllowCredentials();
-                    });
-            });
+            services.AddCors();
 
             services.AddSpaStaticFiles(configuration =>
             {
@@ -95,33 +84,51 @@ namespace EventoWeb.WS.Secretaria
                 {
                     config.Filters.Add<FiltroExcecao>();
                 })
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(opcoes => opcoes.SerializerSettings.ContractResolver = new DefaultContractResolver());
+                .AddNewtonsoftJson(opcoes =>
+                {
+                    opcoes.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    opcoes.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+                    opcoes.SerializerSettings.NullValueHandling = NullValueHandling.Include;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.ConfigureExceptionHandler();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseMvc();
+            //app.UseMvc();
+
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(routes =>
+            {
+                routes.MapControllers();
+            });
 
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
+                //if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseAngularCliServer(npmScript: "start");
                 }
             });
 
-            app.UseCors("AllowAll");
+            app.UseCors(builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed(_ => true)
+                .AllowCredentials()
+            );
             app.UseHttpsRedirection();
 
-            app.UseMvc();
+            //app.UseMvc();
         }
     }
 

@@ -15,7 +15,7 @@ namespace EventoWeb.Nucleo.Persistencia.Comunicacao
 
         public override string GerarMensagemModelo<T>(string modeloMensagem, T objetoDados)
         {
-            return m_MotorRazor.CompileRenderAsync("MODELO", modeloMensagem, objetoDados).Result;
+            return m_MotorRazor.CompileRenderStringAsync("MODELO", modeloMensagem, objetoDados).Result;
         }
     }
 }
