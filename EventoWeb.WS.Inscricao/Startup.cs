@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
@@ -72,12 +71,16 @@ namespace EventoWeb.WS.Inscricao
 
             services
                 .AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
-                .AddJsonOptions(opcoes => opcoes.SerializerSettings.ContractResolver = new DefaultContractResolver());
+                .AddNewtonsoftJson(opcoes =>
+                {
+                    opcoes.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    opcoes.SerializerSettings.DateTimeZoneHandling = DateTimeZoneHandling.Local;
+                    opcoes.SerializerSettings.NullValueHandling = NullValueHandling.Include;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseExceptionHandler(appError =>
             {
@@ -98,15 +101,22 @@ namespace EventoWeb.WS.Inscricao
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseMvc();
+            app.UseRouting();
+
+            app.UseAuthorization();
+
+            app.UseEndpoints(routes =>
+            {
+                routes.MapControllers();
+            });
 
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
+                //if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseAngularCliServer(npmScript: "start");
                 }
             });
         }
