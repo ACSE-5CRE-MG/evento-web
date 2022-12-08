@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29025.244
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Secretaria", "2 - Secretaria", "{C29BB475-4A8A-4895-BE89-522DEFEA4C05}"
 EndProject
@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventoWeb.WS.Secretaria", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventoWeb.BancoDados", "EventoWeb.BancoDados\EventoWeb.BancoDados.csproj", "{7F567E3F-64CD-4604-9C0B-4263E5ED1842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventoWeb.WS.Inscricao", "EventoWeb.WS.Inscricao\EventoWeb.WS.Inscricao.csproj", "{FA8422E7-4D85-4249-BC53-381F7C089B37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventoWeb.WS.Inscricao", "EventoWeb.WS.Inscricao\EventoWeb.WS.Inscricao.csproj", "{FA8422E7-4D85-4249-BC53-381F7C089B37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

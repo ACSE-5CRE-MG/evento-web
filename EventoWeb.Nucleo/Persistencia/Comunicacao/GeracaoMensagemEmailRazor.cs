@@ -1,5 +1,6 @@
 ﻿using EventoWeb.Nucleo.Aplicacao.Comunicacao;
 using RazorLight;
+using System.Reflection;
 
 namespace EventoWeb.Nucleo.Persistencia.Comunicacao
 {
@@ -10,7 +11,8 @@ namespace EventoWeb.Nucleo.Persistencia.Comunicacao
         public GeracaoMensagemEmailRazor()
         {
             m_MotorRazor = new RazorLightEngineBuilder()
-              .Build();
+                .UseEmbeddedResourcesProject(Assembly.GetEntryAssembly())
+                .Build();
         }
 
         public override string GerarMensagemModelo<T>(string modeloMensagem, T objetoDados)

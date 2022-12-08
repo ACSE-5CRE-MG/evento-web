@@ -1,0 +1,58 @@
+﻿@using EventoWeb.Nucleo.Negocio.Entidades
+<p>
+    Olá,<br />
+    <strong>@Model.DadosPessoais.Nome!!</strong>
+</p>
+<p>
+    É com muita alegria que informamos, que sua inscrição foi registrada no sistema. Em breve a mesma será analisada pela secretaria @Model.Evento.Nome. Caso esteja incompleta, entraremos em contato solicitando a correção. No entanto se estiver tudo certo receberá uma mensagem comunicando que sua inscrição foi realizada com sucesso. Qualquer dúvida, entre em contato com a secretaria do evento. Os contatos se encontram no final desta mensagem.
+</p>
+<h2>Dados da sua inscrição</h2>
+<p>
+    Codigo: @Model.Codigo<br />
+    Nome: @Model.DadosPessoais.Nome<br />
+    Cidade/UF: @Model.DadosPessoais.Cidade/@Model.DadosPessoais.Uf<br />
+    Celular: @Model.DadosPessoais.Celular  Tel Fixo: @Model.DadosPessoais.TelefoneFixo<br />
+    Nascimento: @Model.DadosPessoais.DataNascimento.ToString("dd/MM/yyyy")
+</p>
+<h2>Sarais que participará</h2>
+@if (Model.Sarais == null || Model.Sarais.Count == 0)
+{
+    <p>Você não informou nenhum sarau.</p>
+}
+else
+{
+    @foreach (var sarau in Model.Sarais)
+    {
+        <p>
+            Codigo: @sarau.Codigo<br />
+            Tipo: @sarau.Tipo<br />
+            Duração(min): @sarau.DuracaoMin
+        </p>
+    }
+}
+
+<h2>Pagamento</h2>
+@{
+    var forma = "";
+}
+@switch (Model.Pagamento.Forma)
+{
+    case EnumPagamento.Comprovante:
+        forma = "Comprovante";
+        break;
+    case EnumPagamento.ComprovanteOutraInscricao:
+        forma = "Comprovante está em outra inscrição";
+        break;
+    case EnumPagamento.Outro:
+        forma = "Outra forma";
+        break;
+}
+<p>
+    Forma: @forma<br />
+    Observações: @Model.Pagamento.Observacao
+</p>
+
+<p>
+    <strong>Equipe de Secretaria</strong><br />
+    Renato Godoi - (31) 9 9321-3310
+</p>
