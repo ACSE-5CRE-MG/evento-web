@@ -39,8 +39,7 @@ namespace EventoWeb.WS.Inscricao.Controllers
             srv.Enviar(new Nucleo.Aplicacao.Comunicacao.Email()
             {
                 Assunto = "Teste",
-                Conteudo = new GeracaoMensagemEmailRazor()
-                    .GerarMensagemModelo(mensagem.MensagemInscricaoRegistradaAdulto.Mensagem, dto),
+                Conteudo = "Teste de envio",
                 Endereco = "robsonmbobbi@gmail.com"
             });
         }
