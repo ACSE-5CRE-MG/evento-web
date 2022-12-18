@@ -147,7 +147,10 @@ namespace EventoWeb.Nucleo.Persistencia
 
         public override int ContarTotalSalas(Evento evento)
         {
-            return mSessao.QueryOver<SalaEstudo>().RowCount();
+            return mSessao
+                .QueryOver<SalaEstudo>()
+                .Where(x => x.Evento == evento)
+                .RowCount();
         }
 
         protected override bool HaSalaComFaixaEtariaDefinida(SalaEstudo sala)

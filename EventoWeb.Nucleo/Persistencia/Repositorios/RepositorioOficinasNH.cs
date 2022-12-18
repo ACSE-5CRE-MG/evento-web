@@ -147,7 +147,10 @@ namespace EventoWeb.Nucleo.Persistencia
 
         public override int ContarTotalOficinas(Evento mEvento)
         {
-            return mSessao.QueryOver<Oficina>().RowCount();
+            return mSessao
+                .QueryOver<Oficina>()
+                .Where(x => x.Evento == mEvento)
+                .RowCount();
         }
     }
 }

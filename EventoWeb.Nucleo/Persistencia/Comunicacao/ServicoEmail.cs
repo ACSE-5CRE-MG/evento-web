@@ -21,7 +21,7 @@ namespace EventoWeb.Nucleo.Persistencia.Comunicacao
             using var clientHttp = new HttpClient() { BaseAddress = new Uri("https://api.sendinblue.com") };
             clientHttp.DefaultRequestHeaders.Accept.Clear();
             clientHttp.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            clientHttp.DefaultRequestHeaders.Add("api-key", "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");
+            clientHttp.DefaultRequestHeaders.Add("api-key", "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");
             var resultado = clientHttp.PostAsync("v3/smtp/email",
                 new StringContent(
                     JsonConvert.SerializeObject(new
