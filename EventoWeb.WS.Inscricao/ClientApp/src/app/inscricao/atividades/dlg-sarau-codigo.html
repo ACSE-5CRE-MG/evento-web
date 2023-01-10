@@ -3,7 +3,11 @@
     <div><h1>Sarau - Código da Apresentação</h1></div>
     <span style="flex: 1 1 auto;"></span>
   </mat-toolbar>
-  <div style="margin: 5px">
+  <div style="margin: 5px" fxLayout="column" fxLayoutGap="5px">
+    <div>
+      <p>Informe o código de sarau para você fazer parte dele. Um dos seus amigos(as) terá criado o sarau que você deseja participar. No email com as informações da inscrição que seu amigo(a) fez, há um código de sarau no formato <strong>APSAXXXXXX</strong>, onde o "X" representa um número. Este código deverá ser informado aqui.</p>
+      <p>Se você tiver dúvidas, por favor clique no botão "Regulamento". Na tela que se abrirá haverá informações sobre o evento e contatos para você poder conversar.</p>
+    </div>
     <dx-validation-group name="grupoValidacao" #grupoValidacao fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
       <label class="label_campos">Código:</label>
       <dx-text-box [(value)]="codigo" fxFlex="100">
