@@ -80,10 +80,7 @@ namespace EventoWeb.WS.Secretaria
             });
 
             services
-                .AddMvc(config =>
-                {
-                    config.Filters.Add<FiltroExcecao>();
-                })
+                .AddMvc()
                 .AddNewtonsoftJson(opcoes =>
                 {
                     opcoes.SerializerSettings.ContractResolver = new DefaultContractResolver();
@@ -116,7 +113,7 @@ namespace EventoWeb.WS.Secretaria
 
                 //if (env.IsDevelopment())
                 {
-                    //spa.UseAngularCliServer(npmScript: "start");
+                   // spa.UseAngularCliServer(npmScript: "start");
                 }
             });
 

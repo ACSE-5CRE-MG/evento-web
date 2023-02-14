@@ -170,14 +170,17 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
                 var indice = 0;
                 foreach (var inscrito in inscritosOrdenadosIdadeCidade)
                 {
-                    listaQuartos[indice].AdicionarInscrito(inscrito);
-                    if (listaQuartos[indice].Capacidade != null && 
-                         listaQuartos[indice].Inscritos.Count() == listaQuartos[indice].Capacidade.Value)
-                        listaQuartos.RemoveAt(indice);
+                    if (listaQuartos.Any())
+                    {
+                        listaQuartos[indice].AdicionarInscrito(inscrito);
+                        if (listaQuartos[indice].Capacidade != null &&
+                             listaQuartos[indice].Inscritos.Count() == listaQuartos[indice].Capacidade.Value)
+                            listaQuartos.RemoveAt(indice);
 
-                    indice++;
-                    if (indice >= listaQuartos.Count)
-                        indice = 0;  
+                        indice++;
+                        if (indice >= listaQuartos.Count)
+                            indice = 0;
+                    }
                 }
             }
         }
