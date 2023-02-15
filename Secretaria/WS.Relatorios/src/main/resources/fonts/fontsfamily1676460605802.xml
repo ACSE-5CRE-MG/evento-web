@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fontFamilies>
+	<fontFamily name="Geometr415 Blk BT">
+		<normal><![CDATA[fonts/Geometr415BlkBT/geometric 415 black bt.ttf]]></normal>
+		<bold><![CDATA[fonts/Geometr415BlkBT/geometric 415 black bt.ttf]]></bold>
+		<italic><![CDATA[fonts/Geometr415BlkBT/geometric 415 black bt.ttf]]></italic>
+		<boldItalic><![CDATA[fonts/Geometr415BlkBT/geometric 415 black bt.ttf]]></boldItalic>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+		<exportFonts/>
+	</fontFamily>
+	<fontFamily name="Futura Bk BT">
+		<normal><![CDATA[fonts/FuturaBkBT/FutuBk.ttf]]></normal>
+		<bold><![CDATA[fonts/FuturaBkBT/FutuBk.ttf]]></bold>
+		<italic><![CDATA[fonts/FuturaBkBT/FutuBk.ttf]]></italic>
+		<boldItalic><![CDATA[fonts/FuturaBkBT/FutuBk.ttf]]></boldItalic>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+		<exportFonts/>
+	</fontFamily>
+	<fontFamily name="Bahnschrift">
+		<normal><![CDATA[fonts/Bahnschrift/BAHNSCHRIFT 1.TTF]]></normal>
+		<bold><![CDATA[fonts/Bahnschrift/BAHNSCHRIFT 1.TTF]]></bold>
+		<italic><![CDATA[fonts/Bahnschrift/BAHNSCHRIFT 1.TTF]]></italic>
+		<boldItalic><![CDATA[fonts/Bahnschrift/BAHNSCHRIFT 1.TTF]]></boldItalic>
+		<pdfEmbedded><![CDATA[true]]></pdfEmbedded>
+		<exportFonts/>
+	</fontFamily>
+</fontFamilies>

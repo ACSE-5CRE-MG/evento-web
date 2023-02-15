@@ -10,6 +10,9 @@ import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
 
+// deploy
+// https://www.baeldung.com/executable-jar-with-maven
+
 public class Aplicacao {
 
     private static final URI BASE_URI = URI.create("http://localhost:8989/api/");

@@ -52,6 +52,6 @@ public class RelatoriosController {
         
         String nomeArquivoRel = ConfiguracaoServico.getIntancia().getRelatorios().get(relatorio);
         
-        return localRelatorio + "\\" + nomeArquivoRel;
+        return localRelatorio + "/" + nomeArquivoRel;
     }
 }
