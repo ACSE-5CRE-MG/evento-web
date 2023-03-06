@@ -82,11 +82,6 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Column("MODELO_DIV_SL_ESTUDO");
             });
 
-            this.Property(x => x.TemOficinas, m => {
-                m.Access(Accessor.Property);
-                m.NotNullable(true);
-                m.Column("TEM_OFICINAS");
-            });
             this.Property(x => x.TemDormitorios, m => {
                 m.Access(Accessor.Property);
                 m.NotNullable(true);
@@ -126,6 +121,20 @@ namespace EventoWeb.Nucleo.Persistencia.Mapeamentos
                 m.Access(Accessor.NoSetter);
                 m.NotNullable(true);
                 m.Column("VALOR_INSC_CRIANCA");
+            });
+
+            this.Property(x => x.ConfiguracaoOficinas, m =>
+            {
+                m.Access(Accessor.NoSetter);
+                m.NotNullable(false);
+                m.Column("MODELO_DIV_OFICINAS");
+            });
+
+            this.Property(x => x.PermiteEscolhaDormirEvento, m =>
+            {
+                m.Access(Accessor.NoSetter);
+                m.NotNullable(false);
+                m.Column("PERMITE_ESCOLHA_DORMIR_EVENTO");
             });
         }
     }

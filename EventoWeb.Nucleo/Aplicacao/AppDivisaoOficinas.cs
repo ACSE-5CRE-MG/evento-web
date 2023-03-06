@@ -38,11 +38,19 @@ namespace EventoWeb.Nucleo.Aplicacao
             IList<DTODivisaoOficina> oficinasDTO = new List<DTODivisaoOficina>();
             ExecutarSeguramente(() =>
             {
-                Evento evento = m_RepEventos.ObterEventoPeloId(idEvento);                
+                Evento evento = m_RepEventos.ObterEventoPeloId(idEvento);
 
-                DivisaoAutomaticaInscricoesParticipantesPorOficina divisor =
-                    new DivisaoAutomaticaInscricoesParticipantesPorOficina(evento, m_RepInscricoes, m_RepOficinas);
-                IList<Oficina> oficinas = oficinas = divisor.Dividir();
+                IList<Oficina> oficinas;
+                if (evento.ConfiguracaoOficinas == EnumModeloDivisaoOficinas.PorOrdemEscolhaInscricao)
+                {
+                    var divisor = new DivisaoAutomaticaInscricoesParticipantesPorOficinasEscolhidas(evento, m_RepInscricoes, m_RepOficinas);
+                    oficinas = divisor.Dividir();
+                }
+                else
+                {
+                    var divisor = new DivisaoAutomaticaInscricoesParticipantePorOficinaOrdem(evento, m_RepInscricoes, m_RepOficinas);
+                    oficinas = divisor.Dividir();
+                }
 
                 foreach (var oficina in oficinas)
                     m_RepOficinas.Atualizar(oficina);

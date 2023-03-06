@@ -1,7 +1,7 @@
 import { Component, Injectable, OnInit, Inject } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 
-import { DTOEventoCompleto, EnumModeloDivisaoSalasEstudo, EnumPublicoEvangelizacao, Periodo, DTOEvento } from "./objetos";
+import { DTOEventoCompleto, EnumModeloDivisaoSalasEstudo, EnumPublicoEvangelizacao, Periodo, DTOEvento, EnumModeloDivisaoOficinas } from "./objetos";
 import { Alertas } from "../componentes/alertas-dlg/alertas";
 import { WebServiceEventos } from "../webservices/webservice-eventos";
 import { OperacoesImagem } from "../util/util-imagem";
@@ -13,6 +13,7 @@ export abstract class ADlgFormEvento {
 
   modelosDivisaoSala: string[] = ["Por Idade e Cidade", "Por Ordem de Escolha definida na Inscrição"];
   publicosEvangelizacao: string[] = ["Todos", "Apenas para Trabalhadores e Participantes/Trabalhadores"];
+  modelosDivisaoOficina: string[] = ["Por Ordem de Escolha definida na Inscrição", "Por Idade e Cidade"];
 
   evento: DTOEventoCompleto;
 
@@ -73,6 +74,41 @@ export abstract class ADlgFormEvento {
 
   public get temSarau(): boolean {
     return this.evento.ConfiguracaoTempoSarauMin != null;
+  }
+
+  public set temOficinas(valor: boolean) {
+    if (valor)
+      this.modeloDivisaoOficina = this.modelosDivisaoOficina[EnumModeloDivisaoOficinas.PorOrdemEscolhaInscricao];
+    else
+      this.modeloDivisaoOficina = "";
+  }
+
+  public get temOficinas(): boolean {
+    return this.evento.ConfiguracaoOficinas != null;
+  }
+
+  public set modeloDivisaoOficina(valor: string) {
+    let indice = this.modelosDivisaoOficina.findIndex(x => x == valor);
+    if (indice != -1)
+      this.evento.ConfiguracaoOficinas = indice;
+    else
+      this.evento.ConfiguracaoOficinas = null;
+  }
+
+  public get modeloDivisaoOficina(): string {
+    return (this.evento.ConfiguracaoOficinas != null ? this.modelosDivisaoOficina[this.evento.ConfiguracaoOficinas] : null);
+  }
+
+  public set temDormitorios(valor: Boolean) {
+    this.evento.TemDormitorios = valor;
+    if (this.evento.TemDormitorios)
+      this.evento.PermiteEscolhaDormirEvento = false;
+    else
+      this.evento.PermiteEscolhaDormirEvento = null;
+  }
+
+  public get temDormitorios(): Boolean {
+    return this.evento.TemDormitorios;
   }
 
   processarArquivoEscolhido(arquivoImagem: any): void {
@@ -144,7 +180,7 @@ export class DlgFormEventoInclusao extends ADlgFormEvento implements OnInit {
     this.evento.DataRegistro = new Date();
     this.evento.TemDepartamentalizacao = false;
     this.evento.TemDormitorios = false;
-    this.evento.TemOficinas = false;
+    this.evento.PermiteEscolhaDormirEvento = null;
 
     this.titulo = "Inclusão de Evento";
   }

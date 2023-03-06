@@ -49,8 +49,8 @@ namespace EventoWeb.Nucleo.Aplicacao
                 }
                 else
                 {
-                    DivisaoAutomaticaInscricoesParticipantesPorSalaEstudoEscolha divisor =
-                        new DivisaoAutomaticaInscricoesParticipantesPorSalaEstudoEscolha(evento, m_RepInscricoes, m_RepSalas);
+                    DivisaoAutomaticaInscricoesParticipantePorSalaEstudoEscolha divisor =
+                        new DivisaoAutomaticaInscricoesParticipantePorSalaEstudoEscolha(evento, m_RepInscricoes, m_RepSalas);
                     salas = divisor.Dividir();
                 }
 

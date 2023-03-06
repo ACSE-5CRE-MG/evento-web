@@ -116,11 +116,11 @@ export class CompFormInscricao {
     if (!dadosPessoaisValidos || !dadosEspiritasValidos)
       this.mensageria.alertarAtencao("Há informações pessoais que precisam de seus cuidados.", "Sem essas informações não é possível enviar a inscrição.");
     else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[0] &&
-      this.mEvento.TemOficinas &&
+      this.mEvento.ConfiguracaoOficinas != null &&
       this.dadosTela.oficinasEscolhidas == null)
       this.mensageria.alertarAtencao("Você não escolheu as oficinas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
     else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[0] &&
-      this.mEvento.TemOficinas &&
+      this.mEvento.ConfiguracaoOficinas != null &&
       this.dadosTela.oficinasEscolhidas.EscolhidasParticipante.length != this.mEvento.Oficinas.length)
       this.mensageria.alertarAtencao("Você não escolheu todas as oficinas.", "Sem essa informação não é possível enviar a inscrição.");
     else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[0] &&
@@ -136,7 +136,7 @@ export class CompFormInscricao {
       this.dadosTela.departamentoEscolhido == null)
       this.mensageria.alertarAtencao("Você não escolheu o departamento que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
     else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[1] &&
-      this.mEvento.TemOficinas &&
+      this.mEvento.ConfiguracaoOficinas != null &&
       this.dadosTela.oficinasEscolhidas != null &&
       this.dadosTela.oficinasEscolhidas.EscolhidasParticipante != null &&
       this.dadosTela.oficinasEscolhidas.EscolhidasParticipante.length != this.mEvento.Oficinas.length)
@@ -148,8 +148,8 @@ export class CompFormInscricao {
       this.dadosTela.salasEscolhidas.EscolhidasParticipante.length != this.mEvento.SalasEstudo.length)
       this.mensageria.alertarAtencao("Você não escolheu todas as salas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
     else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[1] &&
-      ((this.mEvento.TemDepartamentalizacao || this.mEvento.TemOficinas || this.mEvento.ConfiguracaoSalaEstudo != null) &&
-        !((this.mEvento.TemOficinas && this.dadosTela.oficinasEscolhidas != null) ||
+      ((this.mEvento.TemDepartamentalizacao || this.mEvento.ConfiguracaoOficinas != null || this.mEvento.ConfiguracaoSalaEstudo != null) &&
+      !((this.mEvento.ConfiguracaoOficinas != null && this.dadosTela.oficinasEscolhidas != null) ||
           (this.mEvento.TemDepartamentalizacao && this.dadosTela.departamentoEscolhido != null) ||
           (this.mEvento.ConfiguracaoSalaEstudo != null && this.dadosTela.salasEscolhidas != null))))
       this.mensageria.alertarAtencao("Você nos disse que a sua inscrição é de Participante/Trabalhador, mas não escolheu participar em nenhuma atividade!", "Por favor escolha um atividade para fazer parte.");

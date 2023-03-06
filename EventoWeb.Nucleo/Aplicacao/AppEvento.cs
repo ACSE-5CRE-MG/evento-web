@@ -68,12 +68,13 @@ namespace EventoWeb.Nucleo.Aplicacao
                 Logotipo = (string.IsNullOrWhiteSpace(dto.Logotipo)? null: new ArquivoBinario(Convert.FromBase64String(dto.Logotipo), EnumTipoArquivoBinario.ImagemJPEG)),
                 TemDepartamentalizacao = dto.TemDepartamentalizacao,
                 TemDormitorios = dto.TemDormitorios,
-                TemOficinas = dto.TemOficinas,
                 ConfiguracaoEvangelizacao = dto.ConfiguracaoEvangelizacao,
                 ConfiguracaoSalaEstudo = dto.ConfiguracaoSalaEstudo,
                 ConfiguracaoTempoSarauMin = dto.ConfiguracaoTempoSarauMin,
                 ValorInscricaoAdulto = dto.ValorInscricaoAdulto,
-                ValorInscricaoCrianca = dto.ValorInscricaoCrianca
+                ValorInscricaoCrianca = dto.ValorInscricaoCrianca,
+                PermiteEscolhaDormirEvento = dto.PermiteEscolhaDormirEvento,
+                ConfiguracaoOficinas = dto.ConfiguracaoOficinas
             };
 
             ExecutarSeguramente(() =>
@@ -98,13 +99,14 @@ namespace EventoWeb.Nucleo.Aplicacao
                 evento.PeriodoRealizacaoEvento = dto.PeriodoRealizacao;
                 evento.TemDepartamentalizacao = dto.TemDepartamentalizacao;
                 evento.TemDormitorios = dto.TemDormitorios;
-                evento.TemOficinas = dto.TemOficinas;
                 evento.ConfiguracaoEvangelizacao = dto.ConfiguracaoEvangelizacao;
                 evento.ConfiguracaoSalaEstudo = dto.ConfiguracaoSalaEstudo;
                 evento.ConfiguracaoTempoSarauMin = dto.ConfiguracaoTempoSarauMin;
                 evento.ValorInscricaoAdulto = dto.ValorInscricaoAdulto;
                 evento.ValorInscricaoCrianca = dto.ValorInscricaoCrianca;
                 evento.IdadeMinimaInscricaoAdulto = dto.IdadeMinima;
+                evento.PermiteEscolhaDormirEvento = dto.PermiteEscolhaDormirEvento;
+                evento.ConfiguracaoOficinas = dto.ConfiguracaoOficinas;
 
                 if (string.IsNullOrWhiteSpace(dto.Logotipo))
                     evento.Logotipo = null;
