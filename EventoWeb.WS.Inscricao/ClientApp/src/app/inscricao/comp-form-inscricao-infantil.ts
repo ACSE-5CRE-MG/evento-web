@@ -130,6 +130,7 @@ export class CompFormInscricaoInfantil {
       atualizacao.NomeCracha = this.dadosTela.nomeCracha;
       atualizacao.Responsavel1 = this.dadosTela.responsavel1;
       atualizacao.Responsavel2 = this.dadosTela.responsavel2;
+      atualizacao.DormeEvento = this.dadosTela.dormiraEvento;
 
       atualizacao.Sarais = this.dadosTela.sarais;
       atualizacao.Observacoes = this.dadosTela.observacoes;

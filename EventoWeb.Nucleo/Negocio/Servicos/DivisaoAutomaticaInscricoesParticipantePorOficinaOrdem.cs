@@ -23,7 +23,7 @@ namespace EventoWeb.Nucleo.Negocio.Servicos
         public IList<Oficina> Dividir()
         {
             var participantes =
-                mInscricoes.ListarTodasInscricoesAceitasPorAtividade<AtividadeInscricaoSalaEstudo>(mEvento);
+                mInscricoes.ListarTodasInscricoesAceitasPorAtividade<AtividadeInscricaoOficinaSemEscolha>(mEvento);
 
             IList<Oficina> oficinas = mOficinas.ListarTodasPorEvento(mEvento.Id);
             if (!oficinas.Any())

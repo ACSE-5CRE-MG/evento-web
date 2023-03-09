@@ -1,9 +1,7 @@
 ﻿using EventoWeb.Nucleo.Negocio.Entidades;
 using EventoWeb.Nucleo.Negocio.Repositorios;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
@@ -49,7 +47,7 @@ namespace EventoWeb.Nucleo.Aplicacao
                         new AtividadeInscricaoOficinasCoordenacao(
                             inscParticipante,
                             repOficinas.ObterPorId(inscParticipante.Evento.Id, dto.Coordenador.Id)));
-                else if (dto.EscolhidasParticipante != null)
+                else if (dto.EscolhidasParticipante != null && dto.EscolhidasParticipante.Count > 0)
                 {
                     var oficinas = repOficinas.ListarTodasPorEvento(inscParticipante.Evento.Id);
                     var escolhas = new OficinasEscolhidas(inscParticipante.Evento);
@@ -71,7 +69,8 @@ namespace EventoWeb.Nucleo.Aplicacao
                             gestaoOficinas));
                 }
                 else
-                    throw new ExcecaoAplicacao("AtribuicaoInscricao", "As informações para as oficinas estão incompletas");
+                    inscParticipante.AdicionarAtividade(
+                        new AtividadeInscricaoOficinaSemEscolha(inscParticipante));
             }
         }
 

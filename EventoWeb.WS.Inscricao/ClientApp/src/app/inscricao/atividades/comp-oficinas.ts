@@ -51,14 +51,18 @@ export class ComponenteOficinas {
 
     set opcaoEscolhida(valor: string) {
 
-        if (valor != this._opcaoEscolhida) {
-            this._opcaoEscolhida = valor;
+      if (valor != this._opcaoEscolhida) {
+        this._opcaoEscolhida = valor;
 
-            if (valor == this.opcoes[0])
-                this.participante = null;
-            else
-                this.coordenador = null;
+        if (valor == this.opcoes[0]) {
+          if (this.configuracao == EnumModeloDivisaoOficinas.PorIdadeCidade)
+            this.participante = []
+          else
+            this.participante = null;
         }
+        else
+          this.coordenador = null;
+      }
     }
 
     get opcaoEscolhida(): string {
@@ -69,7 +73,7 @@ export class ComponenteOficinas {
 
     set participante(valor: DTOOficina[]) {
         this.mParticipante = valor;
-        if (valor == null || valor.length == 0)
+        if (valor == null)
             this.escolhidoChange.emit(null);
         else
             this.escolhidoChange.emit({
