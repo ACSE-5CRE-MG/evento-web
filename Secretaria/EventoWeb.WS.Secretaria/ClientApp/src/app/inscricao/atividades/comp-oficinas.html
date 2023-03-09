@@ -10,7 +10,10 @@
     </div>
   </div>
 
-  <comp-oficina-participante *ngIf="opcaoEscolhida == opcoes[0]" [oficinas]="oficinas" [(valor)]="participante" [desabilitar]="desabilitar">
+  <comp-oficina-participante-sem-escolha *ngIf="opcaoEscolhida == opcoes[0] && configuracao == 1">
+  </comp-oficina-participante-sem-escolha>
+
+  <comp-oficina-participante *ngIf="opcaoEscolhida == opcoes[0] && configuracao == 0" [oficinas]="oficinas" [(valor)]="participante" [desabilitar]="desabilitar">
   </comp-oficina-participante>
 
   <comp-oficina-coordenador *ngIf="opcaoEscolhida == opcoes[1]" [oficinas]="oficinas" [(valor)]="coordenador" [desabilitar]="desabilitar">

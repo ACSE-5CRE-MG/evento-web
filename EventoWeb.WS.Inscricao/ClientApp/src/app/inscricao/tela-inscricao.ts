@@ -119,6 +119,7 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
     this.inscricao.Pagamento = new DTOPagamento();
     this.inscricao.Sarais = [];
     this.inscricao.PrimeiroEncontro = false;
+    this.inscricao.DormeEvento = true;
 
     this.evento = new DTOEventoCompleto();
     this.evento.PeriodoInscricao = new Periodo();

@@ -77,6 +77,7 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
             dto.NomeCracha = inscricao.NomeCracha;
             dto.Observacoes = inscricao.Observacoes;
             dto.PrimeiroEncontro = inscricao.PrimeiroEncontro;
+            dto.DormeEvento = inscricao.DormeEvento;
 
            if (inscricao.Pagamento != null)
             {

@@ -17,6 +17,7 @@ export class DTOEventoCompleto extends DTOEventoListagem {
     Oficinas: DTOOficina[];
     SalasEstudo: DTOSalaEstudo[];
     Departamentos: DTODepartamento[];
+    ConfiguracaoOficinas: EnumModeloDivisaoOficinas;
     TemOficinas: boolean;
     TemDepartamentalizacao: boolean;
     ConfiguracaoTempoSarauMin: number; // Pode ser nulo
@@ -44,6 +45,8 @@ export class DTODepartamento {
 export enum EnumModeloDivisaoSalasEstudo { PorIdadeCidade, PorOrdemEscolhaInscricao }
 
 export enum EnumPublicoEvangelizacao { Todos, TrabalhadoresOuParticipantesTrabalhadores }
+
+export enum EnumModeloDivisaoOficinas { PorOrdemEscolhaInscricao, PorIdadeCidade }
 
 export class DTOContratoInscricao
 {

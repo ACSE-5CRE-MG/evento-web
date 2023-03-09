@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { DTOOficina } from '../../principal/objetos';
+import { DTOOficina, EnumModeloDivisaoOficinas } from '../../principal/objetos';
 import { EnumApresentacaoAtividades, DTOInscricaoOficina } from '../objetos';
 
 @Component({
@@ -11,6 +11,9 @@ export class ComponenteOficinas {
     apresentacao: EnumApresentacaoAtividades;
     opcoes: string[] = ["Participante", "Coordenador"];
     _opcaoEscolhida: string;
+
+    @Input()
+    configuracao: EnumModeloDivisaoOficinas;
 
     @Input()
     desabilitar: boolean;
@@ -254,4 +257,11 @@ export class ComponenteOficinaCoordenador {
     get oficinaCoordena(): DTOOficina {
         return this.mValor;
     }
+}
+
+@Component({
+  selector: 'comp-oficina-participante-sem-escolha',
+  templateUrl: './comp-oficina-participante-sem-escolha.html'
+})
+export class ComponenteOficinaParticipanteSemEscolha {
 }

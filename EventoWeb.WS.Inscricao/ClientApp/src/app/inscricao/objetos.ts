@@ -54,6 +54,7 @@ export class DTOInscricaoAtualizacaoInfantil {
   NomeCracha: string;
   PrimeiroEncontro: boolean;
   Observacoes: string;
+  DormeEvento: boolean;
 
   Sarais: DTOSarau[];
   Responsavel1: DTOInscricaoSimplificada;
@@ -80,6 +81,8 @@ export class DTOInscricaoAtualizacao {
     TelefoneResponsavelLegal: string;
     PrimeiroEncontro: boolean;
     Observacoes: string;
+    DormeEvento: boolean;
+
 
     Oficina: DTOInscricaoOficina;
     SalasEstudo: DTOInscricaoSalaEstudo;

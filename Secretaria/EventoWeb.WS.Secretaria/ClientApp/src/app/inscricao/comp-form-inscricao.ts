@@ -5,7 +5,7 @@ import {
   DTOInscricaoOficina, DTOInscricaoSalaEstudo, DTOInscricaoDepartamento, EnumPagamento
 } from './objetos';
 import { DxValidationGroupComponent } from 'devextreme-angular';
-import { DTOEventoCompletoInscricao, EnumModeloDivisaoSalasEstudo } from '../evento/objetos';
+import { DTOEventoCompletoInscricao, EnumModeloDivisaoOficinas, EnumModeloDivisaoSalasEstudo } from '../evento/objetos';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
 import { DTOSarau } from '../sarais/objetos';
 
@@ -61,6 +61,7 @@ export class CompFormInscricao {
     this.dadosTela.telefoneFixo = this.mInscricao.DadosPessoais.TelefoneFixo;
     this.dadosTela.celular = this.mInscricao.DadosPessoais.Celular;
     this.dadosTela.nomeCracha = this.mInscricao.NomeCracha;
+    this.dadosTela.dormiraEvento = this.mInscricao.DormeEvento;
 
     this.dadosTela.oficinasEscolhidas = this.mInscricao.Oficina;
     this.dadosTela.salasEscolhidas = this.mInscricao.SalasEstudo;
@@ -116,11 +117,11 @@ export class CompFormInscricao {
     if (!dadosPessoaisValidos || !dadosEspiritasValidos)
       this.mensageria.alertarAtencao("Há informações pessoais que precisam de seus cuidados.", "Sem essas informações não é possível enviar a inscrição.");
     else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[0] &&
-      this.mEvento.ConfiguracaoOficinas != null &&
+      this.mEvento.ConfiguracaoOficinas == EnumModeloDivisaoOficinas.PorOrdemEscolhaInscricao &&
       this.dadosTela.oficinasEscolhidas == null)
       this.mensageria.alertarAtencao("Você não escolheu as oficinas que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
     else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[0] &&
-      this.mEvento.ConfiguracaoOficinas != null &&
+      this.mEvento.ConfiguracaoOficinas == EnumModeloDivisaoOficinas.PorOrdemEscolhaInscricao &&
       this.dadosTela.oficinasEscolhidas.EscolhidasParticipante.length != this.mEvento.Oficinas.length)
       this.mensageria.alertarAtencao("Você não escolheu todas as oficinas.", "Sem essa informação não é possível enviar a inscrição.");
     else if (this.dadosTela.tipoInscricaoEscolhida == this.dadosTela.TiposInscricao[0] &&
@@ -184,6 +185,7 @@ export class CompFormInscricao {
       atualizacao.TelefoneResponsavelCentro = this.dadosTela.telefoneResponsavelCentro;
       atualizacao.TelefoneResponsavelLegal = this.dadosTela.telefoneResponsavelLegal;
       atualizacao.TempoEspirita = this.dadosTela.tempoEspirita;
+      atualizacao.DormeEvento = this.dadosTela.dormiraEvento;
 
       if (atualizacao.TipoInscricao != EnumTipoInscricao.Trabalhador) {
         atualizacao.Departamento = this.dadosTela.departamentoEscolhido;
@@ -249,6 +251,7 @@ class DadosTela {
   departamentoEscolhido: DTOInscricaoDepartamento;
   sarais: DTOSarau[];
   inscricaoSimples: DTOInscricaoSimplificada;
+  dormiraEvento: boolean;
 
   pagamento: DTOPagamento;
 

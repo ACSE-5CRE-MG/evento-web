@@ -171,6 +171,7 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
     this.inscricao.Pagamento = new DTOPagamento();
     this.inscricao.Sarais = [];
     this.inscricao.PrimeiroEncontro = false;
+    this.inscricao.DormeEvento = true;
 
     this.evento = new DTOEventoCompletoInscricao();
     this.evento.PeriodoInscricao = new Periodo();
@@ -188,11 +189,12 @@ export class TelaInscricaoInclusao extends ATelaInscricao implements OnInit {
           this.wsEventos.obterParaInscricao(idEvento)
             .subscribe(
               (evento) => {
-                dlg.close();
+                dlg.close(); 
                 if (evento == null)
                   this.clicarVoltar();
-                else
+                else {
                   this.evento = evento;
+                }
               },
               (erro) => {
                 dlg.close();

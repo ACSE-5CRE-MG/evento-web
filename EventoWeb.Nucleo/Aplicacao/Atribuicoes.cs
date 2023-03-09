@@ -144,7 +144,8 @@ namespace EventoWeb.Nucleo.Aplicacao
             inscricao.Pessoa.AtribuirDados(dtoInscricao.DadosPessoais);
             inscricao.NomeCracha = dtoInscricao.NomeCracha;
             inscricao.Observacoes = dtoInscricao.Observacoes;
-            inscricao.PrimeiroEncontro = dtoInscricao.PrimeiroEncontro;           
+            inscricao.PrimeiroEncontro = dtoInscricao.PrimeiroEncontro;
+            inscricao.DormeEvento = dtoInscricao.DormeEvento;
 
             inscricao.Pagamento.AtribuirFormaPagamento(dtoInscricao.Pagamento.Forma.Value,
                 dtoInscricao.Pagamento.ComprovantesBase64

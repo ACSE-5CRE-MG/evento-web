@@ -69,7 +69,7 @@ import { WebServiceSalas } from './webservices/webservice-salas';
 import { TelaListagemInscricoes } from './inscricao/tela-lista-inscricoes';
 import { WebServiceInscricoes } from './webservices/webservice-inscricoes';
 import { TelaInscricao, TelaInscricaoInclusao } from './inscricao/tela-inscricao';
-import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador } from './inscricao/atividades/comp-oficinas';
+import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador, ComponenteOficinaParticipanteSemEscolha } from './inscricao/atividades/comp-oficinas';
 import { ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador } from './inscricao/atividades/comp-salas';
 import { ComponenteDepartamentos } from './inscricao/atividades/comp-departamentos';
 import { ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DialogosInscricaoSarau } from './inscricao/atividades/comp-sarau';
@@ -152,7 +152,7 @@ export function init_app(appLoadService: AppLoadService) {
     TelaListagemSalas, DlgFormSala,
     TelaListagemInscricoes,
     TelaInscricao, TelaInscricaoInclusao, TelaInscricaoInfantil, TelaInscricaoInfantilInclusao, CompFormInscricao, CompFormInscricaoInfantil,
-    ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
+    ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador, ComponenteOficinaParticipanteSemEscolha,
     ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
     ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DlgSelecaoInscricaoAdulto,
     ComponentePagamento,

@@ -50,7 +50,7 @@ import { TelaCodigoInscricao } from './inscricao/tela-codigo-inscricao';
 import { TelaInscricaoAtualizacao, TelaInscricaoInclusao } from './inscricao/tela-inscricao';
 import { PermissaoAcessoInscricao } from './permissao-acesso-inscricao';
 import { WsManutencaoInscricoes } from './webservices/wsManutencaoInscricoes';
-import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador } from './inscricao/atividades/comp-oficinas';
+import { ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador, ComponenteOficinaParticipanteSemEscolha } from './inscricao/atividades/comp-oficinas';
 import { ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador } from './inscricao/atividades/comp-salas';
 import { ComponenteDepartamentos } from './inscricao/atividades/comp-departamentos';
 import { ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario, DialogosSarau } from './inscricao/atividades/comp-sarau';
@@ -105,7 +105,7 @@ export function init_app(appLoadService: AppLoadService) {
   declarations: [
     TelaBase, TelaPrincipal, TelaCriacaoInscricao, TelaPesquisaInscricao, TelaCodigoInscricao, TelaInscricaoInclusao, TelaInscricaoAtualizacao,
     CaixaMensagemDlg, DlgEmProcessamento, LayoutGeral,
-    ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador,
+    ComponenteOficinas, ComponenteOficinaParticipante, ComponenteOficinaCoordenador, ComponenteOficinaParticipanteSemEscolha,
     ComponenteSalas, ComponenteSalasParticipanteComEscolha, ComponenteSalasParticipanteSemEscolha, ComponenteSalaCoordenador,
     ComponenteDepartamentos, ComponenteSarau, DlgSarauCodigo, DlgSarauFormulario,
     ComponentePagamento, CompFormInscricao,

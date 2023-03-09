@@ -46,7 +46,7 @@
         <br />
         <span>Salas de Estudo</span>
       </a>
-      <a mat-stroked-button [routerLink]="'./oficinas'" *ngIf="evento.TemOficinas">
+      <a mat-stroked-button [routerLink]="'./oficinas'" *ngIf="evento.ConfiguracaoOficinas != null">
         <span class="fas fa-palette fa-4x"></span>
         <br />
         <span>Oficinas</span>

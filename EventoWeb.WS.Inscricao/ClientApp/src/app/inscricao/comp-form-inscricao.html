@@ -161,6 +161,11 @@
           </dx-text-box>
         </div>
       </div>
+      <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" *ngIf="evento.PermiteEscolhaDormirEvento">
+        <div fxFlex="106px"></div>
+        <dx-check-box [(value)]="dadosTela.dormiraEvento" text="Dormirá no encontro?" [disabled]="naoEhIncompleta">
+        </dx-check-box>
+      </div>
     </div>
   </dx-validation-group>
   <mat-divider></mat-divider>
@@ -249,8 +254,8 @@
 </ng-template>
 <ng-template #participacaoAtividades>
   <mat-tab-group fxFill>
-    <mat-tab label="Oficinas" *ngIf="evento.TemOficinas && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != coordenacao.TiposInscricao[2]">
-      <comp-oficinas [desabilitar]="naoEhIncompleta" [oficinas]="evento.Oficinas" [forma]="dadosTela.formaEscolha" [(escolhido)]="dadosTela.oficinasEscolhidas"></comp-oficinas>
+    <mat-tab label="Oficinas" *ngIf="evento.ConfiguracaoOficinas != null && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != coordenacao.TiposInscricao[2]">
+      <comp-oficinas [desabilitar]="naoEhIncompleta" [oficinas]="evento.Oficinas" [forma]="dadosTela.formaEscolha" [configuracao]="evento.ConfiguracaoOficinas" [(escolhido)]="dadosTela.oficinasEscolhidas"></comp-oficinas>
     </mat-tab>
     <mat-tab label="Estudo" *ngIf="evento.ConfiguracaoSalaEstudo != null && dadosTela.tipoInscricaoEscolhida && dadosTela.tipoInscricaoEscolhida != coordenacao.TiposInscricao[2]">
       <comp-salas [desabilitar]="naoEhIncompleta" [salas]="evento.SalasEstudo" [forma]="dadosTela.formaEscolha" [configuracaoSala]="evento.ConfiguracaoSalaEstudo" [(escolhido)]="dadosTela.salasEscolhidas" style="width: 100%"></comp-salas>
