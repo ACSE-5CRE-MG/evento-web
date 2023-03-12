@@ -112,9 +112,9 @@ namespace EventoWeb.WS.Secretaria
                 spa.Options.SourcePath = "ClientApp";
 
                 //if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
+                //{
+                //    spa.UseAngularCliServer(npmScript: "start");
+                //}
             });
 
             app.UseCors(builder => builder
