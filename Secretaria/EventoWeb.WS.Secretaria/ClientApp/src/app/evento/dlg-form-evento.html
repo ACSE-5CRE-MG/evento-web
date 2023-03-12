@@ -49,7 +49,7 @@
                        [minSearchLength]="0"
                        [searchEnabled]="true"
                        [(value)]="modeloDivisaoSalaEstudo"
-                       fxFlex="20"
+                       fxFlex="40"
                        [disabled]="!temSalaEstudo">
         </dx-select-box>
       </div>
@@ -61,8 +61,20 @@
                        [minSearchLength]="0"
                        [searchEnabled]="true"
                        [(value)]="publicoEvangelizacao"
-                       fxFlex="20"
+                       fxFlex="40"
                        [disabled]="!temEvangelizacao">
+        </dx-select-box>
+      </div>
+      <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+        <dx-check-box [(value)]="temOficinas" text="Tem Oficinas?"></dx-check-box>
+        <dx-select-box [dataSource]="modelosDivisaoOficina"
+                       [searchMode]="'contains'"
+                       [searchTimeout]="200"
+                       [minSearchLength]="0"
+                       [searchEnabled]="true"
+                       [(value)]="modeloDivisaoOficina"
+                       fxFlex="40"
+                       [disabled]="!temOficinas">
         </dx-select-box>
       </div>
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
@@ -72,8 +84,11 @@
       </div>
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
         <dx-check-box [(value)]="evento.TemDepartamentalizacao" text="Tem Departamentalização?"></dx-check-box>
-        <dx-check-box [(value)]="evento.TemOficinas" text="Tem Oficinas?"></dx-check-box>
-        <dx-check-box [(value)]="evento.TemDormitorios" text="Tem Dormitórios?"></dx-check-box>
+        <dx-check-box [(value)]="temDormitorios" text="Tem Dormitórios?"></dx-check-box>
+        <dx-check-box [(value)]="evento.PermiteEscolhaDormirEvento"
+                      text="O inscrito pode escolher se deseja ou não dormir no evento?"
+                      [disabled]="!evento.TemDormitorios">
+        </dx-check-box>
       </div>
       <mat-divider></mat-divider>
       <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">

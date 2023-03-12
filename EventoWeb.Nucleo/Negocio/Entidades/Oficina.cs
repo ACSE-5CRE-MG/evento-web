@@ -46,7 +46,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 if (value == null)
                     throw new ArgumentNullException("Evento", "Evento não pode ser nulo.");
 
-                if (!value.TemOficinas)
+                if (value.ConfiguracaoOficinas == null)
                     throw new InvalidOperationException("Este evento não está configurado para ter Oficinas.");
 
                 m_Evento = value;

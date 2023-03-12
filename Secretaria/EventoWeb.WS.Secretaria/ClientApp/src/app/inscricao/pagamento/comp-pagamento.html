@@ -1,8 +1,17 @@
 <div fxLayout="column" fxLayoutGap="5px">
   <div>
-    <p><strong>Valor Inscrição:</strong> &nbsp; {{valorInscricao| currency:'BRL'}}</p>
-    <p *ngIf="totalCriancas > 0"><strong>Crianças:</strong> &nbsp; {{totalCriancas}} &nbsp; X &nbsp; {{valorInscCrianca| currency:'BRL'}} = {{totalCriancas * valorInscCrianca| currency:'BRL'}} </p>
-    <p><strong>Total: </strong> &nbsp; {{valorInscricao + (totalCriancas * valorInscCrianca) | currency:'BRL'}}</p>
+    <p>
+      Acima de 15 anos: R$ <strong>70,00</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; De 11 a 14 anos: R$ <strong>50,00</strong>
+    </p>
+    <p>
+      De 04 a 10 anos: R$ <strong>40,00</strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; De 0 a 03 anos: <strong>isento</strong>
+    </p>
+
+    <!--
+  <p><strong>Valor Inscrição:</strong> &nbsp; {{valorInscricao| currency:'BRL'}}</p>
+  <p *ngIf="totalCriancas > 0"><strong>Crianças:</strong> &nbsp; {{totalCriancas}} &nbsp; X &nbsp; {{valorInscCrianca| currency:'BRL'}} = {{totalCriancas * valorInscCrianca| currency:'BRL'}} </p>
+  <p><strong>Total: </strong> &nbsp; {{valorInscricao + (totalCriancas * valorInscCrianca) | currency:'BRL'}}</p>
+    -->
   </div>
   <mat-divider></mat-divider>
   <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">

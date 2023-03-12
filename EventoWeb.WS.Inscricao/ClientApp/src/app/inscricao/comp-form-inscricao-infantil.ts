@@ -56,6 +56,7 @@ export class CompFormInscricaoInfantil {
     this.dadosTela.nomeCracha = this.mInscricao.NomeCracha;
     this.dadosTela.responsavel1 = this.mInscricao.Responsavel1;
     this.dadosTela.responsavel2 = this.mInscricao.Responsavel2;
+    this.dadosTela.dormiraEvento = this.mInscricao.DormeEvento;
 
     this.dadosTela.sarais = this.mInscricao.Sarais;
     this.dadosTela.pagamento = this.mInscricao.Pagamento;
@@ -129,6 +130,7 @@ export class CompFormInscricaoInfantil {
       atualizacao.NomeCracha = this.dadosTela.nomeCracha;
       atualizacao.Responsavel1 = this.dadosTela.responsavel1;
       atualizacao.Responsavel2 = this.dadosTela.responsavel2;
+      atualizacao.DormeEvento = this.dadosTela.dormiraEvento;
 
       atualizacao.Sarais = this.dadosTela.sarais;
       atualizacao.Observacoes = this.dadosTela.observacoes;
@@ -230,6 +232,7 @@ class DadosTela {
   celular: string;
   telefoneFixo: string;
   nomeCracha: string;
+  dormiraEvento: boolean;
 
   sarais: DTOSarau[];
   responsavel1: DTOInscricaoSimplificada;

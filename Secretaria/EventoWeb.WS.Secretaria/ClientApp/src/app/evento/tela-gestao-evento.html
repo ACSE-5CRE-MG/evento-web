@@ -46,7 +46,7 @@
         <br />
         <span>Salas de Estudo</span>
       </a>
-      <a mat-stroked-button [routerLink]="'./oficinas'" *ngIf="evento.TemOficinas">
+      <a mat-stroked-button [routerLink]="'./oficinas'" *ngIf="evento.ConfiguracaoOficinas != null">
         <span class="fas fa-palette fa-4x"></span>
         <br />
         <span>Oficinas</span>
@@ -68,7 +68,7 @@
       </a>
     </div>
   </div>
-  <div fxLayout="column" fxLayoutGap="5px" class="padding-padrao" *ngIf="evento.ConfiguracaoSalaEstudo != null || evento.TemOficinas || evento.TemDormitorios || evento.TemDepartamentalizacao">
+  <div fxLayout="column" fxLayoutGap="5px" class="padding-padrao" *ngIf="evento.ConfiguracaoSalaEstudo != null || evento.ConfiguracaoOficinas != null || evento.TemDormitorios || evento.TemDepartamentalizacao">
     <div>
       <span class="secao">Organização</span>
       <mat-divider></mat-divider>
@@ -79,7 +79,7 @@
         <br />
         <span>Divisão de Salas de Estudo</span>
       </a>
-      <a mat-stroked-button [routerLink]="'./divisao-oficinas'" *ngIf="evento.TemOficinas">
+      <a mat-stroked-button [routerLink]="'./divisao-oficinas'" *ngIf="evento.ConfiguracaoOficinas != null">
         <span class="fas fa-palette fa-4x"></span>
         <br />
         <span>Divisão de Oficinas</span>

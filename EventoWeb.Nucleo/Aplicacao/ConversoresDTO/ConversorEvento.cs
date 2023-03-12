@@ -33,13 +33,14 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
             dto.Nome = evento.Nome;
             dto.TemDepartamentalizacao = evento.TemDepartamentalizacao;
             dto.TemDormitorios = evento.TemDormitorios;
-            dto.TemOficinas = evento.TemOficinas;
             dto.ConfiguracaoSalaEstudo = evento.ConfiguracaoSalaEstudo;
             dto.ConfiguracaoEvangelizacao = evento.ConfiguracaoEvangelizacao;
             dto.ConfiguracaoTempoSarauMin = evento.ConfiguracaoTempoSarauMin;
             dto.IdadeMinima = evento.IdadeMinimaInscricaoAdulto;
             dto.ValorInscricaoAdulto = evento.ValorInscricaoAdulto;
             dto.ValorInscricaoCrianca = evento.ValorInscricaoCrianca;
+            dto.ConfiguracaoOficinas = evento.ConfiguracaoOficinas;
+            dto.PermiteEscolhaDormirEvento = evento.PermiteEscolhaDormirEvento;
 
             return dto;
         }

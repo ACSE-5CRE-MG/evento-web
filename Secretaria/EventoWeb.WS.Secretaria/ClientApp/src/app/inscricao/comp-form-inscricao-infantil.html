@@ -93,6 +93,11 @@
             </dx-text-box>
           </div>
         </div>
+        <div fxLayout="row wrap" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center" *ngIf="evento.PermiteEscolhaDormirEvento">
+          <div fxFlex="106px"></div>
+          <dx-check-box [(value)]="dadosTela.dormiraEvento" text="Dormirá no encontro?" [disabled]="naoEhIncompleta">
+          </dx-check-box>
+        </div>
       </div>
     </dx-validation-group>
     <mat-divider></mat-divider>

@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { DTOOficina } from '../../principal/objetos';
+import { DTOOficina, EnumModeloDivisaoOficinas } from '../../principal/objetos';
 import { EnumApresentacaoAtividades, DTOInscricaoOficina } from '../objetos';
 
 @Component({
@@ -11,6 +11,9 @@ export class ComponenteOficinas {
     apresentacao: EnumApresentacaoAtividades;
     opcoes: string[] = ["Participante", "Coordenador"];
     _opcaoEscolhida: string;
+
+    @Input()
+    configuracao: EnumModeloDivisaoOficinas;
 
     @Input()
     desabilitar: boolean;
@@ -48,14 +51,18 @@ export class ComponenteOficinas {
 
     set opcaoEscolhida(valor: string) {
 
-        if (valor != this._opcaoEscolhida) {
-            this._opcaoEscolhida = valor;
+      if (valor != this._opcaoEscolhida) {
+        this._opcaoEscolhida = valor;
 
-            if (valor == this.opcoes[0])
-                this.participante = null;
-            else
-                this.coordenador = null;
+        if (valor == this.opcoes[0]) {
+          if (this.configuracao == EnumModeloDivisaoOficinas.PorIdadeCidade)
+            this.participante = []
+          else
+            this.participante = null;
         }
+        else
+          this.coordenador = null;
+      }
     }
 
     get opcaoEscolhida(): string {
@@ -66,7 +73,7 @@ export class ComponenteOficinas {
 
     set participante(valor: DTOOficina[]) {
         this.mParticipante = valor;
-        if (valor == null || valor.length == 0)
+        if (valor == null)
             this.escolhidoChange.emit(null);
         else
             this.escolhidoChange.emit({
@@ -254,4 +261,11 @@ export class ComponenteOficinaCoordenador {
     get oficinaCoordena(): DTOOficina {
         return this.mValor;
     }
+}
+
+@Component({
+  selector: 'comp-oficina-participante-sem-escolha',
+  templateUrl: './comp-oficina-participante-sem-escolha.html'
+})
+export class ComponenteOficinaParticipanteSemEscolha {
 }

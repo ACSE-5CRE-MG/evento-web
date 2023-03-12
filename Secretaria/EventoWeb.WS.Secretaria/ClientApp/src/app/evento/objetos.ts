@@ -19,17 +19,22 @@ export enum EnumModeloDivisaoSalasEstudo {
   PorOrdemEscolhaInscricao
 }
 
+export enum EnumModeloDivisaoOficinas {
+  PorOrdemEscolhaInscricao, PorIdadeCidade
+}
+
 export class DTOEvento {
   public Nome: string;
   public PeriodoInscricao: Periodo;
   public PeriodoRealizacao: Periodo;
   public Logotipo: string;
   public TemDepartamentalizacao: Boolean;
-  public TemOficinas: Boolean;
   public TemDormitorios: Boolean;
   public ConfiguracaoEvangelizacao: EnumPublicoEvangelizacao;
   public ConfiguracaoSalaEstudo: EnumModeloDivisaoSalasEstudo;
   public ConfiguracaoTempoSarauMin: number;
+  public ConfiguracaoOficinas: EnumModeloDivisaoOficinas;
+  public PermiteEscolhaDormirEvento: Boolean;
 }
 
 export class Periodo {

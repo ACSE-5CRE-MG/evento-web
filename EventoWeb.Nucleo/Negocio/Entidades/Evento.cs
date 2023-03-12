@@ -7,6 +7,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
 
     public enum EnumModeloDivisaoSalasEstudo { PorIdadeCidade, PorOrdemEscolhaInscricao }
 
+    public enum EnumModeloDivisaoOficinas { PorOrdemEscolhaInscricao, PorIdadeCidade }
+
     public class Evento: Entidade
     {
         private string m_Nome;
@@ -19,6 +21,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         private int m_IdadeMinimaInscricaoAdulto;
         private decimal m_ValorInscricaoAdulto;
         private decimal m_ValorInscricaoCrianca;
+        private EnumModeloDivisaoOficinas? m_ConfiguracaoOficinas;
+        private bool? m_PermiteEscolhaDormirEvento;
 
         protected Evento()
         {
@@ -53,9 +57,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             get { return m_PeriodoRealizacaoEvento; }
             set
             {
-                if (value == null)
+                m_PeriodoRealizacaoEvento = value ?? 
                     throw new ExcecaoNegocioAtributo("Evento", "PeriodoRealizacaoEvento", "PeriodoRealizacaoEvento vazio.");
-                m_PeriodoRealizacaoEvento = value;
             }
         }
 
@@ -64,10 +67,8 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             get { return m_PeriodoInscricaoOnLine; }
             set
             {
-                if (value == null)
+                m_PeriodoInscricaoOnLine = value ?? 
                     throw new ExcecaoNegocioAtributo("Evento", "PeriodoInscricaoOnLine", "PeriodoInscricaoOnLine vazio.");
-
-                m_PeriodoInscricaoOnLine = value;
             }
         }
 
@@ -135,6 +136,18 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                     throw new ExcecaoNegocioAtributo("Evento", "ValorInscricaoCrianca", "Valor da inscrição Criança deve ser maior ou igual a zero.");
                 m_ValorInscricaoCrianca = value;
             }
+        }
+
+        public virtual EnumModeloDivisaoOficinas? ConfiguracaoOficinas
+        {
+            get => m_ConfiguracaoOficinas;
+            set => m_ConfiguracaoOficinas = value;
+        }
+
+        public virtual bool? PermiteEscolhaDormirEvento
+        {
+            get => m_PermiteEscolhaDormirEvento;
+            set => m_PermiteEscolhaDormirEvento = value;
         }
     }
 }

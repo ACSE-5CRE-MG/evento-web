@@ -1,8 +1,6 @@
 ﻿using EventoWeb.Nucleo.Negocio.Entidades;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace EventoWeb.Nucleo.Aplicacao
 {
@@ -21,6 +19,8 @@ namespace EventoWeb.Nucleo.Aplicacao
         public int IdadeMinima { get; set; }
         public decimal ValorInscricaoAdulto { get; set; }
         public decimal ValorInscricaoCrianca { get; set; }
+        public EnumModeloDivisaoOficinas? ConfiguracaoOficinas { get; set; }
+        public Boolean? PermiteEscolhaDormirEvento { get; set; }
     }
 
     public class DTOEventoCompleto : DTOEvento

@@ -43,7 +43,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 throw new ArgumentException("Não é possível ter a mesma atividade mais de uma vez", "atividade");
 
             if ((!Evento.TemDepartamentalizacao && atividade.GetType() == typeof(AtividadeInscricaoDepartamento)) ||
-                (!Evento.TemOficinas && (atividade.GetType() == typeof(AtividadeInscricaoOficinas) || atividade.GetType() == typeof(AtividadeInscricaoOficinasCoordenacao))) ||
+                (Evento.ConfiguracaoOficinas == null && (atividade.GetType() == typeof(AtividadeInscricaoOficinas) || atividade.GetType() == typeof(AtividadeInscricaoOficinasCoordenacao))) ||
                 (Evento.ConfiguracaoSalaEstudo == null && 
                    (atividade.GetType() == typeof(AtividadeInscricaoSalaEstudo) || 
                     atividade.GetType() == typeof(AtividadeInscricaoSalaEstudoCoordenacao) ||

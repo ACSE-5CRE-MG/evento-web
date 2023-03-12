@@ -58,6 +58,7 @@ export class CompFormInscricaoInfantil {
     this.dadosTela.sarais = this.mInscricao.Sarais;
     this.dadosTela.pagamento = this.mInscricao.Pagamento;
     this.dadosTela.observacoes = this.mInscricao.Observacoes;
+    this.dadosTela.dormiraEvento = this.mInscricao.DormeEvento;
 
     if (this.dadosTela.pagamento.ComprovantesBase64 != null)
       this.dadosTela.pagamento.ComprovantesBase64 = this.dadosTela.pagamento.ComprovantesBase64.map(x => 'data:image/jpeg;base64,' + x);
@@ -136,6 +137,7 @@ export class CompFormInscricaoInfantil {
 
       atualizacao.Sarais = this.dadosTela.sarais;
       atualizacao.Observacoes = this.dadosTela.observacoes;
+      atualizacao.DormeEvento = this.dadosTela.dormiraEvento;
 
       atualizacao.Pagamento = new DTOPagamento();
       atualizacao.Pagamento.Forma = this.dadosTela.pagamento.Forma;
@@ -222,6 +224,7 @@ class DadosTela {
   celular: string;
   telefoneFixo: string;
   nomeCracha: string;
+  dormiraEvento: boolean;
 
   sarais: DTOSarau[];
   responsavel1: DTOInscricaoSimplificada;

@@ -72,6 +72,7 @@ namespace EventoWeb.Nucleo.Aplicacao
         public string Observacoes { get; set; }
         public IList<TSarau> Sarais { get; set; }
         public DTOPagamento Pagamento { get; set; }
+        public bool DormeEvento { get; set; }
     }
 
     public interface IDTOInscricaoCompleta
