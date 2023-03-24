@@ -132,7 +132,7 @@ export class CompFormInscricao {
       this.dadosTela.departamentoEscolhido == null)
       this.coordenacao.Alertas.alertarAtencao("Você não escolheu o departamento que deseja participar.", "Sem essa informação não é possível enviar a inscrição.");
     else if (this.dadosTela.tipoInscricaoEscolhida == this.coordenacao.TiposInscricao[1] &&
-      this.mEvento.ConfiguracaoOficinas != null &&
+      this.mEvento.ConfiguracaoOficinas == EnumModeloDivisaoOficinas.PorOrdemEscolhaInscricao &&
       this.dadosTela.oficinasEscolhidas != null &&
       this.dadosTela.oficinasEscolhidas.EscolhidasParticipante != null &&
       this.dadosTela.oficinasEscolhidas.EscolhidasParticipante.length != this.mEvento.Oficinas.length)

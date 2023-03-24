@@ -63,7 +63,7 @@ export class DialogoValidacaoEmail {
   constructor(private srvDialog: MatDialog) { }
 
   apresentarDlg(email: string, nome: string, identificacao: string): Observable<boolean> {
-    const dlg = this.srvDialog.open(DlgValidacaoEmail, { data: { email: email, nome: nome, identificacao: identificacao }, width: "40vw" });
+    const dlg = this.srvDialog.open(DlgValidacaoEmail, { data: { email: email, nome: nome, identificacao: identificacao }, width: "95vw" });
     return dlg.afterClosed();
   }
 }

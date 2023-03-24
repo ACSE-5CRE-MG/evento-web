@@ -40,6 +40,8 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
             dto.Departamento = ((AtividadeInscricaoDepartamento)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoDepartamento))?.Converter();
 
             dto.Oficina = ((AtividadeInscricaoOficinas)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoOficinas))?.Converter();
+            if(dto.Oficina == null)
+                dto.Oficina = ((AtividadeInscricaoOficinaSemEscolha)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoOficinaSemEscolha))?.Converter();
             if (dto.Oficina == null)
                 dto.Oficina = ((AtividadeInscricaoOficinasCoordenacao)inscricao.Atividades.FirstOrDefault(x => x is AtividadeInscricaoOficinasCoordenacao))?.Converter();
 
@@ -225,6 +227,12 @@ namespace EventoWeb.Nucleo.Aplicacao.ConversoresDTO
                 EscolhidasParticipante = atividade.Oficinas.Select(x => x.Converter()).ToList()
             };
         }
+
+        public static DTOInscricaoOficina Converter(this AtividadeInscricaoOficinaSemEscolha atividade)
+        {
+            return new DTOInscricaoOficina();
+        }
+
         public static DTOInscricaoOficina Converter(this AtividadeInscricaoOficinasCoordenacao atividade)
         {
             return new DTOInscricaoOficina
