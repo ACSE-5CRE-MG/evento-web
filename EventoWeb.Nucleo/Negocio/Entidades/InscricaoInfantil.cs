@@ -14,11 +14,13 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
         protected InscricaoInfantil() { }
 
         public InscricaoInfantil(Pessoa pessoa, Evento evento, Inscricao inscricaoResponsavel,
-            Inscricao inscricaoResponsavel2, DateTime dataRecebimento)
+            Inscricao inscricaoResponsavel2, DateTime dataRecebimento, bool dormeEvento)
             : base(evento, pessoa, dataRecebimento)
         {
             if (evento.ConfiguracaoEvangelizacao == null)
                 throw new ExcecaoNegocioAtributo("InscricaoInfantil", "evento", "Este evento não aceita inscrições infantis");
+
+            DormeEvento = dormeEvento;
 
             AtribuirResponsaveis(inscricaoResponsavel, inscricaoResponsavel2);
         }

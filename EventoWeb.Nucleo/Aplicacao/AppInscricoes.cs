@@ -121,7 +121,8 @@ namespace EventoWeb.Nucleo.Aplicacao
                 if (dtoInscricao.Responsavel2 != null)
                     responsavel2 = Contexto.RepositorioInscricoes.ObterInscricaoPeloId(dtoInscricao.Responsavel2.Id);
 
-                InscricaoInfantil inscInfantil = new InscricaoInfantil(pessoa, evento, responsavel1, responsavel2, DateTime.Now);
+                InscricaoInfantil inscInfantil = new InscricaoInfantil(pessoa, evento, responsavel1, responsavel2, DateTime.Now, 
+                    dtoInscricao.DormeEvento);
                 inscInfantil.AtribuirDados(dtoInscricao);
 
                 inscInfantil.TornarPendente();

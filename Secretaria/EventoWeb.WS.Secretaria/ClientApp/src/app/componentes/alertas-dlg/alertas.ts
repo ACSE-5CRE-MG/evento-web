@@ -13,7 +13,7 @@ export class Alertas {
     if (typeof mensagem == "string")
       this.alertar('Erro', mensagem, "", CaixaMensagemBotoes.Ok, CaixaMensagemEstilos.Completo);
     else
-      this.alertar('Erro', mensagem.Message, "", CaixaMensagemBotoes.Ok, CaixaMensagemEstilos.Completo);
+      this.alertar('Erro', mensagem.MensagemErro, "", CaixaMensagemBotoes.Ok, CaixaMensagemEstilos.Completo);
   }
 
   alertar(titulo: string, mensagem: string, informacao: string, botoes: CaixaMensagemBotoes, estilo: CaixaMensagemEstilos): Observable<any> {
