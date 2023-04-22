@@ -11,9 +11,32 @@ namespace EventoWeb.Nucleo.Aplicacao.Comunicacao
         public string Endereco { get; set; }
         public string Assunto { get; set; }
         public string Conteudo { get; set; }
+        public List<AnexoEmail> Anexos { get; set; }
     }
 
-    public abstract class AServicoEmail
+    public enum EnumTipoAnexoEmail { URL, Arquivo }
+    public class AnexoEmail
+    {
+        public AnexoEmail(string url)
+        {
+            Url = url;
+            Tipo = EnumTipoAnexoEmail.URL;
+        }
+
+        public AnexoEmail(string nomeArquivo, string arquivoBase64)
+        {
+            NomeArquivo = nomeArquivo;
+            ArquivoBase64 = arquivoBase64;
+            Tipo = EnumTipoAnexoEmail.Arquivo;
+        }
+
+        public string Url { get; }
+        public string NomeArquivo { get; }
+        public string ArquivoBase64 { get; }
+        public EnumTipoAnexoEmail Tipo { get; }
+    }
+
+    public abstract class AServicoEmail 
     {
         private ConfiguracaoEmail m_Configuracao;
 
