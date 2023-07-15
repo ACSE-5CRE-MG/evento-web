@@ -1,9 +1,13 @@
 ﻿using EventoWeb.Nucleo.Aplicacao.Comunicacao;
 using EventoWeb.Nucleo.Negocio.Excecoes;
 using Newtonsoft.Json;
+using NHibernate.Util;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mail;
 using System.Text;
 
 namespace EventoWeb.Nucleo.Persistencia.Comunicacao
@@ -37,9 +41,31 @@ namespace EventoWeb.Nucleo.Persistencia.Comunicacao
                             }
                         },
                         subject = email.Assunto,
-                        htmlContent = email.Conteudo
+                        htmlContent = email.Conteudo,
+                        attachment = GerarAnexos(email.Anexos)
                     }),
                     Encoding.UTF8, "application/json")).Result;
+        }
+
+        private object GerarAnexos(List<AnexoEmail> anexos)
+        {
+            if (anexos == null || anexos.Count == 0)
+                return null;
+
+            return anexos.Select(x =>
+            {
+                if (x.Tipo == EnumTipoAnexoEmail.URL)
+                    return (object)new
+                    {
+                        url = x.Url
+                    };
+                else
+                    return (object)new
+                    {
+                        content = x.ArquivoBase64,
+                        name = x.NomeArquivo
+                    };
+            }).ToList();            
         }
 
         /*public override void Enviar(Email email)
