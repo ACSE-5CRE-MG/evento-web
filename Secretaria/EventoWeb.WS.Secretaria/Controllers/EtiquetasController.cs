@@ -1,5 +1,6 @@
 ﻿using EventoWeb.Nucleo.Aplicacao;
 using EventoWeb.Nucleo.Negocio.Repositorios;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -22,21 +23,21 @@ namespace EventoWeb.WS.Secretaria.Controllers
             mAppGeracaoCaderno = new AppGeracaoEtiquetaCaderno();
         }
 
-        //[Authorize("Bearer")]
+        [Authorize("Bearer")]
         [HttpGet("evento/{idEvento}/listagem")]
         public IList<CrachaInscrito> Listar(int idEvento)
         {
             return mAppListagem.Listar(idEvento);
         }
 
-        //[Authorize("Bearer")]
+        [Authorize("Bearer")]
         [HttpPut("geracao-cracha")]
         public IActionResult GerarCracha(IList<CrachaInscrito> inscritos)
         {
             return File(mAppGeracaoCracha.Gerar(inscritos), TIPO_CONTEUDO_PDF);
         }
 
-        //[Authorize("Bearer")]
+        [Authorize("Bearer")]
         [HttpPut("geracao-caderno")]
         public IActionResult GerarCaderno(IList<CrachaInscrito> inscritos)
         {

@@ -100,6 +100,13 @@ namespace EventoWeb.WS.Secretaria
 
             app.UseRouting();
 
+            app.UseCors(builder => builder
+               .AllowAnyHeader()
+               .AllowAnyMethod()
+               .SetIsOriginAllowed(_ => true)
+               .AllowCredentials()
+           );
+
             app.UseAuthorization();
 
             app.UseEndpoints(routes =>

@@ -107,6 +107,9 @@ import { TelaMensagensEmailInscricao } from './mensagens-email-inscricao/tela-me
 import { WebServiceMensagensInscricao } from './webservices/webservice-mensagens-email-inscricao';
 import { TelaConfiguracaoEmail } from './configuracao-email/tela-configuracao-email';
 import { WebServiceConfiguracaoEmail } from './webservices/webservice-configuracao-email';
+import { WebServiceEtiquetas } from './webservices/webservice-etiquetas';
+import { TelaEtiquetaCaderno } from './etiquetas/tela-etiqueta-caderno';
+import { TelaEtiquetaCracha } from './etiquetas/tela-etiqueta-cracha';
 
 declare function require(url: string);
 
@@ -162,7 +165,8 @@ export function init_app(appLoadService: AppLoadService) {
     TelaEstatisticas, TelaContratosInscricao,
     TelaListagemDepartamentos, DlgFormDepartamento,
     TelaListagemSarais, DlgFormSarau,
-    TelaMensagensEmailInscricao, TelaConfiguracaoEmail
+    TelaMensagensEmailInscricao, TelaConfiguracaoEmail,
+    TelaEtiquetaCaderno, TelaEtiquetaCracha
   ],
   imports: [
     BrowserModule,
@@ -219,6 +223,8 @@ export function init_app(appLoadService: AppLoadService) {
           { path: 'sarau', component: TelaListagemSarais, canActivate: [PermissaoAcessoRota] },
           { path: 'mensagens-inscricao', component: TelaMensagensEmailInscricao, canActivate: [PermissaoAcessoRota] },
           { path: 'configuracao-email', component: TelaConfiguracaoEmail, canActivate: [PermissaoAcessoRota] },
+          { path: 'etiquetas-caderno', component: TelaEtiquetaCaderno, canActivate: [PermissaoAcessoRota] },
+          { path: 'etiquetas-cracha', component: TelaEtiquetaCracha, canActivate: [PermissaoAcessoRota] },
         ]
       },
       { path: '** ', redirectTo: '' }
@@ -238,7 +244,7 @@ export function init_app(appLoadService: AppLoadService) {
     WebServiceDivisaoSalas, WebServiceRelatorios, WebServiceOficinas, WebServiceQuartos, WebServiceDivisaoOficinas, WebServiceDivisaoQuartos,
     DialogosInscricaoSarau, DialogosSala, DialogosOficina, DialogosQuarto, DialogosInscricao, DialogosDepartamentos,
     WebServiceEstatisticas, WebServiceContratosInscricao, WebServiceDepartamentos, WebServiceSarais, DialogosSarau,
-    WebServiceMensagensInscricao, WebServiceConfiguracaoEmail],
+    WebServiceMensagensInscricao, WebServiceConfiguracaoEmail, WebServiceEtiquetas],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule {

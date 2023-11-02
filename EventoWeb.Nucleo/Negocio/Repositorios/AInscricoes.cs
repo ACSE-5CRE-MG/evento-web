@@ -8,6 +8,7 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
 
     public class CrachaInscrito
     {
+        public int Id { get; set; }
         public String Nome { get; set; }
         public String NomeConhecido { get; set; }
         public String Cidade { get; set; }

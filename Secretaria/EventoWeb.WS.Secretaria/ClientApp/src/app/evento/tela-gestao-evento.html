@@ -95,5 +95,24 @@
         <span>Inscritos Departamentos</span>
       </button>
     </div>
-  </div>  
+  </div>
+
+  <div fxLayout="column" fxLayoutGap="5px" class="padding-padrao">
+    <div>
+      <span class="secao">Etiquetas</span>
+      <mat-divider></mat-divider>
+    </div>
+    <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap.xs="5px" fxLayoutGap="5px" class="padding-padrao">
+      <a mat-stroked-button [routerLink]="'./etiquetas-cracha'">
+        <span class="fas fa-user-tag fa-4x"></span>
+        <br />
+        <span>Etiquetas Crachá</span>
+      </a>
+      <a mat-stroked-button [routerLink]="'./etiquetas-caderno'">
+        <span class="fas fa-tag fa-4x"></span>
+        <br />
+        <span>Etiquetas Caderno</span>
+      </a>      
+    </div>
+  </div>
 </layout-geral>

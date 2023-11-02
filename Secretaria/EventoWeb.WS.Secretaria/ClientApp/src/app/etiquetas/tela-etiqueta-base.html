@@ -1,0 +1,54 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <a mat-icon-button matTooltip="Voltar para tela de gestão do evento" routerLink="../"><i class="fas fa-arrow-left"></i></a>
+    <span class="{{iconeFontAwesome}}" style="margin-right:10px"></span>
+    <span class="cursor-pointer sistema">{{tituloTela}}</span>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-raised-button (click)="clicarAtualizar()">Atualizar</button>
+    <button mat-raised-button  style="margin-left:10px" [disabled]="inscricoesSelecionadas.length == 0" (click)="clicarGerar()">Gerar</button>
+  </mat-toolbar>
+  <div fxFill fxLayout="column" fxLayoutAlign="center center" *ngIf="inscricoes == null || inscricoes.length == 0">
+    <span class="fa fa-plus fa-5x"></span>
+    <h1>Não há nenhuma inscrição aqui!!</h1>
+  </div>
+  <dx-data-grid *ngIf="inscricoes != null && inscricoes.length > 0" style="padding-top: 5px"
+                fxFill
+                id="gridContainer"
+                [showBorders]="true"
+                [dataSource]="inscricoes"
+                [hoverStateEnabled]="true"
+                [columnResizingMode]="'nextColumn'"
+                [allowColumnResizing]="true"
+                [(selectedRowKeys)]="inscricoesSelecionadas"
+                keyExpr="Id">
+    <dxo-search-panel [visible]="true"
+                      [width]="300"
+                      placeholder="Pesquisar..."></dxo-search-panel>
+    <dxo-load-panel [enabled]="true"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <dxo-sorting mode="multiple"></dxo-sorting>
+    <dxo-selection mode="multiple" showCheckBoxesMode="always">
+    </dxo-selection>
+
+    <dxi-column dataField="Id" caption="Id" [width]="100" alignment="left"></dxi-column>
+    <dxi-column dataField="Nome" caption="Nome"></dxi-column>
+    <dxi-column dataField="NomeConhecido" caption="Nome Conhecido"></dxi-column>
+    <dxi-column dataField="Cidade" caption="Cidade/UF" cellTemplate="templateCidade" [width]="160"></dxi-column>
+    <dxi-column dataField="Afrac" caption="Oficina" [width]="160" [visible]="evento.ConfiguracaoOficinas != null"></dxi-column>
+    <dxi-column dataField="SalaEstudo" caption="Sala Estudo" [width]="160" [visible]="evento.ConfiguracaoSalaEstudo != null"></dxi-column>
+    <dxi-column dataField="Quarto" caption="Quarto" [width]="160" [visible]="evento.TemDormitorios"></dxi-column>
+    <dxi-column dataField="Departamento" caption="Departamento" [width]="160" [visible]="evento.TemDepartamentalizacao"></dxi-column>
+
+    <div *dxTemplate="let data of 'templateCidade'">
+      {{data.data.Cidade + "/" + data.data.UF}}
+    </div>
+
+    <dxo-summary>
+      <dxi-total-item column="Id"
+                      summaryType="count"
+                      displayFormat="{0} Inscrições">
+      </dxi-total-item>
+    </dxo-summary>
+  </dx-data-grid>
+
+</layout-geral>

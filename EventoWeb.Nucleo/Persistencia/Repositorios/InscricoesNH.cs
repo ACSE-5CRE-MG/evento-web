@@ -215,6 +215,7 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
                 .JoinQueryOver(x => x.Pessoa, () => aliasPessoa)
                 .Where(x=>x.DataNascimento <= new DateTime(2009, 04, 17))
                 .SelectList(lista => lista
+                    .Select(() => aliasInscricao.Id).WithAlias(() => aliasCracha.Id)
                     .SelectSubQuery(subConsultaAfrac).WithAlias(() => aliasCracha.Afrac)
                     .SelectSubQuery(subConsultaSalaEstudo).WithAlias(() => aliasCracha.SalaEstudo)
                     .SelectSubQuery(subConsultaQuarto).WithAlias(() => aliasCracha.Quarto)
