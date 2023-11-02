@@ -55,7 +55,7 @@ export abstract class TelaEtiquetaBase implements OnInit {
   }
 
   public clicarAtualizar(): void {
-    this.alertas.alertarConfirmacao("Você deseja atualizar as inscrições?", "Ao executar essa ação, a seleção para impressão será perdida.")
+    this.alertas.alertarConfirmacao("Você deseja atualizar as inscrições?", "Ao executar essa ação, a seleção para impressão poderá ser perdida.")
       .subscribe(
         resposta => {
           if (resposta != null && resposta == CaixaMensagemResposta.Sim)

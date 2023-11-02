@@ -55,13 +55,13 @@ namespace EventoWeb.Nucleo.Persistencia.Relatorios
 
                 posicaoY = PosicaoYInicial - (AlturaEtiqueta * linha + MargemSuperior).MillimetersToPointsTextSharp();
 
-                pdfCanvas.Rectangle(new Rectangle(
+                /*pdfCanvas.Rectangle(new Rectangle(
                         posicaoX, //x inicial 
                         posicaoY, // y inicial
                         LarguraEtiqueta.MillimetersToPointsTextSharp(), //x final
                         (AlturaEtiqueta - MargemSuperior).MillimetersToPointsTextSharp())
                     );
-                pdfCanvas.Stroke();
+                pdfCanvas.Stroke();*/
 
                 var canvas = new Canvas(
                     page,
