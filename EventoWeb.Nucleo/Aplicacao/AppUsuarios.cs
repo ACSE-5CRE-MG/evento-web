@@ -15,7 +15,7 @@ namespace EventoWeb.Nucleo.Aplicacao
             Usuario usuario = null;
             ExecutarSeguramente(() =>
             {
-                usuario = Contexto.RepositorioUsuarios.ObterUsuarioPeloLogin(login);
+                usuario = Contexto.RepositorioUsuarios.ObterPeloLogin(login);
             });
 
             return usuario;

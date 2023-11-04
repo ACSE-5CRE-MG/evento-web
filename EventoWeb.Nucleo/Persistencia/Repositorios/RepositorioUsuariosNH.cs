@@ -13,7 +13,7 @@ namespace EventoWeb.Nucleo.Persistencia.Repositorios
             mSessao = sessao;
         }
 
-        public override Usuario ObterUsuarioPeloLogin(string login)
+        public override Usuario ObterPeloLogin(string login)
         {
             return mSessao.Get<Usuario>(login);
         }

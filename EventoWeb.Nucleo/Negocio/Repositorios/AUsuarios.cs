@@ -1,5 +1,4 @@
 ﻿using EventoWeb.Nucleo.Negocio.Entidades;
-using EventoWeb.Nucleo.Negocio.Excecoes;
 using System;
 
 namespace EventoWeb.Nucleo.Negocio.Repositorios
@@ -10,14 +9,6 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
         {
         }
 
-        public override void Incluir(Usuario objeto)
-        {
-            if (ObterUsuarioPeloLogin(objeto.Login) != null)
-                throw new ExcecaoNegocioRepositorio("Usuarios", String.Format("O login \"{0}\" já existe.", objeto.Login));
-
-            base.Incluir(objeto);
-        }
-
-        public abstract Usuario ObterUsuarioPeloLogin(String login);
+        public abstract Usuario ObterPeloLogin(String login);
     }
 }
