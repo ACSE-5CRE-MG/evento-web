@@ -19,11 +19,11 @@ namespace EventoWeb.WS.Secretaria.Controllers
     [ApiController]
     public class AutenticacaoController : ControllerBase
     {
-        private AppUsuarios mAppUsuario;
+        private AppUsuarioAutenticacao mAppUsuario;
 
         public AutenticacaoController(IContexto contexto) 
         {
-            mAppUsuario = new AppUsuarios(contexto);
+            mAppUsuario = new AppUsuarioAutenticacao(contexto);
         }
 
         [AllowAnonymous]

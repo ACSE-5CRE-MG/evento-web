@@ -18,7 +18,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
             AlterarSenha(senha, senhaRep);
         }
 
-        public Boolean CompararSenhaIgual(String senha)
+        public Boolean EhIgual(String senha)
         {
             return m_Senha.ToUpper() == CodificarSenha(senha).ToUpper();
         }

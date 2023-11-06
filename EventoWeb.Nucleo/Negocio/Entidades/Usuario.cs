@@ -51,5 +51,7 @@ namespace EventoWeb.Nucleo.Negocio.Entidades
                 return m_Senha;
             }
         }
+
+        public virtual bool EhAdministrador { get; set; } = false;
     }
 }

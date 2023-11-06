@@ -1,5 +1,6 @@
 ﻿using EventoWeb.Nucleo.Negocio.Entidades;
 using System;
+using System.Collections.Generic;
 
 namespace EventoWeb.Nucleo.Negocio.Repositorios
 {
@@ -10,5 +11,7 @@ namespace EventoWeb.Nucleo.Negocio.Repositorios
         }
 
         public abstract Usuario ObterPeloLogin(String login);
+
+        public abstract IList<Usuario> ListarTodos();
     }
 }
