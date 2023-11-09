@@ -39,7 +39,7 @@ namespace EventoWeb.BancoDados
             // Instantiate the runner
             var runner = servico.GetRequiredService<IMigrationRunner>();
 
-            //runner.MigrateDown(3);
+            //runner.MigrateDown(4);
             // Execute the migrations
             runner.MigrateUp();
 
