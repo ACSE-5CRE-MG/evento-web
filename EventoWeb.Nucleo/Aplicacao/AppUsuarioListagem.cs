@@ -9,8 +9,6 @@ namespace EventoWeb.Nucleo.Aplicacao
         public AppUsuarioListagem(IContexto contexto)
             : base(contexto) { }
 
-        public DTOUsuarioInclusao DadosUsuario {  get; set; }
-
         public IList<DTOUsuario> ListarTodos()
         {
             var lista = new List<DTOUsuario>();

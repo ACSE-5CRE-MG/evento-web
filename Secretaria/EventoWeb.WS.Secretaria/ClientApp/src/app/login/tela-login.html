@@ -4,8 +4,32 @@
     <span style="flex: 1 1 auto;"></span>
   </mat-toolbar>
   <div fxFill fxLayout="column" fxLayoutAlign="center center">
-    <button mat-raised-button (click)="clicarAutenticar()">
-      <img src="assets/facebook200.png" />
-    </button>
+    <div fxFill fxLayout="column" fxLayoutAlign="center center">
+      <dx-validation-group name="loginGroup" #grupoValidacao>
+        <div class="card_div" fxLayout="column" fxFlex="300px" fxLayoutGap="5px" style="width:350px" fxLayoutAlign="center center">
+          <h1 class="centralizar_texto">EventoWeb</h1>
+          <label class="label_campos tamanho_campo">Usuário:</label>
+          <dx-text-box [(value)]="nomeUsuario" class="tamanho_campo" (onEnterKey)="clicarAutenticar()" cdkFocusInitial>
+            <dx-validator>
+              <dxi-validation-rule type="required" message="Você não informou o nome de usuário."></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+          <label class="label_campos tamanho_campo">Senha:</label>
+          <dx-text-box [(value)]="senha" mode="password" class="tamanho_campo" (onEnterKey)="clicarAutenticar()">
+            <dx-validator>
+              <dxi-validation-rule type="required" message="Você não informou a senha para acessar."></dxi-validation-rule>
+            </dx-validator>
+          </dx-text-box>
+          <div style="padding-bottom: 10px; width: 100%" class="centralizar_texto">
+            <dx-button stylingMode="contained"
+                       text="AUTENTICAR"
+                       type="success"
+                       class="tamanho_campo"
+                       (onClick)="clicarAutenticar()">
+            </dx-button>
+          </div>
+        </div>
+      </dx-validation-group>
+    </div>
   </div>
 </layout-geral>

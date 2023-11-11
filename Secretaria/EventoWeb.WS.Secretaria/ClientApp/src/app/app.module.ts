@@ -110,6 +110,8 @@ import { WebServiceConfiguracaoEmail } from './webservices/webservice-configurac
 import { WebServiceEtiquetas } from './webservices/webservice-etiquetas';
 import { TelaEtiquetaCaderno } from './etiquetas/tela-etiqueta-caderno';
 import { TelaEtiquetaCracha } from './etiquetas/tela-etiqueta-cracha';
+import { WebServiceUsuariosAdm } from './webservices/webservice-usuarios-adm';
+import { WebServiceUsuariosComum } from './webservices/webservice-usuarios-comum';
 
 declare function require(url: string);
 
@@ -244,7 +246,7 @@ export function init_app(appLoadService: AppLoadService) {
     WebServiceDivisaoSalas, WebServiceRelatorios, WebServiceOficinas, WebServiceQuartos, WebServiceDivisaoOficinas, WebServiceDivisaoQuartos,
     DialogosInscricaoSarau, DialogosSala, DialogosOficina, DialogosQuarto, DialogosInscricao, DialogosDepartamentos,
     WebServiceEstatisticas, WebServiceContratosInscricao, WebServiceDepartamentos, WebServiceSarais, DialogosSarau,
-    WebServiceMensagensInscricao, WebServiceConfiguracaoEmail, WebServiceEtiquetas],
+    WebServiceMensagensInscricao, WebServiceConfiguracaoEmail, WebServiceEtiquetas, WebServiceUsuariosAdm, WebServiceUsuariosComum],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule {

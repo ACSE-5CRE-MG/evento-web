@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { GestaoAutenticacao } from '../seguranca/gestao-autenticacao';
 import { WebServiceAutenticacao } from '../webservices/webservice-autenticacao';
 import { Alertas } from '../componentes/alertas-dlg/alertas';
+import { DTWDadosAutenticacao } from '../seguranca/objetos';
 
 @Component({
   selector: 'tela-login',
@@ -13,6 +14,8 @@ import { Alertas } from '../componentes/alertas-dlg/alertas';
 export class TelaLogin implements OnInit {
 
   paraOndeRedirecionar: string;
+  nomeUsuario: string;
+  senha: string;
 
   constructor(public gestaoAutenticacao: GestaoAutenticacao,
     public router: Router,
@@ -32,7 +35,12 @@ export class TelaLogin implements OnInit {
   clicarAutenticar(): void {
 
     let dlg = this.alertas.alertarProcessamento("Autenticando...");
-    this.wsAutenticacao.autenticarSemFacebook("robsonmbobbi@gmail.com", "EVENTOWEB-0192")
+
+    let dto = new DTWDadosAutenticacao();
+    dto.Login = this.nomeUsuario;
+    dto.Senha = this.senha;
+
+    this.wsAutenticacao.autenticar(dto)
       .subscribe(dadosAutenticacao => {
         this.gestaoAutenticacao.autenticar(dadosAutenticacao);
         this.router.navigate([this.paraOndeRedirecionar]);

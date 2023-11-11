@@ -1,36 +1,29 @@
-﻿using Newtonsoft.Json;
+﻿using EventoWeb.Nucleo.Aplicacao;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace EventoWeb.WS.Secretaria.Controllers.DTOS
 {
-    public class DadosUsuario
+    public class DTWDadosAutenticacao
     {
-        [JsonProperty("email")]
-        public String Login { get; set; }
-        [JsonProperty("name")]
-        public String Nome { get; set; }
-        [JsonProperty("picture")]
-        public Data Imagem { get; set; }
-        [JsonProperty("imagem64")]
-        public String Imagem64 { get; set; }
-        public string TokenApi { get; set; }
+        public string Login { get; set; }
+        public string Senha { get; set; }
     }
 
-    public class Data
+    public class DTWAutenticacao
     {
-        [JsonProperty("data")]
-        public ImgUsuario Imagem { get; set; }
+        public DTOUsuario Usuario { get; set; }
+        public string TokenAutenticacao { get; set; }
+        public DateTime Validade { get; set; }
     }
 
-    public class ImgUsuario
+    public class DTOAlteracaoSenhaWS
     {
-        [JsonProperty("is_silhouette")]
-        public Boolean Silhueta { get; set; }
-        [JsonProperty("url")]
-        public String Url { get; set; }
+        public string NovaSenha { get; set; }
+        public string NovaSenhaRepetida { get; set; }
+    }
 
+    public class DTOAlteracaoSenhaComumWS: DTOAlteracaoSenhaWS
+    {
+        public string SenhaAtual { get; set; }
     }
 }

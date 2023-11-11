@@ -1,15 +1,11 @@
 ﻿using EventoWeb.Nucleo.Aplicacao;
-using EventoWeb.Nucleo.Negocio.Entidades;
 using EventoWeb.WS.Secretaria.Controllers.DTOS;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Newtonsoft.Json;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Net;
-using System.Net.Http;
 using System.Security.Claims;
 using System.Security.Principal;
 
@@ -19,74 +15,55 @@ namespace EventoWeb.WS.Secretaria.Controllers
     [ApiController]
     public class AutenticacaoController : ControllerBase
     {
-        private AppUsuarioAutenticacao mAppUsuario;
+        private IContexto m_Contexto;
 
         public AutenticacaoController(IContexto contexto) 
         {
-            mAppUsuario = new AppUsuarioAutenticacao(contexto);
+            m_Contexto = contexto;
         }
 
         [AllowAnonymous]
-        [HttpPost("autenticar")]
-        public DadosUsuario PostAutenticar([FromBody] String token, [FromServices]ConfiguracaoAutorizacao configuracaoAutorizacao)
+        [HttpPut("autenticar")]
+        public DTWAutenticacao Autenticar([FromBody] DTWDadosAutenticacao dadosAutenticacao, 
+            [FromServices]ConfiguracaoAutorizacao configuracaoAutorizacao)
         {
-            var usuario = ConsultarEmailUsuarioFacebook(token);
-            if (usuario != null && mAppUsuario.BuscarPeloLogin(usuario.Login) != null)
+            var app = new AppUsuarioAutenticacao(m_Contexto)
             {
-                usuario.TokenApi = GerarTokenApi(configuracaoAutorizacao, usuario.Login);                 
-                return usuario;
-            }
-            else
-                throw new ExcecaoAPI("Autenticacao", "Token incorreto ou usuário não existe.");
-        }
+                Login = dadosAutenticacao.Login,
+                Senha = dadosAutenticacao.Senha
+            };
 
-        [AllowAnonymous]
-        [HttpPost("autenticarSemFacebook")]
-        public DadosUsuario PostAutenticar(String emailFacebook, String token, [FromServices]ConfiguracaoAutorizacao configuracaoAutorizacao)
-        {
-            if (emailFacebook == "robsonmbobbi@gmail.com" && !String.IsNullOrEmpty(token) && token == "EVENTOWEB-0192")
-            {
-                return new DadosUsuario()
+            var usuario = app.Autenticar();
+            if (usuario != null)
+                return new DTWAutenticacao
                 {
-                    Login = emailFacebook,
-                    Nome = emailFacebook,
-                    TokenApi = GerarTokenApi(configuracaoAutorizacao, emailFacebook)
+                    Usuario = usuario,
+                    Validade = DateTime.Now + TimeSpan.FromSeconds(configuracaoAutorizacao.TempoSegExpirar),
+                    TokenAutenticacao = GerarTokenApi(configuracaoAutorizacao, usuario)
                 };
-            }
             else
-                throw new ExcecaoAPI("Autenticacao", "Token incorreto ou usuário não existe.");
-
-            /*Usuario usuario = null;
-            if ((usuario = mAppUsuario.BuscarPeloLogin(emailFacebook)) != null && 
-                !String.IsNullOrEmpty(token) && token == "EVENTOWEB-0192")
-            {
-                return new DadosUsuario()
-                {
-                    Login = emailFacebook,
-                    Nome = emailFacebook,
-                    TokenApi = GerarTokenApi(configuracaoAutorizacao, usuario.Login)
-                };
-            }
-            else
-                throw new ExcecaoAPI("Autenticacao", "Token incorreto ou usuário não existe.");*/
-        }
+                return null;
+        }       
 
         [Authorize("Bearer")]
         [HttpDelete("desautenticar")]
-        public void DeleteDesautenticar()
+        public void Desautenticar()
         {
-            var authentication = HttpContext.SignOutAsync();
+            HttpContext.SignOutAsync();
         }
 
-        private string GerarTokenApi(ConfiguracaoAutorizacao configuracaoAutorizacao, string login)
+        private static string GerarTokenApi(ConfiguracaoAutorizacao configuracaoAutorizacao, DTOUsuario usuario)
         {
             ClaimsIdentity identidade = new ClaimsIdentity(
-                    new GenericIdentity(login, "Login"),
+                    new GenericIdentity(usuario.Login, "Login"),
                     new[] {
                         new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
-                        new Claim(JwtRegisteredClaimNames.UniqueName, login)
+                        new Claim(JwtRegisteredClaimNames.UniqueName, usuario.Login)
                     }
                 );
+
+            if (usuario.EhAdministrador)
+                identidade.AddClaim(new Claim(ClaimTypes.Role, "ADM"));
 
             DateTime dataCriacao = DateTime.Now;
             DateTime dataExpiracao = dataCriacao +
@@ -104,29 +81,6 @@ namespace EventoWeb.WS.Secretaria.Controllers
             });
 
             return handler.WriteToken(securityToken);
-        }
-
-        private DadosUsuario ConsultarEmailUsuarioFacebook(string token)
-        {
-            DadosUsuario fbUser = null;
-            var path = "https://graph.facebook.com/me?access_token=" + token +"&fields=name,picture,email";
-            var client = new HttpClient();
-            var uri = new Uri(path);
-            var response = client.GetAsync(uri);
-            if (response.Result.IsSuccessStatusCode)
-            {
-                var content = response.Result.Content.ReadAsStringAsync();             
-                fbUser = JsonConvert.DeserializeObject<DadosUsuario>(content.Result);
-            }
-
-            if (fbUser != null)
-            {
-                var retorno = new HttpClient().GetByteArrayAsync(fbUser.Imagem.Imagem.Url);
-                if (retorno.Result != null)
-                    fbUser.Imagem64 = Convert.ToBase64String(retorno.Result);
-            }
-
-            return fbUser;
-        }
+        }        
     }
 }

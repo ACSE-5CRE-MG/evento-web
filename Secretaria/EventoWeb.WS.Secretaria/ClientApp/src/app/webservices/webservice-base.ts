@@ -74,7 +74,7 @@ export abstract class WebServiceBase {
     opRequisicao = opRequisicao.append('Accept', 'application/json');
     
     if (this.gestorAutenticacao.autenticado)
-      opRequisicao = opRequisicao.append('Authorization', 'Bearer ' + this.gestorAutenticacao.dadosAutenticacao.TokenApi);
+      opRequisicao = opRequisicao.append('Authorization', 'Bearer ' + this.gestorAutenticacao.dadosAutenticacao.TokenAutenticacao);
 
     /*if (ehBinario)
       opRequisicao.responseType = ResponseContentType.Blob;*/
