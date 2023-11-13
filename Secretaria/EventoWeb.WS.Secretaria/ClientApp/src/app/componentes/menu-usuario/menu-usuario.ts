@@ -14,6 +14,11 @@ export class MenuUsuario {
     public wsAutenticacao: WebServiceAutenticacao,
     public alertas: Alertas) { }
 
+  get ehAdmin() {
+    return this.gestaoAutenticacao.autenticado &&
+      this.gestaoAutenticacao.dadosAutenticacao.Usuario.EhAdministrador;
+  }
+
   clicarSair(): void {
 
     let dlg = this.alertas.alertarProcessamento("Autenticando...");

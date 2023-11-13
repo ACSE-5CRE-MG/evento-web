@@ -2,13 +2,21 @@
   <span class="fa fa-user fa-2x"></span>
 </button>
 <mat-menu #notificationsMenu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item *ngIf="ehAdmin">
+    <mat-icon fontSet="fas" fontIcon="fa-users"></mat-icon>
+    <span>Cadastro de usuários</span>
+  </button>
   <button mat-menu-item>
-    <mat-icon fontSet="fa" fontIcon="fa-info"></mat-icon>
-    <span>Sobre o usuário</span>
+    <mat-icon fontSet="fa" fontIcon="fa-user"></mat-icon>
+    <span>Alterar dados</span>
+  </button>
+  <button mat-menu-item>
+    <mat-icon fontSet="fa" fontIcon="fa-key"></mat-icon>
+    <span>Alterar senha</span>
   </button>
   <mat-divider></mat-divider>
   <button mat-menu-item (click)="clicarSair()">
-    <mat-icon fontSet="fa" fontIcon="fa-sign-out"></mat-icon>
+    <mat-icon fontSet="fas" fontIcon="fa-sign-out-alt"></mat-icon>
     <span>Sair</span>
   </button>
 </mat-menu>
