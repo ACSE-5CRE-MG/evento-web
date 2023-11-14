@@ -1,0 +1,37 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <div><h1>Altera senha de usuário</h1></div>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-icon-button cdkFocusInitial (click)="clicarSalvar()" matTooltip="Permite salvar"><i class="fa fa-save"></i></button>
+    <button mat-icon-button (click)="clicarCancelar()" matTooltip="Permite fechar esta tela"><i class="fa fa-times"></i></button>
+  </mat-toolbar>
+
+  <dx-validation-group #grupoValidacao fxLayout="column" fxLayoutGap="5px" style="padding:15px">
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Senha Atual:</label>
+      <dx-text-box [(value)]="senhaAtual" mode="password" fxFlex="70">
+        <dx-validator>
+          <dxi-validation-rule type="required" message="Você não informou a senha atual"></dxi-validation-rule>
+        </dx-validator>
+      </dx-text-box>
+    </div>
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Nova Senha:</label>
+      <dx-text-box [(value)]="novaSenha" mode="password" fxFlex="70">
+        <dx-validator>
+          <dxi-validation-rule type="required" message="Você não informou a senha"></dxi-validation-rule>
+        </dx-validator>
+      </dx-text-box>
+    </div>
+    <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+      <label class="label_campos" fxFlex="106px">Confirmação:</label>
+      <dx-text-box [(value)]="repeticaoNovaSenha" mode="password" fxFlex="70">
+        <dx-validator>
+          <dxi-validation-rule type="required" message="Você precisa confirmar a senha"></dxi-validation-rule>
+          <dxi-validation-rule type="compare" [comparisonTarget]="comparadorSenha"
+                               message="A senha e a confirmação não são iguais"></dxi-validation-rule>
+        </dx-validator>
+      </dx-text-box>
+    </div>
+  </dx-validation-group>  
+</layout-geral>

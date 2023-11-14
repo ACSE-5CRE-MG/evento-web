@@ -112,6 +112,8 @@ import { TelaEtiquetaCaderno } from './etiquetas/tela-etiqueta-caderno';
 import { TelaEtiquetaCracha } from './etiquetas/tela-etiqueta-cracha';
 import { WebServiceUsuariosAdm } from './webservices/webservice-usuarios-adm';
 import { WebServiceUsuariosComum } from './webservices/webservice-usuarios-comum';
+import { DialogoSenhaComum, DlgFormSenhaComum } from './usuarios/senha-comum/dlg-form-senha-comum';
+import { DialogoSenhaAdmin, DlgFormSenhaAdmin } from './usuarios/senha-admin/dlg-form-senha-admin';
 
 declare function require(url: string);
 
@@ -168,7 +170,8 @@ export function init_app(appLoadService: AppLoadService) {
     TelaListagemDepartamentos, DlgFormDepartamento,
     TelaListagemSarais, DlgFormSarau,
     TelaMensagensEmailInscricao, TelaConfiguracaoEmail,
-    TelaEtiquetaCaderno, TelaEtiquetaCracha
+    TelaEtiquetaCaderno, TelaEtiquetaCracha,
+    DlgFormSenhaComum, DlgFormSenhaAdmin
   ],
   imports: [
     BrowserModule,
@@ -235,7 +238,8 @@ export function init_app(appLoadService: AppLoadService) {
   entryComponents: [CaixaMensagemDlg, DlgEmProcessamento, MenuUsuario, LayoutGeral,
     TelaListaEventos, DlgFormEventoInclusao, DlgFormEventoAlteracao, TelaRoteamentoEvento,
     TelaListagemSalas, DlgFormSala, DlgFormOficina, DlgFormQuarto,
-    DlgSarauCodigo, DlgSarauFormulario, DlgSelecaoInscricaoAdulto, DlgFormDepartamento, DlgFormSarau],
+    DlgSarauCodigo, DlgSarauFormulario, DlgSelecaoInscricaoAdulto, DlgFormDepartamento, DlgFormSarau,
+    DlgFormSenhaComum, DlgFormSenhaAdmin],
   providers: [
     AppLoadService,
     { provide: LOCALE_ID, useValue: 'pt' },
@@ -246,7 +250,8 @@ export function init_app(appLoadService: AppLoadService) {
     WebServiceDivisaoSalas, WebServiceRelatorios, WebServiceOficinas, WebServiceQuartos, WebServiceDivisaoOficinas, WebServiceDivisaoQuartos,
     DialogosInscricaoSarau, DialogosSala, DialogosOficina, DialogosQuarto, DialogosInscricao, DialogosDepartamentos,
     WebServiceEstatisticas, WebServiceContratosInscricao, WebServiceDepartamentos, WebServiceSarais, DialogosSarau,
-    WebServiceMensagensInscricao, WebServiceConfiguracaoEmail, WebServiceEtiquetas, WebServiceUsuariosAdm, WebServiceUsuariosComum],
+    WebServiceMensagensInscricao, WebServiceConfiguracaoEmail, WebServiceEtiquetas, WebServiceUsuariosAdm, WebServiceUsuariosComum,
+    DialogoSenhaComum, DialogoSenhaAdmin],
   bootstrap: [TelaPrincipal]
 })
 export class AppModule {

@@ -1,6 +1,8 @@
 import { Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { GestaoAutenticacao } from "../../seguranca/gestao-autenticacao";
+import { DialogoSenhaAdmin } from "../../usuarios/senha-admin/dlg-form-senha-admin";
+import { DialogoSenhaComum } from "../../usuarios/senha-comum/dlg-form-senha-comum";
 import { WebServiceAutenticacao } from "../../webservices/webservice-autenticacao";
 import { Alertas } from "../alertas-dlg/alertas";
 
@@ -10,9 +12,13 @@ import { Alertas } from "../alertas-dlg/alertas";
 })
 export class MenuUsuario {
 
-  constructor(public router: Router, public gestaoAutenticacao: GestaoAutenticacao,
-    public wsAutenticacao: WebServiceAutenticacao,
-    public alertas: Alertas) { }
+  constructor(
+    public gestaoAutenticacao: GestaoAutenticacao,
+    private router: Router,
+    private wsAutenticacao: WebServiceAutenticacao,
+    private alertas: Alertas,
+    private dlgAlteracaoSenha: DialogoSenhaComum,
+    private dlg2: DialogoSenhaAdmin) { }
 
   get ehAdmin() {
     return this.gestaoAutenticacao.autenticado &&
@@ -33,5 +39,13 @@ export class MenuUsuario {
           this.alertas.alertarErro(dadosErro);
           dlg.close();
         });
+  }
+
+  clicarAlterarDados(): void {
+    this.dlg2.apresentar("admin");
+  }
+
+  clicarAlterarSenha(): void {
+    this.dlgAlteracaoSenha.apresentar();
   }
 }
