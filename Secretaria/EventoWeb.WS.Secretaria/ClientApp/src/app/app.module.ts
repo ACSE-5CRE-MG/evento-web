@@ -113,8 +113,12 @@ import { TelaEtiquetaCracha } from './etiquetas/tela-etiqueta-cracha';
 import { WebServiceUsuariosAdm } from './webservices/webservice-usuarios-adm';
 import { WebServiceUsuariosComum } from './webservices/webservice-usuarios-comum';
 import { DialogoSenhaComum, DlgFormSenhaComum } from './usuarios/senha-comum/dlg-form-senha-comum';
-import { DialogoSenhaAdmin, DlgFormSenhaAdmin } from './usuarios/senha-admin/dlg-form-senha-admin';
+import { DialogoSenhaAdmin, DlgAlteracaoSenhaAdmin, DlgFormSenhaAdmin } from './usuarios/senha-admin/dlg-form-senha-admin';
 import { DialogoAlteracaoUsuarioComum, DlgFormAlteracaoUsuarioComum } from './usuarios/alteracao-comum/dlg-form-alteracao-usuario-comum';
+import { TelaListagemUsuarios } from './usuarios/listagem/tela-listagem-usuarios';
+import { TelaManutencaoUsuario } from './usuarios/cadastro/tela-manutencao-usuario';
+import { FormUsuario } from './usuarios/cadastro/form-usuario';
+import { TelaRoteamentoUsuario } from './usuarios/roteamento/tela-roteamento-usuario';
 
 declare function require(url: string);
 
@@ -172,7 +176,8 @@ export function init_app(appLoadService: AppLoadService) {
     TelaListagemSarais, DlgFormSarau,
     TelaMensagensEmailInscricao, TelaConfiguracaoEmail,
     TelaEtiquetaCaderno, TelaEtiquetaCracha,
-    DlgFormSenhaComum, DlgFormSenhaAdmin, DlgFormAlteracaoUsuarioComum
+    DlgFormSenhaComum, DlgAlteracaoSenhaAdmin, DlgFormSenhaAdmin, DlgFormAlteracaoUsuarioComum,
+    TelaRoteamentoUsuario, TelaListagemUsuarios, TelaManutencaoUsuario, FormUsuario 
   ],
   imports: [
     BrowserModule,
@@ -209,6 +214,14 @@ export function init_app(appLoadService: AppLoadService) {
       { path: '', component: TelaListaEventos, canActivate: [PermissaoAcessoRota] },
       { path: 'login', component: TelaLogin },
       {
+        path: 'usuarios', component: TelaRoteamentoUsuario, canActivate: [PermissaoAcessoRota],
+        children: [
+          { path: '', component: TelaListagemUsuarios },
+          { path: 'incluir', component: TelaManutencaoUsuario },
+          { path: 'editar/:login', component: TelaManutencaoUsuario },
+        ]
+      },
+      {
         path: 'evento/:id', component: TelaRoteamentoEvento, canActivate: [PermissaoAcessoRota],
         children: [
           { path: '', component: TelaGestaoEvento, canActivate: [PermissaoAcessoRota] },
@@ -240,7 +253,9 @@ export function init_app(appLoadService: AppLoadService) {
     TelaListaEventos, DlgFormEventoInclusao, DlgFormEventoAlteracao, TelaRoteamentoEvento,
     TelaListagemSalas, DlgFormSala, DlgFormOficina, DlgFormQuarto,
     DlgSarauCodigo, DlgSarauFormulario, DlgSelecaoInscricaoAdulto, DlgFormDepartamento, DlgFormSarau,
-    DlgFormSenhaComum, DlgFormSenhaAdmin, DlgFormAlteracaoUsuarioComum],
+    DlgFormSenhaComum, DlgAlteracaoSenhaAdmin, DlgFormAlteracaoUsuarioComum, DlgFormSenhaAdmin,
+    TelaListagemUsuarios, TelaManutencaoUsuario, FormUsuario, TelaRoteamentoUsuario
+  ],
   providers: [
     AppLoadService,
     { provide: LOCALE_ID, useValue: 'pt' },

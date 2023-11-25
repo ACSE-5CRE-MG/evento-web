@@ -1,0 +1,38 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <span class="fas fa-users" style="margin-right:10px"></span>
+    <span class="cursor-pointer">Usuários</span>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-button (click)="clicarIncluir()" matTooltip="Cria um novo usuário">
+      <span class="fa fa-plus"></span>
+      Nova
+    </button>
+  </mat-toolbar>
+  <dx-data-grid id="gridContainer" fxFill
+                [showBorders]="true"
+                [dataSource]="usuarios"
+                [hoverStateEnabled]="true"
+                [columnResizingMode]="'nextColumn'"
+                [allowColumnResizing]="true">
+    <dxo-load-panel [enabled]="true"></dxo-load-panel>
+    <dxo-scrolling mode="virtual"></dxo-scrolling>
+    <dxo-sorting mode="multiple"></dxo-sorting>
+
+    <dxi-column dataField="Login" caption="Comandos" cellTemplate="templateCelulaDigitacao" [width]="150" alignment="left" [allowSorting]="false"></dxi-column>
+    <dxi-column dataField="Login" caption="Login" [width]="180"></dxi-column>
+    <dxi-column dataField="Nome" caption="Nome"></dxi-column>
+
+    <div *dxTemplate="let data of 'templateCelulaDigitacao'">
+      <button mat-icon-button (click)="clicarAlterarSenha(data.data)" matTooltip="Altera a senha desse usuário"><i class="fa fa-key"></i></button>
+      <button mat-icon-button (click)="clicarEditar(data.data)" matTooltip="Edita os dados desse usuário"><i class="fas fa-pencil-alt"></i></button>
+      <button mat-icon-button (click)="clicarExcluir(data.data)" matTooltip="Exclui esse usuário"><i class="fas fa-trash-alt"></i></button>
+    </div>
+
+    <dxo-summary>
+      <dxi-total-item column="Id"
+                      summaryType="count"
+                      displayFormat="{0} Usuários">
+      </dxi-total-item>
+    </dxo-summary>
+  </dx-data-grid>
+</layout-geral>

@@ -1,0 +1,23 @@
+<layout-geral>
+  <mat-toolbar layout-geral-cabecalho color="primary">
+    <a mat-icon-button style="margin-right:5px" matTooltip="Voltar" routerLink="/usuarios">
+      <span class="fas fa-arrow-left"></span>
+    </a>
+    <span class="fas fa-users" style="margin-right:10px"></span>
+    <span class="cursor-pointer">Manutenção usuário</span>
+    <span style="flex: 1 1 auto;"></span>
+    <button mat-button (click)="clicarSalvar()" matTooltip="Salva as informações">
+      <i class="fa fa-save"></i>
+      Salvar
+    </button>
+  </mat-toolbar>
+  <div fxLayout="row" fxLayoutGap="5px" fxFill>
+    <form-usuario #formUsuario
+                  [desabilitarLogin]="situacao == 1"
+                  [desabilitarEhAdministrador]="false"
+                  [login]="usuario.Login"
+                  [nome]="usuario.Nome"
+                  [ehAdministrador]="usuario.EhAdministrador">
+    </form-usuario>
+  </div>
+</layout-geral>

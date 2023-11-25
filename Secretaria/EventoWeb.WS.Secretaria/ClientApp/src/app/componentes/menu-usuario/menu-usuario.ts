@@ -25,6 +25,10 @@ export class MenuUsuario {
       this.gestaoAutenticacao.dadosAutenticacao.Usuario.EhAdministrador;
   }
 
+  clicarCadastroUsuarios(): void {
+    this.router.navigate(["/usuarios"]);
+  }
+
   clicarSair(): void {
 
     let dlg = this.alertas.alertarProcessamento("Autenticando...");

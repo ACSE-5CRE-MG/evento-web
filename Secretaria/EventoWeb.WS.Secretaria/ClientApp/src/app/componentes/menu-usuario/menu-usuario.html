@@ -2,7 +2,7 @@
   <span class="fa fa-user fa-2x"></span>
 </button>
 <mat-menu #notificationsMenu="matMenu" [overlapTrigger]="false">
-  <button mat-menu-item *ngIf="ehAdmin">
+  <button mat-menu-item *ngIf="ehAdmin" (click)="clicarCadastroUsuarios()">
     <mat-icon fontSet="fas" fontIcon="fa-users"></mat-icon>
     <span>Cadastro de usuários</span>
   </button>

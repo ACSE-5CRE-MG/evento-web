@@ -1,0 +1,21 @@
+<dx-validation-group #grupoValidacao fxLayout="column" fxLayoutGap="5px" style="padding:15px">
+  <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+    <label class="label_campos" fxFlex="106px">Login:</label>
+    <dx-text-box [(value)]="login" fxFlex="70" [maxLength]="150" [disabled]="desabilitarLogin">
+      <dx-validator>
+        <dxi-validation-rule type="required" message="Você não informou o login"></dxi-validation-rule>
+      </dx-validator>
+    </dx-text-box>
+  </div>
+  <div fxLayout="row" fxLayoutGap="5px" fxLayoutGap.xs="5px" fxLayoutAlign="start center">
+    <label class="label_campos" fxFlex="106px">Nome:</label>
+    <dx-text-box [(value)]="nome" fxFlex="90" [maxLength]="100">
+      <dx-validator>
+        <dxi-validation-rule type="required" message="Você não informou o nome"></dxi-validation-rule>
+      </dx-validator>
+    </dx-text-box>
+  </div>
+  <div fxLayout="row" fxLayoutGap="5px" fxLayoutAlign="start center">
+    <dx-check-box [(value)]="ehAdministrador" text="É administrador?" [disabled]="desabilitarEhAdministrador"></dx-check-box>
+  </div>
+</dx-validation-group>
